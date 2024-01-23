@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "commit": "cz"
+    "commit": "cz",
+    "prepare": "husky install",
+    "ts-lint": "tsc --noEmit --incremental"
   },
   "dependencies": {
     "next": "14.1.0",
@@ -26,6 +28,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.0",
     "postcss": "^8",
     "prettier": "3.2.4",
     "tailwindcss": "^3.3.0",
