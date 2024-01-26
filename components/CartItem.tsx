@@ -54,7 +54,9 @@ const CartItem = ({
           <img className="max-w-[100px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
         </div>
 
-        <Card className="w-44 border-0 shadow-none lg:w-60 lg:w-auto">
+        <Card
+          className={cn('border-0 shadow-none lg:w-auto', { 'w-44': editable, 'w-52': !editable })}
+        >
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
             <div>
               <CardTitle className="flex items-center text-base">{title}</CardTitle>
