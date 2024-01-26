@@ -8,7 +8,7 @@ import { useImmer } from 'use-immer'
 const ShoppingCartPage = () => {
   const [count, setCount] = useImmer([1, 1])
   return (
-    <div className="flex flex-col items-center justify-center overflow-x-hidden">
+    <div className="flex w-full flex-col items-center justify-center">
       <CartItem
         amount={count[0]}
         editable={true}
@@ -42,8 +42,9 @@ const ShoppingCartPage = () => {
       <div className="font-lg mb-2 flex items-center justify-center font-semibold">
         ✨推薦商品✨
       </div>
-      <div className="flex w-full items-center justify-center gap-x-1.5 overflow-x-auto p-2">
+      <div className="flex w-full items-center justify-center gap-x-1.5 p-2">
         <MerchandiseCard
+          className="w-[50%] md:w-auto"
           imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
           title="PS5"
           tags={['game', 'tv']}
@@ -53,14 +54,7 @@ const ShoppingCartPage = () => {
           onAddtoCart={() => console.log('hi')}
         />
         <MerchandiseCard
-          imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-          title="PS5"
-          tags={['game', 'tv']}
-          prize={18800}
-          unit="台"
-          onAddtoCart={() => console.log('hi')}
-        />
-        <MerchandiseCard
+          className="w-[50%] md:w-auto"
           imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
           title="PS5"
           tags={['game', 'tv']}

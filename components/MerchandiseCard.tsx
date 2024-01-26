@@ -52,22 +52,22 @@ const MerchandiseCard = ({
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between px-4">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span
-              className={specialPrize ? 'text-sm font-light line-through' : 'text-lg font-bold'}
+              className={specialPrize ? 'text-sm font-light line-through' : 'text-md font-bold'}
             >
               ${prize}
             </span>
             {specialPrize && (
-              <span className="text-lg font-bold text-red-600">${specialPrize}</span>
+              <span className="text-md font-bold text-red-600">${specialPrize}</span>
             )}
           </div>
           <span className="font-light">/{unit}</span>
         </div>
 
-        <Button className="rounded-full" variant="outline" size="icon">
+        <Button className="ml-2 h-8 w-8 rounded-full" variant="outline" size="icon">
           <ShoppingCartIcon className="h-4 w-4" onClick={onAddtoCart} />
         </Button>
       </CardFooter>

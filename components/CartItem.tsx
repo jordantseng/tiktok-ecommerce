@@ -1,12 +1,10 @@
 import * as React from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { MinusCircleIcon, PlusCircleIcon, ShoppingCartIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import Counter from './Counter'
-import ConfirmDeleteDialog from './ConfirmDeleteDialog'
+import Counter from '@/components/Counter'
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
 
 type Props = {
   editable?: boolean
@@ -100,7 +98,7 @@ const CartItem = ({
                   )}
                 </div>
                 <Counter
-                  clasName="items-end"
+                  className="items-end"
                   buttonClassName="items-end hover:bg-inherit"
                   value={amount}
                   onChange={(val) => onChange && onChange(val)}
