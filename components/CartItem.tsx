@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { MinusCircleIcon, PlusCircleIcon, ShoppingCartIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Counter from './Counter'
+import ConfirmDeleteDialog from './ConfirmDeleteDialog'
 
 type Props = {
   editable?: boolean
@@ -45,14 +47,14 @@ const CartItem = ({
         </div>
       )}
       <div className={cn('flex items-center justify-center', className)}>
-        {editable && <Checkbox className="rounded" onCheckedChange={onSelect} />}
+        {editable && <Checkbox className="rounded-full" onCheckedChange={onSelect} />}
         <div
           className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
         >
           <img className="max-w-[100px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
         </div>
 
-        <Card className="w-60 border-0 shadow-none lg:w-auto">
+        <Card className="w-44 border-0 shadow-none lg:w-60 lg:w-auto">
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
             <div>
               <CardTitle className="flex items-center text-base">{title}</CardTitle>
@@ -82,8 +84,8 @@ const CartItem = ({
           </CardHeader>
           <CardContent className="flex justify-between px-0">
             {editable && (
-              <>
-                <div className="flex flex-col">
+              <div className="flex">
+                <div className="mr-4 flex flex-col">
                   <span
                     className={
                       specialPrize ? 'text-sm font-light line-through' : 'text-lg font-bold'
@@ -95,27 +97,17 @@ const CartItem = ({
                     <span className="text-lg font-bold text-red-600">${specialPrize}</span>
                   )}
                 </div>
-                <div className="mt-3 flex items-center">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onChange && onChange(amount - 1)}
-                  >
-                    <MinusCircleIcon />
-                  </Button>
-                  <span className="mx-4 w-5">{amount}</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onChange && onChange(amount + 1)}
-                  >
-                    <PlusCircleIcon />
-                  </Button>
-                </div>
-              </>
+                <Counter
+                  clasName="items-end"
+                  buttonClassName="items-end hover:bg-inherit"
+                  value={amount}
+                  onChange={(val) => onChange && onChange(val)}
+                />
+              </div>
             )}
           </CardContent>
         </Card>
+        {editable && <ConfirmDeleteDialog onConfirm={() => {}} />}
       </div>
     </div>
   )

@@ -42,7 +42,7 @@ const ShoppingCartPage = () => {
       <div className="font-lg mb-2 flex items-center justify-center font-semibold">
         ✨推薦商品✨
       </div>
-      <div className="flex items-center justify-center gap-x-1.5 overflow-x-auto">
+      <div className="flex w-full items-center justify-center gap-x-1.5 overflow-x-auto p-2">
         <MerchandiseCard
           imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
           title="PS5"
