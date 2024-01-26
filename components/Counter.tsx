@@ -5,26 +5,21 @@ import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type Props = {
-  clasName?: string
+  className?: string
   buttonClassName?: string
   value: number
   onChange: (value: number) => void
 }
 
-const Counter = ({ value: propsValue, onChange, clasName, buttonClassName }: Props) => {
-  const [value, setValue] = React.useState(propsValue)
-
+const Counter = ({ value, onChange, className, buttonClassName }: Props) => {
   return (
-    <div className={cn('flex', clasName)}>
+    <div className={cn('flex', className)}>
       <Button
         className={buttonClassName}
         variant="ghost"
         size="icon"
         disabled={value === 1}
-        onClick={() => {
-          setValue(value - 1)
-          onChange(value - 1)
-        }}
+        onClick={() => onChange(value - 1)}
       >
         <MinusCircleIcon />
       </Button>
@@ -33,10 +28,7 @@ const Counter = ({ value: propsValue, onChange, clasName, buttonClassName }: Pro
         className={buttonClassName}
         variant="ghost"
         size="icon"
-        onClick={() => {
-          setValue(value + 1)
-          onChange(value + 1)
-        }}
+        onClick={() => onChange(value + 1)}
       >
         <PlusCircleIcon />
       </Button>
