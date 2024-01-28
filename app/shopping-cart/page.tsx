@@ -51,7 +51,6 @@ const ShoppingCartPage = () => {
           prize={18800}
           specialPrize={13000}
           unit="台"
-          onAddtoCart={() => console.log('hi')}
         />
         <MerchandiseCard
           className="w-[50%] md:w-auto"
@@ -60,7 +59,6 @@ const ShoppingCartPage = () => {
           tags={['game', 'tv']}
           prize={18800}
           unit="台"
-          onAddtoCart={() => console.log('hi')}
         />
       </div>
 
