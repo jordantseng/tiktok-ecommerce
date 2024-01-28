@@ -23,12 +23,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'bg-background min-h-screen font-sans antialiased',
+          'mx-auto min-h-screen max-w-[640px] font-sans antialiased',
           inter.variable,
           inter.className,
         )}
       >
-        {children}
+        <div className="min-h-screen w-full">{children}</div>
       </body>
     </html>
   )
