@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -9,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ShoppingCartIcon } from 'lucide-react'
+import CartButton from './CartButton'
 
 type Props = {
   className?: string
@@ -19,7 +18,6 @@ type Props = {
   prize: number
   specialPrize?: number
   unit: string
-  onAddtoCart: () => void
 }
 
 const MerchandiseCard = ({
@@ -30,7 +28,6 @@ const MerchandiseCard = ({
   prize,
   specialPrize,
   unit,
-  onAddtoCart,
 }: Props) => {
   return (
     <Card className={className}>
@@ -52,7 +49,7 @@ const MerchandiseCard = ({
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between px-4">
+      <CardFooter className="flex justify-between">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span
@@ -66,10 +63,7 @@ const MerchandiseCard = ({
           </div>
           <span className="font-light">/{unit}</span>
         </div>
-
-        <Button className="ml-2 h-8 w-8 rounded-full" variant="outline" size="icon">
-          <ShoppingCartIcon className="h-4 w-4" onClick={onAddtoCart} />
-        </Button>
+        <CartButton />
       </CardFooter>
     </Card>
   )
