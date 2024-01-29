@@ -1,7 +1,7 @@
 import { MessageSquareMoreIcon, MenuIcon, LampFloorIcon } from 'lucide-react'
 
-import Searchbar from '@/components/Searchbar'
 import HeroCarousel from '@/app/HeroCarousel'
+import Searchbar from '@/components/Searchbar'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
