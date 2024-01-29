@@ -16,7 +16,7 @@ export default function HomePage() {
           <MenuIcon />
         </div>
       </header>
-      <div className="bg-default p-4">
+      <div className="p-4">
         <div className="mb-2">
           <Searchbar isDisabled showSearchButton />
         </div>
