@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { HomeIcon, ArrowDownWideNarrowIcon, ShoppingCartIcon, UserRoundIcon } from 'lucide-react'
 
 import IconCard from '@/components/IconCard'
-import { usePathname } from 'next/navigation'
 
 const NavBar = () => {
   const pathName = usePathname()
