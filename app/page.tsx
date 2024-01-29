@@ -18,7 +18,7 @@ export default function HomePage() {
       </header>
       <div className="p-4">
         <div className="mb-2">
-          <Searchbar isDisabled showSearchButton />
+          <Searchbar enableDialog showSearchButton />
         </div>
         <div className="mb-2">
           <HeroCarousel />
