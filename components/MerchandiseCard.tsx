@@ -9,15 +9,10 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import CartButton from './CartButton'
+import { CartItems } from '@/types'
 
-type Props = {
+type Props = CartItems & {
   className?: string
-  imgUrl?: string
-  title: string
-  tags?: string[]
-  prize: number
-  specialPrize?: number
-  unit: string
 }
 
 const MerchandiseCard = ({

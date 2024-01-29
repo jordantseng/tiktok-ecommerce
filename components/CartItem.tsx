@@ -5,17 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
+import { CartItems } from '@/types'
 
-type Props = {
+type Props = CartItems & {
   editable?: boolean
   className?: string
-  imgUrl?: string
-  title: string
-  tags?: string[]
-  unit?: string
-  amount: number
-  prize: number
-  specialPrize?: number
   onChange?: (value: number) => void
   onSelect?: (value: boolean) => void
 }
@@ -78,7 +72,7 @@ const CartItem = ({
             </div>
             {!editable && (
               <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
-                ${amount * prize}
+                ${(amount || 1) * prize}
               </div>
             )}
           </CardHeader>
@@ -103,7 +97,7 @@ const CartItem = ({
                     'items-end': specialPrize !== undefined,
                     'items-start': specialPrize === undefined,
                   })}
-                  value={amount}
+                  value={amount || 1}
                   onChange={(val) => onChange && onChange(val)}
                 />
               </div>

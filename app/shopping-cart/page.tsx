@@ -19,6 +19,7 @@ const ShoppingCartPage = () => {
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             <CartItem
+              id={56583}
               amount={count[0]}
               editable={true}
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
@@ -33,6 +34,7 @@ const ShoppingCartPage = () => {
               }
             />
             <CartItem
+              id={45343}
               amount={count[1]}
               editable={true}
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
@@ -55,6 +57,7 @@ const ShoppingCartPage = () => {
         </div>
         <div className="flex w-full items-center justify-center gap-x-1.5 p-2">
           <MerchandiseCard
+            id={12345}
             className="max-h-[320px] w-[50%] md:w-auto"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5"
@@ -64,6 +67,7 @@ const ShoppingCartPage = () => {
             unit="台"
           />
           <MerchandiseCard
+            id={55555}
             className="max-h-[320px] w-[50%] md:w-auto"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
@@ -75,6 +79,7 @@ const ShoppingCartPage = () => {
         <div className="w-full p-4">
           <div className="rounded bg-white">
             <CartItem
+              id={33331}
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
               tags={['第三方物流', '快速出貨']}
               title="PS5 新春大禮包"
@@ -83,6 +88,7 @@ const ShoppingCartPage = () => {
               unit="台"
             />
             <CartItem
+              id={354523}
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
               tags={['第三方物流', '快速出貨']}
               title="PS5 新春大禮包"
@@ -91,6 +97,7 @@ const ShoppingCartPage = () => {
               unit="台"
             />
             <CartItem
+              id={9888}
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
               tags={['第三方物流', '快速出貨']}
               title="PS5 新春大禮包新春大禮包新春大禮包新春大禮包新春大禮包新春大禮包"
