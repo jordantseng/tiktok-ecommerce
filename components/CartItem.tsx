@@ -53,11 +53,11 @@ const CartItem = ({
         </div>
 
         <Card
-          className={cn('border-0 shadow-none lg:w-auto', { 'w-44': editable, 'w-52': !editable })}
+          className={cn('border-0 shadow-none lg:w-full', { 'w-52': editable, 'w-56': !editable })}
         >
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
-            <div>
-              <CardTitle className="flex items-center text-base">{title}</CardTitle>
+            <div className="max-w-[150px]">
+              <CardTitle className="truncate text-base">{title}</CardTitle>
               <CardDescription className="mt-2">
                 {editable ? (
                   tags.map((opt) => (
@@ -77,7 +77,7 @@ const CartItem = ({
               </CardDescription>
             </div>
             {!editable && (
-              <div className="ml-auto text-lg font-bold" style={{ marginTop: 0 }}>
+              <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
                 ${amount * prize}
               </div>
             )}
@@ -98,8 +98,11 @@ const CartItem = ({
                   )}
                 </div>
                 <Counter
-                  className="items-end"
-                  buttonClassName="items-end hover:bg-inherit"
+                  className={cn({ 'items-end': specialPrize !== undefined })}
+                  buttonClassName={cn('hover:bg-inherit', {
+                    'items-end': specialPrize !== undefined,
+                    'items-start': specialPrize === undefined,
+                  })}
                   value={amount}
                   onChange={(val) => onChange && onChange(val)}
                 />

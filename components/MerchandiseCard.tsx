@@ -32,15 +32,10 @@ const MerchandiseCard = ({
   return (
     <Card className={className}>
       <CardHeader>
-        {imgUrl && (
-          <img
-            className="max-h-[100px] max-w-[200px] lg:max-h-[150px] lg:max-w-[250px]"
-            src={imgUrl}
-          />
-        )}
+        {imgUrl && <img className="max-h-[100px] lg:max-h-[150px] lg:max-w-[250px]" src={imgUrl} />}
       </CardHeader>
-      <CardContent>
-        <CardTitle>{title}</CardTitle>
+      <CardContent className="max-w-[150px]">
+        <CardTitle className="truncate">{title}</CardTitle>
         <CardDescription className="mt-4">
           {tags.map((opt) => (
             <span key={opt} className="mr-2 rounded border border-primary p-1 text-xs text-primary">
