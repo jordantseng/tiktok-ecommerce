@@ -1,6 +1,7 @@
 'use client'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
+import { useImmer } from 'use-immer'
 
 type CartContextType = {
   items: Item[]
@@ -21,7 +22,7 @@ type CartProviderProps = {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [items, setItems] = useState<Item[]>([
+  const [items, setItems] = useImmer<Item[]>([
     {
       id: 56583,
       amount: 1,
@@ -45,20 +46,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     },
   ])
 
-  const handleAddToCart = (val: Item) => {
-    items.push(val)
-    setItems([...items])
-  }
+  const handleAddToCart = (val: Item) => setItems((draft) => draft.push(val))
 
-  const handleRemoveFromCart = (id: number) => {
-    const newItems = items.filter((opt) => opt.id !== id)
-    setItems(newItems)
-  }
+  const handleRemoveFromCart = (id: number) =>
+    setItems((draft) => draft.filter((opt) => opt.id !== id))
 
-  const updateSelected = (id: number, isSelect: boolean) => {
-    const updatedItems = items.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt))
-    setItems(updatedItems)
-  }
+  const updateSelected = (id: number, isSelect: boolean) =>
+    setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt)))
 
   const getSelectedCartItems = () => {
     const res = items.filter((opt) => opt.isSelect)

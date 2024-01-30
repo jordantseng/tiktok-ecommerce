@@ -11,15 +11,22 @@ import { useImmer } from 'use-immer'
 
 const ShoppingCartPage = () => {
   const [count, setCount] = useImmer([1, 1])
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useImmer(0)
   const { items, updateSelected, getSelectedCartItems } = useCartContext()
 
   const handleCheckAll = (res: boolean) => {
-    console.log(res)
+    let sum = 0
+    items.forEach((opt, index) => {
+      if (res) {
+        sum += count[index] * (opt.specialPrize || opt.prize)
+      }
+      updateSelected(opt.id, res)
+    })
+    setTotal(sum)
   }
 
   return (
-    <main className="mb-16">
+    <main className="mb-16 h-full">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
         <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
           購物車
@@ -30,6 +37,7 @@ const ShoppingCartPage = () => {
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (
               <CartItem
+                isChecked={opt.isSelect}
                 key={opt.id}
                 id={opt.id}
                 amount={count[index]}
@@ -41,21 +49,26 @@ const ShoppingCartPage = () => {
                 specialPrize={opt.specialPrize}
                 onSelect={(res) => {
                   if (res) {
-                    setTotal(total + count[index] * (opt.specialPrize || opt.prize))
+                    setTotal((draft) => draft + count[index] * (opt.specialPrize || opt.prize))
                     updateSelected(opt.id, res)
                   } else {
-                    setTotal(total - count[index] * (opt.specialPrize || opt.prize))
+                    setTotal((draft) => draft - count[index] * (opt.specialPrize || opt.prize))
                     updateSelected(opt.id, res)
                   }
                 }}
                 onChange={(val) => {
+                  const isMinus = val < count[index]
                   setCount((draft) => {
                     draft[index] = val
                   })
                   const nowItems = getSelectedCartItems()
                   nowItems.forEach((el) => {
                     if (opt.id === opt.id) {
-                      setTotal(total + count[index] * (el.specialPrize || el.prize))
+                      setTotal(
+                        isMinus
+                          ? total - (el.specialPrize || el.prize)
+                          : total + (el.specialPrize || el.prize),
+                      )
                     }
                   })
                 }}
@@ -90,7 +103,11 @@ const ShoppingCartPage = () => {
         </div>
         <div className="mb-[18px] flex w-full justify-between bg-white px-6 py-6">
           <div className="text-md flex items-center space-x-2">
-            <Checkbox id="terms" onCheckedChange={handleCheckAll} />
+            <Checkbox
+              id="terms"
+              onCheckedChange={handleCheckAll}
+              checked={getSelectedCartItems().length === items.length}
+            />
             <label htmlFor="terms" className="text-lg font-medium">
               全選
             </label>

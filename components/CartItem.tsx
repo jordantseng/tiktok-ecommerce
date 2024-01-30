@@ -8,6 +8,7 @@ import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
 import { CartItem } from '@/types/common'
 
 type Props = CartItem & {
+  isChecked?: boolean
   editable?: boolean
   className?: string
   onChange?: (value: number) => void
@@ -15,6 +16,7 @@ type Props = CartItem & {
 }
 
 const CartItem = ({
+  isChecked,
   editable,
   className,
   imgUrl,
@@ -39,7 +41,9 @@ const CartItem = ({
         </div>
       )}
       <div className={cn('flex items-center justify-center', className)}>
-        {editable && <Checkbox className="rounded-full" onCheckedChange={onSelect} />}
+        {editable && (
+          <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
+        )}
         <div
           className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
         >
