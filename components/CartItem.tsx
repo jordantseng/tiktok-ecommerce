@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
-import { CartItems } from '@/types'
+import { CartItems } from '@/types/common'
 
 type Props = CartItems & {
   editable?: boolean

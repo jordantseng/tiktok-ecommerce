@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import CartButton from './CartButton'
-import { CartItems } from '@/types'
+import { CartItems } from '@/types/common'
 
 type Props = CartItems & {
   className?: string
