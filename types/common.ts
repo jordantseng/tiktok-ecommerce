@@ -1,4 +1,4 @@
-export interface CartItems {
+export type CartItem = {
   id: number
   imgUrl?: string
   title: string

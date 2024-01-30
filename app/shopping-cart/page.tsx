@@ -3,11 +3,21 @@
 import CartItem from '@/components/CartItem'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
-import React from 'react'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useCartContext } from '@/context/CartContext'
+import React, { useState } from 'react'
 import { useImmer } from 'use-immer'
 
 const ShoppingCartPage = () => {
   const [count, setCount] = useImmer([1, 1])
+  const [total, setTotal] = useState(0)
+  const { items, updateSelected, getSelectedCartItems } = useCartContext()
+
+  const handleCheckAll = (res: boolean) => {
+    console.log(res)
+  }
+
   return (
     <main className="mb-16">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
@@ -18,44 +28,46 @@ const ShoppingCartPage = () => {
       <div className="bg-default flex w-full flex-col items-center justify-center">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
-            <CartItem
-              id={56583}
-              amount={count[0]}
-              editable={true}
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              title="PS5 新春大禮包"
-              prize={18888}
-              tags={['快速出貨', '24hr']}
-              onSelect={(res) => console.log(res)}
-              onChange={(val) =>
-                setCount((draft) => {
-                  draft[0] = val
-                })
-              }
-            />
-            <CartItem
-              id={45343}
-              amount={count[1]}
-              editable={true}
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              title="PS5 新春大禮包新春大禮包新春大禮包新春大禮包新春大禮包"
-              prize={18888}
-              specialPrize={13000}
-              tags={['快速出貨', '24hr']}
-              onSelect={(res) => console.log(res)}
-              onChange={(val) =>
-                setCount((draft) => {
-                  draft[1] = val
-                })
-              }
-            />
+            {items.map((opt, index) => (
+              <CartItem
+                key={opt.id}
+                id={opt.id}
+                amount={count[index]}
+                editable={true}
+                imgUrl={opt.imgUrl}
+                title={opt.title}
+                prize={opt.prize}
+                tags={opt.tags}
+                specialPrize={opt.specialPrize}
+                onSelect={(res) => {
+                  if (res) {
+                    setTotal(total + count[index] * (opt.specialPrize || opt.prize))
+                    updateSelected(opt.id, res)
+                  } else {
+                    setTotal(total - count[index] * (opt.specialPrize || opt.prize))
+                    updateSelected(opt.id, res)
+                  }
+                }}
+                onChange={(val) => {
+                  setCount((draft) => {
+                    draft[index] = val
+                  })
+                  const nowItems = getSelectedCartItems()
+                  nowItems.forEach((el) => {
+                    if (opt.id === opt.id) {
+                      setTotal(total + count[index] * (el.specialPrize || el.prize))
+                    }
+                  })
+                }}
+              />
+            ))}
           </div>
         </div>
 
         <div className="font-lg mb-2 flex items-center justify-center font-semibold">
-          ✨推薦商品✨
+          ✨為你推薦✨
         </div>
-        <div className="flex w-full items-center justify-center gap-x-1.5 p-2">
+        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-2">
           <MerchandiseCard
             id={12345}
             className="max-h-[320px] w-[50%] md:w-auto"
@@ -76,35 +88,19 @@ const ShoppingCartPage = () => {
             unit="台"
           />
         </div>
-        <div className="w-full p-4">
-          <div className="rounded bg-white">
-            <CartItem
-              id={33331}
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              tags={['第三方物流', '快速出貨']}
-              title="PS5 新春大禮包"
-              amount={2}
-              prize={18888}
-              unit="台"
-            />
-            <CartItem
-              id={354523}
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              tags={['第三方物流', '快速出貨']}
-              title="PS5 新春大禮包"
-              amount={2}
-              prize={18888}
-              unit="台"
-            />
-            <CartItem
-              id={9888}
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              tags={['第三方物流', '快速出貨']}
-              title="PS5 新春大禮包新春大禮包新春大禮包新春大禮包新春大禮包新春大禮包"
-              amount={2}
-              prize={18888}
-              unit="台"
-            />
+        <div className="mb-[18px] flex w-full justify-between bg-white px-6 py-6">
+          <div className="text-md flex items-center space-x-2">
+            <Checkbox id="terms" onCheckedChange={handleCheckAll} />
+            <label htmlFor="terms" className="text-lg font-medium">
+              全選
+            </label>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="felx">
+              <span>總計：</span>
+              <span className="text-lg font-semibold text-red-400">${total}</span>
+            </div>
+            <Button className="w-[4/12] rounded-3xl bg-primary">結帳</Button>
           </div>
         </div>
       </div>

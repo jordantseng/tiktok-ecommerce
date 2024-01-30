@@ -1,5 +1,5 @@
 'use client'
-import { CartItems } from '@/types/common'
+import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 type CartContextType = {
@@ -10,7 +10,7 @@ type CartContextType = {
   getSelectedCartItems: () => Item[]
 }
 
-interface Item extends CartItems {
+interface Item extends CartItem {
   isSelect: boolean
 }
 
@@ -21,7 +21,29 @@ type CartProviderProps = {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [items, setItems] = useState<Item[]>([])
+  const [items, setItems] = useState<Item[]>([
+    {
+      id: 56583,
+      amount: 1,
+      imgUrl:
+        'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
+      title: 'PS5 新春大禮包',
+      prize: 18888,
+      tags: ['快速出貨', '24hr'],
+      isSelect: false,
+    },
+    {
+      id: 12334,
+      amount: 1,
+      imgUrl:
+        'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
+      title: 'PS5 新春大禮包 龍年大好運好彩頭',
+      prize: 18888,
+      specialPrize: 13000,
+      tags: ['快速出貨', '24hr'],
+      isSelect: false,
+    },
+  ])
 
   const handleAddToCart = (val: Item) => {
     items.push(val)

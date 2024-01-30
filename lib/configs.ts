@@ -1,5 +1,5 @@
-const Config = {
+const config = {
   api: process.env.API_DOMAIN || 'https://backend.tkshop.live',
 }
 
-export default Config
+export default config

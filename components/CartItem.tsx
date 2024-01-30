@@ -5,9 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
-import { CartItems } from '@/types/common'
+import { CartItem } from '@/types/common'
 
-type Props = CartItems & {
+type Props = CartItem & {
   editable?: boolean
   className?: string
   onChange?: (value: number) => void
@@ -43,11 +43,14 @@ const CartItem = ({
         <div
           className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
         >
-          <img className="max-w-[100px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
+          <img className="max-w-[60px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
         </div>
 
         <Card
-          className={cn('border-0 shadow-none lg:w-full', { 'w-52': editable, 'w-56': !editable })}
+          className={cn('border-0 shadow-none lg:w-full', {
+            'w-1/2': editable,
+            'w-56': !editable,
+          })}
         >
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
             <div className="max-w-[150px]">

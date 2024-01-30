@@ -9,9 +9,9 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import CartButton from './CartButton'
-import { CartItems } from '@/types/common'
+import { CartItem } from '@/types/common'
 
-type Props = CartItems & {
+type Props = CartItem & {
   className?: string
 }
 
