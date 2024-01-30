@@ -84,7 +84,7 @@ const ShoppingCartPage = () => {
         <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-2">
           <MerchandiseCard
             id={12345}
-            className="h-72 w-[50%] md:w-auto"
+            className="h-80 w-[50%] md:w-auto"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5"
             tags={['game', 'tv']}
@@ -94,7 +94,7 @@ const ShoppingCartPage = () => {
           />
           <MerchandiseCard
             id={55555}
-            className="h-72 w-[50%] md:w-auto"
+            className="h-80 w-[50%] md:w-auto"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
             tags={['game', 'tv']}
