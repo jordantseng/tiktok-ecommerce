@@ -44,6 +44,7 @@ export default function HomePage() {
               tags={['game', 'tv']}
               prize={18800}
               unit="台"
+              sales={10000}
             />
           ))}
         </div>
