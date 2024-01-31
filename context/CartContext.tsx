@@ -7,6 +7,7 @@ type CartContextType = {
   items: Item[]
   handleAddToCart: (val: Item) => void
   handleRemoveFromCart: (id: number) => void
+  updateItemAmount: (id: number, amount: number) => void
   updateSelected: (id: number, isSelect: boolean) => void
   getSelectedCartItems: () => Item[]
 }
@@ -54,6 +55,9 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const updateSelected = (id: number, isSelect: boolean) =>
     setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt)))
 
+  const updateItemAmount = (id: number, amount: number) =>
+    setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, amount } : opt)))
+
   const getSelectedCartItems = () => {
     const res = items.filter((opt) => opt.isSelect)
     return res
@@ -66,6 +70,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         handleAddToCart,
         handleRemoveFromCart,
         updateSelected,
+        updateItemAmount,
         getSelectedCartItems,
       }}
     >
