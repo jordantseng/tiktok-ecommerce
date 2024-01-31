@@ -51,6 +51,8 @@ const CartItem = ({
         >
           <Image
             className="max-w-[60px] lg:max-h-[200px] lg:max-w-[250px]"
+            width={300}
+            height={300}
             src={imgUrl || ''}
             alt={`product-${id}`}
           />

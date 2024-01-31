@@ -30,6 +30,8 @@ const MerchandiseCard = ({
       <CardHeader>
         {imgUrl && (
           <Image
+            width={300}
+            height={300}
             className="max-h-[100px] lg:max-h-[150px] lg:max-w-[250px]"
             src={imgUrl}
             alt={`product-${id}`}
