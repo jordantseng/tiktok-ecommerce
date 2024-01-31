@@ -49,13 +49,11 @@ const ShoppingCartPage = () => {
                 tags={opt.tags}
                 specialPrize={opt.specialPrize}
                 onSelect={(res) => {
-                  if (res) {
-                    setTotal((draft) => draft + count[index] * (opt.specialPrize || opt.prize))
-                    updateSelected(opt.id, res)
-                  } else {
-                    setTotal((draft) => draft - count[index] * (opt.specialPrize || opt.prize))
-                    updateSelected(opt.id, res)
-                  }
+                  const prizeAmount = opt.specialPrize || opt.prize
+                  const updateAmount = count[index] * prizeAmount
+
+                  setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
+                  updateSelected(opt.id, res)
                 }}
                 onChange={(val) => {
                   const isMinus = val < count[index]
@@ -118,8 +116,17 @@ const ShoppingCartPage = () => {
               <span>總計：</span>
               <span className="text-lg font-semibold text-red-400">${total}</span>
             </div>
-            <Link href="/confirm-bill">
-              <Button className="w-[4/12] rounded-3xl bg-primary">結帳</Button>
+            <Link
+              aria-disabled={total === 0}
+              tabIndex={total === 0 ? -1 : undefined}
+              style={{
+                pointerEvents: total === 0 ? 'none' : 'auto',
+              }}
+              href="/confirm-bill"
+            >
+              <Button className="w-[4/12] rounded-3xl bg-primary" disabled={total === 0}>
+                結帳
+              </Button>
             </Link>
           </div>
         </div>

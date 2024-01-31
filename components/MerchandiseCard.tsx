@@ -1,5 +1,5 @@
 import * as React from 'react'
-
+import Image from 'next/image'
 import {
   Card,
   CardContent,
@@ -16,6 +16,7 @@ type Props = CartItem & {
 }
 
 const MerchandiseCard = ({
+  id,
   className,
   imgUrl,
   title,
@@ -27,7 +28,13 @@ const MerchandiseCard = ({
   return (
     <Card className={className}>
       <CardHeader>
-        {imgUrl && <img className="max-h-[100px] lg:max-h-[150px] lg:max-w-[250px]" src={imgUrl} />}
+        {imgUrl && (
+          <Image
+            className="max-h-[100px] lg:max-h-[150px] lg:max-w-[250px]"
+            src={imgUrl}
+            alt={`product-${id}`}
+          />
+        )}
       </CardHeader>
       <CardContent className="max-w-[150px]">
         <CardTitle className="truncate">{title}</CardTitle>

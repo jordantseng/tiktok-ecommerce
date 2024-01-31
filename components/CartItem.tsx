@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Image from 'next/image'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -16,6 +17,7 @@ type Props = CartItem & {
 }
 
 const CartItem = ({
+  id,
   isChecked,
   editable,
   className,
@@ -47,7 +49,11 @@ const CartItem = ({
         <div
           className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
         >
-          <img className="max-w-[60px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
+          <Image
+            className="max-w-[60px] lg:max-h-[200px] lg:max-w-[250px]"
+            src={imgUrl || ''}
+            alt={`product-${id}`}
+          />
         </div>
 
         <Card

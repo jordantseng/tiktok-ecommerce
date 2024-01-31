@@ -11,7 +11,7 @@ type CartContextType = {
   getSelectedCartItems: () => Item[]
 }
 
-interface Item extends CartItem {
+type Item = CartItem & {
   isSelect: boolean
 }
 
