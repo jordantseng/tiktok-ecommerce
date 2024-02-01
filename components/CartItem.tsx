@@ -47,10 +47,12 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
+          className={cn('m-2 flex h-auto items-center max-[320px]:m-0 max-[320px]:h-[80px]', {
+            'bg-slate-50': !editable,
+          })}
         >
           <Image
-            className="max-w-[60px] lg:max-h-[200px] lg:max-w-[250px]"
+            className="max-h-[200px] max-w-[85px] max-[320px]:max-w-[65px]"
             width={300}
             height={300}
             src={imgUrl || ''}
@@ -65,8 +67,8 @@ const CartItem = ({
           })}
         >
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
-            <div className="max-w-[150px]">
-              <CardTitle className="truncate text-base">{title}</CardTitle>
+            <div className="max-w-[150px] max-[320px]:max-w-[80px]">
+              <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <CardDescription className="mt-2">
                 {editable ? (
                   tags.map((opt) => (
@@ -97,18 +99,22 @@ const CartItem = ({
                 <div className="mr-4 flex flex-col">
                   <span
                     className={
-                      specialPrize ? 'text-sm font-light line-through' : 'text-lg font-bold'
+                      specialPrize
+                        ? 'text-sm font-light line-through'
+                        : 'max-[320px]:text-md text-lg font-bold'
                     }
                   >
                     ${prize}
                   </span>
                   {specialPrize && (
-                    <span className="text-lg font-bold text-red-600">${specialPrize}</span>
+                    <span className="max-[320px]:text-md text-lg font-bold text-red-600">
+                      ${specialPrize}
+                    </span>
                   )}
                 </div>
                 <Counter
                   className={cn({ 'items-end': specialPrize !== undefined })}
-                  buttonClassName={cn('hover:bg-inherit', {
+                  buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
                     'items-end': specialPrize !== undefined,
                     'items-start': specialPrize === undefined,
                   })}

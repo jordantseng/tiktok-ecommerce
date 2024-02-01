@@ -27,13 +27,13 @@ const ShoppingCartPage = () => {
   }
 
   return (
-    <main className="mb-16 h-full">
+    <main className="mb-16 h-full min-h-screen">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
         <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
           購物車
         </h4>
       </header>
-      <div className="flex w-full flex-col items-center justify-center bg-default">
+      <div className="flex w-full flex-col items-center bg-default">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (
@@ -80,10 +80,10 @@ const ShoppingCartPage = () => {
         <div className="font-lg mb-2 flex items-center justify-center font-semibold">
           ✨為你推薦✨
         </div>
-        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-2 max-[320px]:block">
+        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-4 max-[320px]:block">
           <MerchandiseCard
             id={12345}
-            className="h-78 w-[50%] max-[320px]:w-full"
+            className="h-72 w-[50%] max-[320px]:h-auto max-[320px]:w-full"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5"
             tags={['game', 'tv']}
@@ -93,7 +93,7 @@ const ShoppingCartPage = () => {
           />
           <MerchandiseCard
             id={55555}
-            className="h78 w-[50%] max-[320px]:w-full"
+            className="h-72 w-[50%] max-[320px]:h-auto max-[320px]:w-full"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
             tags={['game', 'tv']}
@@ -101,7 +101,7 @@ const ShoppingCartPage = () => {
             unit="台"
           />
         </div>
-        <div className="mb-[18px] flex w-full justify-between bg-white px-6 py-6">
+        <div className="mb-[18px] flex w-full justify-between bg-white p-6">
           <div className="text-md flex items-center space-x-2">
             <Checkbox
               id="terms"

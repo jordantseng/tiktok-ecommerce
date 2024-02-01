@@ -32,7 +32,7 @@ const MerchandiseCard = ({
           <Image
             width={300}
             height={300}
-            className="max-h-[100px] lg:max-h-[150px] lg:max-w-[250px]"
+            className="lg:max-h-[200px] lg:max-w-[250px]"
             src={imgUrl}
             alt={`product-${id}`}
           />
@@ -48,7 +48,7 @@ const MerchandiseCard = ({
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between px-4">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span
