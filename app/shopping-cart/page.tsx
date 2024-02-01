@@ -13,7 +13,7 @@ import { useImmer } from 'use-immer'
 const ShoppingCartPage = () => {
   const [count, setCount] = useImmer([1, 1])
   const [total, setTotal] = useImmer(0)
-  const { items, updateSelected, getSelectedCartItems } = useCartContext()
+  const { items, updateSelected, getSelectedCartItems, updateItemAmount } = useCartContext()
 
   const handleCheckAll = (res: boolean) => {
     let sum = 0
@@ -33,7 +33,7 @@ const ShoppingCartPage = () => {
           購物車
         </h4>
       </header>
-      <div className="bg-default flex w-full flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-center bg-default">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (
@@ -61,8 +61,9 @@ const ShoppingCartPage = () => {
                     draft[index] = val
                   })
                   const nowItems = getSelectedCartItems()
+                  updateItemAmount(opt.id, val)
                   nowItems.forEach((el) => {
-                    if (opt.id === opt.id) {
+                    if (opt.id === el.id) {
                       setTotal(
                         isMinus
                           ? total - (el.specialPrize || el.prize)
@@ -79,10 +80,10 @@ const ShoppingCartPage = () => {
         <div className="font-lg mb-2 flex items-center justify-center font-semibold">
           ✨為你推薦✨
         </div>
-        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-2">
+        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-2 max-[320px]:block">
           <MerchandiseCard
             id={12345}
-            className="h-78 w-[50%] md:w-auto"
+            className="h-78 w-[50%] max-[320px]:w-full"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5"
             tags={['game', 'tv']}
@@ -92,7 +93,7 @@ const ShoppingCartPage = () => {
           />
           <MerchandiseCard
             id={55555}
-            className="h78 w-[50%] md:w-auto"
+            className="h78 w-[50%] max-[320px]:w-full"
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
             tags={['game', 'tv']}
