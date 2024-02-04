@@ -16,12 +16,11 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
   return (
     <>
       <main
-        className={cn('min-h-screen', {
+        className={cn('min-h-screen bg-default', {
           'bg-white': !q,
-          'bg-default': q,
         })}
       >
-        <header className="flex items-center gap-3 bg-default px-4 pb-4 pt-6">
+        <header className="flex items-center gap-3 px-4 pb-4 pt-6">
           <PrevButton />
           <Searchbar />
         </header>
