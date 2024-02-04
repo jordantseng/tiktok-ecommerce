@@ -1,5 +1,5 @@
 import * as React from 'react'
-
+import Image from 'next/image'
 import {
   Card,
   CardContent,
@@ -9,18 +9,14 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import CartButton from './CartButton'
+import { CartItem } from '@/types/common'
 
-type Props = {
+type Props = CartItem & {
   className?: string
-  imgUrl?: string
-  title: string
-  tags?: string[]
-  prize: number
-  specialPrize?: number
-  unit: string
 }
 
 const MerchandiseCard = ({
+  id,
   className,
   imgUrl,
   title,
@@ -33,14 +29,17 @@ const MerchandiseCard = ({
     <Card className={className}>
       <CardHeader>
         {imgUrl && (
-          <img
-            className="max-h-[100px] max-w-[200px] lg:max-h-[150px] lg:max-w-[250px]"
+          <Image
+            width={300}
+            height={300}
+            className="lg:max-h-[200px] lg:max-w-[250px]"
             src={imgUrl}
+            alt={`product-${id}`}
           />
         )}
       </CardHeader>
-      <CardContent>
-        <CardTitle>{title}</CardTitle>
+      <CardContent className="max-w-[150px]">
+        <CardTitle className="truncate">{title}</CardTitle>
         <CardDescription className="mt-4">
           {tags.map((opt) => (
             <span key={opt} className="mr-2 rounded border border-primary p-1 text-xs text-primary">
@@ -49,7 +48,7 @@ const MerchandiseCard = ({
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between px-4">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span

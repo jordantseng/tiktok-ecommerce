@@ -1,26 +1,24 @@
 import * as React from 'react'
+import Image from 'next/image'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
+import { CartItem } from '@/types/common'
 
-type Props = {
+type Props = CartItem & {
+  isChecked?: boolean
   editable?: boolean
   className?: string
-  imgUrl?: string
-  title: string
-  tags?: string[]
-  unit?: string
-  amount: number
-  prize: number
-  specialPrize?: number
   onChange?: (value: number) => void
   onSelect?: (value: boolean) => void
 }
 
 const CartItem = ({
+  id,
+  isChecked,
   editable,
   className,
   imgUrl,
@@ -45,19 +43,32 @@ const CartItem = ({
         </div>
       )}
       <div className={cn('flex items-center justify-center', className)}>
-        {editable && <Checkbox className="rounded-full" onCheckedChange={onSelect} />}
+        {editable && (
+          <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
+        )}
         <div
-          className={cn('m-2 flex h-[80px] items-center lg:h-auto', { 'bg-slate-50': !editable })}
+          className={cn('m-2 flex h-auto items-center max-[320px]:m-0 max-[320px]:h-[80px]', {
+            'bg-slate-50': !editable,
+          })}
         >
-          <img className="max-w-[100px] lg:max-h-[200px] lg:max-w-[250px]" src={imgUrl} />
+          <Image
+            className="max-h-[200px] max-w-[85px] max-[320px]:max-w-[65px]"
+            width={300}
+            height={300}
+            src={imgUrl || ''}
+            alt={`product-${id}`}
+          />
         </div>
 
         <Card
-          className={cn('border-0 shadow-none lg:w-auto', { 'w-44': editable, 'w-52': !editable })}
+          className={cn('border-0 shadow-none lg:w-full', {
+            'w-1/2': editable,
+            'w-56': !editable,
+          })}
         >
           <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
-            <div>
-              <CardTitle className="flex items-center text-base">{title}</CardTitle>
+            <div className="max-w-[150px] max-[320px]:max-w-[80px]">
+              <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <CardDescription className="mt-2">
                 {editable ? (
                   tags.map((opt) => (
@@ -77,8 +88,8 @@ const CartItem = ({
               </CardDescription>
             </div>
             {!editable && (
-              <div className="ml-auto text-lg font-bold" style={{ marginTop: 0 }}>
-                ${amount * prize}
+              <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
+                ${(amount || 1) * prize}
               </div>
             )}
           </CardHeader>
@@ -88,19 +99,26 @@ const CartItem = ({
                 <div className="mr-4 flex flex-col">
                   <span
                     className={
-                      specialPrize ? 'text-sm font-light line-through' : 'text-lg font-bold'
+                      specialPrize
+                        ? 'text-sm font-light line-through'
+                        : 'max-[320px]:text-md text-lg font-bold'
                     }
                   >
                     ${prize}
                   </span>
                   {specialPrize && (
-                    <span className="text-lg font-bold text-red-600">${specialPrize}</span>
+                    <span className="max-[320px]:text-md text-lg font-bold text-red-600">
+                      ${specialPrize}
+                    </span>
                   )}
                 </div>
                 <Counter
-                  className="items-end"
-                  buttonClassName="items-end hover:bg-inherit"
-                  value={amount}
+                  className={cn({ 'items-end': specialPrize !== undefined })}
+                  buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
+                    'items-end': specialPrize !== undefined,
+                    'items-start': specialPrize === undefined,
+                  })}
+                  value={amount || 1}
                   onChange={(val) => onChange && onChange(val)}
                 />
               </div>

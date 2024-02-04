@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import { cn } from '@/lib/utils'
+import { CartProvider } from '@/context/CartContext'
+import { AuthProvider } from '@/context/AuthContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,15 +23,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          'mx-auto min-h-screen max-w-[640px] font-sans antialiased',
-          inter.variable,
-          inter.className,
-        )}
-      >
-        <div className="min-h-screen w-full">{children}</div>
-      </body>
+      <AuthProvider>
+        <CartProvider>
+          <body
+            className={cn(
+              'mx-auto min-h-screen font-sans antialiased',
+              inter.variable,
+              inter.className,
+            )}
+          >
+            <div className="min-h-screen w-full">{children}</div>
+          </body>
+        </CartProvider>
+      </AuthProvider>
     </html>
   )
 }

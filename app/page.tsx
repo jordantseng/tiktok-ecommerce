@@ -36,6 +36,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, index) => (
             <MerchandiseCard
+              id={1234}
               key={index}
               className="w-full"
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
