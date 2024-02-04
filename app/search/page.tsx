@@ -24,7 +24,6 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
         <header className="flex items-center gap-3 bg-default px-4 pb-4 pt-6">
           <PrevButton />
           <Searchbar />
-          <button>取消</button>
         </header>
         <div className="p-4">
           {q ? (
