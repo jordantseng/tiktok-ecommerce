@@ -103,8 +103,11 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="w-full bg-white">
-                  {cities.map((opt) => (
-                    <SelectItem value={opt}>{opt}</SelectItem>
+                  {cities.map((opt, index) => (
+                    // TODO: temp key
+                    <SelectItem key={index} value={opt}>
+                      {opt}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -125,8 +128,11 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="w-full bg-white">
-                  {districts.map((opt) => (
-                    <SelectItem value={opt}>{opt}</SelectItem>
+                  {districts.map((opt, index) => (
+                    // TODO: temp key
+                    <SelectItem key={index} value={opt}>
+                      {opt}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
