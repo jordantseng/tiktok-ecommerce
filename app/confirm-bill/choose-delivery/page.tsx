@@ -1,23 +1,20 @@
 'use client'
 
+import PrevButton from '@/components/PrevButton'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
 
 const ChooseReceiptPage = () => {
   return (
     <main className="min-h-screen">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <Link href="/confirm-bill">
-          <ChevronLeft />
-        </Link>
+        <PrevButton />
         <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
           選擇收件方式
         </h4>
       </header>
-      <div className="bg-default flex min-h-screen w-full flex-col items-center">
+      <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <RadioGroup className="w-full bg-white">
           <div className="flex items-center justify-between space-x-2  p-4">
             <div className="flex items-center space-x-2">

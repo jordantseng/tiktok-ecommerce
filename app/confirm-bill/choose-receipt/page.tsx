@@ -1,8 +1,8 @@
 'use client'
 
+import PrevButton from '@/components/PrevButton'
 import ReceiptInfo from '@/components/ReceiptInfo'
 import { Button } from '@/components/ui/button'
-import { Check, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -10,9 +10,7 @@ const ChooseReceiptPage = () => {
   return (
     <main className="min-h-screen">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <Link href="/confirm-bill">
-          <ChevronLeft />
-        </Link>
+        <PrevButton />
 
         <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
           選擇收件人資訊
