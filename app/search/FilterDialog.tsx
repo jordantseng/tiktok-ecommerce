@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 const FilterDialog = () => {
@@ -82,19 +83,16 @@ const FilterDialog = () => {
           </h5>
           <div className="grid grid-cols-3 gap-6">
             {categories.map((category) => (
-              <div
-                className={cn(
-                  'flex cursor-pointer justify-center rounded-md bg-secondary px-2 py-3 text-sm',
-                  {
-                    'bg-primary-foreground text-primary outline outline-primary':
-                      selectedCategoryIds.includes(category.id),
-                  },
-                )}
+              <Badge
                 key={category.id}
+                className={cn('', {
+                  'bg-primary-foreground text-primary outline outline-primary':
+                    selectedCategoryIds.includes(category.id),
+                })}
                 onClick={() => handleClick(category.id)}
               >
                 {category.title}
-              </div>
+              </Badge>
             ))}
           </div>
         </div>
