@@ -65,7 +65,7 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
             <FormItem>
               <FormLabel>*收件人</FormLabel>
               <FormControl>
-                <Input className="bg-white" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,7 +78,7 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
             <FormItem>
               <FormLabel>*電話</FormLabel>
               <FormControl>
-                <Input className="bg-white" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +147,7 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
             <FormItem>
               <FormLabel>*地址</FormLabel>
               <FormControl>
-                <Input className="bg-white" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,7 +160,7 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
             <FormItem>
               <FormLabel>店家名稱</FormLabel>
               <FormControl>
-                <Input className="bg-white" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -173,7 +173,7 @@ const ReceiptForm = ({ cities = [], districts = [], onGetDistrict }: Props) => {
             <FormItem>
               <FormLabel>店家地址</FormLabel>
               <FormControl>
-                <Input className="bg-white" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

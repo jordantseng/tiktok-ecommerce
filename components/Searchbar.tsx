@@ -1,9 +1,10 @@
 'use client'
 
+import { FormEvent, useRef } from 'react'
 import { SearchIcon } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
 
 type SearchbarProps = {
   enableDialog?: boolean
@@ -12,9 +13,23 @@ type SearchbarProps = {
 
 const Searchbar = ({ enableDialog = false, showSearchButton = false }: SearchbarProps) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchTerm = searchParams.get('q') || ''
 
-  const navigateToSearchPage = () => {
+  const handleFormClick = () => {
     router.push('/search')
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const params = new URLSearchParams(searchParams)
+    const searchValue = searchInputRef.current?.value
+
+    searchValue ? params.set('q', searchValue) : params.delete('q')
+
+    router.push(`/search/?${params.toString()}`)
   }
 
   return (
@@ -23,8 +38,9 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
         'cursor-pointer': enableDialog,
       })}
       {...(enableDialog && {
-        onClick: navigateToSearchPage,
+        onClick: handleFormClick,
       })}
+      onSubmit={handleSubmit}
     >
       <SearchIcon
         className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
@@ -36,9 +52,9 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
           'cursor-pointer': enableDialog,
         })}
         placeholder="耳機"
-        // ref={searchInputRef}
+        ref={searchInputRef}
         type="search"
-        // defaultValue={searchTerm}
+        defaultValue={searchTerm}
         readOnly={enableDialog}
       />
       {showSearchButton && (
