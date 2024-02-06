@@ -1,46 +1,53 @@
 'use client'
 
 import CartItem from '@/components/CartItem'
+import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
+import { useAddressContext } from '@/context/AddressContext'
 import { useCartContext } from '@/context/CartContext'
 import {
-  ChevronLeft,
   ChevronRight,
+  CircleDollarSignIcon,
   CreditCardIcon,
   MapPinIcon,
   StoreIcon,
   TruckIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useImmer } from 'use-immer'
 
 const ConfirmBillPage = () => {
+  const router = useRouter()
   const [count, setCount] = useImmer([1, 1])
   const [total, setTotal] = useImmer(0)
   const { items, updateSelected, getSelectedCartItems } = useCartContext()
+  const { selectedAddress, deliveryType } = useAddressContext()
+  const deliveryMap = {
+    'home-delivery': '宅配到府',
+    FAMIC2C: '超商取貨-全家',
+    UNIMARTC2C: '超商取貨-7-11',
+    HILIFEC2C: '超商取貨-萊爾富',
+  }
+
+  const handleAddOrder = () => {
+    router.push('/confirm-order/success')
+  }
 
   return (
     <main className="h-full">
-      <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <Link href="/shopping-cart">
-          <ChevronLeft />
-        </Link>
-
-        <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
-          確認訂單
-        </h4>
-      </header>
+      <Title title="確認訂單" goBackUrl="/shopping-cart" />
       <div className="flex w-full flex-col items-center justify-center bg-default">
         <div className="w-full p-4 pb-0">
           <div className="flex items-center justify-between rounded-lg bg-white p-2">
             <span>取貨方式</span>
             <Link href="/confirm-bill/choose-delivery">
               <Button className="font-light" variant="ghost">
-                超商取貨 <ChevronRight />
+                {deliveryMap[deliveryType]} <ChevronRight />
               </Button>
             </Link>
           </div>
@@ -126,7 +133,28 @@ const ConfirmBillPage = () => {
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <CreditCardIcon />
-                  <Label htmlFor="r1">信用卡</Label>
+                  <Label htmlFor="r1">信用卡一次付清</Label>
+                </div>
+                <RadioGroupItem value="default" id="r1" />
+              </div>
+              <div className="flex items-center justify-between space-x-2 bg-white p-4">
+                <div className="flex items-center space-x-2">
+                  <CreditCardIcon />
+                  <Label htmlFor="r1">信用卡分期</Label>
+                </div>
+                <RadioGroupItem value="default" id="r1" />
+              </div>
+              <div className="flex items-center justify-between space-x-2 bg-white p-4">
+                <div className="flex items-center space-x-2">
+                  <CreditCardIcon />
+                  <Label htmlFor="r1">無卡分期</Label>
+                </div>
+                <RadioGroupItem value="default" id="r1" />
+              </div>
+              <div className="flex items-center justify-between space-x-2 bg-white p-4">
+                <div className="flex items-center space-x-2">
+                  <CircleDollarSignIcon />
+                  <Label htmlFor="r1">ATM轉帳</Label>
                 </div>
                 <RadioGroupItem value="default" id="r1" />
               </div>
@@ -153,9 +181,9 @@ const ConfirmBillPage = () => {
               <span>總計：</span>
               <span className="text-lg font-semibold text-red-400">${total}</span>
             </div>
-            <Link href="/">
-              <Button className="w-[4/12] rounded-3xl bg-primary">提交訂單</Button>
-            </Link>
+            <Button className="m-4 w-[90%] rounded-3xl bg-primary p-4" onClick={handleAddOrder}>
+              新增收件人資訊
+            </Button>
           </div>
         </div>
       </div>
