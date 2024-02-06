@@ -177,12 +177,12 @@ const ConfirmBillPage = () => {
         </div>
         <div className="mb-[18px] flex w-full justify-end bg-white px-6 py-6">
           <div className="flex items-center space-x-4">
-            <div className="felx">
+            <div className="felx w-[50%]">
               <span>總計：</span>
               <span className="text-lg font-semibold text-red-400">${total}</span>
             </div>
-            <Button className="m-4 w-[90%] rounded-3xl bg-primary p-4" onClick={handleAddOrder}>
-              新增收件人資訊
+            <Button className="m-4 w-[50%] rounded-3xl bg-primary p-4" onClick={handleAddOrder}>
+              確認訂單
             </Button>
           </div>
         </div>
