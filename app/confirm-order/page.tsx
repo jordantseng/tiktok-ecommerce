@@ -45,7 +45,7 @@ const ConfirmBillPage = () => {
         <div className="w-full p-4 pb-0">
           <div className="flex items-center justify-between rounded-lg bg-white p-2">
             <span>取貨方式</span>
-            <Link href="/confirm-bill/choose-delivery">
+            <Link href="/confirm-order/choose-delivery">
               <Button className="font-light" variant="ghost">
                 {deliveryMap[deliveryType]} <ChevronRight />
               </Button>
@@ -65,7 +65,7 @@ const ConfirmBillPage = () => {
                 </span>
                 <div className="flex justify-between">
                   <span className="p-2 font-light">台北市中正區每人里中正路123號5巷13-2一樓</span>
-                  <Link href="/confirm-bill/choose-receipt">
+                  <Link href="/confirm-order/choose-receipt">
                     <Button variant="ghost">
                       <ChevronRight />
                     </Button>

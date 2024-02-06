@@ -13,7 +13,7 @@ const ChooseReceiptPage = () => {
   const { handleSelectDeliveryType, deliveryType } = useAddressContext()
   return (
     <main className="min-h-screen">
-      <Title title="選擇收件方式" goBackUrl="/confirm-bill" />
+      <Title title="選擇收件方式" goBackUrl="/confirm-order" />
       <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <RadioGroup
           className="w-full bg-white"

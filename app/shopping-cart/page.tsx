@@ -120,7 +120,7 @@ const ShoppingCartPage = () => {
               style={{
                 pointerEvents: total === 0 ? 'none' : 'auto',
               }}
-              href="/confirm-bill"
+              href="/confirm-order"
             >
               <Button className="w-[4/12] rounded-3xl bg-primary" disabled={total === 0}>
                 結帳
