@@ -25,6 +25,7 @@ export const getMyCart = async (): Promise<CartRes> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
     body: JSON.stringify({
       page: 1,
@@ -43,6 +44,7 @@ export const addToCart = async (id: number): Promise<CartsRes> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
     body: JSON.stringify({
       productitem_id: id,
@@ -60,6 +62,7 @@ export const deleteFromCart = async (id: number): Promise<CartsRes> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
     body: JSON.stringify({
       del: id,
