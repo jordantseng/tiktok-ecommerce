@@ -19,7 +19,6 @@ type Props = CartItem & {
   prize: number
   specialPrize?: number
   unit: string
-  sales?: number
 }
 
 const MerchandiseCard = ({
