@@ -1,9 +1,8 @@
 'use client'
 
+import PrevButton from '@/components/PrevButton'
 import ReceiptForm from '@/components/ReceiptForm'
 import { useCity } from '@/hooks/useCity'
-import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
 
 const AddReceiptPage = () => {
@@ -12,9 +11,7 @@ const AddReceiptPage = () => {
   return (
     <main className="min-h-screen">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <Link href="/confirm-bill/choose-receipt">
-          <ChevronLeft />
-        </Link>
+        <PrevButton />
         <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
           新增收件人資訊
         </h4>

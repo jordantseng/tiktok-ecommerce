@@ -1,14 +1,14 @@
 import { MessageSquareMoreIcon, MenuIcon, LampFloorIcon } from 'lucide-react'
 
-import Searchbar from '@/components/Searchbar'
 import HeroCarousel from '@/app/HeroCarousel'
+import Searchbar from '@/components/Searchbar'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 
 export default function HomePage() {
   return (
-    <main className="mb-16">
+    <main className="mb-16 bg-default">
       <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
         <h4 className="mb-2 scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
         <div className="flex items-center gap-4">
@@ -16,9 +16,9 @@ export default function HomePage() {
           <MenuIcon />
         </div>
       </header>
-      <div className="bg-default p-4">
+      <div className="p-4">
         <div className="mb-2">
-          <Searchbar isDisabled showSearchButton />
+          <Searchbar enableDialog showSearchButton />
         </div>
         <div className="mb-2">
           <HeroCarousel />
@@ -44,6 +44,7 @@ export default function HomePage() {
               tags={['game', 'tv']}
               prize={18800}
               unit="台"
+              sales={10000}
             />
           ))}
         </div>

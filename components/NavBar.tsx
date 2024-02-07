@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { HomeIcon, ArrowDownWideNarrowIcon, ShoppingCartIcon, UserRoundIcon } from 'lucide-react'
 
 import IconCard from '@/components/IconCard'
-import { usePathname } from 'next/navigation'
 
 const NavBar = () => {
   const pathName = usePathname()
@@ -33,7 +33,7 @@ const NavBar = () => {
   ]
 
   return (
-    <nav className="h-22 fixed bottom-0 flex w-full max-w-[640px] justify-around bg-white">
+    <nav className="h-22 fixed bottom-0 flex w-full justify-around bg-white">
       {navItems.map((item, index) => {
         return (
           <Link key={index} href={item.href}>

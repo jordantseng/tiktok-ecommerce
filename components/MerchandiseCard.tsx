@@ -13,6 +13,12 @@ import { CartItem } from '@/types/common'
 
 type Props = CartItem & {
   className?: string
+  imgUrl?: string
+  title: string
+  tags?: string[]
+  prize: number
+  specialPrize?: number
+  unit: string
 }
 
 const MerchandiseCard = ({
@@ -24,6 +30,7 @@ const MerchandiseCard = ({
   prize,
   specialPrize,
   unit,
+  sales,
 }: Props) => {
   return (
     <Card className={className}>
@@ -62,7 +69,11 @@ const MerchandiseCard = ({
           </div>
           <span className="font-light">/{unit}</span>
         </div>
-        <CartButton />
+        {sales ? (
+          <span className="text-sm font-light text-gray-400">已售 {sales}</span>
+        ) : (
+          <CartButton />
+        )}
       </CardFooter>
     </Card>
   )
