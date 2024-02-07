@@ -1,6 +1,5 @@
-import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
+import PrevButton from '@/components/PrevButton'
 
 type Props = {
   title: string
@@ -13,9 +12,7 @@ const Title = ({ title, goBackUrl }: Props) => {
       {goBackUrl ? (
         <>
           <div className="flex w-1/4 justify-start">
-            <Link href={goBackUrl}>
-              <ChevronLeft />
-            </Link>
+            <PrevButton redirectUrl={goBackUrl} />
           </div>
           <h4 className="w-1/2 text-center text-xl font-normal tracking-tight">{title}</h4>
           <div className="w-1/4"></div> {/* Placeholder to balance the layout */}

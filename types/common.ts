@@ -7,7 +7,6 @@ export type CartItem = {
   amount?: number
   prize: number
   specialPrize?: number
-  sales?: number
 }
 
 export type ApiRes<Data> = {

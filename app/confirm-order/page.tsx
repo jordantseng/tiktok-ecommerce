@@ -3,6 +3,7 @@
 import CartItem from '@/components/CartItem'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
@@ -121,10 +122,9 @@ const ConfirmBillPage = () => {
         </div>
         <div className="w-full px-4">
           <div className="flex items-center justify-between rounded-lg bg-white p-2">
-            <span>優惠券</span>
-            <Button className="font-light" variant="ghost">
-              <span className="text-red-400">-$60</span> <ChevronRight />
-            </Button>
+            <span>優惠券：</span>
+            <Input className="w-[40%]" placeholder="請輸入優惠代碼" onChange={() => {}} />
+            <Button className="w-[30%]">確認兌換</Button>
           </div>
         </div>
         <div className="w-full p-4">
@@ -135,51 +135,55 @@ const ConfirmBillPage = () => {
                   <CreditCardIcon />
                   <Label htmlFor="r1">信用卡一次付清</Label>
                 </div>
-                <RadioGroupItem value="default" id="r1" />
+                <RadioGroupItem value="1" id="r1" />
               </div>
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <CreditCardIcon />
-                  <Label htmlFor="r1">信用卡分期</Label>
+                  <Label htmlFor="r2">信用卡分期</Label>
                 </div>
-                <RadioGroupItem value="default" id="r1" />
+                <RadioGroupItem value="2" id="r2" />
               </div>
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <CreditCardIcon />
-                  <Label htmlFor="r1">無卡分期</Label>
+                  <Label htmlFor="r3">無卡分期</Label>
                 </div>
-                <RadioGroupItem value="default" id="r1" />
+                <RadioGroupItem value="3" id="r3" />
               </div>
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <CircleDollarSignIcon />
-                  <Label htmlFor="r1">ATM轉帳</Label>
+                  <Label htmlFor="r4">ATM轉帳</Label>
                 </div>
-                <RadioGroupItem value="default" id="r1" />
+                <RadioGroupItem value="4" id="r4" />
               </div>
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <TruckIcon />
-                  <Label htmlFor="r2">貨到付款</Label>
+                  <Label htmlFor="r5">貨到付款</Label>
                 </div>
-                <RadioGroupItem value="comfortable" id="r2" />
+                <RadioGroupItem value="5" id="r5" />
               </div>
               <div className="flex items-center justify-between space-x-2 bg-white p-4">
                 <div className="flex items-center space-x-2">
                   <StoreIcon />
-                  <Label htmlFor="r3">超商取貨付款</Label>
+                  <Label htmlFor="r6">超商取貨付款</Label>
                 </div>
-                <RadioGroupItem value="compact" id="r3" />
+                <RadioGroupItem value="6" id="r6" />
               </div>
             </RadioGroup>
           </div>
         </div>
         <div className="mb-[18px] flex w-full justify-end bg-white px-6 py-6">
           <div className="flex items-center space-x-4">
-            <div className="felx w-[50%]">
-              <span>總計：</span>
-              <span className="text-lg font-semibold text-red-400">${total}</span>
+            <span className="break-keep">總計：</span>
+            <div className="flex w-full flex-col">
+              <span className="flex justify-center text-lg font-semibold text-red-400">
+                ${total}
+              </span>
+              <span className="m-2 flex justify-center border-b-2 text-red-400">-60</span>
+              <span className="flex justify-center text-red-400">${total - 60}</span>
             </div>
             <Button className="m-4 w-[50%] rounded-3xl bg-primary p-4" onClick={handleAddOrder}>
               確認訂單

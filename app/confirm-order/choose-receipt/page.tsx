@@ -1,14 +1,11 @@
 'use client'
 
-import PrevButton from '@/components/PrevButton'
-import ReceiptInfo from '@/components/ReceiptInfo'
+import ReceiptInfo from '@/app/confirm-order/choose-receipt/ReceiptInfo'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { useAddressContext } from '@/context/AddressContext'
 import { getAddress, getLogistic } from '@/services/address'
 import { AddressData } from '@/types/common'
-import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 

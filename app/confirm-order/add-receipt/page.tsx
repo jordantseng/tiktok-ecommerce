@@ -1,7 +1,6 @@
 'use client'
 
-import PrevButton from '@/components/PrevButton'
-import ReceiptForm from '@/components/ReceiptForm'
+import ReceiptForm from '@/app/confirm-order/add-receipt/ReceiptForm'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
 import { useAuth } from '@/context/AuthContext'
 import { useCity } from '@/hooks/useCity'
