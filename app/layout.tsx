@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
+import { InitialProvider } from '@/context/InitailContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,21 +25,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <CartProvider>
-          <AddressProvider>
-            <body
-              className={cn(
-                'mx-auto min-h-screen font-sans antialiased',
-                inter.variable,
-                inter.className,
-              )}
-            >
-              <div className="min-h-screen w-full">{children}</div>
-            </body>
-          </AddressProvider>
-        </CartProvider>
-      </AuthProvider>
+      <InitialProvider>
+        <AuthProvider>
+          <CartProvider>
+            <AddressProvider>
+              <body
+                className={cn(
+                  'mx-auto min-h-screen font-sans antialiased',
+                  inter.variable,
+                  inter.className,
+                )}
+              >
+                <div className="min-h-screen w-full">{children}</div>
+              </body>
+            </AddressProvider>
+          </CartProvider>
+        </AuthProvider>
+      </InitialProvider>
     </html>
   )
 }
