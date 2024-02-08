@@ -13,12 +13,7 @@ import { CartItem } from '@/types/common'
 
 type Props = CartItem & {
   className?: string
-  imgUrl?: string
-  title: string
-  tags?: string[]
-  prize: number
-  specialPrize?: number
-  unit: string
+  sales?: number
 }
 
 const MerchandiseCard = ({

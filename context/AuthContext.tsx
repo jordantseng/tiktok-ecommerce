@@ -58,9 +58,19 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>({
-    name: '曾喬丹',
-    email: 'jordantseng1024@gmail.com',
+    name: '林蓋瑞',
+    email: 'gary@gmail.com',
+    password: 'a123456789',
+    api_token: 'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
+    id: 10000,
   })
+  //temp use testing token
+  typeof window !== 'undefined' &&
+    localStorage.setItem(
+      'token',
+      'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
+    )
+
   const router = useRouter()
   const { isLogin, token, resetToken } = useLogin()
 

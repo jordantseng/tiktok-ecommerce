@@ -3,6 +3,7 @@
 import CartItem from '@/components/CartItem'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
+import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useCartContext } from '@/context/CartContext'
@@ -28,11 +29,7 @@ const ShoppingCartPage = () => {
 
   return (
     <main className="mb-16 h-full min-h-screen">
-      <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <h4 className="mb-2 ml-auto mr-auto flex scroll-m-20 text-xl font-normal tracking-tight">
-          購物車
-        </h4>
-      </header>
+      <Title title="購物車" />
       <div className="flex w-full flex-col items-center bg-default">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
@@ -123,7 +120,7 @@ const ShoppingCartPage = () => {
               style={{
                 pointerEvents: total === 0 ? 'none' : 'auto',
               }}
-              href="/confirm-bill"
+              href="/confirm-order"
             >
               <Button className="w-[4/12] rounded-3xl bg-primary" disabled={total === 0}>
                 結帳
