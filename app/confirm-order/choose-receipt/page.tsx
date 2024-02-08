@@ -34,6 +34,7 @@ const ChooseReceiptPage = () => {
           )
           .map((opt) => (
             <ReceiptInfo
+              key={opt.id}
               receiver={opt.name}
               phone={opt.tel}
               address={

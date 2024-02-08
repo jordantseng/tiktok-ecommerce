@@ -42,7 +42,7 @@ const AddReceiptPage = () => {
         draft['CVSAddress'] = CVSAddress
       })
     }
-  }, [])
+  }, [CVSStoreID, CVSStoreName, CVSAddress, LogisticsSubType])
 
   const handleSubmit = (val: AddressData) => {
     console.log(val)
