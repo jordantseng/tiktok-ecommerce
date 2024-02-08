@@ -65,7 +65,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     id: 10000,
   })
   //temp use testing token
-  localStorage.setItem('token', 'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2')
+  if (localStorage) {
+    localStorage.setItem(
+      'token',
+      'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
+    )
+  }
 
   const router = useRouter()
   const { isLogin, token, resetToken } = useLogin()

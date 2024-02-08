@@ -39,7 +39,7 @@ export const getMyCart = async (): Promise<CartRes> => {
   return data
 }
 
-export const addToCart = async (id: number): Promise<CartsRes> => {
+export const addToCart = async (id: number, count: number): Promise<CartsRes> => {
   const res = await fetch(`${Config.api}/api/membercenter/mycart/store`, {
     method: 'POST',
     headers: {
@@ -48,6 +48,7 @@ export const addToCart = async (id: number): Promise<CartsRes> => {
     },
     body: JSON.stringify({
       productitem_id: id,
+      qty: count || 1,
     }),
     next: { revalidate: 60 * 5 },
   })
