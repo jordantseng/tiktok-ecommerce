@@ -13,7 +13,7 @@ export const getAddress = async (): Promise<AddressRes> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
     body: JSON.stringify({
       page: 1,
@@ -32,7 +32,7 @@ export const addAddress = async (value: AddressData): Promise<void> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
     body: JSON.stringify({
       ...value,
@@ -50,7 +50,7 @@ export const deleteAddress = async (id: number): Promise<void> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
     body: JSON.stringify({
       del: id,
@@ -70,7 +70,7 @@ export const getLogistic = (type: string) => {
 
   const fields = {
     logisticssubtype: type,
-    api_token: localStorage.getItem('token') || '',
+    api_token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
     gobackurl: 'http://localhost:3000/confirm-order/add-receipt',
   }
 
