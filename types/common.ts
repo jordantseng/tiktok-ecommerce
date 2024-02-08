@@ -29,3 +29,19 @@ export type AddressData = {
   CVSStoreID?: string
   CVSAddress?: string
 }
+
+export type InitialData = {
+  paykind: string
+  paystatus: string
+  id: number
+  name: string
+  domain: string
+  title: string
+  keyword: string
+  description: string
+  email: string
+  logisticprice: number
+  jsonbody: string
+  created_at: string
+  updated_at: string
+}

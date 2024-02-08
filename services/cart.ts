@@ -1,8 +1,6 @@
 import Config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
-type CartRes = ApiRes<CartData>
-
 type CartsRes = ApiRes<{
   current_page: number
   data: CartData[]
@@ -20,7 +18,7 @@ type CartData = {
   productitem_id: number
 }
 
-export const getMyCart = async (): Promise<CartRes> => {
+export const getMyCart = async (): Promise<CartsRes> => {
   const res = await fetch(`${Config.api}/api/membercenter/mycart`, {
     method: 'POST',
     headers: {

@@ -1,6 +1,5 @@
 import Config from '@/lib/configs'
 import { AddressData, ApiRes } from '@/types/common'
-import { object } from 'zod'
 
 type AddressRes = ApiRes<{
   current_page: number
@@ -71,7 +70,7 @@ export const getLogistic = (type: string) => {
   const fields = {
     logisticssubtype: type,
     api_token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
-    gobackurl: 'http://localhost:3000/confirm-order/add-receipt',
+    gobackurl: `${location.host}/confirm-order/add-receipt`,
   }
 
   // Append input elements to the form
