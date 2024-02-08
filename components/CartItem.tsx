@@ -89,7 +89,7 @@ const CartItem = ({
             </div>
             {!editable && (
               <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
-                ${(amount || 1) * prize}
+                ${(amount || 1) * (specialPrize || prize)}
               </div>
             )}
           </CardHeader>

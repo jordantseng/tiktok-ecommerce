@@ -8,24 +8,34 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useCartContext } from '@/context/CartContext'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
 const ShoppingCartPage = () => {
-  const [count, setCount] = useImmer([1, 1])
   const [total, setTotal] = useImmer(0)
   const { items, updateSelected, getSelectedCartItems, updateItemAmount } = useCartContext()
 
   const handleCheckAll = (res: boolean) => {
     let sum = 0
-    items.forEach((opt, index) => {
+    items.forEach((opt) => {
       if (res) {
-        sum += count[index] * (opt.specialPrize || opt.prize)
+        sum += (opt.amount || 0) * (opt.specialPrize || opt.prize)
       }
       updateSelected(opt.id, res)
     })
     setTotal(sum)
   }
+
+  useEffect(() => {
+    const arr = getSelectedCartItems()
+    const sum = arr.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        (currentValue.amount || 0) * (currentValue.specialPrize || currentValue.prize),
+      0,
+    )
+    setTotal(sum)
+  }, [])
 
   return (
     <main className="mb-16 h-full min-h-screen">
@@ -38,7 +48,7 @@ const ShoppingCartPage = () => {
                 isChecked={opt.isSelect}
                 key={opt.id}
                 id={opt.id}
-                amount={count[index]}
+                amount={opt.amount}
                 editable={true}
                 imgUrl={opt.imgUrl}
                 title={opt.title}
@@ -47,16 +57,13 @@ const ShoppingCartPage = () => {
                 specialPrize={opt.specialPrize}
                 onSelect={(res) => {
                   const prizeAmount = opt.specialPrize || opt.prize
-                  const updateAmount = count[index] * prizeAmount
+                  const updateAmount = (opt.amount || 0) * prizeAmount
 
                   setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
                   updateSelected(opt.id, res)
                 }}
                 onChange={(val) => {
-                  const isMinus = val < count[index]
-                  setCount((draft) => {
-                    draft[index] = val
-                  })
+                  const isMinus = val < (opt.amount || 0)
                   const nowItems = getSelectedCartItems()
                   updateItemAmount(opt.id, val)
                   nowItems.forEach((el) => {
