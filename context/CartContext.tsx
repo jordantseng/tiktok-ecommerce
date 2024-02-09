@@ -1,11 +1,12 @@
 'use client'
+import { addToCart, deleteFromCart, getMyCart } from '@/services/cart'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 type CartContextType = {
   items: Item[]
-  handleAddToCart: (val: Item) => void
+  handleAddToCart: (val: CartItem) => void
   handleRemoveFromCart: (id: number) => void
   updateItemAmount: (id: number, amount: number) => void
   updateSelected: (id: number, isSelect: boolean) => void
@@ -30,7 +31,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       imgUrl:
         'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
       title: 'PS5 新春大禮包',
-      prize: 18888,
+      price: 18888,
       tags: ['快速出貨', '24hr'],
       isSelect: false,
     },
@@ -40,17 +41,38 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       imgUrl:
         'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
       title: 'PS5 新春大禮包 龍年大好運好彩頭',
-      prize: 18888,
-      specialPrize: 13000,
+      price: 18888,
+      specialPrice: 13000,
       tags: ['快速出貨', '24hr'],
       isSelect: false,
     },
   ])
 
-  const handleAddToCart = (val: Item) => setItems((draft) => draft.push(val))
+  useEffect(() => {
+    getMyCart().then((res) => {
+      const newItems = (res?.data?.data || []).map((opt) => ({
+        id: opt.id,
+        amount: opt.number,
+        imgUrl: opt.imgs,
+        title: opt.title,
+        price: opt.price,
+        specialPrice: opt.marketprice,
+        tags: opt.tags.split(','),
+        isSelect: false,
+      }))
+      setItems((draft) => [...draft, ...newItems])
+    })
+  }, [])
 
-  const handleRemoveFromCart = (id: number) =>
+  const handleAddToCart = (val: CartItem) => {
+    addToCart(val.id, 1)
+    setItems((draft) => draft.push({ ...val, isSelect: false }))
+  }
+
+  const handleRemoveFromCart = (id: number) => {
+    deleteFromCart(id)
     setItems((draft) => draft.filter((opt) => opt.id !== id))
+  }
 
   const updateSelected = (id: number, isSelect: boolean) =>
     setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt)))
