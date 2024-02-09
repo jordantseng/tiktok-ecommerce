@@ -16,6 +16,11 @@ type CartData = {
   info: string
   productitem_title: string
   productitem_id: number
+  number: number
+  price: number
+  marketprice: number
+  domain_id: number
+  tags: string
 }
 
 export const getMyCart = async (): Promise<CartsRes> => {
