@@ -22,8 +22,8 @@ const MerchandiseCard = ({
   imgUrl,
   title,
   tags = [],
-  prize,
-  specialPrize,
+  price,
+  specialPrice,
   unit,
   sales,
 }: Props) => {
@@ -54,12 +54,12 @@ const MerchandiseCard = ({
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span
-              className={specialPrize ? 'text-sm font-light line-through' : 'text-md font-bold'}
+              className={specialPrice ? 'text-sm font-light line-through' : 'text-md font-bold'}
             >
-              ${prize}
+              ${price}
             </span>
-            {specialPrize && (
-              <span className="text-md font-bold text-red-600">${specialPrize}</span>
+            {specialPrice && (
+              <span className="text-md font-bold text-red-600">${specialPrice}</span>
             )}
           </div>
           <span className="font-light">/{unit}</span>
@@ -67,7 +67,17 @@ const MerchandiseCard = ({
         {sales ? (
           <span className="text-sm font-light text-gray-400">已售 {sales}</span>
         ) : (
-          <CartButton />
+          <CartButton
+            item={{
+              id,
+              imgUrl,
+              title,
+              tags,
+              unit,
+              price,
+              specialPrice,
+            }}
+          />
         )}
       </CardFooter>
     </Card>

@@ -26,8 +26,8 @@ const CartItem = ({
   tags = [],
   unit,
   amount,
-  prize,
-  specialPrize,
+  price,
+  specialPrice,
   onSelect,
   onChange,
 }: Props) => {
@@ -89,7 +89,7 @@ const CartItem = ({
             </div>
             {!editable && (
               <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
-                ${(amount || 1) * (specialPrize || prize)}
+                ${(amount || 1) * (specialPrice || price)}
               </div>
             )}
           </CardHeader>
@@ -99,24 +99,24 @@ const CartItem = ({
                 <div className="mr-4 flex flex-col">
                   <span
                     className={
-                      specialPrize
+                      specialPrice
                         ? 'text-sm font-light line-through'
                         : 'max-[320px]:text-md text-lg font-bold'
                     }
                   >
-                    ${prize}
+                    ${price}
                   </span>
-                  {specialPrize && (
+                  {specialPrice && (
                     <span className="max-[320px]:text-md text-lg font-bold text-red-600">
-                      ${specialPrize}
+                      ${specialPrice}
                     </span>
                   )}
                 </div>
                 <Counter
-                  className={cn({ 'items-end': specialPrize !== undefined })}
+                  className={cn({ 'items-end': specialPrice !== undefined })}
                   buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
-                    'items-end': specialPrize !== undefined,
-                    'items-start': specialPrize === undefined,
+                    'items-end': specialPrice !== undefined,
+                    'items-start': specialPrice === undefined,
                   })}
                   value={amount || 1}
                   onChange={(val) => onChange && onChange(val)}

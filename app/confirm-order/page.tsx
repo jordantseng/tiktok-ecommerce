@@ -33,7 +33,7 @@ const ConfirmBillPage = () => {
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
-      accumulator + (currentValue.amount || 0) * (currentValue.specialPrize || currentValue.prize),
+      accumulator + (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
     0,
   )
 
@@ -103,9 +103,9 @@ const ConfirmBillPage = () => {
                 editable={false}
                 imgUrl={opt.imgUrl}
                 title={opt.title}
-                prize={opt.prize}
+                price={opt.price}
                 tags={opt.tags}
-                specialPrize={opt.specialPrize}
+                specialPrice={opt.specialPrice}
               />
             ))}
           </div>
@@ -123,6 +123,7 @@ const ConfirmBillPage = () => {
           </div>
         </div>
         <div className="mb-[18px] flex w-full justify-end bg-white px-6 py-6">
+          <span className=" mr-8 flex items-center">共計：{items.length}件</span>
           <div className="flex items-center space-x-4">
             <div className="flex w-full flex-col">
               <div className="flex items-center justify-end">

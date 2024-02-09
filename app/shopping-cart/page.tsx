@@ -19,7 +19,7 @@ const ShoppingCartPage = () => {
     let sum = 0
     items.forEach((opt) => {
       if (res) {
-        sum += (opt.amount || 0) * (opt.specialPrize || opt.prize)
+        sum += (opt.amount || 0) * (opt.specialPrice || opt.price)
       }
       updateSelected(opt.id, res)
     })
@@ -31,7 +31,7 @@ const ShoppingCartPage = () => {
     const sum = arr.reduce(
       (accumulator, currentValue) =>
         accumulator +
-        (currentValue.amount || 0) * (currentValue.specialPrize || currentValue.prize),
+        (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
       0,
     )
     setTotal(sum)
@@ -52,11 +52,11 @@ const ShoppingCartPage = () => {
                 editable={true}
                 imgUrl={opt.imgUrl}
                 title={opt.title}
-                prize={opt.prize}
+                price={opt.price}
                 tags={opt.tags}
-                specialPrize={opt.specialPrize}
+                specialPrice={opt.specialPrice}
                 onSelect={(res) => {
-                  const prizeAmount = opt.specialPrize || opt.prize
+                  const prizeAmount = opt.specialPrice || opt.price
                   const updateAmount = (opt.amount || 0) * prizeAmount
 
                   setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
@@ -70,8 +70,8 @@ const ShoppingCartPage = () => {
                     if (opt.id === el.id) {
                       setTotal(
                         isMinus
-                          ? total - (el.specialPrize || el.prize)
-                          : total + (el.specialPrize || el.prize),
+                          ? total - (el.specialPrice || el.price)
+                          : total + (el.specialPrice || el.price),
                       )
                     }
                   })
@@ -91,8 +91,8 @@ const ShoppingCartPage = () => {
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5"
             tags={['game', 'tv']}
-            prize={18800}
-            specialPrize={13000}
+            price={18800}
+            specialPrice={13000}
             unit="台"
           />
           <MerchandiseCard
@@ -101,7 +101,7 @@ const ShoppingCartPage = () => {
             imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
             tags={['game', 'tv']}
-            prize={18800}
+            price={18800}
             unit="台"
           />
         </div>

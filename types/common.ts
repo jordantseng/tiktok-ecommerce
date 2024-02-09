@@ -5,8 +5,8 @@ export type CartItem = {
   tags?: string[]
   unit?: string
   amount?: number
-  prize: number
-  specialPrize?: number
+  price: number
+  specialPrice?: number
 }
 
 export type ApiRes<Data> = {
@@ -31,7 +31,7 @@ export type AddressData = {
 }
 
 export type InitialData = {
-  paykind: string
+  paykind: { [key: string]: string }
   paystatus: string
   id: number
   name: string
