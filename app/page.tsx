@@ -42,7 +42,7 @@ export default function HomePage() {
               imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
               title="PS5"
               tags={['game', 'tv']}
-              prize={18800}
+              price={18800}
               unit="台"
               sales={10000}
             />
