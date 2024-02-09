@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "commit": "cz",
-    "prepare": "husky install",
+    "prepare": "husky install && chmod +x .husky/pre-push",
     "ts-lint": "tsc --noEmit --incremental"
   },
   "dependencies": {
