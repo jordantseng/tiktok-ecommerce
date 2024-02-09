@@ -2,7 +2,7 @@
 
 import { FormEvent, useRef } from 'react'
 import { SearchIcon } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
@@ -16,6 +16,7 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
   const searchParams = useSearchParams()
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchTerm = searchParams.get('q') || ''
+  const pathname = usePathname()
 
   const handleFormClick = () => {
     router.push('/search')
@@ -28,6 +29,14 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
     const searchValue = searchInputRef.current?.value
 
     searchValue ? params.set('q', searchValue) : params.delete('q')
+
+    if (pathname === '/search' && searchValue) {
+      const stringifiedHistoryTerms = localStorage.getItem('historyTerms') ?? '[]'
+      const historyTerms = JSON.parse(stringifiedHistoryTerms)
+
+      const updatedHistoryTerms = Array.from(new Set([...historyTerms, searchValue]))
+      localStorage.setItem('historyTerms', JSON.stringify(updatedHistoryTerms))
+    }
 
     router.push(`/search/?${params.toString()}`)
   }
