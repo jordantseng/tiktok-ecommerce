@@ -20,7 +20,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
           'bg-white': !q,
         })}
       >
-        <header className="flex items-center gap-3 px-4 pb-4 pt-6">
+        <header className="sticky top-0 flex items-center gap-3 bg-default px-4 pb-4 pt-6">
           <PrevButton />
           <Searchbar />
         </header>
