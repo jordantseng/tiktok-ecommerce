@@ -30,15 +30,23 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
 
     searchValue ? params.set('q', searchValue) : params.delete('q')
 
-    if (pathname === '/search' && searchValue) {
+    if (pathname === '/search') {
       const stringifiedHistoryTerms = localStorage.getItem('historyTerms') ?? '[]'
       const historyTerms = JSON.parse(stringifiedHistoryTerms)
 
-      const updatedHistoryTerms = Array.from(new Set([...historyTerms, searchValue]))
+      if (searchValue) {
+        historyTerms.push(searchValue)
+      }
+
+      const updatedHistoryTerms = Array.from(new Set([...historyTerms]))
       localStorage.setItem('historyTerms', JSON.stringify(updatedHistoryTerms))
+
+      router.push(`/search/?${params.toString()}`)
     }
 
-    router.push(`/search/?${params.toString()}`)
+    if (pathname === '/products') {
+      router.push(`/products/?${params.toString()}`)
+    }
   }
 
   return (
