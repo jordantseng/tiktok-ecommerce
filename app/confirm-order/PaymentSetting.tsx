@@ -9,10 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useInitialContext } from '@/context/InitailContext'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const PaymentSetting = () => {
+  const { initialData } = useInitialContext()
   const handleChange = (val: string) => console.log(val)
   return (
     // 信用卡付款(綠界)[ecpay-credit],
@@ -45,19 +47,15 @@ const PaymentSetting = () => {
               <span>信用卡付款</span>
             </div>
           </SelectLabel>
-          <SelectItem className="ml-4" value="ecpay-credit">
-            信用卡一次付清
-          </SelectItem>
-          <SelectItem className="ml-4" value="ecpay-credit3">
-            信用卡分3期
-          </SelectItem>
-          <SelectItem className="ml-4" value="ecpay-credit6">
-            信用卡分6期
-          </SelectItem>
-          <SelectItem className="ml-4" value="ecpay-credit12">
-            信用卡分12期
-          </SelectItem>
+          {Object.keys(initialData?.paykind || {}).map((opt: string) => (
+            <SelectItem className="ml-4" value={opt}>
+              {initialData?.paykind[opt] === '信用卡付款'
+                ? '信用卡一次付清'
+                : initialData?.paykind[opt]}
+            </SelectItem>
+          ))}
         </SelectGroup>
+        {/* TODO:無卡分期 */}
         {/* <SelectGroup>
           <SelectLabel>
             <div className="flex items-center space-x-2">
@@ -76,12 +74,17 @@ const PaymentSetting = () => {
           </SelectItem>
         </SelectGroup> */}
         <SelectGroup>
-          <SelectItem value="ecpay-atm">
-            <div className="flex items-center space-x-2">
-              <CircleDollarSignIcon />
-              <span>ATM轉帳</span>
-            </div>
-          </SelectItem>
+          {Object.keys(initialData?.paykind || {}).map(
+            (opt: string) =>
+              opt.indexOf('atm') > 0 && (
+                <SelectItem value="ecpay-atm">
+                  <div className="flex items-center space-x-2">
+                    <CircleDollarSignIcon />
+                    <span>ATM轉帳</span>
+                  </div>
+                </SelectItem>
+              ),
+          )}
         </SelectGroup>
         <SelectGroup>
           <SelectItem value="pay-when-get">
