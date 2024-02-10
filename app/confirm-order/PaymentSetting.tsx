@@ -11,11 +11,15 @@ import {
 } from '@/components/ui/select'
 import { useInitialContext } from '@/context/InitailContext'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-const PaymentSetting = () => {
+type Props = {
+  onChange: (val: string) => void
+}
+
+const PaymentSetting = ({ onChange }: Props) => {
   const { initialData } = useInitialContext()
-  const handleChange = (val: string) => console.log(val)
+  const handleChange = (val: string) => onChange(val)
   return (
     // 信用卡付款(綠界)[ecpay-credit],
     // 信用卡分3期(綠界)[ecpay-credit3],

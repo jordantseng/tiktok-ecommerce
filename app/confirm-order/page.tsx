@@ -13,12 +13,14 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import PaymentSetting from './PaymentSetting'
 import { useInitialContext } from '@/context/InitailContext'
+import { useImmer } from 'use-immer'
 
 const ConfirmBillPage = () => {
   const router = useRouter()
   const { initialData } = useInitialContext()
   const { getSelectedCartItems } = useCartContext()
   const { selectedAddress, deliveryType } = useAddressContext()
+  const [payStatus, setPayStatus] = useImmer<string | null>(null)
   const deliveryMap = {
     'home-delivery': '宅配到府',
     FAMIC2C: '超商取貨-全家',
@@ -40,7 +42,7 @@ const ConfirmBillPage = () => {
   return (
     <main className="h-full">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
-      <div className="flex w-full flex-col items-center justify-center bg-default">
+      <div className="flex h-screen w-full flex-col items-center bg-default">
         <div className="w-full p-4 pb-0">
           <div className="flex items-center justify-between rounded-lg bg-white p-2">
             <span>取貨方式</span>
@@ -119,7 +121,7 @@ const ConfirmBillPage = () => {
         </div>
         <div className="w-full p-4">
           <div className="rounded-lg bg-white p-2">
-            <PaymentSetting />
+            <PaymentSetting onChange={(val) => setPayStatus(val)} />
           </div>
         </div>
         <div className="mb-[18px] flex w-full justify-end bg-white px-6 py-6">
