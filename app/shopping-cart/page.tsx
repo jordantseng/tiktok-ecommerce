@@ -6,7 +6,7 @@ import NavBar from '@/components/NavBar'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { useCartContext } from '@/context/CartContext'
+import { Item, useCartContext } from '@/context/CartContext'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
@@ -37,6 +37,27 @@ const ShoppingCartPage = () => {
     setTotal(sum)
   }, [getSelectedCartItems, setTotal])
 
+  const handlePriceChange = (item: Item, val: number) => {
+    const isMinus = val < (item.amount || 0)
+    const nowItems = getSelectedCartItems()
+    updateItemAmount(item.id, val)
+    nowItems.forEach((el) => {
+      if (item.id === el.id) {
+        setTotal(
+          isMinus ? total - (el.specialPrice || el.price) : total + (el.specialPrice || el.price),
+        )
+      }
+    })
+  }
+
+  const handleSelect = (item: Item, res: boolean) => {
+    const prizeAmount = item.specialPrice || item.price
+    const updateAmount = (item.amount || 0) * prizeAmount
+
+    setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
+    updateSelected(item.id, res)
+  }
+
   return (
     <main className="mb-16 h-full min-h-screen">
       <Title title="購物車" />
@@ -55,27 +76,8 @@ const ShoppingCartPage = () => {
                 price={opt.price}
                 tags={opt.tags}
                 specialPrice={opt.specialPrice}
-                onSelect={(res) => {
-                  const prizeAmount = opt.specialPrice || opt.price
-                  const updateAmount = (opt.amount || 0) * prizeAmount
-
-                  setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
-                  updateSelected(opt.id, res)
-                }}
-                onChange={(val) => {
-                  const isMinus = val < (opt.amount || 0)
-                  const nowItems = getSelectedCartItems()
-                  updateItemAmount(opt.id, val)
-                  nowItems.forEach((el) => {
-                    if (opt.id === el.id) {
-                      setTotal(
-                        isMinus
-                          ? total - (el.specialPrice || el.price)
-                          : total + (el.specialPrice || el.price),
-                      )
-                    }
-                  })
-                }}
+                onSelect={(res) => handleSelect(opt, res)}
+                onChange={(val) => handlePriceChange(opt, val)}
               />
             ))}
           </div>
