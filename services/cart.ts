@@ -16,7 +16,7 @@ type CartData = {
   info: string
   productitem_title: string
   productitem_id: number
-  number: number
+  qty: number
   price: number
   marketprice: number
   domain_id: number
@@ -49,10 +49,12 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify({
-      productitem_id: id,
-      qty: count || 1,
-    }),
+    body: JSON.stringify([
+      {
+        productitem_id: id,
+        qty: count || 1,
+      },
+    ]),
     next: { revalidate: 60 * 5 },
   })
 

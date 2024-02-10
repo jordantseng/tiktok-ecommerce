@@ -70,7 +70,7 @@ export const getLogistic = (type: string) => {
   const fields = {
     logisticssubtype: type,
     api_token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
-    gobackurl: `${location.host}/confirm-order/add-receipt`,
+    gobackurl: `http://${location.host}/confirm-order/add-receipt`,
   }
 
   // Append input elements to the form

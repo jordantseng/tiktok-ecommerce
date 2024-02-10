@@ -52,7 +52,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     getMyCart().then((res) => {
       const newItems = (res?.data?.data || []).map((opt) => ({
         id: opt.id,
-        amount: opt.number,
+        amount: opt.qty,
         imgUrl: opt.imgs,
         title: opt.title,
         price: opt.price,

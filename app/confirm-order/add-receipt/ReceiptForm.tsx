@@ -29,7 +29,7 @@ const formSchema = z.object({
   tel: z.string().min(1, { message: '電話為必填' }),
   city1: z.string(),
   city2: z.string(),
-  address: z.string().min(1, { message: '地址為必填' }),
+  address: z.string(),
   CVSStoreName: z.string(),
   CVSAddress: z.string(),
 })
