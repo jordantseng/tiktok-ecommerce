@@ -103,7 +103,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     discount: order.discount || '',
     discount_title: order.discount_title || '',
     discount_code: order.discount_code || '',
-    gobackurl: `${location.host}/confirm-order/add-receipt`,
+    gobackurl: `http://${location.host}/confirm-order/add-receipt`,
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',
