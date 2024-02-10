@@ -6,21 +6,22 @@ import { Button } from '@/components/ui/button'
 import { useAddressContext } from '@/context/AddressContext'
 import { getAddress, getLogistic } from '@/services/address'
 import { AddressData } from '@/types/common'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const ChooseReceiptPage = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const { deliveryType, selectedAddress, handleSelectAddress } = useAddressContext()
   const [addresses, setAddresses] = useState<AddressData[]>([])
 
   useEffect(() => {
-    if (location.pathname === '/confirm-order/choose-receipt') {
+    if (pathname === '/confirm-order/choose-receipt') {
       getAddress().then(({ data }) => {
         setAddresses(data?.data || [])
       })
     }
-  }, [location.pathname])
+  }, [pathname])
 
   return (
     <main className="min-h-screen">
