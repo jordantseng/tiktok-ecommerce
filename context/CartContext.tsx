@@ -13,7 +13,7 @@ type CartContextType = {
   getSelectedCartItems: () => Item[]
 }
 
-type Item = CartItem & {
+export type Item = CartItem & {
   isSelect: boolean
 }
 
