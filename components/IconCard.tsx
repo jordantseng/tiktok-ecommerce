@@ -11,7 +11,7 @@ const IconCard = ({ title, Icon, isActive = false }: IconCardProps) => {
     <div className="flex flex-col items-center justify-between">
       <div className={`${isActive ? 'text-primary' : ''}`}>{Icon}</div>
       <h4
-        className={`${cn('text-md mb-2 scroll-m-20 font-normal tracking-wider', {
+        className={`${cn('md:text-md mb-2 scroll-m-20 text-sm font-normal md:tracking-wider', {
           'text-primary': isActive,
         })}`}
       >
