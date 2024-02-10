@@ -106,7 +106,7 @@ const MemberPage = () => {
 
   return (
     <main className="flex h-full min-h-screen flex-col">
-      <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
+      <section className="from-primary-alt relative bg-gradient-to-r to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
@@ -181,8 +181,8 @@ const MemberPage = () => {
                 imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
                 title="PS5"
                 tags={['game', 'tv']}
-                prize={18800}
-                specialPrize={13000}
+                price={18800}
+                specialPrice={13000}
                 unit="台"
               />
               <MerchandiseCard
@@ -191,8 +191,8 @@ const MemberPage = () => {
                 imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
                 title="PS5"
                 tags={['game', 'tv']}
-                prize={18800}
-                specialPrize={13000}
+                price={18800}
+                specialPrice={13000}
                 unit="台"
               />
             </div>
