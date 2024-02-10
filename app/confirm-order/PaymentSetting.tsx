@@ -52,7 +52,7 @@ const PaymentSetting = ({ onChange }: Props) => {
             </div>
           </SelectLabel>
           {Object.keys(initialData?.paykind || {}).map((opt: string) => (
-            <SelectItem className="ml-4" value={opt}>
+            <SelectItem className="ml-4" key={opt} value={opt}>
               {initialData?.paykind[opt] === '信用卡付款'
                 ? '信用卡一次付清'
                 : initialData?.paykind[opt]}
@@ -81,7 +81,7 @@ const PaymentSetting = ({ onChange }: Props) => {
           {Object.keys(initialData?.paykind || {}).map(
             (opt: string) =>
               opt.indexOf('atm') > 0 && (
-                <SelectItem value="ecpay-atm">
+                <SelectItem key={opt} value="ecpay-atm">
                   <div className="flex items-center space-x-2">
                     <CircleDollarSignIcon />
                     <span>ATM轉帳</span>

@@ -35,7 +35,7 @@ const ShoppingCartPage = () => {
       0,
     )
     setTotal(sum)
-  }, [])
+  }, [getSelectedCartItems, setTotal])
 
   return (
     <main className="mb-16 h-full min-h-screen">
