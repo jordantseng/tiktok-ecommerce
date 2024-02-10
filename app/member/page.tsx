@@ -51,6 +51,7 @@ const MemberPage = () => {
       title: '待付款',
       href: '/',
       Icon: <Wallet className="h-10 w-10 p-2" />,
+      count: 10,
     },
     {
       title: '待發貨',
@@ -139,8 +140,15 @@ const MemberPage = () => {
           </div>
 
           <div className="grid flex-1 grid-cols-5">
-            {orderNavItems.map(({ title, Icon, href }) => (
-              <IconCard key={title} title={title} Icon={Icon} />
+            {orderNavItems.map(({ title, Icon, href, count }) => (
+              <div className="relative" key={title}>
+                <IconCard title={title} Icon={Icon} />
+                {count && count > 0 && (
+                  <div className="absolute -top-1 end-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white">
+                    20
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
