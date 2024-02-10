@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
+import NavBar from '@/components/NavBar'
 
 function AvatarDemo() {
   return (
@@ -51,6 +52,7 @@ const MemberPage = () => {
       title: '待付款',
       href: '/',
       Icon: <Wallet className="h-10 w-10 p-2" />,
+      count: 10,
     },
     {
       title: '待發貨',
@@ -139,8 +141,17 @@ const MemberPage = () => {
           </div>
 
           <div className="grid flex-1 grid-cols-5">
-            {orderNavItems.map(({ title, Icon, href }) => (
-              <IconCard key={title} title={title} Icon={Icon} />
+            {orderNavItems.map(({ title, Icon, href, count }) => (
+              <div className="relative grid place-items-center" key={title}>
+                <span className="relative flex md:w-20">
+                  <IconCard title={title} Icon={Icon} />
+                  {count && count > 0 && (
+                    <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white md:end-8">
+                      {count}
+                    </div>
+                  )}
+                </span>
+              </div>
             ))}
           </div>
         </div>
@@ -188,6 +199,8 @@ const MemberPage = () => {
           </div>
         </div>
       </section>
+
+      <NavBar />
     </main>
   )
 }
