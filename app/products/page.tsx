@@ -50,7 +50,7 @@ const ProductsPage = ({ searchParams }: ProductsPageProps) => {
                   imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
                   title="PS5"
                   tags={['game', 'tv']}
-                  prize={18800}
+                  price={18800}
                   unit="台"
                 />
                 <hr className="mx-auto flex w-11/12" />
