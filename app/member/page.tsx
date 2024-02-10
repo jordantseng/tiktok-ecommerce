@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
+import NavBar from '@/components/NavBar'
 
 function AvatarDemo() {
   return (
@@ -141,13 +142,15 @@ const MemberPage = () => {
 
           <div className="grid flex-1 grid-cols-5">
             {orderNavItems.map(({ title, Icon, href, count }) => (
-              <div className="relative" key={title}>
-                <IconCard title={title} Icon={Icon} />
-                {count && count > 0 && (
-                  <div className="absolute -top-1 end-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white">
-                    20
-                  </div>
-                )}
+              <div className="relative grid place-items-center" key={title}>
+                <span className="relative flex md:w-20">
+                  <IconCard title={title} Icon={Icon} />
+                  {count && count > 0 && (
+                    <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white md:end-8">
+                      {count}
+                    </div>
+                  )}
+                </span>
               </div>
             ))}
           </div>
@@ -196,6 +199,8 @@ const MemberPage = () => {
           </div>
         </div>
       </section>
+
+      <NavBar />
     </main>
   )
 }
