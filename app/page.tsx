@@ -9,8 +9,8 @@ import NavBar from '@/components/NavBar'
 export default function HomePage() {
   return (
     <main className="mb-16 bg-default">
-      <header className="flex items-center justify-between bg-white px-4 pb-4 pt-6">
-        <h4 className="mb-2 scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
+      <header className="flex items-center justify-between bg-white px-4 py-4">
+        <h4 className="scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
         <div className="flex items-center gap-4">
           <MessageSquareMoreIcon />
           <MenuIcon />
