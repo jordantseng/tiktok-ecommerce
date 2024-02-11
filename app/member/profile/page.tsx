@@ -16,7 +16,7 @@ function AvatarDemo() {
 
 function Card() {
   return (
-    <section className="flex items-center justify-between gap-2 rounded-xl bg-white p-2">
+    <section className="flex items-center justify-between rounded-xl bg-white p-4">
       <div className="flex flex-col">
         <span className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary-foreground text-primary">
@@ -60,7 +60,7 @@ const ProfilePage = () => {
     <main className="min-h-screen bg-default">
       <Title title="個人中心" goBackUrl="/member" />
 
-      <div className="flex flex-col gap-2 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <form className="flex w-full flex-col divide-y divide-secondary rounded-lg bg-white">
           <div className="flex items-center justify-between p-4 py-2">
             <span>頭像</span>
