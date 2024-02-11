@@ -111,11 +111,14 @@ const MemberPage = () => {
 
   return (
     <main className="flex h-full min-h-screen flex-col">
-      <section className="from-primary-alt relative bg-gradient-to-r to-primary pb-20 text-white">
+      <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
-              <Bolt className="cursor-pointer md:h-10 md:w-10" />
+              <Bolt
+                onClick={() => router.push('/member/profile')}
+                className="cursor-pointer md:h-10 md:w-10"
+              />
               <Headset className="cursor-pointer md:h-10 md:w-10" />
             </div>
 
