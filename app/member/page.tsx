@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -15,6 +17,7 @@ import {
   Building2,
   Headphones,
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
@@ -47,31 +50,33 @@ function NumericInfo() {
 }
 
 const MemberPage = () => {
+  const router = useRouter()
+
   const orderNavItems = [
     {
       title: '待付款',
-      href: '/',
+      href: '/member/orders?type=checkout',
       Icon: <Wallet className="h-10 w-10 p-2" />,
       count: 10,
     },
     {
       title: '待發貨',
-      href: '/products',
+      href: '/member/orders?type=shipping',
       Icon: <WalletCards className="h-10 w-10 p-2" />,
     },
     {
       title: '待收貨',
-      href: '/shopping-cart',
+      href: '/member/orders?type=receipt',
       Icon: <Truck className="h-10 w-10 p-2" />,
     },
     {
       title: '待評價',
-      href: '/member',
+      href: '/member/orders?type=comment',
       Icon: <MessageSquareText className="h-10 w-10 p-2" />,
     },
     {
       title: '退款/收貨',
-      href: '/member',
+      href: '/member/orders?type=refund',
       Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
     },
   ]
@@ -94,12 +99,12 @@ const MemberPage = () => {
     },
     {
       title: '服務中心',
-      href: '/member',
+      href: '/service-center',
       Icon: <Building2 className="h-10 w-10 p-2" />,
     },
     {
       title: '在線客服',
-      href: '/member',
+      href: '/online-service',
       Icon: <Headphones className="h-10 w-10 p-2" />,
     },
   ]
@@ -134,7 +139,10 @@ const MemberPage = () => {
         <div className="relative -top-24 m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
           <div className="flex flex-1 justify-between">
             <span className="font-medium">我的訂單</span>
-            <span className="flex cursor-pointer text-gray-600 transition-all hover:text-gray-500">
+            <span
+              onClick={() => router.push('/member/orders')}
+              className="flex cursor-pointer text-gray-600 transition-all hover:text-gray-500"
+            >
               全部訂單
               <ChevronRight />
             </span>
@@ -144,7 +152,7 @@ const MemberPage = () => {
             {orderNavItems.map(({ title, Icon, href, count }) => (
               <div className="relative grid place-items-center" key={title}>
                 <span className="relative flex md:w-20">
-                  <IconCard title={title} Icon={Icon} />
+                  <IconCard title={title} Icon={Icon} onClick={() => router.push(href)} />
                   {count && count > 0 && (
                     <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white md:end-8">
                       {count}
@@ -164,7 +172,7 @@ const MemberPage = () => {
 
             <div className="grid flex-1 grid-cols-5">
               {serviceNavItems.map(({ title, Icon, href }) => (
-                <IconCard key={title} title={title} Icon={Icon} />
+                <IconCard key={title} title={title} Icon={Icon} onClick={() => router.push(href)} />
               ))}
             </div>
           </div>
