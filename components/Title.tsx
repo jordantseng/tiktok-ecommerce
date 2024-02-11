@@ -8,7 +8,7 @@ type Props = {
 
 const Title = ({ title, goBackUrl }: Props) => {
   return (
-    <header className="flex items-center justify-between bg-white px-4 py-4">
+    <header className="sticky top-0 flex items-center justify-between bg-white px-4 py-4">
       {goBackUrl ? (
         <>
           <div className="flex w-1/4 justify-start">
