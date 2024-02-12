@@ -22,7 +22,7 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
 
   return (
     <div className="sticky top-[68px] z-20">
-      <div className="relative z-30 flex h-14 items-center justify-between gap-2 bg-white px-2">
+      <div className="relative z-30 flex h-14 items-center justify-between gap-4 bg-white px-4">
         {isOpen ? (
           <h4 className="flex items-center text-sm font-normal tracking-tight">全部分類</h4>
         ) : (
@@ -47,7 +47,7 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
         </button>
       </div>
       {isOpen && (
-        <div className="absolute top-14 grid w-full grid-cols-2 gap-4 bg-white px-2 pb-2 md:grid-cols-3">
+        <div className="absolute top-14 grid w-full grid-cols-2 gap-4 bg-white px-4 pb-4 md:grid-cols-3">
           {/* TODO: need backend data */}
           {subSidebarItems.map((item: any) => (
             <Badge
