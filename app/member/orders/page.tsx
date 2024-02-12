@@ -77,7 +77,7 @@ const OrderCard = () => {
             className="rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
             onClick={handlePay}
           >
-            去支付
+            付款
           </Button>
           <Button
             variant="ghost"

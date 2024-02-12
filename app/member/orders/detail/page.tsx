@@ -125,7 +125,7 @@ const DetailPage = () => {
               variant="ghost"
               className="rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
             >
-              去支付
+              付款
             </Button>
           </div>
         </div>
