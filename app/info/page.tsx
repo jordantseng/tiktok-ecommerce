@@ -9,7 +9,7 @@ const InfoPage = () => {
 
   return (
     <main className="flex min-h-screen flex-col bg-default">
-      <Title title="消息" goBackUrl="/member" />
+      <Title title="消息" goBackUrl="/" />
 
       <div className="flex flex-1 flex-col justify-between gap-4 p-4 text-sm">
         <div className="flex flex-col gap-4">
