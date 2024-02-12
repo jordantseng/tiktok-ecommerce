@@ -119,6 +119,7 @@ const CartItem = ({
                     'items-start': specialPrice === undefined,
                   })}
                   value={amount || 1}
+                  isLeftCounterDisabled={amount === 1}
                   onChange={(val) => onChange && onChange(val)}
                 />
               </div>

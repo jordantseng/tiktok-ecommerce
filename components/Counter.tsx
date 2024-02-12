@@ -9,16 +9,17 @@ type Props = {
   buttonClassName?: string
   value: number
   onChange: (value: number) => void
+  isLeftCounterDisabled: boolean
 }
 
-const Counter = ({ value, onChange, className, buttonClassName }: Props) => {
+const Counter = ({ value, onChange, className, buttonClassName, isLeftCounterDisabled }: Props) => {
   return (
-    <div className={cn('flex', className)}>
+    <div className={cn('flex items-center', className)}>
       <Button
         className={buttonClassName}
         variant="ghost"
         size="icon"
-        disabled={value === 1}
+        disabled={isLeftCounterDisabled}
         onClick={() => onChange(value - 1)}
       >
         <MinusCircleIcon />
