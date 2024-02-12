@@ -96,9 +96,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   const fields = {
     domain_title: location.hostname,
     member_name: order.member_name,
-    totalprice: order.totalprice,
     LogisticsSubType: order.LogisticsSubType || '',
-    totalportage: order.totalportage || '',
     CVSStoreName: order.CVSStoreName || '',
     discount: order.discount || '',
     discount_title: order.discount_title || '',
@@ -121,4 +119,20 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   document.body.appendChild(form)
   form.submit()
   document.body.removeChild(form)
+}
+
+export const previewDiscont = async (order: OrderData): Promise<void> => {
+  const res = await fetch(`${Config.api}/api/membercenter/ordergroup/review`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
+    },
+    body: JSON.stringify({ discount: order.discount || '' }),
+    next: { revalidate: 60 * 5 },
+  })
+
+  const data = await res.json()
+
+  return data
 }
