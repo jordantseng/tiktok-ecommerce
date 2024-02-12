@@ -143,7 +143,7 @@ const MemberPage = () => {
           <div className="flex flex-1 justify-between">
             <span className="font-medium">我的訂單</span>
             <span
-              onClick={() => router.push('/member/orders')}
+              onClick={() => router.push('/member/orders?type=all')}
               className="flex cursor-pointer text-gray-600 transition-all hover:text-gray-500"
             >
               全部訂單
@@ -154,10 +154,10 @@ const MemberPage = () => {
           <div className="grid flex-1 grid-cols-5">
             {orderNavItems.map(({ title, Icon, href, count }) => (
               <div className="relative grid place-items-center" key={title}>
-                <span className="relative flex md:w-20">
+                <span className="relative flex">
                   <IconCard title={title} Icon={Icon} onClick={() => router.push(href)} />
                   {count && count > 0 && (
-                    <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white md:end-8">
+                    <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white">
                       {count}
                     </div>
                   )}
