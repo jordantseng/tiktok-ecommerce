@@ -63,6 +63,27 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
   return data
 }
 
+export const updatePurchase = async (id: number, online: number): Promise<CartsRes> => {
+  const res = await fetch(`${Config.api}/api/membercenter/mycart/store`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
+    },
+    body: JSON.stringify([
+      {
+        id,
+        online,
+      },
+    ]),
+    next: { revalidate: 60 * 5 },
+  })
+
+  const data = await res.json()
+
+  return data
+}
+
 export const deleteFromCart = async (id: number): Promise<CartsRes> => {
   const res = await fetch(`${Config.api}/api/membercenter/mycart/destory`, {
     method: 'POST',
