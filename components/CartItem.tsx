@@ -24,7 +24,6 @@ const CartItem = ({
   imgUrl,
   title,
   tags = [],
-  unit,
   amount,
   price,
   specialPrice,
@@ -81,7 +80,6 @@ const CartItem = ({
                   ))
                 ) : (
                   <span className="flex flex-col">
-                    <span className="text-sm font-light">規格：{unit}</span>
                     <span className="text-sm font-light">數量：{amount}</span>
                   </span>
                 )}

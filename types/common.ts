@@ -3,7 +3,6 @@ export type CartItem = {
   imgUrl?: string
   title: string
   tags?: string[]
-  unit?: string
   amount?: number
   price: number
   specialPrice?: number

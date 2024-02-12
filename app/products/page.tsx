@@ -51,7 +51,6 @@ const ProductsPage = ({ searchParams }: ProductsPageProps) => {
                   title="PS5"
                   tags={['game', 'tv']}
                   price={18800}
-                  unit="台"
                 />
                 <hr className="mx-auto flex w-11/12" />
               </Link>

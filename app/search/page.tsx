@@ -36,7 +36,6 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
                     title="PS5"
                     tags={['game', 'tv']}
                     price={18800}
-                    unit="台"
                     sales={100}
                   />
                 ))}
