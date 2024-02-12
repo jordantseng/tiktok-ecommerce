@@ -8,11 +8,13 @@ import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { getBanners } from '@/services/banner'
 import { getCategoryTypes } from '@/services/categoryType'
+import { getProducts } from '@/services/product'
 
 export default async function HomePage() {
-  const [{ data: banners }, { data: categoryTypes }] = await Promise.all([
+  const [{ data: banners }, { data: categoryTypes }, { data: products }] = await Promise.all([
     getBanners(),
     getCategoryTypes(),
+    getProducts({ page: 1, pageSize: 10 }),
   ])
 
   return (
@@ -44,17 +46,17 @@ export default async function HomePage() {
         </div>
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {Array.from({ length: 4 }).map((_, index) => (
+          {products.data.map((product) => (
             <MerchandiseCard
-              id={1234}
-              key={index}
+              id={product.id}
+              key={product.id}
               className="w-full"
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-              title="PS5"
-              tags={['game', 'tv']}
-              price={18800}
-              unit="台"
-              sales={10000}
+              imgUrl={product.imgs[0]}
+              title={product.title}
+              tags={product.tags.split(',')}
+              price={product.price}
+              // TODO: waiting for trash backend
+              sales={1000}
             />
           ))}
         </div>
