@@ -55,6 +55,9 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+      minHeight: {
+        15: '3.75rem',
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
