@@ -1,13 +1,18 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import Autoplay from 'embla-carousel-autoplay'
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
 
-const HeroCarousel = () => {
+type HeroCarouselProps = {
+  items: { id: number; img: string; title: string }[]
+}
+
+const HeroCarousel = ({ items }: HeroCarouselProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
 
@@ -36,12 +41,12 @@ const HeroCarousel = () => {
       ]}
     >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
+        {items.map((item) => (
+          <CarouselItem key={item.id}>
             <div className="p-1">
               <Card>
-                <CardContent className="flex aspect-video items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                <CardContent className="relative flex aspect-video items-center justify-center p-6">
+                  <Image alt={item.title} src={item.img} fill />
                 </CardContent>
               </Card>
             </div>
@@ -49,7 +54,7 @@ const HeroCarousel = () => {
         ))}
       </CarouselContent>
       <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {items.map((_, index) => (
           <button
             type="button"
             key={index}
