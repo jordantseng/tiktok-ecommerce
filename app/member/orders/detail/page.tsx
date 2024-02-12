@@ -18,7 +18,7 @@ const DetailPage = () => {
                     <Clock4 />
                     待付款
                   </span>
-                  <span className="text-xs md:text-base">9分钟后订单关闭，请及时付款哦</span>
+                  <span className="text-xs md:text-base">9分鐘後訂單關閉，請及時付款哦</span>
                 </div>
               </div>
             </div>
@@ -35,7 +35,7 @@ const DetailPage = () => {
               </div>
 
               <div className="flex flex-col gap-2 text-foreground">
-                <span className="font-medium">北京市海淀区恒大新宏福苑西区20号楼2单元301</span>
+                <span className="font-medium">北京市海淀區恆大新宏福苑西區20號樓2單元301</span>
                 <span className="text-gray-400">丢丢 15800000000</span>
               </div>
 
@@ -57,7 +57,7 @@ const DetailPage = () => {
               </div>
 
               <div className="text-sm">
-                <span>彩食有机鲜菠菜彩食新鲜的菠菜 1kg/份</span>
+                <span>彩食有機鮮菠菜彩食新鮮的菠菜 1kg/份</span>
                 <div className="flex flex-col text-gray-500">
                   <span>規格：1kg/份</span>
                   <span>數量：2份</span>
