@@ -1,5 +1,3 @@
-import { ChevronLeft } from 'lucide-react'
-
 import SearchHistory from '@/app/search/SearchHistory'
 import Toolbar from '@/app/search/Toolbar'
 import FilterDialog from '@/app/search/FilterDialog'
