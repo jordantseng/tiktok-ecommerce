@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, MouseEvent } from 'react'
-import { XIcon } from 'lucide-react'
 import { useImmer } from 'use-immer'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -9,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import BottomDialog from '@/components/BottomDialog'
 
 const FilterDialog = () => {
   const [categories, updateCategories] = useImmer([
@@ -66,69 +66,58 @@ const FilterDialog = () => {
   }
 
   return (
-    <>
-      <div className="fixed bottom-0 h-screen w-full bg-black/80" onClick={handleClose} />
-      <form className="fixed bottom-0 mx-auto h-[360px] w-full rounded-t-xl bg-white p-4">
-        <div className="flex items-center ">
-          <h4 className="mb-2 flex flex-1 scroll-m-20 justify-center text-lg font-normal tracking-tight">
-            全部篩選
-          </h4>
-          <button onClick={handleClose}>
-            <XIcon className="h-5 w-5" />
-          </button>
+    <BottomDialog className="h-[360px]" title="全部篩選" onClose={handleClose}>
+      <div className="mb-2">
+        <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
+          類別
+        </h5>
+        <div className="grid grid-cols-3 gap-6">
+          {categories.map((category) => (
+            <Badge
+              key={category.id}
+              className={cn('', {
+                'bg-primary-foreground text-primary outline outline-primary':
+                  selectedCategoryIds.includes(category.id),
+              })}
+              onClick={() => handleClick(category.id)}
+            >
+              {category.title}
+            </Badge>
+          ))}
         </div>
-        <div className="mb-2">
-          <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
-            類別
-          </h5>
-          <div className="grid grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <Badge
-                key={category.id}
-                className={cn('', {
-                  'bg-primary-foreground text-primary outline outline-primary':
-                    selectedCategoryIds.includes(category.id),
-                })}
-                onClick={() => handleClick(category.id)}
-              >
-                {category.title}
-              </Badge>
-            ))}
-          </div>
+      </div>
+      <div className="mb-4">
+        <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
+          價格
+        </h5>
+        <div className="flex items-center gap-2">
+          <Input
+            placeholder="自定義最低金額"
+            value={price.minPrice}
+            type="number"
+            min={0}
+            onChange={handleMinPriceChange('minPrice')}
+          />
+          <div>-</div>
+          <Input
+            value={price.maxPrice}
+            placeholder="自定義最高金額"
+            type="number"
+            onChange={handleMinPriceChange('maxPrice')}
+          />
         </div>
-        <div className="mb-4">
-          <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
-            價格
-          </h5>
-          <div className="flex items-center gap-2">
-            <Input
-              placeholder="自定義最低金額"
-              value={price.minPrice}
-              type="number"
-              min={0}
-              onChange={handleMinPriceChange('minPrice')}
-            />
-            <div>-</div>
-            <Input
-              value={price.maxPrice}
-              placeholder="自定義最高金額"
-              type="number"
-              onChange={handleMinPriceChange('maxPrice')}
-            />
-          </div>
-        </div>
-        <div className="flex">
-          <Button
-            className="flex-grow rounded-l-full bg-red-400/80 text-white hover:bg-red-500/80"
-            type="button"
-            onClick={handleReset}
-          >
-            重置
-          </Button>
-          <Button className="flex-grow rounded-r-full hover:bg-red-600">查看商品</Button>
-        </div>
-      </form>
-    </>
+      </div>
+      <div className="flex">
+        <Button
+          className="flex-grow rounded-l-full bg-red-400/80 text-white hover:bg-red-500/80"
+          type="button"
+          onClick={handleReset}
+        >
+          重置
+        </Button>
+        <Button className="flex-grow rounded-r-full hover:bg-red-600">查看商品</Button>
+      </div>
+    </BottomDialog>
   )
 }
 
