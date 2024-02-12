@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ChevronRightIcon, XIcon } from 'lucide-react'
 import { useImmer } from 'use-immer'
 
@@ -16,16 +16,13 @@ const SpecDialog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [confirmedItem, updateConfirmedItem] = useImmer<{ size: string; count: number }>({
     size: '',
-    count: 1,
+    count: 0,
   })
   const [count, setCount] = useState(selectedSize === confirmedItem.size ? confirmedItem.count : 1)
 
-  useEffect(() => {
-    setCount(1)
-  }, [selectedSize])
-
   const handleClick = (size: string) => {
     setSelectedSize(size)
+    setCount(1)
   }
 
   const handleClose = () => {
@@ -34,7 +31,7 @@ const SpecDialog = () => {
     setSelectedSize(confirmedItem.size)
   }
 
-  const handleConfirm = (e: MouseEvent) => {
+  const handleConfirm = () => {
     setIsDialogOpen(false)
     updateConfirmedItem((draft) => {
       draft.size = selectedSize
