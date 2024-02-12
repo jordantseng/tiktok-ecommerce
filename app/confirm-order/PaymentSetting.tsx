@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useInitialContext } from '@/context/InitailContext'
+import { useWebSettingsContext } from '@/context/InitailContext'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
 import React from 'react'
 
@@ -18,7 +18,7 @@ type Props = {
 }
 
 const PaymentSetting = ({ onChange }: Props) => {
-  const { initialData } = useInitialContext()
+  const { webSettingsData } = useWebSettingsContext()
   const handleChange = (val: string) => onChange(val)
   return (
     // 信用卡付款(綠界)[ecpay-credit],
@@ -51,11 +51,11 @@ const PaymentSetting = ({ onChange }: Props) => {
               <span>信用卡付款</span>
             </div>
           </SelectLabel>
-          {Object.keys(initialData?.paykind || {}).map((opt: string) => (
+          {Object.keys(webSettingsData?.paykind || {}).map((opt: string) => (
             <SelectItem className="ml-4" key={opt} value={opt}>
-              {initialData?.paykind[opt] === '信用卡付款'
+              {webSettingsData?.paykind[opt] === '信用卡付款'
                 ? '信用卡一次付清'
-                : initialData?.paykind[opt]}
+                : webSettingsData?.paykind[opt]}
             </SelectItem>
           ))}
         </SelectGroup>
@@ -78,7 +78,7 @@ const PaymentSetting = ({ onChange }: Props) => {
           </SelectItem>
         </SelectGroup> */}
         <SelectGroup>
-          {Object.keys(initialData?.paykind || {}).map(
+          {Object.keys(webSettingsData?.paykind || {}).map(
             (opt: string) =>
               opt.indexOf('atm') > 0 && (
                 <SelectItem key={opt} value="ecpay-atm">

@@ -12,12 +12,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import PaymentSetting from './PaymentSetting'
-import { useInitialContext } from '@/context/InitailContext'
+import { useWebSettingsContext } from '@/context/InitailContext'
 import { useImmer } from 'use-immer'
 
 const ConfirmBillPage = () => {
   const router = useRouter()
-  const { initialData } = useInitialContext()
+  const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
   const { selectedAddress, deliveryType } = useAddressContext()
   const [payStatus, setPayStatus] = useImmer<string | null>(null)
@@ -134,7 +134,7 @@ const ConfirmBillPage = () => {
               <div className="flex items-center justify-between">
                 <span className="break-keep">運費：</span>
                 <span className="flex justify-center text-red-400">
-                  ${initialData?.logisticprice}
+                  ${webSettingsData?.logisticprice}
                 </span>
               </div>
               <div className="flex justify-end justify-between">
@@ -144,7 +144,7 @@ const ConfirmBillPage = () => {
               <div className="flex items-center justify-center">
                 <span className="break-keep">總計：</span>$
                 <span className="flex justify-center text-lg font-semibold text-red-400">
-                  {total + (initialData?.logisticprice || 0) - 60}
+                  {total + (webSettingsData?.logisticprice || 0) - 60}
                 </span>
               </div>
             </div>
