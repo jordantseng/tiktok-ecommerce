@@ -15,7 +15,7 @@ const Title = ({ title, goBackUrl }: Props) => {
             <PrevButton redirectUrl={goBackUrl} />
           </div>
           <h4 className="w-1/2 text-center text-xl font-normal tracking-tight">{title}</h4>
-          <div className="w-1/4"></div> {/* Placeholder to balance the layout */}
+          <div className="w-1/4" /> {/* Placeholder to balance the layout */}
         </>
       ) : (
         <h4 className="w-full text-center text-xl font-normal tracking-tight">{title}</h4>
