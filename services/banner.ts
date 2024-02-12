@@ -1,7 +1,7 @@
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
-type AddressRes = ApiRes<{
+type GetBannersRes = ApiRes<{
   current_page: number
   data: {
     id: number
@@ -11,7 +11,7 @@ type AddressRes = ApiRes<{
   total: number
 }>
 
-export const getBanners = async (): Promise<AddressRes> => {
+export const getBanners = async (): Promise<GetBannersRes> => {
   const res = await fetch(`${config.api}/api/banner`, {
     method: 'POST',
     headers: {
