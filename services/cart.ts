@@ -1,4 +1,4 @@
-import Config from '@/lib/configs'
+import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
 type CartsRes = ApiRes<{
@@ -24,7 +24,7 @@ type CartData = {
 }
 
 export const getMyCart = async (): Promise<CartsRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/mycart`, {
+  const res = await fetch(`${config.api}/api/membercenter/mycart`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export const getMyCart = async (): Promise<CartsRes> => {
 }
 
 export const addToCart = async (id: number, count: number): Promise<CartsRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/mycart/store`, {
+  const res = await fetch(`${config.api}/api/membercenter/mycart/store`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
 }
 
 export const updatePurchase = async (id: number, online: number): Promise<CartsRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/mycart/store`, {
+  const res = await fetch(`${config.api}/api/membercenter/mycart/store`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export const updatePurchase = async (id: number, online: number): Promise<CartsR
 }
 
 export const deleteFromCart = async (id: number): Promise<CartsRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/mycart/destory`, {
+  const res = await fetch(`${config.api}/api/membercenter/mycart/destory`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

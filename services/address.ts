@@ -1,4 +1,4 @@
-import Config from '@/lib/configs'
+import config from '@/lib/configs'
 import { AddressData, ApiRes } from '@/types/common'
 
 type AddressRes = ApiRes<{
@@ -8,7 +8,7 @@ type AddressRes = ApiRes<{
 }>
 
 export const getAddress = async (): Promise<AddressRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/myaddress`, {
+  const res = await fetch(`${config.api}/api/membercenter/myaddress`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const getAddress = async (): Promise<AddressRes> => {
 }
 
 export const addAddress = async (value: AddressData): Promise<void> => {
-  const res = await fetch(`${Config.api}/api/membercenter/myaddress/store`, {
+  const res = await fetch(`${config.api}/api/membercenter/myaddress/store`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const addAddress = async (value: AddressData): Promise<void> => {
 }
 
 export const deleteAddress = async (id: number): Promise<void> => {
-  const res = await fetch(`${Config.api}/api/membercenter/myaddress/destory`, {
+  const res = await fetch(`${config.api}/api/membercenter/myaddress/destory`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export const deleteAddress = async (id: number): Promise<void> => {
 export const getLogistic = (type: string) => {
   const form = document.createElement('form')
   form.method = 'post'
-  form.action = `${Config.api}/ecpaylogisticmap`
+  form.action = `${config.api}/ecpaylogisticmap`
 
   const fields = {
     logisticssubtype: type,

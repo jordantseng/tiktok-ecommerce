@@ -1,4 +1,4 @@
-import Config from '@/lib/configs'
+import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
 type CityRes = ApiRes<CityData[]>
@@ -10,7 +10,7 @@ type CityData = {
 }
 
 export const getCities = async (): Promise<CityRes> => {
-  const res = await fetch(`${Config.api}/api/city1`, {
+  const res = await fetch(`${config.api}/api/city1`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const getCities = async (): Promise<CityRes> => {
 }
 
 export const getDistrict = async (city: string): Promise<CityRes> => {
-  const res = await fetch(`${Config.api}/api/city2`, {
+  const res = await fetch(`${config.api}/api/city2`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
