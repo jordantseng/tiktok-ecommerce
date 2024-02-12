@@ -6,8 +6,11 @@ import Searchbar from '@/components/Searchbar'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
+import { getBanners } from '@/services/banner'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { data: banners } = await getBanners()
+
   return (
     <main className="mb-16 bg-default">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
@@ -24,7 +27,7 @@ export default function HomePage() {
           <Searchbar enableDialog showSearchButton />
         </div>
         <div className="mb-2">
-          <HeroCarousel />
+          <HeroCarousel items={banners.data} />
         </div>
         <div className="mb-2 grid grid-cols-4">
           {Array.from({ length: 8 }).map((_, index) => (

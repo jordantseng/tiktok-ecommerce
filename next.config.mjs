@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     remotePatterns: [
+      // TODO: remove mock url
       {
         protocol: 'https',
         hostname: 'gmedia.playstation.com',
@@ -11,6 +12,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'img.freepik.com',
+        port: '',
+        pathname: '/**/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'backend.tkshop.live',
         port: '',
         pathname: '/**/*',
       },
