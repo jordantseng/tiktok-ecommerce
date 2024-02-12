@@ -194,7 +194,6 @@ const MemberPage = () => {
                 tags={['game', 'tv']}
                 price={18800}
                 specialPrice={13000}
-                unit="台"
               />
               <MerchandiseCard
                 id={12345}
@@ -204,7 +203,6 @@ const MemberPage = () => {
                 tags={['game', 'tv']}
                 price={18800}
                 specialPrice={13000}
-                unit="台"
               />
             </div>
           </div>

@@ -96,12 +96,11 @@ const ConfirmBillPage = () => {
         </div>
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
-            {items.map((opt, index) => (
+            {items.map((opt) => (
               <CartItem
                 key={opt.id}
                 id={opt.id}
                 amount={opt.amount}
-                unit={opt.unit}
                 editable={false}
                 imgUrl={opt.imgUrl}
                 title={opt.title}

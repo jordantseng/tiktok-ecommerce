@@ -95,7 +95,6 @@ const ShoppingCartPage = () => {
             tags={['game', 'tv']}
             price={18800}
             specialPrice={13000}
-            unit="台"
           />
           <MerchandiseCard
             id={55555}
@@ -104,7 +103,6 @@ const ShoppingCartPage = () => {
             title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
             tags={['game', 'tv']}
             price={18800}
-            unit="台"
           />
         </div>
         <div className="mb-[18px] flex w-full justify-between bg-white p-6">

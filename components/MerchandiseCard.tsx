@@ -24,7 +24,6 @@ const MerchandiseCard = ({
   tags = [],
   price,
   specialPrice,
-  unit,
   sales,
 }: Props) => {
   return (
@@ -50,7 +49,7 @@ const MerchandiseCard = ({
           ))}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between px-4">
+      <CardFooter className="flex justify-between">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
             <span
@@ -62,7 +61,6 @@ const MerchandiseCard = ({
               <span className="text-md font-bold text-red-600">${specialPrice}</span>
             )}
           </div>
-          <span className="font-light">/{unit}</span>
         </div>
         {sales ? (
           <span className="text-sm font-light text-gray-400">已售 {sales}</span>
@@ -73,7 +71,6 @@ const MerchandiseCard = ({
               imgUrl,
               title,
               tags,
-              unit,
               price,
               specialPrice,
             }}
