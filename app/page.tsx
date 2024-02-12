@@ -1,24 +1,22 @@
-'use client'
-
 import { MessageSquareMoreIcon, MenuIcon, LampFloorIcon } from 'lucide-react'
+import Link from 'next/link'
 
 import HeroCarousel from '@/app/HeroCarousel'
 import Searchbar from '@/components/Searchbar'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
-import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
-  const router = useRouter()
-
   return (
     <main className="mb-16 bg-default">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
         <h4 className="scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
         <div className="flex items-center gap-4">
           <MessageSquareMoreIcon className="cursor-pointer" />
-          <MenuIcon className="cursor-pointer" onClick={() => router.push('/info')} />
+          <Link href="/info">
+            <MenuIcon />
+          </Link>
         </div>
       </header>
       <div className="p-4">
