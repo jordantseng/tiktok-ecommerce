@@ -36,7 +36,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
                     title="PS5"
                     tags={['game', 'tv']}
                     price={18800}
-                    sales={100}
+                    sales={String(100)}
                   />
                 ))}
               </div>

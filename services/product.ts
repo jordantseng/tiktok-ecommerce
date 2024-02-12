@@ -19,6 +19,7 @@ type ProductData = {
   closedate: string
   begindate: string
   updated_at: string
+  buycount: number
 }
 
 type GetProductsRes = ApiRes<{

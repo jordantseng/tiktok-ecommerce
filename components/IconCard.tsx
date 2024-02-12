@@ -19,7 +19,7 @@ const IconCard = ({ title, isActive, Icon, imgUrl, onClick }: IconCardProps) => 
       onClick={onClick}
     >
       {Icon && <div className={`${isActive ? 'text-primary' : ''}`}>{Icon}</div>}
-      {imgUrl && <Image alt="title" src={imgUrl} width={24} height={24} className="h-14 w-14" />}
+      {imgUrl && <Image src={imgUrl} width={24} height={24} className="h-14 w-14" alt={title} />}
       <h4
         className={cn('md:text-md mb-2 scroll-m-20 text-sm font-normal md:tracking-wider', {
           'text-primary': isActive,

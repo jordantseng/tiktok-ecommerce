@@ -14,7 +14,7 @@ export default async function HomePage() {
   const [{ data: banners }, { data: categoryTypes }, { data: products }] = await Promise.all([
     getBanners(),
     getCategoryTypes(),
-    getProducts({ page: 1, pageSize: 10 }),
+    getProducts({ page: 1, pageSize: 4 }),
   ])
 
   return (
@@ -37,12 +37,7 @@ export default async function HomePage() {
         </div>
         <div className="mb-2 grid grid-cols-4 gap-2">
           {categoryTypes.data.map((type) => (
-            <IconCard
-              key={type.id}
-              title={type.title}
-              // TODO: waiting for trash backend
-              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-            />
+            <IconCard key={type.id} title={type.title} imgUrl={type.imgs} />
           ))}
         </div>
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
@@ -56,8 +51,7 @@ export default async function HomePage() {
               title={product.title}
               tags={product.tags.split(',')}
               price={product.price}
-              // TODO: waiting for trash backend
-              sales={1000}
+              sales={String(product.buycount)}
             />
           ))}
         </div>
