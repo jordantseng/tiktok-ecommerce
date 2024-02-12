@@ -1,10 +1,10 @@
-import Config from '@/lib/configs'
+import config from '@/lib/configs'
 import { ApiRes, InitialData } from '@/types/common'
 
 type InitialRes = ApiRes<InitialData>
 
 export const getInitial = async (): Promise<InitialRes> => {
-  const res = await fetch(`${Config.api}/api/web/show`, {
+  const res = await fetch(`${config.api}/api/web/show`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

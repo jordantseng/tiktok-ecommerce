@@ -1,4 +1,4 @@
-import Config from '@/lib/configs'
+import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
 type OrderRes = ApiRes<OrderData>
@@ -54,7 +54,7 @@ type OrderData = {
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/ordergroup/show`, {
+  const res = await fetch(`${config.api}/api/membercenter/ordergroup/show`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export const getOrder = async (id: number): Promise<OrderRes> => {
 }
 
 export const getOrders = async (): Promise<OrdersRes> => {
-  const res = await fetch(`${Config.api}/api/membercenter/ordergroup`, {
+  const res = await fetch(`${config.api}/api/membercenter/ordergroup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export const getOrders = async (): Promise<OrdersRes> => {
 export const addOrder = async (order: OrderData): Promise<void> => {
   const form = document.createElement('form')
   form.method = 'post'
-  form.action = `${Config.api}/api/membercenter/ordergroup/store`
+  form.action = `${config.api}/api/membercenter/ordergroup/store`
 
   const fields = {
     domain_title: location.hostname,
@@ -122,7 +122,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
 }
 
 export const previewDiscont = async (order: OrderData): Promise<void> => {
-  const res = await fetch(`${Config.api}/api/membercenter/ordergroup/review`, {
+  const res = await fetch(`${config.api}/api/membercenter/ordergroup/review`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
