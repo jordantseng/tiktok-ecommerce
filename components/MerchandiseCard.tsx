@@ -13,7 +13,7 @@ import { CartItem } from '@/types/common'
 
 type Props = CartItem & {
   className?: string
-  sales?: number
+  sales?: string
 }
 
 const MerchandiseCard = ({

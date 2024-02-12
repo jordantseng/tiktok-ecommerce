@@ -6,6 +6,7 @@ type GetCategoryTypesRes = ApiRes<{
   data: {
     id: number
     title: string
+    imgs: string
   }[]
   total: number
 }>
