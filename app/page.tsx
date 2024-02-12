@@ -7,9 +7,13 @@ import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { getBanners } from '@/services/banner'
+import { getCategoryTypes } from '@/services/categoryType'
 
 export default async function HomePage() {
-  const { data: banners } = await getBanners()
+  const [{ data: banners }, { data: categoryTypes }] = await Promise.all([
+    getBanners(),
+    getCategoryTypes(),
+  ])
 
   return (
     <main className="mb-16 bg-default">
@@ -29,11 +33,11 @@ export default async function HomePage() {
         <div className="mb-2">
           <HeroCarousel items={banners.data} />
         </div>
-        <div className="mb-2 grid grid-cols-4">
-          {Array.from({ length: 8 }).map((_, index) => (
+        <div className="mb-2 grid grid-cols-4 gap-2">
+          {categoryTypes.data.map((type) => (
             <IconCard
-              key={index}
-              title="商品種類"
+              key={type.id}
+              title={type.title}
               Icon={<LampFloorIcon className="h-12 w-12 p-2" />}
             />
           ))}
