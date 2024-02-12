@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
-import { InitialProvider } from '@/context/InitailContext'
+import { WebSettingsProvider } from '@/context/InitailContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <InitialProvider>
+      <WebSettingsProvider>
         <AuthProvider>
           <CartProvider>
             <AddressProvider>
@@ -41,7 +41,7 @@ export default function RootLayout({
             </AddressProvider>
           </CartProvider>
         </AuthProvider>
-      </InitialProvider>
+      </WebSettingsProvider>
     </html>
   )
 }

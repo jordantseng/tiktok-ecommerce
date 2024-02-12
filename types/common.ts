@@ -30,7 +30,7 @@ export type AddressData = {
   CVSAddress?: string
 }
 
-export type InitialData = {
+export type webSettingsData = {
   paykind: { [key: string]: string }
   paystatus: string
   id: number

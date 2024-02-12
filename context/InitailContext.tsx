@@ -1,42 +1,42 @@
 'use client'
-import { getInitial } from '@/services/initial'
-import { InitialData } from '@/types/common'
+import { getWebSettings } from '@/services/webSettings'
+import { webSettingsData } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
-type InitialContextType = {
-  initialData: InitialData | null
+type WebSettingsContextType = {
+  webSettingsData: webSettingsData | null
 }
 
-const InitialContext = createContext<InitialContextType | null>(null)
+const WebSettingsContext = createContext<WebSettingsContextType | null>(null)
 
-type InitialProviderProps = {
+type WebSettingsProviderProps = {
   children: ReactNode
 }
 
-export const InitialProvider = ({ children }: InitialProviderProps) => {
-  const [data, setData] = useImmer<InitialData | null>(null)
+export const WebSettingsProvider = ({ children }: WebSettingsProviderProps) => {
+  const [data, setData] = useImmer<webSettingsData | null>(null)
 
   useEffect(() => {
-    getInitial().then((res) => setData(res.data))
-  }, [])
+    getWebSettings().then((res) => setData(res.data))
+  }, [setData])
 
   return (
-    <InitialContext.Provider
+    <WebSettingsContext.Provider
       value={{
-        initialData: data,
+        webSettingsData: data,
       }}
     >
       {children}
-    </InitialContext.Provider>
+    </WebSettingsContext.Provider>
   )
 }
 
-export const useInitialContext = () => {
-  const value = useContext(InitialContext)
+export const useWebSettingsContext = () => {
+  const value = useContext(WebSettingsContext)
 
   if (value == null) {
-    throw new Error('useSidebarContext cannot be used outside of SidebarProvider')
+    throw new Error('useWebSettingsContext cannot be used outside of WebSettingsProvider')
   }
 
   return value
