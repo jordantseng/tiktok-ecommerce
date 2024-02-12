@@ -40,7 +40,8 @@ export default async function HomePage() {
             <IconCard
               key={type.id}
               title={type.title}
-              Icon={<LampFloorIcon className="h-12 w-12 p-2" />}
+              // TODO: waiting for trash backend
+              imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
             />
           ))}
         </div>
