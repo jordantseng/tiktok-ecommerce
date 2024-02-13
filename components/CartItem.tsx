@@ -46,12 +46,12 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn('m-2 flex h-auto items-center max-[320px]:m-0 max-[320px]:h-[80px]', {
+          className={cn('m-2 flex h-[80px] items-center max-[320px]:m-0', {
             'bg-slate-50': !editable,
           })}
         >
           <Image
-            className="max-h-[200px] max-w-[85px] max-[320px]:max-w-[65px]"
+            className="max-w-[85px] max-[320px]:max-w-[65px]"
             width={300}
             height={300}
             src={imgUrl || ''}
@@ -99,7 +99,7 @@ const CartItem = ({
                     className={
                       specialPrice
                         ? 'text-sm font-light line-through'
-                        : 'max-[320px]:text-md text-lg font-bold'
+                        : 'max-[320px]:text-md flex h-full items-center text-lg font-bold'
                     }
                   >
                     ${price}
@@ -114,7 +114,6 @@ const CartItem = ({
                   className={cn({ 'items-end': specialPrice !== undefined })}
                   buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
                     'items-end': specialPrice !== undefined,
-                    'items-start': specialPrice === undefined,
                   })}
                   value={amount || 1}
                   isLeftCounterDisabled={amount === 1}

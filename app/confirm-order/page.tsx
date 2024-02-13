@@ -123,8 +123,9 @@ const ConfirmBillPage = () => {
             <PaymentSetting onChange={(val) => setPayStatus(val)} />
           </div>
         </div>
-        <div className="mb-[18px] flex w-full justify-end bg-white px-6 py-6">
-          <span className=" mr-8 flex items-center">共計：{items.length}件</span>
+        <div className="mb-[18px] flex w-full items-center justify-between bg-white px-6 py-6">
+          <span className="mr-1 flex items-center">共計:</span>
+          <span className="mr-4 flex items-center md:mr-8">{items.length}件</span>
           <div className="flex items-center space-x-4">
             <div className="flex w-full flex-col">
               <div className="flex items-center justify-end">
