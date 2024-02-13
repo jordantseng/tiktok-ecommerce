@@ -111,7 +111,7 @@ const MemberPage = () => {
 
   return (
     <main className="flex h-full min-h-screen flex-col">
-      <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
+      <section className="from-primary-alt relative bg-gradient-to-r to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
@@ -184,8 +184,8 @@ const MemberPage = () => {
             <div className="font-lg relative flex items-center justify-center font-semibold">
               ✨為你推薦✨
             </div>
-
-            <div className="flex gap-4 p-4">
+            {/* 窄螢幕手機會破圖 我先擋一下 */}
+            <div className="flex gap-4 p-4 max-[320px]:block">
               <MerchandiseCard
                 id={12345}
                 className="w-[50%] max-[320px]:h-auto max-[320px]:w-full"

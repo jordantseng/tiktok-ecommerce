@@ -39,7 +39,7 @@ const MerchandiseCard = ({
           />
         )}
       </CardHeader>
-      <CardContent className="max-w-[150px]">
+      <CardContent>
         <CardTitle className="truncate">{title}</CardTitle>
         <CardDescription className="mt-4">
           {tags.map((opt) => (
