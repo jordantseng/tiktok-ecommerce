@@ -99,7 +99,7 @@ const CartItem = ({
                     className={
                       specialPrice
                         ? 'text-sm font-light line-through'
-                        : 'max-[320px]:text-md text-lg font-bold'
+                        : 'max-[320px]:text-md flex h-full items-center text-lg font-bold'
                     }
                   >
                     ${price}
@@ -114,7 +114,6 @@ const CartItem = ({
                   className={cn({ 'items-end': specialPrice !== undefined })}
                   buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
                     'items-end': specialPrice !== undefined,
-                    'items-start': specialPrice === undefined,
                   })}
                   value={amount || 1}
                   isLeftCounterDisabled={amount === 1}
