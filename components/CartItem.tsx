@@ -46,12 +46,12 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn('m-2 flex h-auto items-center max-[320px]:m-0 max-[320px]:h-[80px]', {
+          className={cn('m-2 flex h-[80px] items-center max-[320px]:m-0', {
             'bg-slate-50': !editable,
           })}
         >
           <Image
-            className="max-h-[200px] max-w-[85px] max-[320px]:max-w-[65px]"
+            className="max-w-[85px] max-[320px]:max-w-[65px]"
             width={300}
             height={300}
             src={imgUrl || ''}
