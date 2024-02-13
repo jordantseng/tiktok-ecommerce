@@ -51,7 +51,7 @@ const LoginPage = () => {
                 </span>
               </div>
             </div>
-            <Button type="submit" variant="default" className="rounded-full">
+            <Button type="submit" variant="primary" className="rounded-full">
               登入
             </Button>
           </form>
