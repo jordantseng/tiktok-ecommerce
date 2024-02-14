@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import PaymentSetting from './PaymentSetting'
-import { useWebSettingsContext } from '@/context/InitailContext'
+import { useWebSettingsContext } from '@/context/InitialContext'
 import { useImmer } from 'use-immer'
 
 const ConfirmBillPage = () => {

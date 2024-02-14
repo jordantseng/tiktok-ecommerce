@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
-import { WebSettingsProvider } from '@/context/InitailContext'
+import { WebSettingsProvider } from '@/context/InitialContext'
 
 const inter = Inter({
   subsets: ['latin'],

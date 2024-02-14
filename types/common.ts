@@ -29,8 +29,8 @@ export type AddressData = {
   CVSAddress?: string
 }
 
-export type webSettingsData = {
-  paykind: { [key: string]: string }
+export type WebSettingsData = {
+  paykind: Record<string, string>
   paystatus: string
   id: number
   name: string
