@@ -1,13 +1,14 @@
 'use client'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { PropsWithChildren, ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { useImmer } from 'use-immer'
+import { UserInfo, login, register } from '@/services/auth'
+import { useRouter } from 'next/navigation'
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 
 type AuthContextType = {
   user: User | null
   token: string
   isLogin: boolean
-  handleLogin: (user: User) => void
+  handleRegister: (user: UserInfo) => void
+  handleLogin: (user: UserInfo) => void
   handleLogout: (user: User) => void
 }
 
@@ -26,65 +27,82 @@ type User = {
   email?: string
 }
 
-const useLogin = () => {
-  const router = useRouter()
-  const [token, setToken] = useState('')
+const AuthContext = createContext<AuthContextType | null>(null)
 
-  const isLogin = !!token
-  const searchParams = useSearchParams()
-
-  const code = searchParams.get('code')
-  const state = searchParams.get('state')
-
-  useEffect(() => {
-    if (code || state) {
-      router.push('/')
-      router.refresh()
-    }
-  }, [code, state, router])
-
-  function resetToken() {
-    setToken('')
-  }
-
-  return {
-    isLogin,
-    token,
-    resetToken,
+function getLocalStorageToken() {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token') || ''
+  } else {
+    return ''
   }
 }
 
-const AuthContext = createContext<AuthContextType | null>(null)
-
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [user, setUser] = useState<User | null>({
-    name: '林蓋瑞',
-    email: 'gary@gmail.com',
-    password: 'a123456789',
-    api_token: 'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
-    id: 10000,
-  })
-  //temp use testing token
-  typeof window !== 'undefined' &&
-    localStorage.setItem(
-      'token',
-      'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
-    )
-
   const router = useRouter()
-  const { isLogin, token, resetToken } = useLogin()
 
-  const handleLogin = (user: User) => {
-    setUser(user)
+  const [user, setUser] = useState<User | null>(null)
+
+  const [token, setToken] = useState(getLocalStorageToken())
+
+  const isLogin = !!token
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    } else {
+      // TODO: fetch user data
+      setUser({
+        name: '林蓋瑞',
+        email: 'gary@gmail.com',
+        password: 'a123456789',
+        api_token: 'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
+        id: 10000,
+      })
+    }
+  }, [token, router])
+
+  const handleLogin = async ({ email, password }: UserInfo) => {
+    try {
+      const response = await login({ email, password })
+      const data = response.data
+      const apiToken = data?.api_token
+
+      if (!apiToken) {
+        throw new Error(response.resultmessage)
+      } else {
+        setToken(apiToken)
+        localStorage.setItem('token', apiToken)
+        router.push('/')
+      }
+    } catch (error) {
+      console.error('login error: ', error)
+    }
+  }
+
+  const handleRegister = async ({ email, password }: UserInfo) => {
+    try {
+      const response = await register({ email, password })
+      const data = response.data
+      const apiToken = data?.api_token
+
+      if (!apiToken) {
+        throw new Error(response.resultmessage)
+      } else {
+        setToken(apiToken)
+        localStorage.setItem('token', apiToken)
+        router.push('/')
+      }
+    } catch (error) {
+      console.error('login error: ', error)
+    }
   }
 
   const handleLogout = () => {
     setUser(null)
-    resetToken()
+    setToken('')
+    localStorage.removeItem('token')
     router.push('/login')
   }
-
-  console.log('token: ', token)
 
   return (
     <AuthContext.Provider
@@ -92,6 +110,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         user,
         token,
         isLogin,
+        handleRegister,
         handleLogin,
         handleLogout,
       }}

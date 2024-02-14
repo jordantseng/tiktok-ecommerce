@@ -1,14 +1,30 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
+import { FormEvent, useState } from 'react'
+import { ChevronRight, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import PrevButton from '@/components/PrevButton'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
 
 const Register = () => {
   const router = useRouter()
+  const { handleRegister } = useAuth()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    setIsSubmitting(true)
+    await handleRegister({ email, password })
+    setIsSubmitting(false)
+  }
+
   return (
     <main className="flex min-h-screen flex-col bg-white">
       <header className="sticky top-0 z-10 flex min-h-15 items-center justify-between bg-white p-4">
@@ -19,33 +35,31 @@ const Register = () => {
         <div className="flex flex-col gap-4">
           <span className="text-xl font-bold">註冊</span>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-            }}
-            className="flex flex-col gap-6"
-          >
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div>
               <Input
                 className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                placeholder="請輸入用戶名稱"
+                placeholder="請輸入 Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Input
                 className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                placeholder="請輸入手機號碼"
+                placeholder="請輸入密碼"
+                type="password"
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <div className="relative flex items-center">
-                <Input
-                  className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                  placeholder="請輸入手機驗證碼"
-                />
-                <span className="absolute right-0 cursor-pointer bg-white text-gray-500 transition-all hover:text-primary">
-                  獲取驗證碼
-                </span>
-              </div>
             </div>
-            <Button type="submit" variant="primary" className="rounded-full">
-              註冊
+            <Button
+              disabled={!email || !password}
+              type="submit"
+              variant="primary"
+              className="rounded-full"
+            >
+              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '註冊'}
             </Button>
           </form>
 
