@@ -1,5 +1,5 @@
 'use client'
-import { UserInfo, login, register } from '@/services/auth'
+import { LoginInfo, login, register } from '@/services/auth'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 
@@ -7,8 +7,8 @@ type AuthContextType = {
   user: User | null
   token: string
   isLogin: boolean
-  handleRegister: (user: UserInfo) => void
-  handleLogin: (user: UserInfo) => void
+  handleRegister: (loginInfo: LoginInfo) => void
+  handleLogin: (loginInfo: LoginInfo) => void
   handleLogout: (user: User) => void
 }
 
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }, [token, router])
 
-  const handleLogin = async ({ email, password }: UserInfo) => {
+  const handleLogin = async ({ email, password }: LoginInfo) => {
     try {
       const response = await login({ email, password })
       const data = response.data
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const handleRegister = async ({ email, password }: UserInfo) => {
+  const handleRegister = async ({ email, password }: LoginInfo) => {
     try {
       const response = await register({ email, password })
       const data = response.data

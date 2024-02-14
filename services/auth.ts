@@ -5,12 +5,12 @@ type LoginRes = ApiRes<{
   api_token: string
 }>
 
-export type UserInfo = {
+export type LoginInfo = {
   email: string
   password: string
 }
 
-export const login = async ({ email, password }: UserInfo): Promise<LoginRes> => {
+export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
   const res = await fetch(`${config.api}/api/member/login/store`, {
     method: 'POST',
     headers: {
@@ -24,7 +24,7 @@ export const login = async ({ email, password }: UserInfo): Promise<LoginRes> =>
   return data
 }
 
-export const register = async ({ email, password }: UserInfo): Promise<LoginRes> => {
+export const register = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
   const res = await fetch(`${config.api}/api/member/create/store`, {
     method: 'POST',
     headers: {
