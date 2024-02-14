@@ -1,7 +1,7 @@
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
-type LoginRes = ApiRes<{
+export type LoginRes = ApiRes<{
   api_token: string
 }>
 

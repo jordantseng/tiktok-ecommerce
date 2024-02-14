@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
+import { useToast } from '@/components/ui/use-toast'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -23,6 +24,7 @@ const formSchema = z.object({
 })
 
 const Register = () => {
+  const { toast } = useToast()
   const router = useRouter()
   const { handleRegister } = useAuth()
 
@@ -42,8 +44,16 @@ const Register = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    await handleRegister(values)
-    setIsSubmitting(false)
+    handleRegister(values)
+      .catch((error: string) => {
+        toast({
+          variant: 'destructive',
+          description: error.toString(),
+        })
+      })
+      .finally(() => {
+        setIsSubmitting(false)
+      })
   }
 
   return (
