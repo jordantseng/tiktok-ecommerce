@@ -1,27 +1,48 @@
 'use client'
 
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { ChevronRight, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import PrevButton from '@/components/PrevButton'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/AuthContext'
+import { Form, FormField, FormMessage } from '@/components/ui/form'
+
+const formSchema = z.object({
+  email: z.string().email({
+    message: '請輸入正確的 Email 格式',
+  }),
+  password: z.string().min(8, {
+    message: '密碼長度至少 8 個字元',
+  }),
+})
 
 const Register = () => {
   const router = useRouter()
   const { handleRegister } = useAuth()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  const email = form.watch('email')
+  const password = form.watch('password')
+  const errors = form.formState.errors
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    await handleRegister({ email, password })
+    await handleRegister(values)
     setIsSubmitting(false)
   }
 
@@ -35,33 +56,49 @@ const Register = () => {
         <div className="flex flex-col gap-4">
           <span className="text-xl font-bold">註冊</span>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <div>
-              <Input
-                className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                placeholder="請輸入 Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Input
-                className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                placeholder="請輸入密碼"
-                type="password"
-                minLength={8}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <Button
-              disabled={!email || !password}
-              type="submit"
-              variant="primary"
-              className="rounded-full"
-            >
-              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '註冊'}
-            </Button>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
+              <div>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <>
+                      <Input
+                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                        placeholder="請輸入 Email"
+                        {...field}
+                      />
+                      {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
+                    </>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <>
+                      <Input
+                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                        placeholder="請輸入密碼"
+                        type="password"
+                        {...field}
+                      />
+                      {errors.password && <FormMessage>{errors.password.message}</FormMessage>}
+                    </>
+                  )}
+                />
+              </div>
+              <Button
+                disabled={!email || !password}
+                type="submit"
+                variant="primary"
+                className="rounded-full"
+              >
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '註冊'}
+              </Button>
+            </form>
+          </Form>
 
           <div className="flex w-full">
             <div
