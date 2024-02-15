@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useWebSettingsContext } from '@/context/InitailContext'
+import { useWebSettingsContext } from '@/context/InitialContext'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
 import React from 'react'
 

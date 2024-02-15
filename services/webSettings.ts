@@ -1,7 +1,7 @@
 import config from '@/lib/configs'
-import { ApiRes, webSettingsData } from '@/types/common'
+import { ApiRes, WebSettingsData } from '@/types/common'
 
-type WebSettingsRes = ApiRes<webSettingsData>
+type WebSettingsRes = ApiRes<WebSettingsData>
 
 export const getWebSettings = async (): Promise<WebSettingsRes> => {
   const res = await fetch(`${config.api}/api/web/show`, {

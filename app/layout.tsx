@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
-import { WebSettingsProvider } from '@/context/InitailContext'
+import { WebSettingsProvider } from '@/context/InitialContext'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -37,6 +38,7 @@ export default function RootLayout({
                 )}
               >
                 <div className="min-h-screen w-full">{children}</div>
+                <Toaster />
               </body>
             </AddressProvider>
           </CartProvider>
