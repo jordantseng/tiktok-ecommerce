@@ -3,17 +3,17 @@
 import { ShoppingCartIcon } from 'lucide-react'
 
 import { Button } from './ui/button'
-import { useCartContext } from '@/context/CartContext'
 import { CartItem } from '@/types/common'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   item: CartItem
 }
 
 const CartButton = ({ item }: Props) => {
-  const { handleAddToCart } = useCartContext()
+  const router = useRouter()
   // TODO: this component should use context api
-  const handleClick = () => handleAddToCart(item)
+  const handleClick = () => router.push(`/products/${item.id}`)
 
   return (
     <Button

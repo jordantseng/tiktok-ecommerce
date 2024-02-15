@@ -40,8 +40,8 @@ const MerchandiseCard = ({
         )}
       </CardHeader>
       <CardContent>
-        <CardTitle className="truncate">{title}</CardTitle>
-        <CardDescription className="mt-4">
+        <CardTitle className="truncate pb-2">{title}</CardTitle>
+        <CardDescription className="mt-4 truncate py-1">
           {tags.map((opt) => (
             <span key={opt} className="mr-2 rounded border border-primary p-1 text-xs text-primary">
               {opt}
