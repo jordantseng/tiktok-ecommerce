@@ -49,12 +49,14 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify([
-      {
-        productitem_id: id,
-        qty: count || 1,
-      },
-    ]),
+    body: JSON.stringify({
+      data: [
+        {
+          productitem_id: id,
+          qty: count || 1,
+        },
+      ],
+    }),
     next: { revalidate: 60 * 5 },
   })
 
@@ -70,12 +72,14 @@ export const updatePurchase = async (id: number, online: number): Promise<CartsR
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify([
-      {
-        id,
-        online,
-      },
-    ]),
+    body: JSON.stringify({
+      data: [
+        {
+          id,
+          online,
+        },
+      ],
+    }),
     next: { revalidate: 60 * 5 },
   })
 
