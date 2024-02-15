@@ -27,6 +27,22 @@ const ConfirmBillPage = () => {
     router.push('/confirm-order/success')
   }
 
+  const handleLabel = (val: string) => {
+    const map: Record<string, string> = {
+      'pay-when-get': '貨到付款',
+      store: '超商取貨付款',
+    }
+    if (webSettingsData?.paykind[val] === '信用卡付款') {
+      return '信用卡一次付清'
+    } else if (val.indexOf('atm') > -1) {
+      return 'ATM轉帳'
+    } else if (!webSettingsData?.paykind[val] && map[val]) {
+      return map[val]
+    } else {
+      return webSettingsData?.paykind[val] ?? 'Unknown payment method'
+    }
+  }
+
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
@@ -74,7 +90,7 @@ const ConfirmBillPage = () => {
             </div>
             <div className="flex items-center justify-between border-b py-2">
               <span>付款方式</span>
-              <span>{payStatus}</span>
+              <span>{handleLabel(payStatus || '')}</span>
             </div>
             <div className="mb-2 flex items-center justify-between border-b py-2">
               <span>收件人</span>
