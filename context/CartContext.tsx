@@ -1,5 +1,5 @@
 'use client'
-import { addToCart, deleteFromCart, getMyCart } from '@/services/cart'
+import { addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
@@ -74,8 +74,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setItems((draft) => draft.filter((opt) => opt.id !== id))
   }
 
-  const updateSelected = (id: number, isSelect: boolean) =>
+  const updateSelected = (id: number, isSelect: boolean) => {
     setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt)))
+    // updatePurchase(id, isSelect ? 1 : 0)
+  }
 
   const updateItemAmount = (id: number, amount: number) =>
     setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, amount } : opt)))

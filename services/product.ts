@@ -1,7 +1,7 @@
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
-type ProductData = {
+export type ProductData = {
   title: string
   id: number
   price: number

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
-import { WebSettingsProvider } from '@/context/InitialContext'
+import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({

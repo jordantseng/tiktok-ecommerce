@@ -105,6 +105,12 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',
+    remail: order.remail || '',
+    rname: order.rname || '',
+    rtel: order.rtel || '',
+    rcity1: order.rcity1 || '',
+    rcity2: order.rcity2 || '',
+    raddress: order.raddress || '',
   }
 
   // Append input elements to the form
@@ -121,14 +127,14 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   document.body.removeChild(form)
 }
 
-export const previewDiscont = async (order: OrderData): Promise<void> => {
+export const previewDiscont = async (code: string): Promise<void> => {
   const res = await fetch(`${config.api}/api/membercenter/ordergroup/review`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify({ discount: order.discount || '' }),
+    body: JSON.stringify({ discount: code || '' }),
     next: { revalidate: 60 * 5 },
   })
 

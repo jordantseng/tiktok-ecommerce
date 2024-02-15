@@ -7,12 +7,14 @@ import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Item, useCartContext } from '@/context/CartContext'
+import { ProductData, getProducts } from '@/services/product'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
+  const [recommand, setRecommand] = useImmer<ProductData[]>([])
   const { items, updateSelected, getSelectedCartItems, updateItemAmount } = useCartContext()
 
   const handleCheckAll = (res: boolean) => {
@@ -25,6 +27,10 @@ const ShoppingCartPage = () => {
     })
     setTotal(sum)
   }
+
+  useEffect(() => {
+    getProducts({ page: 1, pageSize: 2 }).then(({ data }) => setRecommand(data.data))
+  }, [])
 
   useEffect(() => {
     const arr = getSelectedCartItems()
@@ -61,7 +67,7 @@ const ShoppingCartPage = () => {
   return (
     <main className="mb-16 h-full min-h-screen">
       <Title title="購物車" />
-      <div className="flex w-full flex-col items-center bg-default">
+      <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (
@@ -87,23 +93,18 @@ const ShoppingCartPage = () => {
           ✨為你推薦✨
         </div>
         <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-4 max-[320px]:block">
-          <MerchandiseCard
-            id={12345}
-            className="h-auto w-[50%] max-[320px]:w-full"
-            imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-            title="PS5"
-            tags={['game', 'tv']}
-            price={18800}
-            specialPrice={13000}
-          />
-          <MerchandiseCard
-            id={55555}
-            className="h-auto w-[50%] max-[320px]:w-full"
-            imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-            title="PS5 GGGHHGHGHGHGHGHGHGHGHGHG"
-            tags={['game', 'tv']}
-            price={18800}
-          />
+          {recommand.map((opt) => (
+            <MerchandiseCard
+              id={opt.id}
+              key={opt.id}
+              className="h-auto w-[50%] max-[320px]:w-full"
+              imgUrl={opt.imgs[0]}
+              title={opt.title}
+              tags={opt.tags.split(',')}
+              price={opt.price}
+              specialPrice={opt.marketprice}
+            />
+          ))}
         </div>
         <div className="mb-[18px] flex w-full justify-between bg-white p-6">
           <div className="text-md flex items-center space-x-2">

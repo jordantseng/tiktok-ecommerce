@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useWebSettingsContext } from '@/context/InitialContext'
+import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
 import React from 'react'
 
@@ -81,7 +81,7 @@ const PaymentSetting = ({ onChange }: Props) => {
           {Object.keys(webSettingsData?.paykind || {}).map(
             (opt: string) =>
               opt.indexOf('atm') > 0 && (
-                <SelectItem key={opt} value="ecpay-atm">
+                <SelectItem key={opt} value={opt}>
                   <div className="flex items-center space-x-2">
                     <CircleDollarSignIcon />
                     <span>ATM轉帳</span>
