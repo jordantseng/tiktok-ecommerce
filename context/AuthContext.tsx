@@ -1,7 +1,9 @@
 'use client'
-import { LoginInfo, LoginRes, login, register } from '@/services/auth'
-import { useRouter } from 'next/navigation'
+
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
+
+import { LoginInfo, User, getUser, login, register } from '@/services/auth'
+import { useRouter } from 'next/navigation'
 
 type AuthContextType = {
   user: User | null
@@ -10,21 +12,6 @@ type AuthContextType = {
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
   handleLogout: (user: User) => void
-}
-
-type User = {
-  id?: number
-  tiktokid?: string
-  lineid?: string
-  online?: number
-  domain_id?: number
-  img?: string
-  api_token?: string
-  tel?: string
-  name?: string
-  mobile?: string
-  password?: string
-  email?: string
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -50,14 +37,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     if (!token) {
       router.push('/login')
     } else {
-      // TODO: fetch user data
-      setUser({
-        name: '林蓋瑞',
-        email: 'gary@gmail.com',
-        password: 'a123456789',
-        api_token: 'f14dd61a50bfbf1f640cc0041667c4746e75d829ae65ce210f0584b1c96819c2',
-        id: 10000,
-      })
+      getUser()
+        .then((res) => setUser(res.data))
+        .catch((error) => {
+          console.error('getUser error: ', error)
+        })
     }
   }, [token, router])
 
