@@ -16,7 +16,7 @@ function getPageNumbers(isMobile: boolean, currentPage: number, totalPages: numb
   const showPrevMore = isMobile ? currentPage >= 4 : currentPage >= 5
   const showPostMore = currentPage <= totalPages - 4
 
-  if (totalPages <= 7) {
+  if (totalPages <= 5) {
     return Array.from({ length: totalPages }, (_, i) => i + 1)
   }
 
@@ -49,18 +49,26 @@ const Pagination = ({ page, totalItems, itemsPerPage }: PaginationProps) => {
   const isLastPage = currentPage === totalPages
   const pageNumbers = getPageNumbers(isMobile, currentPage, totalPages)
 
+  const navigateToPage = (
+    page: number,
+    searchParams: URLSearchParams,
+    router: any,
+    setCurrentPage: Function,
+  ) => {
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.set('page', String(page))
+
+    setCurrentPage(page)
+
+    router.push(`/products?${newSearchParams.toString()}`)
+  }
+
   const handlePrevClick = () => {
     if (isFirstPage) {
       return
     }
 
-    const newSearchParams = new URLSearchParams(searchParams)
-
-    newSearchParams.set('page', String(currentPage - 1))
-
-    setCurrentPage((page) => page - 1)
-
-    router.push(`/products?${newSearchParams.toString()}`)
+    navigateToPage(currentPage - 1, searchParams, router, setCurrentPage)
   }
 
   const handleNextClick = () => {
@@ -68,13 +76,7 @@ const Pagination = ({ page, totalItems, itemsPerPage }: PaginationProps) => {
       return
     }
 
-    const newSearchParams = new URLSearchParams(searchParams)
-
-    newSearchParams.set('page', String(currentPage + 1))
-
-    setCurrentPage((page) => page + 1)
-
-    router.push(`/products?${newSearchParams.toString()}`)
+    navigateToPage(currentPage + 1, searchParams, router, setCurrentPage)
   }
 
   const handlePageClick = (
@@ -87,13 +89,7 @@ const Pagination = ({ page, totalItems, itemsPerPage }: PaginationProps) => {
     }
 
     if (typeof pageNum === 'number') {
-      const newSearchParams = new URLSearchParams(searchParams)
-
-      newSearchParams.set('page', String(pageNum))
-
-      router.push(`/products?${newSearchParams.toString()}`)
-
-      setCurrentPage(pageNum)
+      navigateToPage(pageNum, searchParams, router, setCurrentPage)
     }
   }
 
