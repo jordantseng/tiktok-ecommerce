@@ -46,7 +46,7 @@ const ProductPage = () => {
           />
         </div>
       </Card>
-      <nav className="h-22 fixed bottom-0 z-30 flex w-full justify-around bg-white p-2">
+      <nav className="h-22 fixed bottom-0 z-30 flex w-full max-w-md justify-around bg-white p-2">
         <Button className="w-full rounded-3xl bg-primary">加入購物車</Button>
       </nav>
     </main>

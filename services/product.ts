@@ -26,6 +26,7 @@ type GetProductsRes = ApiRes<{
   current_page: number
   data: ProductData[]
   total: number
+  last_page: number
 }>
 
 type getProductsArgs = {
@@ -34,6 +35,8 @@ type getProductsArgs = {
   search?: string
   sortName?: string
   sortType?: string
+  kindheadId?: number
+  kindmainId?: number
 }
 
 export const getProducts = async ({
@@ -42,6 +45,8 @@ export const getProducts = async ({
   search = '',
   sortName = 'hits',
   sortType = 'desc',
+  kindheadId,
+  kindmainId,
 }: getProductsArgs): Promise<GetProductsRes> => {
   const res = await fetch(`${config.api}/api/product`, {
     method: 'POST',
@@ -57,6 +62,8 @@ export const getProducts = async ({
       sorttype: sortType,
       searchstartdate: '2021-01-01',
       searchenddate: '2099-12-31',
+      ...(kindheadId && { kindhead_id: kindheadId }),
+      ...(kindmainId && { kindmain_id: kindmainId }),
     }),
     next: { revalidate: 60 * 5 },
   })

@@ -5,17 +5,18 @@ import SubSidebar from '@/app/products/SubSidebar'
 import { cn } from '@/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-type ProductListProps = PropsWithChildren<{ subSidebarItems: any[] }>
+type ProductListProps = PropsWithChildren<{ subSidebarItems: { id: number; title: string }[] }>
 
 const ProductList = ({ subSidebarItems, children }: ProductListProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const handleNavigation = (title: string) => {
+  const handleNavigation = (title: number) => {
     const params = new URLSearchParams(searchParams)
 
-    params.set('subType', title)
+    params.set('page', '1')
+    params.set('subType', String(title))
 
     router.push(`/products/?${params.toString()}`)
   }

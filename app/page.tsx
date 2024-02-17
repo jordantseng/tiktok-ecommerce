@@ -7,13 +7,13 @@ import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { getBanners } from '@/services/banner'
-import { getCategoryTypes } from '@/services/categoryType'
+import { getCategories } from '@/services/category'
 import { getProducts } from '@/services/product'
 
 export default async function HomePage() {
   const [{ data: banners }, { data: categoryTypes }, { data: products }] = await Promise.all([
     getBanners(),
-    getCategoryTypes(),
+    getCategories(),
     getProducts({ page: 1, pageSize: 4 }),
   ])
 
@@ -41,7 +41,7 @@ export default async function HomePage() {
           ))}
         </div>
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-4">
           {products.data.map((product) => (
             <MerchandiseCard
               id={product.id}

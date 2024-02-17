@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 import Sidebar from '@/app/products/Sidebar'
 import ProductList from '@/app/products/ProductList'
@@ -6,30 +7,56 @@ import NavBar from '@/components/NavBar'
 import PrevButton from '@/components/PrevButton'
 import Searchbar from '@/components/Searchbar'
 import MerchandiseCard from '@/components/MerchandiseCard'
+import Pagination from '@/components/Pagination'
+import { getProducts } from '@/services/product'
+import { getCategories, getSubCategories } from '@/services/category'
 
-const sidebarItems = [
-  { id: 1, title: '蔬菜水果' },
-  { id: 2, title: '肉禽蛋品' },
-  { id: 3, title: '海鮮水產' },
-  { id: 4, title: '素食冷凍' },
-  { id: 5, title: '柴米油鹽' },
-]
-
-const subSidebarItems = [
-  { id: 1, title: '所有' },
-  { id: 2, title: '熱帶水果' },
-  { id: 3, title: '櫻桃莓類' },
-  { id: 4, title: '櫻桃莓類' },
-  { id: 5, title: '櫻桃莓類' },
-  { id: 6, title: '櫻桃莓類' },
-]
+const PAGE_SIZE = 1
 
 type ProductsPageProps = {
-  searchParams: { type: string }
+  searchParams: { page: string; type: string; subType: string; q: string }
 }
 
-const ProductsPage = ({ searchParams }: ProductsPageProps) => {
-  const { type } = searchParams
+const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
+  const { page, type, subType, q } = searchParams
+
+  const [{ data: products }, { data: categories }] = await Promise.all([
+    getProducts({
+      page: Number(page),
+      pageSize: PAGE_SIZE,
+      kindheadId: Number(type),
+      kindmainId: Number(subType),
+      // TODO: server bug
+      search: q,
+    }),
+    getCategories(),
+  ])
+
+  const category = categories.data.find(({ id }) => id === Number(type)) || categories.data[0] || []
+
+  if (!type) {
+    redirect(`products?page=1&type=${category.id}`)
+  }
+
+  const { data: subCategories } = await getSubCategories(category.id)
+
+  if (Number(page) > products.last_page) {
+    let url = 'products?'
+
+    if (page) {
+      url += `page=${products.last_page}&`
+    }
+
+    if (type) {
+      url += `type=${type}&`
+    }
+
+    if (subType) {
+      url += `subType=${subType}&`
+    }
+
+    redirect(url)
+  }
 
   return (
     <main className="mb-16 min-h-screen bg-default">
@@ -38,23 +65,24 @@ const ProductsPage = ({ searchParams }: ProductsPageProps) => {
         <Searchbar />
       </header>
       <div className="flex min-h-screen w-full">
-        <Sidebar activeType={type} items={sidebarItems} />
-        <ProductList subSidebarItems={subSidebarItems}>
-          {Array(5)
-            .fill(null)
-            .map((_, index) => (
-              <Link href={`/products/${1}`} key={index}>
-                <MerchandiseCard
-                  id={1234}
-                  className="w-full border-none shadow-none"
-                  imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                  title="PS5"
-                  tags={['game', 'tv']}
-                  price={18800}
-                />
-                <hr className="mx-auto flex w-11/12" />
-              </Link>
-            ))}
+        <Sidebar activeType={type} items={categories.data} />
+        <ProductList subSidebarItems={subCategories}>
+          {products.data.map((product) => (
+            <Link href={`/products/${product.id}`} key={product.id}>
+              <MerchandiseCard
+                id={product.id}
+                className="w-full border-none shadow-none"
+                imgUrl={product.imgs[0]}
+                title={product.title}
+                tags={product.tags.split(',')}
+                price={product.price}
+              />
+              <hr className="mx-auto flex w-11/12" />
+            </Link>
+          ))}
+          <div className="flex items-center justify-center p-4">
+            <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
+          </div>
         </ProductList>
       </div>
       <NavBar />
