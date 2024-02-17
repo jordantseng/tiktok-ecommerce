@@ -39,8 +39,8 @@ type getProductsArgs = {
   search?: string
   sortName?: string
   sortType?: string
-  kindheadId?: number
-  kindmainId?: number
+  kindheadId?: string
+  kindmainId?: string
 }
 
 export const getProducts = async ({

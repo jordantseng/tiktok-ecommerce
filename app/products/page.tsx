@@ -24,9 +24,8 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
     getProducts({
       page: Number(page),
       pageSize: PAGE_SIZE,
-      kindheadId: Number(type),
-      kindmainId: Number(subType),
-      // TODO: server bug
+      kindheadId: type,
+      kindmainId: subType,
       search: q,
     }),
     getCategories(),
@@ -37,8 +36,6 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   if (!type) {
     redirect(`products?page=1&type=${category.id}`)
   }
-
-  const { data: subCategories } = await getSubCategories(category.id)
 
   if (Number(page) > products.last_page) {
     let url = 'products?'
@@ -57,6 +54,8 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
 
     redirect(url)
   }
+
+  const { data: subCategories } = await getSubCategories(category.id)
 
   return (
     <main className="mb-16 min-h-screen bg-default">
