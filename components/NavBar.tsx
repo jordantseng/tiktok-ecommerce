@@ -33,7 +33,7 @@ const NavBar = () => {
   ]
 
   return (
-    <nav className="h-22 fixed bottom-0 z-50 flex w-full justify-around bg-white">
+    <nav className="h-22 fixed bottom-0 z-50 flex w-full max-w-md justify-around bg-white">
       {navItems.map((item, index) => {
         return (
           <Link key={index} href={item.href}>

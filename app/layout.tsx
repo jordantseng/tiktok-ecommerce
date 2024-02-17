@@ -32,7 +32,7 @@ export default function RootLayout({
             <AddressProvider>
               <body
                 className={cn(
-                  'mx-auto min-h-screen font-sans antialiased',
+                  'mx-auto min-h-screen max-w-md font-sans antialiased',
                   inter.variable,
                   inter.className,
                 )}

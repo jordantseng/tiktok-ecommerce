@@ -17,12 +17,12 @@ const BottomDialog = ({ title, children, className = '', onClose }: BottomDialog
       <div className="fixed bottom-0 h-screen w-full bg-black/80" onClick={onClose} />
       <form
         className={cn(
-          'fixed bottom-0 mx-auto h-[280px] w-full rounded-t-xl bg-white p-4',
+          'fixed bottom-0 mx-auto h-[280px] w-full max-w-md rounded-t-xl bg-white p-4',
           className,
         )}
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className="flex items-center ">
+        <div className="flex items-center">
           <h4 className="mb-2 flex flex-1 scroll-m-20 justify-center text-lg font-normal tracking-tight">
             {title}
           </h4>

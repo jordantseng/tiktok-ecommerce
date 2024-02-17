@@ -41,7 +41,7 @@ export default async function HomePage() {
           ))}
         </div>
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-4">
           {products.data.map((product) => (
             <MerchandiseCard
               id={product.id}
