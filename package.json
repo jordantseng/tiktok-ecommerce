@@ -42,6 +42,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "use-immer": "^0.9.0",
+    "usehooks-ts": "^2.14.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
