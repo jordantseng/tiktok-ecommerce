@@ -17,7 +17,7 @@ const NavBar = () => {
     },
     {
       title: '分類',
-      href: '/products',
+      href: '/products?page=1',
       Icon: <ArrowDownWideNarrowIcon className="h-10 w-10 p-2" />,
     },
     {
@@ -35,12 +35,13 @@ const NavBar = () => {
   return (
     <nav className="h-22 fixed bottom-0 z-50 flex w-full max-w-md justify-around bg-white">
       {navItems.map((item, index) => {
+        const splitedPathname = item.href.split('?')[0]
         return (
           <Link key={index} href={item.href}>
             <IconCard
               title={item.title}
               Icon={item.Icon}
-              isActive={item.href === '/' ? pathName === '/' : pathName.includes(item.href)}
+              isActive={item.href === '/' ? pathName === '/' : pathName.includes(splitedPathname)}
             />
           </Link>
         )

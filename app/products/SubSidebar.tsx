@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils'
 
 type SubSidebarProps = {
   isOpen: boolean
-  subSidebarItems: any // TODO: need backend data
-  onClick: (title: string) => void
+  subSidebarItems: { id: number; title: string }[]
+  onClick: (title: number) => void
   onSidebarOpen: () => void
 }
 
@@ -18,8 +18,6 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
 
   const subType = searchParams.get('subType')
 
-  console.log(subType)
-
   return (
     <div className="sticky top-[68px] z-20">
       <div className="relative z-30 flex h-14 items-center justify-between gap-4 bg-white px-4">
@@ -27,15 +25,14 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
           <h4 className="flex items-center text-sm font-normal tracking-tight">全部分類</h4>
         ) : (
           <div className="flex gap-2 overflow-x-scroll">
-            {/* TODO: need backend data */}
-            {subSidebarItems.map((item: any) => (
+            {subSidebarItems.map((item) => (
               <Badge
                 key={item.id}
-                variant={subType === item.title ? 'primary' : 'secondary'}
+                variant={subType === String(item.id) ? 'primary' : 'secondary'}
                 className={cn('text-nowrap px-2 py-1 text-xs', {
-                  'font-semibold': subType === item.title,
+                  'font-semibold': subType === String(item.id),
                 })}
-                onClick={() => onClick(item.title)}
+                onClick={() => onClick(item.id)}
               >
                 {item.title}
               </Badge>
@@ -48,15 +45,14 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
       </div>
       {isOpen && (
         <div className="absolute top-14 grid w-full grid-cols-2 gap-4 bg-white px-4 pb-4 md:grid-cols-3">
-          {/* TODO: need backend data */}
-          {subSidebarItems.map((item: any) => (
+          {subSidebarItems.map((item) => (
             <Badge
               key={item.id}
-              variant={subType === item.title ? 'primary' : 'secondary'}
+              variant={subType === String(item.id) ? 'primary' : 'secondary'}
               className={cn('text-nowrap px-2 py-1 text-xs', {
-                'font-semibold': subType === item.title,
+                'font-semibold': subType === String(item.id),
               })}
-              onClick={() => onClick(item.title)}
+              onClick={() => onClick(item.id)}
             >
               {item.title}
             </Badge>
