@@ -15,7 +15,8 @@ import { useImmer } from 'use-immer'
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
   const [recommand, setRecommand] = useImmer<ProductData[]>([])
-  const { items, updateSelected, getSelectedCartItems, updateItemAmount } = useCartContext()
+  const { items, updateSelected, getSelectedCartItems, updateItemAmount, handleRemoveFromCart } =
+    useCartContext()
 
   const handleCheckAll = (res: boolean) => {
     let sum = 0
@@ -30,7 +31,7 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     getProducts({ page: 1, pageSize: 2 }).then(({ data }) => setRecommand(data.data))
-  }, [])
+  }, [setRecommand])
 
   useEffect(() => {
     const arr = getSelectedCartItems()
@@ -84,6 +85,7 @@ const ShoppingCartPage = () => {
                 specialPrice={opt.specialPrice}
                 onSelect={(res) => handleSelect(opt, res)}
                 onChange={(val) => handlePriceChange(opt, val)}
+                onDelete={(id) => handleRemoveFromCart(id)}
               />
             ))}
           </div>

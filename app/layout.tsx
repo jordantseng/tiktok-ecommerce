@@ -30,14 +30,8 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <AddressProvider>
-              <body
-                className={cn(
-                  'mx-auto min-h-screen max-w-md font-sans antialiased',
-                  inter.variable,
-                  inter.className,
-                )}
-              >
-                <div className="min-h-screen w-full">{children}</div>
+              <body className={cn('font-sans antialiased', inter.variable, inter.className)}>
+                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
                 <Toaster />
               </body>
             </AddressProvider>

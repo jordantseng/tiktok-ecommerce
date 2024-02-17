@@ -14,6 +14,7 @@ type Props = CartItem & {
   className?: string
   onChange?: (value: number) => void
   onSelect?: (value: boolean) => void
+  onDelete?: (value: number) => void
 }
 
 const CartItem = ({
@@ -29,9 +30,10 @@ const CartItem = ({
   specialPrice,
   onSelect,
   onChange,
+  onDelete,
 }: Props) => {
   return (
-    <div className="flex w-auto flex-col p-2">
+    <div className="flex w-auto flex-col border-b p-2">
       {!editable && (
         <div className="ml-auto">
           {tags.map((opt) => (
@@ -46,17 +48,11 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn('m-2 flex h-[80px] items-center max-[320px]:m-0', {
+          className={cn('m-2 flex h-[80px] w-full max-w-[85px] items-center max-[320px]:m-0', {
             'bg-slate-50': !editable,
           })}
         >
-          <Image
-            className="max-w-[85px] max-[320px]:max-w-[65px]"
-            width={300}
-            height={300}
-            src={imgUrl || ''}
-            alt={`product-${id}`}
-          />
+          <Image width={300} height={300} src={imgUrl || ''} alt={`product-${id}`} />
         </div>
 
         <Card
@@ -123,7 +119,7 @@ const CartItem = ({
             )}
           </CardContent>
         </Card>
-        {editable && <ConfirmDeleteDialog onConfirm={() => {}} />}
+        {editable && <ConfirmDeleteDialog onConfirm={() => onDelete && onDelete(id)} />}
       </div>
     </div>
   )

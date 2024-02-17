@@ -29,15 +29,7 @@ const MerchandiseCard = ({
   return (
     <Card className={className}>
       <CardHeader>
-        {imgUrl && (
-          <Image
-            width={300}
-            height={300}
-            className="lg:max-h-[200px] lg:max-w-[250px]"
-            src={imgUrl}
-            alt={`product-${id}`}
-          />
-        )}
+        {imgUrl && <Image height={300} width={300} src={imgUrl} alt={`product-${id}`} />}
       </CardHeader>
       <CardContent>
         <CardTitle className="truncate pb-2">{title}</CardTitle>
