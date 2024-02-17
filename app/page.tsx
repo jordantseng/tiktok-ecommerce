@@ -7,13 +7,13 @@ import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { getBanners } from '@/services/banner'
-import { getCategoryTypes } from '@/services/categoryType'
+import { getCategories } from '@/services/category'
 import { getProducts } from '@/services/product'
 
 export default async function HomePage() {
   const [{ data: banners }, { data: categoryTypes }, { data: products }] = await Promise.all([
     getBanners(),
-    getCategoryTypes(),
+    getCategories(),
     getProducts({ page: 1, pageSize: 4 }),
   ])
 
