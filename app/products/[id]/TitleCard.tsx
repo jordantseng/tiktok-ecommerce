@@ -32,7 +32,7 @@ const TitleCard = ({ title, price, salePrice, tags }: TitleCardProps) => {
             ))}
           </div>
         </div>
-        <h3 className="line-clamp-2 h-14 text-xl font-semibold tracking-wide">{title}</h3>
+        <h3 className="line-clamp-2 text-xl font-semibold tracking-wide">{title}</h3>
       </CardContent>
     </Card>
   )

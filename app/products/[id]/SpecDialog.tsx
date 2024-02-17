@@ -8,11 +8,15 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Counter from '@/components/Counter'
-import { cn } from '@/lib/utils'
 import BottomDialog from '@/components/BottomDialog'
+import { cn } from '@/lib/utils'
 
-const SpecDialog = () => {
-  const [sizes, updateSizes] = useImmer(['S', 'M', 'L', 'XL'])
+type SpecDialogProps = {
+  specs: { title: string }[]
+}
+
+const SpecDialog = ({ specs }: SpecDialogProps) => {
+  const [sizes, updateSizes] = useImmer(specs.map((spec) => spec?.title) || [])
   const [selectedSize, setSelectedSize] = useState<string>('')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [confirmedItem, updateConfirmedItem] = useImmer<{ size: string; count: number }>({

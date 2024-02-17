@@ -11,7 +11,7 @@ export type ProductData = {
   location: string
   tags: string
   star: number
-  imgs: string
+  imgs: string[]
   number: string
   kindmain_id: number
   kindhead_id: number
@@ -20,6 +20,8 @@ export type ProductData = {
   begindate: string
   updated_at: string
   buycount: number
+  body: string
+  specs: { title: string }[]
 }
 
 type GetProductsRes = ApiRes<{
@@ -28,6 +30,8 @@ type GetProductsRes = ApiRes<{
   total: number
   last_page: number
 }>
+
+type GetProductRes = ApiRes<ProductData>
 
 type getProductsArgs = {
   page: number
@@ -64,6 +68,24 @@ export const getProducts = async ({
       searchenddate: '2099-12-31',
       ...(kindheadId && { kindhead_id: kindheadId }),
       ...(kindmainId && { kindmain_id: kindmainId }),
+    }),
+    next: { revalidate: 60 * 5 },
+  })
+
+  const data = await res.json()
+
+  return data
+}
+
+export const getProduct = async (id: number): Promise<GetProductRes> => {
+  const res = await fetch(`${config.api}/api/product/show`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
+    },
+    body: JSON.stringify({
+      id,
     }),
     next: { revalidate: 60 * 5 },
   })
