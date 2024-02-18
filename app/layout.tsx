@@ -8,6 +8,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
 import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
+import { RecommendsProvider } from '@/context/RecommendsContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,10 +31,12 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <AddressProvider>
-              <body className={cn('font-sans antialiased', inter.variable, inter.className)}>
-                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
-                <Toaster />
-              </body>
+              <RecommendsProvider>
+                <body className={cn('font-sans antialiased', inter.variable, inter.className)}>
+                  <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
+                  <Toaster />
+                </body>
+              </RecommendsProvider>
             </AddressProvider>
           </CartProvider>
         </AuthProvider>

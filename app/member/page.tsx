@@ -20,11 +20,12 @@ import { useRouter } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import IconCard from '@/components/IconCard'
-import MerchandiseCard from '@/components/MerchandiseCard'
+import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
+import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/member'
 import { useAuth } from '@/context/AuthContext'
-import { Skeleton } from '@/components/ui/skeleton'
+import { useRecommendsContext } from '@/context/RecommendsContext'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -62,66 +63,67 @@ function AvatarDemo({ src }: { src?: string }) {
 //   )
 // }
 
+const orderNavItems = [
+  {
+    title: orderStatusMap.checkout.title,
+    href: orderStatusMap.checkout.href,
+    Icon: <Wallet className="h-10 w-10 p-2" />,
+    count: 10,
+  },
+  {
+    title: orderStatusMap.shipping.title,
+    href: orderStatusMap.shipping.href,
+    Icon: <WalletCards className="h-10 w-10 p-2" />,
+  },
+  {
+    title: orderStatusMap.receipt.title,
+    href: orderStatusMap.receipt.href,
+    Icon: <Truck className="h-10 w-10 p-2" />,
+  },
+  {
+    title: orderStatusMap.receipted.title,
+    href: orderStatusMap.receipted.href,
+    Icon: <MessageSquareText className="h-10 w-10 p-2" />,
+  },
+  {
+    title: orderStatusMap.refunded.title,
+    href: orderStatusMap.refunded.href,
+    Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
+  },
+]
+
+const serviceNavItems = [
+  {
+    title: '收貨地址',
+    href: '/address',
+    Icon: <MapPin className="h-10 w-10 p-2" />,
+  },
+  {
+    title: '足跡',
+    href: '/footprints',
+    Icon: <Footprints className="h-10 w-10 p-2" />,
+  },
+  {
+    title: '我的收藏',
+    href: 'my-favorites',
+    Icon: <MessageSquareHeart className="h-10 w-10 p-2" />,
+  },
+  {
+    title: '服務中心',
+    href: '/service-center',
+    Icon: <Building2 className="h-10 w-10 p-2" />,
+  },
+  {
+    title: '在線客服',
+    href: '/online-service',
+    Icon: <Headphones className="h-10 w-10 p-2" />,
+  },
+]
+
 const MemberPage = () => {
   const router = useRouter()
   const { user } = useAuth()
-
-  const orderNavItems = [
-    {
-      title: orderStatusMap.checkout.title,
-      href: orderStatusMap.checkout.href,
-      Icon: <Wallet className="h-10 w-10 p-2" />,
-      count: 10,
-    },
-    {
-      title: orderStatusMap.shipping.title,
-      href: orderStatusMap.shipping.href,
-      Icon: <WalletCards className="h-10 w-10 p-2" />,
-    },
-    {
-      title: orderStatusMap.receipt.title,
-      href: orderStatusMap.receipt.href,
-      Icon: <Truck className="h-10 w-10 p-2" />,
-    },
-    {
-      title: orderStatusMap.receipted.title,
-      href: orderStatusMap.receipted.href,
-      Icon: <MessageSquareText className="h-10 w-10 p-2" />,
-    },
-    {
-      title: orderStatusMap.refunded.title,
-      href: orderStatusMap.refunded.href,
-      Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
-    },
-  ]
-
-  const serviceNavItems = [
-    {
-      title: '收貨地址',
-      href: '/address',
-      Icon: <MapPin className="h-10 w-10 p-2" />,
-    },
-    {
-      title: '足跡',
-      href: '/footprints',
-      Icon: <Footprints className="h-10 w-10 p-2" />,
-    },
-    {
-      title: '我的收藏',
-      href: 'my-favorites',
-      Icon: <MessageSquareHeart className="h-10 w-10 p-2" />,
-    },
-    {
-      title: '服務中心',
-      href: '/service-center',
-      Icon: <Building2 className="h-10 w-10 p-2" />,
-    },
-    {
-      title: '在線客服',
-      href: '/online-service',
-      Icon: <Headphones className="h-10 w-10 p-2" />,
-    },
-  ]
+  const { recommends, isLoading } = useRecommendsContext()
 
   return (
     <main className="flex h-full min-h-screen flex-col">
@@ -203,29 +205,24 @@ const MemberPage = () => {
           </div>
 
           <div>
-            <div className="font-lg relative flex items-center justify-center font-semibold">
+            <div className="font-lg flex items-center justify-center font-semibold">
               ✨為你推薦✨
             </div>
-            {/* 窄螢幕手機會破圖 我先擋一下 */}
-            <div className="flex gap-4 p-4 max-[320px]:block">
-              <MerchandiseCard
-                id={12345}
-                className="w-[50%] max-[320px]:h-auto max-[320px]:w-full"
-                imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                title="PS5"
-                tags={['game', 'tv']}
-                price={18800}
-                specialPrice={13000}
-              />
-              <MerchandiseCard
-                id={12345}
-                className="w-[50%] max-[320px]:h-auto max-[320px]:w-full"
-                imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                title="PS5"
-                tags={['game', 'tv']}
-                price={18800}
-                specialPrice={13000}
-              />
+            <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
+              {recommends.map((recommend) => (
+                <MerchandiseCard
+                  className="h-full w-full"
+                  id={recommend.id}
+                  key={recommend.id}
+                  imgUrl={recommend.imgs[0]}
+                  title={recommend.title}
+                  tags={recommend.tags.split(',')}
+                  price={recommend.price}
+                  specialPrice={recommend.marketprice}
+                />
+              ))}
+              {isLoading &&
+                Array.from({ length: 2 }).map((_, index) => <MerchandiseSkeleton key={index} />)}
             </div>
           </div>
         </div>
