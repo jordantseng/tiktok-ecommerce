@@ -5,6 +5,14 @@ import { PropsWithChildren, createContext, useContext, useEffect, useState } fro
 import { LoginInfo, User, getUser, login, register } from '@/services/auth'
 import { useRouter } from 'next/navigation'
 
+function getLocalStorageToken() {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token') || ''
+  } else {
+    return ''
+  }
+}
+
 type AuthContextType = {
   user: User | null
   token: string
@@ -15,14 +23,6 @@ type AuthContextType = {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
-
-function getLocalStorageToken() {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('token') || ''
-  } else {
-    return ''
-  }
-}
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
@@ -106,11 +106,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   const value = useContext(AuthContext)
 
   if (value == null) {
-    throw new Error('useAuth cannot be used outside of AuthProvider')
+    throw new Error('useAuthContext cannot be used outside of AuthProvider')
   }
 
   return value

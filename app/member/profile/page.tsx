@@ -1,22 +1,34 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import Title from '@/components/Title'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { useImmer } from 'use-immer'
 
-function AvatarDemo() {
+import Title from '@/components/Title'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useAuthContext } from '@/context/AuthContext'
+import { Skeleton } from '@/components/ui/skeleton'
+import { AddressData } from '@/types/common'
+import { getAddress } from '@/services/address'
+
+function AvatarDemo({ src }: { src?: string }) {
   return (
     <Avatar className="h-12 w-12 border-2">
-      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarImage src={src || 'https://github.com/shadcn.png'} alt="@shadcn" />
+      <AvatarFallback>
+        <Skeleton className="h-12 w-12" />
+      </AvatarFallback>
     </Avatar>
   )
 }
 
-function Card() {
+function Card({ onClick }: { onClick: () => void }) {
   return (
-    <section className="flex items-center justify-between rounded-xl bg-white p-4">
+    <section
+      onClick={onClick}
+      className="flex items-center justify-between rounded-xl bg-white p-4"
+    >
       <div className="flex flex-col">
         <span className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary-foreground text-primary">
@@ -33,26 +45,49 @@ function Card() {
 }
 
 type LabelMap = {
-  nickname: string
-  uid: string
+  name: string
+  id: string
   phone: string
-  password: string
+  email: string
 }
 
 const labelMap: LabelMap = {
-  nickname: '暱稱',
-  uid: '身分證字號',
+  name: '暱稱',
+  id: '身分證字號',
   phone: '電話',
-  password: 'E-mail',
+  email: 'E-mail',
 }
 
 const ProfilePage = () => {
+  const router = useRouter()
+
+  const { user } = useAuthContext()
+
   const [formValues, setFormValues] = useImmer<LabelMap>({
-    nickname: '丟丟不丟',
-    uid: '123456789',
-    phone: '0912345678',
-    password: '123321',
+    name: '',
+    id: '',
+    phone: '',
+    email: '',
   })
+
+  const [addresses, setAddresses] = useImmer<AddressData[]>([])
+
+  useEffect(() => {
+    getAddress().then(({ data }) => {
+      setAddresses(data?.data || [])
+    })
+  }, [setAddresses])
+
+  useEffect(() => {
+    if (!user) return
+
+    setFormValues((draft) => {
+      draft.name = user.name ?? ''
+      draft.id = user.id.toString() ?? ''
+      draft.phone = user.mobile ?? ''
+      draft.email = user.email
+    })
+  }, [user, setFormValues])
 
   const fields = Object.entries(formValues) as [keyof LabelMap, string][]
 
@@ -65,7 +100,11 @@ const ProfilePage = () => {
           <div className="flex items-center justify-between p-4 py-2">
             <span>頭像</span>
             <span className="flex items-center gap-2">
-              <AvatarDemo />
+              {user ? (
+                <AvatarDemo src={user.img ?? ''} />
+              ) : (
+                <Skeleton className="h-12 w-12 rounded-full" />
+              )}
               <ChevronRight className="text-gray-500" />
             </span>
           </div>
@@ -73,13 +112,14 @@ const ProfilePage = () => {
           {fields.map(([key, value]) => (
             <div key={key} className="flex min-h-16 items-center justify-between p-4 py-2">
               <span>{labelMap[key]}</span>
-              <span>{value}</span>
+              <span>{!user ? <Skeleton className="h-6 w-28" /> : value}</span>
             </div>
           ))}
         </form>
 
-        <Card />
-        <Card />
+        {addresses.map((address, i) => (
+          <Card onClick={() => router.push('/confirm-order/add-receipt')} key={i} />
+        ))}
       </div>
     </main>
   )

@@ -9,7 +9,7 @@ type OrdersRes = ApiRes<{
   total: number
 }>
 
-type OrderData = {
+export type OrderData = {
   domain_title?: string
   member_name: string
   id: number
@@ -48,7 +48,9 @@ type OrderData = {
   paystatus?: string
   paynumber?: string
   paynotifynumber?: string
+  // 付款狀態: 尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2]
   moneystatus?: number
+  // 訂單狀態: 訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4]
   orderstatus?: number
   updated_at?: string
 }

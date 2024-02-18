@@ -8,6 +8,7 @@ import Title from '@/components/Title'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { orderStatusMap } from '@/constants/member'
 
 const OrderCard = () => {
   const router = useRouter()
@@ -176,39 +177,33 @@ const OrderPages = () => {
             <TabsTrigger className="w-4 hover:text-primary" value="all">
               全部
             </TabsTrigger>
-            <TabsTrigger className="w-4 hover:text-primary" value="checkout">
-              待付款
-            </TabsTrigger>
-            <TabsTrigger className="w-4 hover:text-primary" value="shipping">
-              待發貨
-            </TabsTrigger>
-            <TabsTrigger className="w-4 hover:text-primary" value="receipt">
-              待收貨
-            </TabsTrigger>
-            <TabsTrigger className="w-4 hover:text-primary" value="comment">
-              待評價
-            </TabsTrigger>
-            <TabsTrigger className="w-4 hover:text-primary" value="refund">
-              退款/收貨
-            </TabsTrigger>
+            {Object.values(orderStatusMap).map((status) => (
+              <TabsTrigger
+                key={status.value}
+                className="w-4 hover:text-primary"
+                value={status.value}
+              >
+                {status.title}
+              </TabsTrigger>
+            ))}
           </TabsList>
 
           <TabsContent className="flex-1" value="all">
             <AllOrders />
           </TabsContent>
-          <TabsContent className="flex-1" value="checkout">
+          <TabsContent className="flex-1" value={orderStatusMap.checkout.value}>
             <CheckoutOrders />
           </TabsContent>
-          <TabsContent className="flex-1" value="shipping">
+          <TabsContent className="flex-1" value={orderStatusMap.shipping.value}>
             <ShippingOrders />
           </TabsContent>
-          <TabsContent className="flex-1" value="receipt">
+          <TabsContent className="flex-1" value={orderStatusMap.receipt.value}>
             <ReceiptOrders />
           </TabsContent>
-          <TabsContent className="flex-1" value="comment">
+          <TabsContent className="flex-1" value={orderStatusMap.receipted.value}>
             <CommentOrders />
           </TabsContent>
-          <TabsContent className="flex-1" value="refund">
+          <TabsContent className="flex-1" value={orderStatusMap.refunded.value}>
             <RefundOrders />
           </TabsContent>
         </Tabs>

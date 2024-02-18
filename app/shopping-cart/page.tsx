@@ -1,37 +1,24 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useImmer } from 'use-immer'
+import Link from 'next/link'
+
 import CartItem from '@/components/CartItem'
-import MerchandiseCard from '@/components/MerchandiseCard'
+import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Item, useCartContext } from '@/context/CartContext'
-import { ProductData, getProducts } from '@/services/product'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { useImmer } from 'use-immer'
+import { useRecommendsContext } from '@/context/RecommendsContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
-  const [recommand, setRecommand] = useImmer<ProductData[]>([])
   const { items, updateSelected, getSelectedCartItems, updateItemAmount, handleRemoveFromCart } =
     useCartContext()
-
-  const handleCheckAll = (res: boolean) => {
-    let sum = 0
-    items.forEach((opt) => {
-      if (res) {
-        sum += (opt.amount || 0) * (opt.specialPrice || opt.price)
-      }
-      updateSelected(opt.id, res)
-    })
-    setTotal(sum)
-  }
-
-  useEffect(() => {
-    getProducts({ page: 1, pageSize: 2 }).then(({ data }) => setRecommand(data.data))
-  }, [setRecommand])
+  const { recommends, isLoadingRecommends } = useRecommendsContext()
 
   useEffect(() => {
     const arr = getSelectedCartItems()
@@ -43,6 +30,17 @@ const ShoppingCartPage = () => {
     )
     setTotal(sum)
   }, [getSelectedCartItems, setTotal])
+
+  const handleCheckAll = (res: boolean) => {
+    let sum = 0
+    items.forEach((opt) => {
+      if (res) {
+        sum += (opt.amount || 0) * (opt.specialPrice || opt.price)
+      }
+      updateSelected(opt.id, res)
+    })
+    setTotal(sum)
+  }
 
   const handlePriceChange = (item: Item, val: number) => {
     const isMinus = val < (item.amount || 0)
@@ -68,7 +66,7 @@ const ShoppingCartPage = () => {
   return (
     <main className="mb-16 h-full min-h-screen">
       <Title title="購物車" />
-      <div className="flex min-h-screen w-full flex-col items-center bg-default">
+      <div className="relative flex min-h-screen w-full flex-col items-center bg-default">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (
@@ -91,15 +89,13 @@ const ShoppingCartPage = () => {
           </div>
         </div>
 
-        <div className="font-lg mb-2 flex items-center justify-center font-semibold">
-          ✨為你推薦✨
-        </div>
-        <div className="mb-5 flex w-full items-center justify-center gap-x-1.5 p-4 max-[320px]:block">
-          {recommand.map((opt) => (
+        <div className="font-lg flex items-center justify-center font-semibold">✨為你推薦✨</div>
+        <div className="mb-32 grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
+          {recommends.map((opt) => (
             <MerchandiseCard
               id={opt.id}
               key={opt.id}
-              className="h-auto w-[50%] max-[320px]:w-full"
+              className="h-full w-full"
               imgUrl={opt.imgs[0]}
               title={opt.title}
               tags={opt.tags.split(',')}
@@ -107,8 +103,12 @@ const ShoppingCartPage = () => {
               specialPrice={opt.marketprice}
             />
           ))}
+
+          {isLoadingRecommends &&
+            Array.from({ length: 2 }).map((_, index) => <MerchandiseSkeleton key={index} />)}
         </div>
-        <div className="mb-[18px] flex w-full justify-between bg-white p-6">
+
+        <div className="fixed bottom-[68px] flex w-full max-w-md justify-between bg-white p-6">
           <div className="text-md flex items-center space-x-2">
             <Checkbox
               id="terms"

@@ -10,7 +10,7 @@ import { z } from 'zod'
 import PrevButton from '@/components/PrevButton'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
 
@@ -26,7 +26,7 @@ const formSchema = z.object({
 const LoginPage = () => {
   const { toast } = useToast()
   const router = useRouter()
-  const { handleLogin } = useAuth()
+  const { handleLogin } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

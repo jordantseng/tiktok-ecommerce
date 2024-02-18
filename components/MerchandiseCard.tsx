@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
+
 import {
   Card,
   CardContent,
@@ -8,13 +9,33 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import CartButton from './CartButton'
+import { Skeleton } from '@/components/ui/skeleton'
 import { CartItem } from '@/types/common'
+import CartButton from './CartButton'
 
 type Props = CartItem & {
   className?: string
   sales?: string
 }
+
+const MerchandiseSkeleton = () => (
+  <Card className="h-full w-full">
+    <CardHeader>
+      <Skeleton className="h-20 w-full md:h-28" />
+    </CardHeader>
+    <CardContent>
+      <CardTitle className="truncate pb-2">
+        <Skeleton className="h-6 w-3/4" />
+      </CardTitle>
+    </CardContent>
+    <CardFooter>
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-4 w-10" />
+        <Skeleton className="h-4 w-12" />
+      </div>
+    </CardFooter>
+  </Card>
+)
 
 const MerchandiseCard = ({
   id,
@@ -77,4 +98,5 @@ const MerchandiseCard = ({
   )
 }
 
+export { MerchandiseSkeleton }
 export default MerchandiseCard
