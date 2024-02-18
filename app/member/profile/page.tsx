@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { useImmer } from 'use-immer'
 
@@ -7,7 +9,8 @@ import Title from '@/components/Title'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useAuth } from '@/context/AuthContext'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useEffect } from 'react'
+import { AddressData } from '@/types/common'
+import { getAddress } from '@/services/address'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -20,9 +23,12 @@ function AvatarDemo({ src }: { src?: string }) {
   )
 }
 
-function Card() {
+function Card({ onClick }: { onClick: () => void }) {
   return (
-    <section className="flex items-center justify-between rounded-xl bg-white p-4">
+    <section
+      onClick={onClick}
+      className="flex items-center justify-between rounded-xl bg-white p-4"
+    >
       <div className="flex flex-col">
         <span className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary-foreground text-primary">
@@ -53,6 +59,8 @@ const labelMap: LabelMap = {
 }
 
 const ProfilePage = () => {
+  const router = useRouter()
+
   const { user } = useAuth()
 
   const [formValues, setFormValues] = useImmer<LabelMap>({
@@ -61,6 +69,14 @@ const ProfilePage = () => {
     phone: '',
     email: '',
   })
+
+  const [addresses, setAddresses] = useImmer<AddressData[]>([])
+
+  useEffect(() => {
+    getAddress().then(({ data }) => {
+      setAddresses(data?.data || [])
+    })
+  }, [setAddresses])
 
   useEffect(() => {
     if (!user) return
@@ -101,8 +117,9 @@ const ProfilePage = () => {
           ))}
         </form>
 
-        <Card />
-        <Card />
+        {addresses.map((address, i) => (
+          <Card onClick={() => router.push('/confirm-order/add-receipt')} key={i} />
+        ))}
       </div>
     </main>
   )
