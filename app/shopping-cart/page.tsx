@@ -18,7 +18,7 @@ const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
   const { items, updateSelected, getSelectedCartItems, updateItemAmount, handleRemoveFromCart } =
     useCartContext()
-  const { recommends, isLoading } = useRecommendsContext()
+  const { recommends, isLoadingRecommends } = useRecommendsContext()
 
   useEffect(() => {
     const arr = getSelectedCartItems()
@@ -104,7 +104,7 @@ const ShoppingCartPage = () => {
             />
           ))}
 
-          {isLoading &&
+          {isLoadingRecommends &&
             Array.from({ length: 2 }).map((_, index) => <MerchandiseSkeleton key={index} />)}
         </div>
 

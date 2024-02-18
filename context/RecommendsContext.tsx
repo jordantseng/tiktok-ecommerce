@@ -7,14 +7,14 @@ import { ProductData, getProducts } from '@/services/product'
 
 type RecommendsContextType = {
   recommends: ProductData[]
-  isLoading: boolean
+  isLoadingRecommends: boolean
 }
 
 const RecommendsContext = createContext<RecommendsContextType | null>(null)
 
 export const RecommendsProvider = ({ children }: PropsWithChildren) => {
   const [recommends, setRecommends] = useImmer<ProductData[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoadingRecommends, setIsLoadingRecommends] = useState(true)
 
   useEffect(() => {
     getProducts({ page: 1, pageSize: 2 })
@@ -22,7 +22,7 @@ export const RecommendsProvider = ({ children }: PropsWithChildren) => {
         setRecommends(data.data)
       })
       .finally(() => {
-        setIsLoading(false)
+        setIsLoadingRecommends(false)
       })
   }, [setRecommends])
 
@@ -30,7 +30,7 @@ export const RecommendsProvider = ({ children }: PropsWithChildren) => {
     <RecommendsContext.Provider
       value={{
         recommends,
-        isLoading,
+        isLoadingRecommends,
       }}
     >
       {children}

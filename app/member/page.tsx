@@ -123,7 +123,7 @@ const serviceNavItems = [
 const MemberPage = () => {
   const router = useRouter()
   const { user } = useAuthContext()
-  const { recommends, isLoading } = useRecommendsContext()
+  const { recommends, isLoadingRecommends } = useRecommendsContext()
 
   return (
     <main className="flex h-full min-h-screen flex-col">
@@ -221,7 +221,7 @@ const MemberPage = () => {
                   specialPrice={recommend.marketprice}
                 />
               ))}
-              {isLoading &&
+              {isLoadingRecommends &&
                 Array.from({ length: 2 }).map((_, index) => <MerchandiseSkeleton key={index} />)}
             </div>
           </div>
