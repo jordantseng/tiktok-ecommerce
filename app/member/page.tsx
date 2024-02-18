@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Bolt,
   Headset,
@@ -17,6 +17,7 @@ import {
   Headphones,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useImmer } from 'use-immer'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import IconCard from '@/components/IconCard'
@@ -26,6 +27,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/member'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
+import { OrderData, getOrders } from '@/services/order'
+import OrderNamItem from '@/app/member/OrderNavItem'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -125,6 +128,18 @@ const MemberPage = () => {
   const { user } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
 
+  const [orders, setOrders] = useImmer<OrderData[]>([])
+
+  useEffect(() => {
+    getOrders()
+      .then(({ data }) => {
+        setOrders(data.data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [setOrders])
+
   return (
     <main className="flex h-full min-h-screen flex-col">
       <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
@@ -177,16 +192,13 @@ const MemberPage = () => {
 
           <div className="grid flex-1 grid-cols-5">
             {orderNavItems.map(({ title, Icon, href, count }) => (
-              <div className="relative grid place-items-center" key={title}>
-                <span className="relative flex">
-                  <IconCard title={title} Icon={Icon} onClick={() => router.push(href)} />
-                  {count && count > 0 && (
-                    <div className="absolute -end-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white">
-                      {count}
-                    </div>
-                  )}
-                </span>
-              </div>
+              <OrderNamItem
+                key={title}
+                title={title}
+                Icon={Icon}
+                onClick={() => router.push(href)}
+                count={count}
+              />
             ))}
           </div>
         </div>
