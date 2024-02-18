@@ -24,7 +24,7 @@ const Counter = ({ value, onChange, className, buttonClassName, isLeftCounterDis
       >
         <MinusCircleIcon />
       </Button>
-      <span className="mx-2">{value}</span>
+      <span className="min-w-5 text-center md:min-w-6">{value}</span>
       <Button
         className={buttonClassName}
         variant="ghost"
