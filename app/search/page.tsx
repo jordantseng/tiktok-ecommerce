@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import SearchHistory from '@/app/search/SearchHistory'
 import Toolbar from '@/app/search/Toolbar'
 import FilterDialog from '@/app/search/FilterDialog'
@@ -60,16 +62,18 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
               <Toolbar />
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {products.data.map((product) => (
-                  <MerchandiseCard
-                    id={product.id}
-                    key={product.id}
-                    className="w-full"
-                    imgUrl={product.imgs[0]}
-                    title={product.title}
-                    tags={product.tags.split(',')}
-                    price={product.price}
-                    sales={String(product.buycount)}
-                  />
+                  <Link key={product.id} href={`/products/${product.id}`}>
+                    <MerchandiseCard
+                      id={product.id}
+                      key={product.id}
+                      className="w-full"
+                      imgUrl={product.imgs[0]}
+                      title={product.title}
+                      tags={product.tags.split(',')}
+                      price={product.price}
+                      sales={String(product.buycount)}
+                    />
+                  </Link>
                 ))}
               </div>
               <div className="flex items-center justify-center p-4">

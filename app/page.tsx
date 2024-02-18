@@ -43,16 +43,17 @@ export default async function HomePage() {
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
         <div className="grid grid-cols-2 gap-4">
           {products.data.map((product) => (
-            <MerchandiseCard
-              id={product.id}
-              key={product.id}
-              className="w-full"
-              imgUrl={product.imgs[0]}
-              title={product.title}
-              tags={product.tags.split(',')}
-              price={product.price}
-              sales={String(product.buycount)}
-            />
+            <Link key={product.id} href={`/products/${product.id}`}>
+              <MerchandiseCard
+                id={product.id}
+                className="w-full"
+                imgUrl={product.imgs[0]}
+                title={product.title}
+                tags={product.tags.split(',')}
+                price={product.price}
+                sales={String(product.buycount)}
+              />
+            </Link>
           ))}
         </div>
       </div>
