@@ -8,6 +8,7 @@ import Pagination from '@/components/Pagination'
 import { cn } from '@/lib/utils'
 import { getProducts } from '@/services/product'
 import { getCategories } from '@/services/category'
+import { paginationGuard } from '@/lib/guard'
 
 const PAGE_SIZE = 1
 
@@ -39,6 +40,8 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   })
 
   const { data: categories } = await getCategories()
+
+  paginationGuard(Number(page), products.last_page, type)
 
   return (
     <>

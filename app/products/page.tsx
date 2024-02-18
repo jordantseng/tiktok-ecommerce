@@ -10,8 +10,9 @@ import MerchandiseCard from '@/components/MerchandiseCard'
 import Pagination from '@/components/Pagination'
 import { getProducts } from '@/services/product'
 import { getCategories, getSubCategories } from '@/services/category'
+import { paginationGuard } from '@/lib/guard'
 
-const PAGE_SIZE = 1
+const PAGE_SIZE = 5
 
 type ProductsPageProps = {
   searchParams: { page: string; type: string; subType: string; q: string }
@@ -37,23 +38,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
     redirect(`products?page=1&type=${category.id}`)
   }
 
-  if (Number(page) > products.last_page) {
-    let url = 'products?'
-
-    if (page) {
-      url += `page=${products.last_page}&`
-    }
-
-    if (type) {
-      url += `type=${type}&`
-    }
-
-    if (subType) {
-      url += `subType=${subType}&`
-    }
-
-    redirect(url)
-  }
+  paginationGuard(Number(page), products.last_page, type, subType)
 
   const { data: subCategories } = await getSubCategories(category.id)
 
