@@ -15,10 +15,9 @@ const ProductList = ({ subSidebarItems, children }: ProductListProps) => {
   const handleNavigation = (title: number) => {
     const params = new URLSearchParams(searchParams)
 
-    params.set('page', '1')
     params.set('subType', String(title))
 
-    router.push(`/products/?${params.toString()}`)
+    router.push(`/products/?page=1&${params.toString()}`)
   }
 
   return (
@@ -34,6 +33,7 @@ const ProductList = ({ subSidebarItems, children }: ProductListProps) => {
           className={cn('absolute h-full min-h-screen w-full', {
             'bg-black/50': isOpen,
           })}
+          onClick={() => setIsOpen(false)}
         />
       )}
       {children}
