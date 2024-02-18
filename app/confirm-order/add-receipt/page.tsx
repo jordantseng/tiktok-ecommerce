@@ -2,7 +2,7 @@
 
 import ReceiptForm from '@/app/confirm-order/add-receipt/ReceiptForm'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
-import { useAuth } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/AuthContext'
 import { useCity } from '@/hooks/useCity'
 import { addAddress } from '@/services/address'
 import { AddressData } from '@/types/common'
@@ -16,7 +16,7 @@ import Title from '@/components/Title'
 const AddReceiptPage = () => {
   const { cities, districts, handleGetDistrict } = useCity()
   const { handleSelectDeliveryType } = useAddressContext()
-  const { user } = useAuth()
+  const { user } = useAuthContext()
   const searchParams = useSearchParams()
   const [value, setValue] = useImmer<AddressData>({
     title: format(new Date(), 'yyyymmddHHMMSSS') + user?.name,

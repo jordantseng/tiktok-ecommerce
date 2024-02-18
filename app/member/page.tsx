@@ -24,7 +24,7 @@ import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCa
 import NavBar from '@/components/NavBar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/member'
-import { useAuth } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 
 function AvatarDemo({ src }: { src?: string }) {
@@ -39,7 +39,7 @@ function AvatarDemo({ src }: { src?: string }) {
 }
 
 // function NumericInfo() {
-//   const { user } = useAuth()
+//   const { user } = useAuthContext()
 //   const infos = [
 //     { count: 51, label: '餘額(元)' },
 //     { count: 51, label: '優惠券' },
@@ -122,7 +122,7 @@ const serviceNavItems = [
 
 const MemberPage = () => {
   const router = useRouter()
-  const { user } = useAuth()
+  const { user } = useAuthContext()
   const { recommends, isLoading } = useRecommendsContext()
 
   return (

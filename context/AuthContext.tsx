@@ -106,11 +106,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   )
 }
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   const value = useContext(AuthContext)
 
   if (value == null) {
-    throw new Error('useAuth cannot be used outside of AuthProvider')
+    throw new Error('useAuthContext cannot be used outside of AuthProvider')
   }
 
   return value

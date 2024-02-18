@@ -7,7 +7,7 @@ import { useImmer } from 'use-immer'
 
 import Title from '@/components/Title'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { useAuth } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/AuthContext'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AddressData } from '@/types/common'
 import { getAddress } from '@/services/address'
@@ -61,7 +61,7 @@ const labelMap: LabelMap = {
 const ProfilePage = () => {
   const router = useRouter()
 
-  const { user } = useAuth()
+  const { user } = useAuthContext()
 
   const [formValues, setFormValues] = useImmer<LabelMap>({
     name: '',
