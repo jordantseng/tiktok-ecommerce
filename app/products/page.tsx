@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import Sidebar from '@/app/products/Sidebar'
@@ -52,7 +51,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         <Sidebar activeType={type} items={categories.data} />
         <ProductList subSidebarItems={subCategories}>
           {products.data.map((product) => (
-            <Link href={`/products/${product.id}`} key={product.id}>
+            <>
               <MerchandiseCard
                 id={product.id}
                 className="w-full border-none shadow-none"
@@ -62,7 +61,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                 price={product.price}
               />
               <hr className="mx-auto flex w-11/12" />
-            </Link>
+            </>
           ))}
           <div className="flex items-center justify-center p-4">
             <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
