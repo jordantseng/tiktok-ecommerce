@@ -4,12 +4,41 @@ import FilterDialog from '@/app/search/FilterDialog'
 import Searchbar from '@/components/Searchbar'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import PrevButton from '@/components/PrevButton'
+import Pagination from '@/components/Pagination'
 import { cn } from '@/lib/utils'
+import { getProducts } from '@/services/product'
+import { getCategories } from '@/services/category'
 
-type SearchPageProps = { searchParams: { q: string; filter: string } }
+const PAGE_SIZE = 1
 
-const SearchPage = ({ searchParams }: SearchPageProps) => {
-  const { q, filter } = searchParams
+type SearchPageProps = {
+  searchParams: {
+    q: string
+    filter: string
+    page: string
+    type: string
+    order: string
+    sortBy: string
+    minPrice: string
+    maxPrice: string
+  }
+}
+
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
+  const { q, filter, page, type, order, sortBy, minPrice, maxPrice } = searchParams
+
+  const { data: products } = await getProducts({
+    page: Number(page),
+    pageSize: PAGE_SIZE,
+    search: q,
+    kindheadId: type,
+    sortName: sortBy,
+    sortType: order === 'ascending' ? 'asc' : 'desc',
+    price1: Number(minPrice),
+    price2: Number(maxPrice),
+  })
+
+  const { data: categories } = await getCategories()
 
   return (
     <>
@@ -27,18 +56,25 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
             <>
               <Toolbar />
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {Array.from({ length: 10 }).map((_, index) => (
+                {products.data.map((product) => (
                   <MerchandiseCard
-                    id={index}
-                    key={index}
+                    id={product.id}
+                    key={product.id}
                     className="w-full"
-                    imgUrl="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                    title="PS5"
-                    tags={['game', 'tv']}
-                    price={18800}
-                    sales={String(100)}
+                    imgUrl={product.imgs[0]}
+                    title={product.title}
+                    tags={product.tags.split(',')}
+                    price={product.price}
+                    sales={String(product.buycount)}
                   />
                 ))}
+              </div>
+              <div className="flex items-center justify-center p-4">
+                <Pagination
+                  page={Number(page)}
+                  totalItems={products.total}
+                  itemsPerPage={PAGE_SIZE}
+                />
               </div>
             </>
           ) : (
@@ -46,7 +82,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
           )}
         </div>
       </main>
-      {filter && <FilterDialog />}
+      {filter && <FilterDialog categories={categories.data} />}
     </>
   )
 }

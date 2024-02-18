@@ -41,6 +41,8 @@ type getProductsArgs = {
   sortType?: string
   kindheadId?: string
   kindmainId?: string
+  price1?: number
+  price2?: number
 }
 
 export const getProducts = async ({
@@ -51,6 +53,8 @@ export const getProducts = async ({
   sortType = 'desc',
   kindheadId,
   kindmainId,
+  price1,
+  price2,
 }: getProductsArgs): Promise<GetProductsRes> => {
   const res = await fetch(`${config.api}/api/product`, {
     method: 'POST',
@@ -68,8 +72,9 @@ export const getProducts = async ({
       searchenddate: '2099-12-31',
       ...(kindheadId && { kindhead_id: kindheadId }),
       ...(kindmainId && { kindmain_id: kindmainId }),
+      price1,
+      price2,
     }),
-    next: { revalidate: 60 * 5 },
   })
 
   const data = await res.json()

@@ -1,6 +1,6 @@
 'use client'
 import { useState, MouseEvent } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
 
@@ -43,6 +43,7 @@ const Pagination = ({ page, totalItems, itemsPerPage }: PaginationProps) => {
   const isMobile = useMediaQuery('(max-width: 425px)')
   const searchParams = useSearchParams()
   const router = useRouter()
+  const pathname = usePathname()
 
   const totalPages = Math.ceil(totalItems / itemsPerPage) || 1
   const isFirstPage = currentPage === 1
@@ -60,7 +61,7 @@ const Pagination = ({ page, totalItems, itemsPerPage }: PaginationProps) => {
 
     setCurrentPage(page)
 
-    router.push(`/products?${newSearchParams.toString()}`)
+    router.push(`${pathname}?${newSearchParams.toString()}`)
   }
 
   const handlePrevClick = () => {

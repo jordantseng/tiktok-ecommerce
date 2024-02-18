@@ -19,7 +19,7 @@ const SearchHistory = () => {
   }, [stringifiedHistoryTerms])
 
   const handleClick = (term: string) => {
-    router.push(`/search?q=${term}`)
+    router.push(`/search?page=1&q=${term}`)
   }
 
   const handleClearHistoryTerms = () => {
