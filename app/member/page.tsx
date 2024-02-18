@@ -37,30 +37,30 @@ function AvatarDemo({ src }: { src?: string }) {
   )
 }
 
-function NumericInfo() {
-  const { user } = useAuth()
-  const infos = [
-    { count: 51, label: '餘額(元)' },
-    { count: 51, label: '優惠券' },
-    { count: 51, label: '積分' },
-  ]
-  return (
-    <div className="grid grid-cols-3">
-      {infos.map(({ count, label }) => (
-        <div key={label} className="flex flex-col items-center justify-between">
-          <span className="text-xl md:text-2xl">
-            {!user ? (
-              <Skeleton className="h-7 w-7 md:h-8 md:w-8" />
-            ) : (
-              Number(count).toLocaleString()
-            )}
-          </span>
-          <span className="text-sm font-extrabold md:text-base">{label}</span>
-        </div>
-      ))}
-    </div>
-  )
-}
+// function NumericInfo() {
+//   const { user } = useAuth()
+//   const infos = [
+//     { count: 51, label: '餘額(元)' },
+//     { count: 51, label: '優惠券' },
+//     { count: 51, label: '積分' },
+//   ]
+//   return (
+//     <div className="grid grid-cols-3">
+//       {infos.map(({ count, label }) => (
+//         <div key={label} className="flex flex-col items-center justify-between">
+//           <span className="text-xl md:text-2xl">
+//             {!user ? (
+//               <Skeleton className="h-7 w-7 md:h-8 md:w-8" />
+//             ) : (
+//               Number(count).toLocaleString()
+//             )}
+//           </span>
+//           <span className="text-sm font-extrabold md:text-base">{label}</span>
+//         </div>
+//       ))}
+//     </div>
+//   )
+// }
 
 const MemberPage = () => {
   const router = useRouter()
@@ -146,16 +146,16 @@ const MemberPage = () => {
 
                 <div className="flex flex-col gap-1">
                   <span className="text-lg md:text-2xl">
-                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : 123456}
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.name}
                   </span>
                   <span className="text-xs md:text-base">
-                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : 15800000000000}
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.tiktokid}
                   </span>
                 </div>
               </div>
             </div>
 
-            <NumericInfo />
+            {/* <NumericInfo /> */}
           </div>
         </div>
       </section>
