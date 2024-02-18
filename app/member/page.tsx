@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
+import { orderStatusMap } from '@/constants/member'
 
 function AvatarDemo() {
   return (
@@ -54,29 +55,29 @@ const MemberPage = () => {
 
   const orderNavItems = [
     {
-      title: '待付款',
-      href: '/member/orders?type=checkout',
+      title: orderStatusMap.checkout.title,
+      href: orderStatusMap.checkout.href,
       Icon: <Wallet className="h-10 w-10 p-2" />,
       count: 10,
     },
     {
-      title: '待發貨',
-      href: '/member/orders?type=shipping',
+      title: orderStatusMap.shipping.title,
+      href: orderStatusMap.shipping.href,
       Icon: <WalletCards className="h-10 w-10 p-2" />,
     },
     {
-      title: '待收貨',
-      href: '/member/orders?type=receipt',
+      title: orderStatusMap.receipt.title,
+      href: orderStatusMap.receipt.href,
       Icon: <Truck className="h-10 w-10 p-2" />,
     },
     {
-      title: '待評價',
-      href: '/member/orders?type=comment',
+      title: orderStatusMap.receipted.title,
+      href: orderStatusMap.receipted.href,
       Icon: <MessageSquareText className="h-10 w-10 p-2" />,
     },
     {
-      title: '退款/收貨',
-      href: '/member/orders?type=refund',
+      title: orderStatusMap.refunded.title,
+      href: orderStatusMap.refunded.href,
       Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
     },
   ]
@@ -111,7 +112,7 @@ const MemberPage = () => {
 
   return (
     <main className="flex h-full min-h-screen flex-col">
-      <section className="from-primary-alt relative bg-gradient-to-r to-primary pb-20 text-white">
+      <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
