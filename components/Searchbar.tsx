@@ -25,10 +25,12 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const params = new URLSearchParams(searchParams)
+    const newSearchParams = new URLSearchParams(searchParams)
     const searchValue = searchInputRef.current?.value
+    const page = newSearchParams.get('page') || '1'
+    newSearchParams.set('page', page)
 
-    searchValue ? params.set('q', searchValue) : params.delete('q')
+    searchValue ? newSearchParams.set('q', searchValue) : newSearchParams.delete('q')
 
     if (pathname === '/search') {
       const stringifiedHistoryTerms = localStorage.getItem('historyTerms') ?? '[]'
@@ -41,11 +43,11 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
       const updatedHistoryTerms = Array.from(new Set([...historyTerms]))
       localStorage.setItem('historyTerms', JSON.stringify(updatedHistoryTerms))
 
-      router.push(`/search/?${params.toString()}`)
+      router.push(`/search/?${newSearchParams.toString()}`)
     }
 
     if (pathname === '/products') {
-      router.push(`/products/?${params.toString()}`)
+      router.push(`/products/?${newSearchParams.toString()}`)
     }
   }
 

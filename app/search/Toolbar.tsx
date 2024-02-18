@@ -28,13 +28,13 @@ const Toolbar = () => {
   const handleSalesClick = () => {
     const params = new URLSearchParams(searchParams)
 
-    if (sortBy === 'sales') {
+    if (sortBy === 'buycount') {
       params.set('order', order === 'ascending' ? 'descending' : 'ascending')
     } else {
       params.set('order', 'ascending')
     }
 
-    params.set('sortBy', 'sales')
+    params.set('sortBy', 'buycount')
 
     router.push(`/search/?${params.toString()}`)
   }
@@ -52,6 +52,7 @@ const Toolbar = () => {
   }
 
   const renderSortIcon = (sortName: string) => {
+    console.log('sortName', sortName)
     if (sortBy !== sortName) {
       return <ChevronsUpDownIcon className="h-3 w-3" />
     }
@@ -71,7 +72,7 @@ const Toolbar = () => {
       </button>
       <button className="flex items-center justify-center gap-1 text-sm" onClick={handleSalesClick}>
         銷量
-        {renderSortIcon('sales')}
+        {renderSortIcon('buycount')}
       </button>
       <button
         className="flex items-center justify-center gap-1 text-sm"

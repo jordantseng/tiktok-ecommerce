@@ -7,23 +7,29 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
 import BottomDialog from '@/components/BottomDialog'
+import { cn } from '@/lib/utils'
 
-const FilterDialog = () => {
-  const [categories, updateCategories] = useImmer([
-    { id: 1, title: '水果' },
-    { id: 2, title: '堅果' },
-    { id: 3, title: '零食' },
-    { id: 4, title: '零食' },
-    { id: 5, title: '零食' },
-    { id: 6, title: '零食' },
-  ])
-  const [selectedCategoryIds, updateSelectedCategoryIds] = useImmer<number[]>([])
-  const [price, updatePrice] = useImmer({ minPrice: 0, maxPrice: 0 })
+type FilterDialogProps = {
+  categories: {
+    id: number
+    title: string
+    imgs: string
+  }[]
+}
 
-  const router = useRouter()
+const FilterDialog = ({ categories }: FilterDialogProps) => {
   const searchParams = useSearchParams()
+  const router = useRouter()
+  const [price, updatePrice] = useImmer(() => {
+    const minPrice = Number(searchParams.get('minPrice'))
+    const maxPrice = Number(searchParams.get('maxPrice'))
+    return { minPrice, maxPrice }
+  })
+  const [selectedCategoryIds, updateSelectedCategoryIds] = useImmer<number[]>(() => {
+    const typeIds = searchParams.get('type')?.split(',').map(Number) || []
+    return [...typeIds]
+  })
 
   const filter = searchParams.get('filter')
 
@@ -63,6 +69,28 @@ const FilterDialog = () => {
     updateSelectedCategoryIds((draft) => {
       draft.length = 0
     })
+  }
+
+  const handleSubmit = () => {
+    const newSearchParams = new URLSearchParams(searchParams)
+
+    if (selectedCategoryIds.length !== 0) {
+      newSearchParams.set('type', selectedCategoryIds.join(','))
+    } else {
+      newSearchParams.delete('type')
+    }
+
+    if (price.minPrice !== 0 || price.maxPrice !== 0) {
+      newSearchParams.set('minPrice', String(price.minPrice))
+      newSearchParams.set('maxPrice', String(price.maxPrice))
+    } else {
+      newSearchParams.delete('minPrice')
+      newSearchParams.delete('maxPrice')
+    }
+
+    newSearchParams.delete('filter')
+
+    router.push(`/search?${newSearchParams.toString()}`)
   }
 
   return (
@@ -115,7 +143,9 @@ const FilterDialog = () => {
         >
           重置
         </Button>
-        <Button className="flex-grow rounded-r-full hover:bg-red-600">查看商品</Button>
+        <Button className="flex-grow rounded-r-full hover:bg-red-600" onClick={handleSubmit}>
+          查看商品
+        </Button>
       </div>
     </BottomDialog>
   )
