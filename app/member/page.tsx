@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Bolt,
   Headset,
@@ -18,21 +17,28 @@ import {
   Headphones,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import IconCard from '@/components/IconCard'
 import MerchandiseCard from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { orderStatusMap } from '@/constants/member'
+import { useAuth } from '@/context/AuthContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function AvatarDemo() {
   return (
     <Avatar className="h-12 w-12 border-2 md:h-20 md:w-20">
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarFallback>
+        <Skeleton className="h-12 w-12 md:h-20 md:w-20" />
+      </AvatarFallback>
     </Avatar>
   )
 }
 
 function NumericInfo() {
+  const { user } = useAuth()
   const infos = [
     { count: 51, label: '餘額(元)' },
     { count: 51, label: '優惠券' },
@@ -42,7 +48,13 @@ function NumericInfo() {
     <div className="grid grid-cols-3">
       {infos.map(({ count, label }) => (
         <div key={label} className="flex flex-col items-center justify-between">
-          <span className="text-xl md:text-2xl">{Number(count).toLocaleString()}</span>
+          <span className="text-xl md:text-2xl">
+            {!user ? (
+              <Skeleton className="h-7 w-7 md:h-8 md:w-8" />
+            ) : (
+              Number(count).toLocaleString()
+            )}
+          </span>
           <span className="text-sm font-extrabold md:text-base">{label}</span>
         </div>
       ))}
@@ -52,6 +64,7 @@ function NumericInfo() {
 
 const MemberPage = () => {
   const router = useRouter()
+  const { user } = useAuth()
 
   const orderNavItems = [
     {
@@ -125,11 +138,19 @@ const MemberPage = () => {
 
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2 md:gap-4">
-                <AvatarDemo />
+                {user ? (
+                  <AvatarDemo />
+                ) : (
+                  <Skeleton className="h-12 w-12 rounded-full md:h-20 md:w-20" />
+                )}
 
-                <div className="flex flex-col">
-                  <span className="text-lg md:text-2xl">123456</span>
-                  <span className="text-xs md:text-base">15800000000</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-lg md:text-2xl">
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : 123456}
+                  </span>
+                  <span className="text-xs md:text-base">
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : 15800000000000}
+                  </span>
                 </div>
               </div>
             </div>
