@@ -30,7 +30,7 @@ const ProductList = ({ subSidebarItems, children }: ProductListProps) => {
       />
       {isOpen && (
         <div
-          className={cn('absolute h-full min-h-screen w-full', {
+          className={cn('absolute z-10 h-full min-h-screen w-full', {
             'bg-black/50': isOpen,
           })}
           onClick={() => setIsOpen(false)}
