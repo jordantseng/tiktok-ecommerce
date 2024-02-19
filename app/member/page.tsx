@@ -133,7 +133,7 @@ const MemberPage = () => {
   useEffect(() => {
     getOrders()
       .then(({ data }) => {
-        setOrders(data.data)
+        setOrders(data?.data || [])
       })
       .catch((err) => {
         console.error(err)

@@ -3,6 +3,12 @@ import { ApiRes } from '@/types/common'
 
 type CityRes = ApiRes<CityData[]>
 
+type DistrictRes = ApiRes<{
+  current_page: number
+  data: CityData[]
+  total: number
+}>
+
 type CityData = {
   city1title: string
   city2title?: string
@@ -23,7 +29,7 @@ export const getCities = async (): Promise<CityRes> => {
   return data
 }
 
-export const getDistrict = async (city: string): Promise<CityRes> => {
+export const getDistrict = async (city: string): Promise<DistrictRes> => {
   const res = await fetch(`${config.api}/api/city2`, {
     method: 'POST',
     headers: {

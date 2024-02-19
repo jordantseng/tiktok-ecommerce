@@ -16,7 +16,7 @@ export const useCity = () => {
 
   const handleGetDistrict = (city: string) => {
     getDistrict(city).then(({ data }) => {
-      const res = data.map((opt) => opt.city2title || '')
+      const res = data.data.map((opt) => opt.city2title || '')
       setDistricts(res)
     })
   }

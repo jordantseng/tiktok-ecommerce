@@ -53,7 +53,7 @@ const ChooseReceiptPage = () => {
           onClick={() => {
             deliveryType !== 'home-delivery'
               ? getLogistic(deliveryType)
-              : router.push('/confirm-order/add-receipt')
+              : router.push('/confirm-order/upsert-receipt')
           }}
         >
           新增收件人資訊
