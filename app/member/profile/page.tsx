@@ -23,7 +23,7 @@ function AvatarDemo({ src }: { src?: string }) {
   )
 }
 
-function Card({ onClick }: { onClick: () => void }) {
+function Card({ address, onClick }: { address: AddressData; onClick: () => void }) {
   return (
     <section
       onClick={onClick}
@@ -31,13 +31,13 @@ function Card({ onClick }: { onClick: () => void }) {
     >
       <div className="flex flex-col">
         <span className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-xl bg-primary-foreground text-primary">
-            家
+          <span className="grid h-8 w-auto place-items-center rounded-xl bg-primary-foreground text-primary">
+            {address.CVSStoreName || '取貨地點'}
           </span>
-          <p>丟丟</p>
-          <p>1580000000000</p>
+          <p>{address.name}</p>
+          <p>{address.tel}</p>
         </span>
-        <span className="text-gray-500">北京市海定區環大福苑西區 20 號 2 樓</span>
+        <span className="text-gray-500">{address.CVSAddress || address.address}</span>
       </div>
       <ExternalLink className="text-gray-500" />
     </section>
@@ -118,7 +118,11 @@ const ProfilePage = () => {
         </form>
 
         {addresses.map((address, i) => (
-          <Card onClick={() => router.push('/confirm-order/add-receipt')} key={i} />
+          <Card
+            address={address}
+            onClick={() => router.push(`/confirm-order/upsert-receipt?id=${address.id}`)}
+            key={i}
+          />
         ))}
       </div>
     </main>

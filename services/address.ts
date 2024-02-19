@@ -26,7 +26,7 @@ export const getAddress = async (): Promise<AddressRes> => {
   return data
 }
 
-export const addAddress = async (value: AddressData): Promise<void> => {
+export const upsertAddress = async (value: AddressData): Promise<void> => {
   const res = await fetch(`${config.api}/api/membercenter/myaddress/store`, {
     method: 'POST',
     headers: {
