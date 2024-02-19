@@ -12,75 +12,56 @@ import BottomDialog from '@/components/BottomDialog'
 import { cn } from '@/lib/utils'
 
 type SpecDialogProps = {
-  specs: { title: string }[]
+  specs: { id: number; title: string }[]
+  confirmedItem: {
+    id: string
+    size: string
+    count: number
+  }
+  selectedSize: {
+    id: string
+    size: string
+  } | null
+  count: number
+  onSpecSelect: ({ id, size }: { id: string; size: string }) => void
+  open: boolean
+  onClose: () => void
+  onCountChange: (count: number) => void
+  onConfirm: () => void
 }
 
-const SpecDialog = ({ specs }: SpecDialogProps) => {
-  const [sizes, updateSizes] = useImmer(specs.map((spec) => spec?.title) || [])
-  const [selectedSize, setSelectedSize] = useState<string>('')
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [confirmedItem, updateConfirmedItem] = useImmer<{ size: string; count: number }>({
-    size: '',
-    count: 0,
-  })
-  const [count, setCount] = useState(selectedSize === confirmedItem.size ? confirmedItem.count : 1)
-
-  const handleClick = (size: string) => {
-    setSelectedSize(size)
-    setCount(1)
-  }
-
-  const handleClose = () => {
-    setIsDialogOpen(false)
-    setCount(1)
-    setSelectedSize(confirmedItem.size)
-  }
-
-  const handleConfirm = () => {
-    setIsDialogOpen(false)
-    updateConfirmedItem((draft) => {
-      draft.size = selectedSize
-      draft.count = count
-    })
-  }
-
+const SpecDialog = ({
+  specs,
+  confirmedItem,
+  open,
+  selectedSize,
+  count,
+  onCountChange,
+  onClose,
+  onSpecSelect,
+  onConfirm,
+}: SpecDialogProps) => {
   return (
     <>
-      <Card
-        className="m-2 cursor-pointer border-none shadow-none"
-        onClick={() => setIsDialogOpen(true)}
-      >
-        <CardContent className="flex justify-between gap-2 p-3">
-          <div>
-            已選
-            {confirmedItem.count !== 0 && (
-              <>
-                {confirmedItem.size} - x{confirmedItem.count}
-              </>
-            )}
-          </div>
-          <ChevronRightIcon />
-        </CardContent>
-      </Card>
-      {isDialogOpen && (
-        <BottomDialog title="選擇規格" onClose={handleClose}>
+      {open && (
+        <BottomDialog title="選擇規格" onClose={onClose}>
           <div className="mb-2">
             <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
               尺寸
             </h5>
             <div className="grid grid-cols-4 gap-6">
-              {sizes.map((size) => (
+              {specs.map((spec) => (
                 <Badge
-                  key={size}
+                  key={spec.id}
                   variant="secondary"
                   className={cn('', {
                     'bg-primary-foreground text-primary outline outline-primary': selectedSize
-                      ? selectedSize === size
-                      : confirmedItem?.size === size,
+                      ? selectedSize.size === spec.title
+                      : confirmedItem?.size === spec.title,
                   })}
-                  onClick={() => handleClick(size)}
+                  onClick={() => onSpecSelect({ id: String(spec.id), size: spec.title })}
                 >
-                  {size || confirmedItem?.size}
+                  {spec.title}
                 </Badge>
               ))}
             </div>
@@ -92,14 +73,14 @@ const SpecDialog = ({ specs }: SpecDialogProps) => {
             <Counter
               value={count}
               isLeftCounterDisabled={count === 0}
-              onChange={(count) => setCount(count)}
+              onChange={(count) => onCountChange(count)}
             />
           </div>
           <div className="flex">
             <Button
               className="flex-grow rounded-full text-white hover:bg-red-600"
               type="button"
-              onClick={handleConfirm}
+              onClick={onConfirm}
             >
               確認
             </Button>
