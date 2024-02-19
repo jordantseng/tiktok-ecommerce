@@ -132,13 +132,16 @@ const MemberPage = () => {
 
   useEffect(() => {
     getOrders()
-      .then(({ data }) => {
-        setOrders(data?.data || [])
+      .then((res) => {
+        if (res.resultcode !== 0) {
+          throw new Error(res.resultmessage)
+        }
+        setOrders(res.data.data || [])
       })
       .catch((err) => {
         console.error(err)
       })
-  }, [setOrders])
+  }, [setOrders, user])
 
   return (
     <main className="flex h-full min-h-screen flex-col">
