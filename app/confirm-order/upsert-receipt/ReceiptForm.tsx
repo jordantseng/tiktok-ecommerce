@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select'
 import { AddressData } from '@/types/common'
 import { useEffect } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const formSchema = z.object({
   name: z.string().min(1, { message: '姓名為必填' }),
@@ -62,6 +63,14 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
       form.setValue('CVSStoreName', value.CVSStoreName)
       form.setValue('CVSAddress', value.CVSAddress)
     }
+    if (value.city1) {
+      form.setValue('city1', value.city1)
+      onGetDistrict(value.city1)
+    }
+    value.name && form.setValue('name', value.name)
+    value.tel && form.setValue('tel', value.tel)
+    value.city2 && form.setValue('city2', value.city2)
+    value.address && form.setValue('address', value.address)
   }, [form, value])
 
   // 2. Define a submit handler.
@@ -113,7 +122,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
                       field.onChange(val)
                       onGetDistrict(val)
                     }}
-                    defaultValue={field.value}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger className="w-full bg-white">
@@ -137,20 +146,24 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>鄉鎮區</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="w-full bg-white">
-                        <SelectValue placeholder="請選擇..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="w-full bg-white">
-                      {districts.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
-                          {opt}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {districts.length > 0 ? (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="請選擇..." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="w-full bg-white">
+                        {districts.map((opt) => (
+                          <SelectItem key={opt} value={opt}>
+                            {opt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Skeleton className="h-10 w-full" />
+                  )}
                 </FormItem>
               )}
             />
@@ -201,7 +214,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
           </>
         )}
         <Button type="submit" className="mt-15 flex w-full rounded-3xl">
-          新增
+          {value.id ? '更新' : '新增'}
         </Button>
       </form>
     </Form>

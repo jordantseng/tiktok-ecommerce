@@ -1,10 +1,10 @@
 'use client'
 
-import ReceiptForm from '@/app/confirm-order/add-receipt/ReceiptForm'
+import ReceiptForm from '@/app/confirm-order/upsert-receipt/ReceiptForm'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
 import { useAuthContext } from '@/context/AuthContext'
 import { useCity } from '@/hooks/useCity'
-import { addAddress } from '@/services/address'
+import { getAddress, upsertAddress } from '@/services/address'
 import { AddressData } from '@/types/common'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
@@ -13,7 +13,7 @@ import { useImmer } from 'use-immer'
 import { format } from 'date-fns'
 import Title from '@/components/Title'
 
-const AddReceiptPage = () => {
+const UpsertReceiptPage = () => {
   const { cities, districts, handleGetDistrict } = useCity()
   const { handleSelectDeliveryType } = useAddressContext()
   const { user } = useAuthContext()
@@ -27,10 +27,23 @@ const AddReceiptPage = () => {
   })
   const router = useRouter()
 
+  const id = searchParams.get('id')
   const CVSStoreID = searchParams.get('CVSStoreID')
   const CVSStoreName = searchParams.get('CVSStoreName')
   const CVSAddress = searchParams.get('CVSAddress')
   const LogisticsSubType = searchParams.get('LogisticsSubType') as Delivery
+
+  useEffect(() => {
+    if (id) {
+      getAddress().then(({ data }) => {
+        const target = data.data?.find((opt) => opt?.id?.toString() === id)
+        if (target) {
+          console.log(target)
+          setValue(target)
+        }
+      })
+    }
+  }, [id])
 
   useEffect(() => {
     if (CVSStoreID && CVSStoreName && CVSAddress && LogisticsSubType) {
@@ -45,15 +58,19 @@ const AddReceiptPage = () => {
   }, [CVSStoreID, CVSStoreName, CVSAddress, LogisticsSubType, handleSelectDeliveryType, setValue])
 
   const handleSubmit = (val: AddressData) => {
-    console.log(val)
     // const addressToSubmit =
     //   val.LogisticsSubType === 'home-delivery' ? { ...val, LogisticsSubType: '' } : val
-    addAddress(val).then(() => router.push('/confirm-order/choose-receipt'))
+    upsertAddress(val).then(() => {
+      id ? router.push('/member/profile') : router.push('/confirm-order/choose-receipt')
+    })
   }
 
   return (
     <main className="min-h-screen">
-      <Title title="新增收件人資訊" goBackUrl="/confirm-order/choose-receipt" />
+      <Title
+        title="新增收件人資訊"
+        goBackUrl={id ? '/member/profile' : '/confirm-order/choose-receipt'}
+      />
       <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <div className="min-h-screen w-full bg-white p-4">
           <ReceiptForm
@@ -69,4 +86,4 @@ const AddReceiptPage = () => {
   )
 }
 
-export default AddReceiptPage
+export default UpsertReceiptPage
