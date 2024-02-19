@@ -114,16 +114,10 @@ const DetailPage = () => {
         </div>
 
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">
-          <div className="grid grid-cols-2 gap-2 p-2">
+          <div className="p-2">
             <Button
               variant="ghost"
-              className="rounded-3xl border border-gray-400 p-2 text-gray-400 hover:text-gray-400"
-            >
-              取消訂單
-            </Button>
-            <Button
-              variant="ghost"
-              className="rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
+              className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
             >
               付款
             </Button>
