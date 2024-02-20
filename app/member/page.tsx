@@ -165,10 +165,10 @@ const MemberPage = () => {
                 )}
 
                 <div className="flex flex-col gap-1">
-                  <span className="text-lg md:text-2xl">
+                  <span className="min-h-7 text-lg md:min-h-8 md:text-2xl">
                     {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.name}
                   </span>
-                  <span className="text-xs md:text-base">
+                  <span className="min-h-4 text-xs md:min-h-8 md:text-base">
                     {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.tiktokid}
                   </span>
                 </div>
