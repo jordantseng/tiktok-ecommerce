@@ -71,6 +71,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
                       title={product.title}
                       tags={product.tags.split(',')}
                       price={product.price}
+                      originPrice={product.marketprice}
                       sales={String(product.buycount)}
                     />
                   </Link>

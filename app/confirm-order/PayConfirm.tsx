@@ -8,17 +8,18 @@ import BottomDialog from '@/components/BottomDialog'
 import { useImmer } from 'use-immer'
 
 type Props = {
+  discount: { code: string; discount: number } | null
   onConfirm: () => void
 }
 
-const PayConfirm = ({ onConfirm }: Props) => {
+const PayConfirm = ({ discount, onConfirm }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
 
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
-      accumulator + (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
+      accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
     0,
   )
 
@@ -38,14 +39,17 @@ const PayConfirm = ({ onConfirm }: Props) => {
                 ${webSettingsData?.logisticprice}
               </span>
             </div>
-            <div className="flex justify-end justify-between">
-              <span className="break-keep">折扣：</span>
-              <span className="mb-2 flex border-b-2 text-red-400">-$60</span>
-            </div>
+            {discount?.discount && (
+              <div className="flex justify-end justify-between">
+                <span className="break-keep">折扣：</span>
+                <span className="mb-2 flex border-b-2 text-red-400">-${discount.discount}</span>
+              </div>
+            )}
+
             <div className="flex items-center justify-center">
-              <span className="break-keep">總計：</span>$
+              <span className="break-keep">總計：</span>
               <span className="flex justify-center text-lg font-semibold text-red-400">
-                {total + (webSettingsData?.logisticprice || 0) - 60}
+                ${total + (webSettingsData?.logisticprice || 0) - (discount?.discount || 0)}
               </span>
             </div>
           </div>

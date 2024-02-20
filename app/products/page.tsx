@@ -59,6 +59,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                 title={product.title}
                 tags={product.tags.split(',')}
                 price={product.price}
+                originPrice={product.marketprice}
               />
               <hr className="mx-auto flex w-11/12" />
             </>

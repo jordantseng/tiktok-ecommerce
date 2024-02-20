@@ -44,7 +44,7 @@ const MerchandiseCard = ({
   title,
   tags = [],
   price,
-  specialPrice,
+  originPrice,
   sales,
 }: Props) => {
   return (
@@ -69,14 +69,10 @@ const MerchandiseCard = ({
       <CardFooter className="flex justify-between">
         <div className="flex items-center">
           <div className="mr-3 flex flex-col">
-            <span
-              className={specialPrice ? 'text-sm font-light line-through' : 'text-md font-bold'}
-            >
-              ${price}
+            <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+              ${originPrice}
             </span>
-            {specialPrice && (
-              <span className="text-md font-bold text-red-600">${specialPrice}</span>
-            )}
+            {price && <span className="text-md font-bold text-red-600">${price}</span>}
           </div>
         </div>
         {sales ? (
@@ -89,7 +85,7 @@ const MerchandiseCard = ({
               title,
               tags,
               price,
-              specialPrice,
+              originPrice,
             }}
           />
         )}

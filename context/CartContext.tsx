@@ -1,16 +1,18 @@
 'use client'
-import { addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
+import { CartReq, addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 type CartContextType = {
   items: Item[]
+  handleGetMyCart: () => void
   handleAddToCart: (val: CartItem) => void
   handleRemoveFromCart: (id: number) => void
   updateItemAmount: (id: number, amount: number) => void
   updateSelected: (id: number, isSelect: boolean) => void
   getSelectedCartItems: () => Item[]
+  confirmPurchase: () => void
 }
 
 export type Item = CartItem & {
@@ -24,49 +26,32 @@ type CartProviderProps = {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [items, setItems] = useImmer<Item[]>([
-    {
-      id: 56583,
-      amount: 1,
-      imgUrl:
-        'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
-      title: 'PS5 新春大禮包',
-      price: 18888,
-      tags: ['快速出貨', '24hr'],
-      isSelect: false,
-    },
-    {
-      id: 12334,
-      amount: 1,
-      imgUrl:
-        'https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$',
-      title: 'PS5 新春大禮包 龍年大好運好彩頭',
-      price: 18888,
-      specialPrice: 13000,
-      tags: ['快速出貨', '24hr'],
-      isSelect: false,
-    },
-  ])
+  const [items, setItems] = useImmer<Item[]>([])
 
   useEffect(() => {
+    handleGetMyCart()
+  }, [])
+
+  const handleGetMyCart = () => {
     getMyCart().then((res) => {
       const newItems = (res?.data?.data || []).map((opt) => ({
         id: opt.id,
         amount: opt.qty,
-        imgUrl: opt.imgs,
+        imgUrl: opt.imgs[0],
         title: opt.title,
         price: opt.price,
-        specialPrice: opt.marketprice,
+        originPrice: opt.marketprice,
+        productItemTitle: opt.productitem_title,
+        productItemId: opt.productitem_id,
         tags: opt.tags.split(','),
         isSelect: false,
       }))
-      setItems((draft) => [...draft, ...newItems])
+      setItems(newItems)
     })
-  }, [])
+  }
 
   const handleAddToCart = (val: CartItem) => {
-    addToCart(val.id, 1)
-    setItems((draft) => draft.push({ ...val, isSelect: false }))
+    addToCart(val.productItemId || 0, val.amount || 1).then(() => handleGetMyCart())
   }
 
   const handleRemoveFromCart = (id: number) => {
@@ -76,7 +61,19 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const updateSelected = (id: number, isSelect: boolean) => {
     setItems((draft) => draft.map((opt) => (opt.id === id ? { ...opt, isSelect: isSelect } : opt)))
-    // updatePurchase(id, isSelect ? 1 : 0)
+  }
+
+  const confirmPurchase = () => {
+    const selected = getSelectedCartItems()
+    const request: CartReq[] = []
+    selected.forEach((opt) => {
+      request.push({
+        productitem_id: opt.productItemId || 0,
+        qty: opt.amount || 1,
+        online: opt.isSelect ? 1 : 0,
+      })
+    })
+    updatePurchase(request)
   }
 
   const updateItemAmount = (id: number, amount: number) =>
@@ -91,11 +88,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     <CartContext.Provider
       value={{
         items,
+        handleGetMyCart,
         handleAddToCart,
         handleRemoveFromCart,
         updateSelected,
         updateItemAmount,
         getSelectedCartItems,
+        confirmPurchase,
       }}
     >
       {children}

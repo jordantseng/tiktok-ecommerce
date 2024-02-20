@@ -10,7 +10,7 @@ import { ChevronsUpDown } from 'lucide-react'
 import React from 'react'
 
 const ChooseReceiptPage = () => {
-  const { handleSelectDeliveryType, deliveryType } = useAddressContext()
+  const { handleSelectDeliveryType, deliveryType, resetSelectAddress } = useAddressContext()
   return (
     <main className="min-h-screen">
       <Title title="選擇收件方式" goBackUrl="/confirm-order" />
@@ -18,7 +18,10 @@ const ChooseReceiptPage = () => {
         <RadioGroup
           className="w-full bg-white"
           defaultValue={deliveryType}
-          onValueChange={(val) => handleSelectDeliveryType(val as Delivery)}
+          onValueChange={(val) => {
+            resetSelectAddress()
+            handleSelectDeliveryType(val as Delivery)
+          }}
         >
           <div className="flex items-center justify-between space-x-2  p-4">
             <Collapsible className="w-full" defaultOpen>

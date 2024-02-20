@@ -45,7 +45,7 @@ export const upsertAddress = async (value: AddressData): Promise<void> => {
 }
 
 export const deleteAddress = async (id: number): Promise<void> => {
-  const res = await fetch(`${config.api}/api/membercenter/myaddress/destory`, {
+  const res = await fetch(`${config.api}/api/membercenter/myaddress/destroy`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -69,8 +69,8 @@ export const getLogistic = (type: string) => {
 
   const fields = {
     logisticssubtype: type,
-    api_token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
-    gobackurl: `http://${location.host}/confirm-order/add-receipt`,
+    token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
+    gobackurl: `https://${location.host}/confirm-order/upsert-receipt`,
   }
 
   // Append input elements to the form

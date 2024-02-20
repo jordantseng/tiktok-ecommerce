@@ -2,18 +2,26 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
 import { previewDiscont } from '@/services/order'
 import React from 'react'
 import { useImmer } from 'use-immer'
 
 type Props = {
-  onDiscount: (val: number) => void
+  onDiscount: (code: string, discount: number) => void
 }
 
 const Discount = ({ onDiscount }: Props) => {
   const [code, setCode] = useImmer('')
+  const { toast } = useToast()
   const handleDiscount = () => {
-    previewDiscont(code).then((res) => console.log(res))
+    previewDiscont(code).then(({ data }) => {
+      toast({
+        variant: 'destructive',
+        description: '兌換成功',
+      })
+      onDiscount(data.discount_code || '', data.discount || 0)
+    })
   }
 
   return (
