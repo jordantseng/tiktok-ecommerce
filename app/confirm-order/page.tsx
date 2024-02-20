@@ -75,13 +75,9 @@ const ConfirmBillPage = () => {
     !payStatus || (!selectedAddress?.address && !selectedAddress?.CVSAddress) || items.length === 0
 
   return (
-    <main className="h-full">
+    <main className="h-full min-h-screen">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
-      <div
-        className={cn('flex w-full flex-col items-center bg-default', {
-          'h-screen': items.length === 0,
-        })}
-      >
+      <div className={'flex min-h-screen w-full flex-col items-center bg-default'}>
         <DeliveryInfo />
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">

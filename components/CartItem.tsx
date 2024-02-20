@@ -68,7 +68,7 @@ const CartItem = ({
               <CardDescription className="mt-2">
                 <div className="flex flex-col">
                   <div className="mb-2">{productItemTitle}</div>
-                  <div>
+                  <div className="truncate pb-1">
                     {editable ? (
                       tags.map((opt) => (
                         <span
