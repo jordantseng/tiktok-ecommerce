@@ -69,8 +69,8 @@ export const getLogistic = (type: string) => {
 
   const fields = {
     logisticssubtype: type,
-    api_token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
-    gobackurl: `http://${location.host}/confirm-order/add-receipt`,
+    token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
+    gobackurl: `https://${location.host}/confirm-order/upsert-receipt`,
   }
 
   // Append input elements to the form

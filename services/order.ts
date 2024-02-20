@@ -93,32 +93,37 @@ export const getOrders = async (): Promise<OrdersRes> => {
 export const addOrder = async (order: OrderData): Promise<void> => {
   const form = document.createElement('form')
   form.method = 'post'
-  form.action = `${config.api}/api/membercenter/ordergroup/store`
+  form.action = `${config.api}/membercenter/ordergroup/store`
 
   const fields = {
+    id: Date.now(),
+    token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
     domain_title: order.domain_title || location.hostname,
-    member_name: order.member_name,
+    member_id: order.member_id || '',
+    domain_id: 1,
+    member_name: order.member_name || '無',
     LogisticsSubType: order.LogisticsSubType || '',
+    deliverystatus: order.CVSStoreName ? 'csv' : 'store',
     CVSStoreName: order.CVSStoreName || '',
     discount: order.discount || '',
     discount_title: order.discount_title || '',
     discount_code: order.discount_code || '',
-    gobackurl: `http://${location.host}/confirm-order/upsert-receipt`,
+    gobackurl: `https://${location.host}/confirm-order/success`,
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',
-    remail: order.remail || '',
+    remail: order.remail || 'test@mail.com',
     rname: order.rname || '',
     rtel: order.rtel || '',
-    rcity1: order.rcity1 || '',
-    rcity2: order.rcity2 || '',
-    raddress: order.raddress || '',
+    rcity1: order.rcity1 || '無',
+    rcity2: order.rcity2 || '無',
+    raddress: order.raddress || '無',
   }
 
   // Append input elements to the form
   Object.entries(fields).forEach(([name, value]) => {
     const input = document.createElement('input')
-    input.type = 'hidden'
+    input.type = 'text'
     input.name = name
     input.value = value.toString()
     form.appendChild(input)
@@ -129,14 +134,14 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   document.body.removeChild(form)
 }
 
-export const previewDiscont = async (code: string): Promise<void> => {
+export const previewDiscont = async (code: string): Promise<OrderRes> => {
   const res = await fetch(`${config.api}/api/membercenter/ordergroup/review`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify({ discount: code || '' }),
+    body: JSON.stringify({ discount_code: code || '' }),
     next: { revalidate: 60 * 5 },
   })
 

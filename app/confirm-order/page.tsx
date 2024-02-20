@@ -12,36 +12,40 @@ import Discount from '@/app/confirm-order/DIscount'
 import DeliveryInfo from '@/app/confirm-order/DeliveryInfo'
 import PaymentSetting from '@/app/confirm-order/PaymentSetting'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { use } from 'react'
 import { useImmer } from 'use-immer'
 import { addOrder } from '@/services/order'
+import { cn } from '@/lib/utils'
+import { useAuthContext } from '@/context/AuthContext'
 
 const ConfirmBillPage = () => {
   const router = useRouter()
+  const { user } = useAuthContext()
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
   const { selectedAddress } = useAddressContext()
   const [payStatus, setPayStatus] = useImmer<string | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useImmer(false)
-  const [discount, setDiscount] = useImmer<string | null>('')
+  const [discount, setDiscount] = useImmer<{ code: string; discount: number } | null>(null)
 
   const handleAddOrder = () => {
-    // addOrder({
-    //   domain_title: webSettingsData?.domain,
-    //   member_name: webSettingsData?.name || '',
-    //   LogisticsSubType: selectedAddress?.LogisticsSubType || '',
-    //   CVSStoreName: selectedAddress?.CVSStoreName || '',
-    //   discount_code: discount || '',
-    //   CVSAddress: selectedAddress?.CVSAddress || '',
-    //   CVSStoreID: selectedAddress?.CVSStoreID || '',
-    //   paystatus: payStatus || '',
-    //   rname: selectedAddress?.name || '',
-    //   rtel: selectedAddress?.tel || '',
-    //   rcity1: selectedAddress?.city1 || '',
-    //   rcity2: selectedAddress?.city2 || '',
-    //   raddress: selectedAddress?.address || '',
-    // })
-    router.push('/confirm-order/success')
+    addOrder({
+      domain_title: webSettingsData?.domain,
+      member_id: user?.id || 0,
+      member_name: user?.name || '',
+      LogisticsSubType: selectedAddress?.LogisticsSubType || '',
+      CVSStoreName: selectedAddress?.CVSStoreName || '',
+      discount_code: discount?.code || '',
+      CVSAddress: selectedAddress?.CVSAddress || '',
+      CVSStoreID: selectedAddress?.CVSStoreID || '',
+      paystatus: payStatus || '',
+      rname: selectedAddress?.name || '',
+      rtel: selectedAddress?.tel || '',
+      rcity1: selectedAddress?.city1 || '',
+      rcity2: selectedAddress?.city2 || '',
+      raddress: selectedAddress?.address || '',
+    })
+    // router.push('/confirm-order/success')
   }
 
   const handleLabel = (val: string) => {
@@ -56,7 +60,7 @@ const ConfirmBillPage = () => {
     } else if (!webSettingsData?.paykind[val] && map[val]) {
       return map[val]
     } else {
-      return webSettingsData?.paykind[val] ?? 'Unknown payment method'
+      return webSettingsData?.paykind[val] ?? '尚未選擇付款方式'
     }
   }
 
@@ -67,10 +71,17 @@ const ConfirmBillPage = () => {
     0,
   )
 
+  const btnDisable =
+    !payStatus || (!selectedAddress?.address && !selectedAddress?.CVSAddress) || items.length === 0
+
   return (
     <main className="h-full">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
-      <div className="flex w-full flex-col items-center bg-default">
+      <div
+        className={cn('flex w-full flex-col items-center bg-default', {
+          'h-screen': items.length === 0,
+        })}
+      >
         <DeliveryInfo />
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
@@ -92,17 +103,17 @@ const ConfirmBillPage = () => {
           </div>
         </div>
         <div className="w-full px-4">
-          <Discount onDiscount={(val) => setDiscount(val)} />
+          <Discount onDiscount={(code, discount) => setDiscount({ code, discount })} />
         </div>
         <div className="w-full p-4">
           <div className="rounded-lg bg-white p-2">
             <PaymentSetting onChange={(val) => setPayStatus(val)} />
           </div>
         </div>
-        <PayConfirm onConfirm={() => setIsDialogOpen(true)} />
+        <PayConfirm discount={discount} onConfirm={() => setIsDialogOpen(true)} />
       </div>
       {isDialogOpen && (
-        <BottomDialog title="確認訂單" onClose={() => setIsDialogOpen(false)}>
+        <BottomDialog className="h-auto" title="確認訂單" onClose={() => setIsDialogOpen(false)}>
           <div>
             <div className="flex items-center justify-center p-4 text-4xl font-bold">
               ${total + (webSettingsData?.logisticprice || 0) - 60}
@@ -112,11 +123,18 @@ const ConfirmBillPage = () => {
               <span>{handleLabel(payStatus || '')}</span>
             </div>
             <div className="mb-2 flex items-center justify-between border-b py-2">
+              <span>收件地址</span>
+              <div className="flex flex-col">
+                <span>{selectedAddress?.address || selectedAddress?.CVSStoreName}</span>
+                {selectedAddress?.CVSAddress && <span>{selectedAddress?.CVSAddress}</span>}
+              </div>
+            </div>
+            <div className="mb-2 flex items-center justify-between border-b py-2">
               <span>收件人</span>
               <span>{selectedAddress?.name}</span>
             </div>
             <Button
-              disabled={!payStatus || !selectedAddress?.address}
+              disabled={btnDisable}
               className="w-full rounded-full"
               variant="primary"
               onClick={handleAddOrder}
