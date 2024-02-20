@@ -24,6 +24,7 @@ type AuthContextType = {
   user: User | null
   token: string
   isLogin: boolean
+  isLoadingUser: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
   handleLogout: (user: User) => void
@@ -39,14 +40,19 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const [token, setToken] = useState(getLocalStorageToken())
 
+  const [isLoadingUser, setIsLoadingUser] = useState(false)
+
   const isLogin = !!token
 
   const refreshUser = useCallback(async () => {
+    setIsLoadingUser(true)
     try {
       const res = await getUser()
       setUser(res.data)
     } catch (error) {
       console.error('refreshUser error: ', error)
+    } finally {
+      setIsLoadingUser(false)
     }
   }, [])
 
@@ -109,6 +115,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         user,
         token,
         isLogin,
+        isLoadingUser,
         refreshUser,
         handleRegister,
         handleLogin,
