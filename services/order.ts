@@ -12,8 +12,8 @@ type OrdersRes = ApiRes<{
 export type OrderData = {
   domain_title?: string
   member_name: string
-  id: number
-  totalprice: number
+  id?: number
+  totalprice?: number
   LogisticsSubType?: string
   AllPayLogisticsID?: string
   CVSRtnMsg?: string
@@ -96,14 +96,14 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   form.action = `${config.api}/api/membercenter/ordergroup/store`
 
   const fields = {
-    domain_title: location.hostname,
+    domain_title: order.domain_title || location.hostname,
     member_name: order.member_name,
     LogisticsSubType: order.LogisticsSubType || '',
     CVSStoreName: order.CVSStoreName || '',
     discount: order.discount || '',
     discount_title: order.discount_title || '',
     discount_code: order.discount_code || '',
-    gobackurl: `http://${location.host}/confirm-order/add-receipt`,
+    gobackurl: `http://${location.host}/confirm-order/upsert-receipt`,
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',

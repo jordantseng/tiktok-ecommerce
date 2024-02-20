@@ -14,6 +14,7 @@ import PaymentSetting from '@/app/confirm-order/PaymentSetting'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useImmer } from 'use-immer'
+import { addOrder } from '@/services/order'
 
 const ConfirmBillPage = () => {
   const router = useRouter()
@@ -22,8 +23,24 @@ const ConfirmBillPage = () => {
   const { selectedAddress } = useAddressContext()
   const [payStatus, setPayStatus] = useImmer<string | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useImmer(false)
+  const [discount, setDiscount] = useImmer<string | null>('')
 
   const handleAddOrder = () => {
+    // addOrder({
+    //   domain_title: webSettingsData?.domain,
+    //   member_name: webSettingsData?.name || '',
+    //   LogisticsSubType: selectedAddress?.LogisticsSubType || '',
+    //   CVSStoreName: selectedAddress?.CVSStoreName || '',
+    //   discount_code: discount || '',
+    //   CVSAddress: selectedAddress?.CVSAddress || '',
+    //   CVSStoreID: selectedAddress?.CVSStoreID || '',
+    //   paystatus: payStatus || '',
+    //   rname: selectedAddress?.name || '',
+    //   rtel: selectedAddress?.tel || '',
+    //   rcity1: selectedAddress?.city1 || '',
+    //   rcity2: selectedAddress?.city2 || '',
+    //   raddress: selectedAddress?.address || '',
+    // })
     router.push('/confirm-order/success')
   }
 
@@ -46,14 +63,14 @@ const ConfirmBillPage = () => {
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
-      accumulator + (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
+      accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
     0,
   )
 
   return (
     <main className="h-full">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
-      <div className="flex h-screen w-full flex-col items-center bg-default">
+      <div className="flex w-full flex-col items-center bg-default">
         <DeliveryInfo />
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
@@ -67,13 +84,15 @@ const ConfirmBillPage = () => {
                 title={opt.title}
                 price={opt.price}
                 tags={opt.tags}
-                specialPrice={opt.specialPrice}
+                originPrice={opt.originPrice}
+                productItemTitle={opt.productItemTitle}
+                productItemId={opt.productItemId}
               />
             ))}
           </div>
         </div>
         <div className="w-full px-4">
-          <Discount onDiscount={(val) => console.log(val)} />
+          <Discount onDiscount={(val) => setDiscount(val)} />
         </div>
         <div className="w-full p-4">
           <div className="rounded-lg bg-white p-2">

@@ -61,7 +61,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           />
         </div>
       </Card> */}
-      <SubmitButtons specs={productItems.data} />
+      <SubmitButtons product={product} specs={productItems.data} />
     </main>
   )
 }

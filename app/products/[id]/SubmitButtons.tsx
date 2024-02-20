@@ -9,12 +9,16 @@ import { Button } from '@/components/ui/button'
 import { addToCart } from '@/services/cart'
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronRightIcon } from 'lucide-react'
+import { ProductData } from '@/services/product'
+import { Item, useCartContext } from '@/context/CartContext'
 
 type SubmitButtonsProps = {
+  product: ProductData
   specs: { id: number; title: string }[]
 }
 
-const SubmitButtons = ({ specs }: SubmitButtonsProps) => {
+const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
+  const { handleAddToCart } = useCartContext()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(null)
   const [confirmedItem, updateConfirmedItem] = useImmer<{
@@ -57,7 +61,18 @@ const SubmitButtons = ({ specs }: SubmitButtonsProps) => {
 
   const handleBuyProduct = async () => {
     try {
-      await addToCart(Number(confirmedItem?.id), confirmedItem.count)
+      const item: Item = {
+        id: product.id,
+        productItemId: Number(confirmedItem?.id),
+        amount: confirmedItem.count,
+        imgUrl: product.imgs[0],
+        title: product.title,
+        price: product.price,
+        originPrice: product.marketprice,
+        tags: product.tags.split(','),
+        isSelect: false,
+      }
+      await handleAddToCart(item)
       router.push('/shopping-cart')
     } catch (error) {
       console.log(error)
@@ -67,7 +82,17 @@ const SubmitButtons = ({ specs }: SubmitButtonsProps) => {
   const handleAddToCard = async () => {
     // TODO: show success alert
     try {
-      await addToCart(Number(confirmedItem?.id), confirmedItem.count)
+      const item: Item = {
+        id: Number(confirmedItem?.id),
+        amount: confirmedItem.count,
+        imgUrl: product.imgs[0],
+        title: product.title,
+        price: product.price,
+        originPrice: product.marketprice,
+        tags: product.tags.split(','),
+        isSelect: false,
+      }
+      await handleAddToCart(item)
     } catch (error) {
       console.log(error)
     }

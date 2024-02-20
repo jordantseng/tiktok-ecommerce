@@ -7,13 +7,14 @@ import React from 'react'
 import { useImmer } from 'use-immer'
 
 type Props = {
-  onDiscount: (val: number) => void
+  onDiscount: (val: string) => void
 }
 
 const Discount = ({ onDiscount }: Props) => {
   const [code, setCode] = useImmer('')
   const handleDiscount = () => {
     previewDiscont(code).then((res) => console.log(res))
+    onDiscount(code)
   }
 
   return (
