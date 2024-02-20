@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import ProductCarousel from '@/app/products/[id]/ProductCarousel'
-import { Button } from '@/components/ui/button'
 import TitleCard from '@/app/products/[id]/TitleCard'
 // import SpecCard from '@/app/products/[id]/SpecCard'
 import PrevButton from '@/components/PrevButton'
@@ -38,7 +37,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         title={product.title}
         price={String(product.price)}
         salePrice={String(product.marketprice)}
-        tags={product.tags.split(',')}
+        tags={product.tags?.split(',') || []}
       />
       <Card className="m-2 border-none shadow-none">
         <CardContent className="flex flex-col gap-2 p-3">

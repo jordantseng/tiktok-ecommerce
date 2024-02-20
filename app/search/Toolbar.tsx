@@ -52,7 +52,6 @@ const Toolbar = () => {
   }
 
   const renderSortIcon = (sortName: string) => {
-    console.log('sortName', sortName)
     if (sortBy !== sortName) {
       return <ChevronsUpDownIcon className="h-3 w-3" />
     }

@@ -231,7 +231,7 @@ const MemberPage = () => {
                   key={recommend.id}
                   imgUrl={recommend.imgs[0]}
                   title={recommend.title}
-                  tags={recommend.tags.split(',')}
+                  tags={recommend.tags?.split(',')}
                   price={recommend.price}
                   originPrice={recommend.marketprice}
                 />
