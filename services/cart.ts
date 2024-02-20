@@ -23,6 +23,12 @@ type CartData = {
   tags: string
 }
 
+export type CartReq = {
+  productitem_id: number
+  qty: number
+  online: number
+}
+
 export const getMyCart = async (): Promise<CartsRes> => {
   const res = await fetch(`${config.api}/api/membercenter/mycart`, {
     method: 'POST',
@@ -66,11 +72,7 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
   return data
 }
 
-export const updatePurchase = async (
-  id: number,
-  qty: number,
-  online: number,
-): Promise<CartsRes> => {
+export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
   const res = await fetch(`${config.api}/api/membercenter/mycart/store`, {
     method: 'POST',
     headers: {
@@ -78,13 +80,7 @@ export const updatePurchase = async (
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
     body: JSON.stringify({
-      data: [
-        {
-          productitem_id: id,
-          qty,
-          online,
-        },
-      ],
+      data: req.map((opt) => opt),
     }),
     next: { revalidate: 60 * 5 },
   })

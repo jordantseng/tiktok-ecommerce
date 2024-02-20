@@ -83,7 +83,8 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     // TODO: show success alert
     try {
       const item: Item = {
-        id: Number(confirmedItem?.id),
+        id: product.id,
+        productItemId: Number(confirmedItem?.id),
         amount: confirmedItem.count,
         imgUrl: product.imgs[0],
         title: product.title,

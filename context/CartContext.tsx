@@ -1,11 +1,12 @@
 'use client'
-import { addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
+import { CartReq, addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 type CartContextType = {
   items: Item[]
+  handleGetMyCart: () => void
   handleAddToCart: (val: CartItem) => void
   handleRemoveFromCart: (id: number) => void
   updateItemAmount: (id: number, amount: number) => void
@@ -45,12 +46,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         tags: opt.tags.split(','),
         isSelect: false,
       }))
-      setItems((draft) => [...draft, ...newItems])
+      setItems(newItems)
     })
   }
 
   const handleAddToCart = (val: CartItem) => {
-    addToCart(val.id, 1).then(() => handleGetMyCart())
+    addToCart(val.productItemId || 0, val.amount || 1).then(() => handleGetMyCart())
   }
 
   const handleRemoveFromCart = (id: number) => {
@@ -64,10 +65,15 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const confirmPurchase = () => {
     const selected = getSelectedCartItems()
-    const process = []
+    const request: CartReq[] = []
     selected.forEach((opt) => {
-      process.push(updatePurchase(opt.productItemId || 0, opt.amount || 1, opt.isSelect ? 1 : 0))
+      request.push({
+        productitem_id: opt.productItemId || 0,
+        qty: opt.amount || 1,
+        online: opt.isSelect ? 1 : 0,
+      })
     })
+    updatePurchase(request)
   }
 
   const updateItemAmount = (id: number, amount: number) =>
@@ -82,6 +88,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     <CartContext.Provider
       value={{
         items,
+        handleGetMyCart,
         handleAddToCart,
         handleRemoveFromCart,
         updateSelected,
