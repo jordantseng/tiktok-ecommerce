@@ -233,7 +233,7 @@ const MemberPage = () => {
                   title={recommend.title}
                   tags={recommend.tags.split(',')}
                   price={recommend.price}
-                  specialPrice={recommend.marketprice}
+                  originPrice={recommend.marketprice}
                 />
               ))}
               {isLoadingRecommends &&

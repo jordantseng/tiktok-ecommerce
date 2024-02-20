@@ -18,7 +18,7 @@ const PayConfirm = ({ onConfirm }: Props) => {
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
-      accumulator + (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
+      accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
     0,
   )
 

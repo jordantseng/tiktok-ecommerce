@@ -4,8 +4,10 @@ export type CartItem = {
   title: string
   tags?: string[]
   amount?: number
-  price: number
-  specialPrice?: number
+  price?: number
+  originPrice: number
+  productItemTitle?: string
+  productItemId?: number
 }
 
 export type ApiRes<Data> = {

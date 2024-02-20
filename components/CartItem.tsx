@@ -27,7 +27,8 @@ const CartItem = ({
   tags = [],
   amount,
   price,
-  specialPrice,
+  originPrice,
+  productItemTitle,
   onSelect,
   onChange,
   onDelete,
@@ -65,25 +66,30 @@ const CartItem = ({
             <div className="max-w-[150px] max-[320px]:max-w-[80px]">
               <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <CardDescription className="mt-2">
-                {editable ? (
-                  tags.map((opt) => (
-                    <span
-                      key={opt}
-                      className="mr-2 rounded border border-primary p-0.5 text-xs text-primary"
-                    >
-                      {opt}
-                    </span>
-                  ))
-                ) : (
-                  <span className="flex flex-col">
-                    <span className="text-sm font-light">數量：{amount}</span>
-                  </span>
-                )}
+                <div className="flex flex-col">
+                  <div className="mb-2">{productItemTitle}</div>
+                  <div>
+                    {editable ? (
+                      tags.map((opt) => (
+                        <span
+                          key={opt}
+                          className="mr-2 rounded border border-primary p-0.5 text-xs text-primary"
+                        >
+                          {opt}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="flex flex-col">
+                        <span className="text-sm font-light">數量：{amount}</span>
+                      </span>
+                    )}
+                  </div>
+                </div>
               </CardDescription>
             </div>
             {!editable && (
               <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
-                ${(amount || 1) * (specialPrice || price)}
+                ${(amount || 1) * (price || originPrice)}
               </div>
             )}
           </CardHeader>
@@ -93,23 +99,23 @@ const CartItem = ({
                 <div className="mr-4 flex flex-col">
                   <span
                     className={
-                      specialPrice
+                      price
                         ? 'text-sm font-light line-through'
                         : 'max-[320px]:text-md flex h-full items-center text-lg font-bold'
                     }
                   >
-                    ${price}
+                    ${originPrice}
                   </span>
-                  {specialPrice && (
+                  {price && (
                     <span className="max-[320px]:text-md text-lg font-bold text-red-600">
-                      ${specialPrice}
+                      ${price}
                     </span>
                   )}
                 </div>
                 <Counter
-                  className={cn({ 'items-end': specialPrice !== undefined })}
+                  className={cn({ 'items-end': price !== undefined })}
                   buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
-                    'items-end': specialPrice !== undefined,
+                    'items-end': price !== undefined,
                   })}
                   value={amount || 1}
                   isLeftCounterDisabled={amount === 1}

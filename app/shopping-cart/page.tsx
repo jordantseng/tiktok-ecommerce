@@ -16,16 +16,21 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
-  const { items, updateSelected, getSelectedCartItems, updateItemAmount, handleRemoveFromCart } =
-    useCartContext()
+  const {
+    items,
+    updateSelected,
+    getSelectedCartItems,
+    updateItemAmount,
+    handleRemoveFromCart,
+    confirmPurchase,
+  } = useCartContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
 
   useEffect(() => {
     const arr = getSelectedCartItems()
     const sum = arr.reduce(
       (accumulator, currentValue) =>
-        accumulator +
-        (currentValue.amount || 0) * (currentValue.specialPrice || currentValue.price),
+        accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
       0,
     )
     setTotal(sum)
@@ -35,7 +40,7 @@ const ShoppingCartPage = () => {
     let sum = 0
     items.forEach((opt) => {
       if (res) {
-        sum += (opt.amount || 0) * (opt.specialPrice || opt.price)
+        sum += (opt.amount || 0) * (opt.price || opt.originPrice)
       }
       updateSelected(opt.id, res)
     })
@@ -49,14 +54,14 @@ const ShoppingCartPage = () => {
     nowItems.forEach((el) => {
       if (item.id === el.id) {
         setTotal(
-          isMinus ? total - (el.specialPrice || el.price) : total + (el.specialPrice || el.price),
+          isMinus ? total - (el.price || el.originPrice) : total + (el.price || el.originPrice),
         )
       }
     })
   }
 
   const handleSelect = (item: Item, res: boolean) => {
-    const prizeAmount = item.specialPrice || item.price
+    const prizeAmount = item.price || item.originPrice
     const updateAmount = (item.amount || 0) * prizeAmount
 
     setTotal((draft) => draft + (res ? updateAmount : -updateAmount))
@@ -80,7 +85,9 @@ const ShoppingCartPage = () => {
                 title={opt.title}
                 price={opt.price}
                 tags={opt.tags}
-                specialPrice={opt.specialPrice}
+                originPrice={opt.originPrice}
+                productItemId={opt.productItemId}
+                productItemTitle={opt.productItemTitle}
                 onSelect={(res) => handleSelect(opt, res)}
                 onChange={(val) => handlePriceChange(opt, val)}
                 onDelete={(id) => handleRemoveFromCart(id)}
@@ -100,7 +107,7 @@ const ShoppingCartPage = () => {
               title={opt.title}
               tags={opt.tags.split(',')}
               price={opt.price}
-              specialPrice={opt.marketprice}
+              originPrice={opt.marketprice}
             />
           ))}
 
@@ -132,7 +139,11 @@ const ShoppingCartPage = () => {
               }}
               href="/confirm-order"
             >
-              <Button className="w-[4/12] rounded-3xl bg-primary" disabled={total === 0}>
+              <Button
+                className="w-[4/12] rounded-3xl bg-primary"
+                disabled={total === 0}
+                onClick={() => confirmPurchase()}
+              >
                 結帳
               </Button>
             </Link>
