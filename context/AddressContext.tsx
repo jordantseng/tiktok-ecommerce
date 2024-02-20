@@ -17,6 +17,7 @@ type AddressContextType = {
   deliveryType: Delivery
   handleSelectAddress: (val: AddressData) => void
   handleSelectDeliveryType: (val: Delivery) => void
+  resetSelectAddress: () => void
   //   updateAddress: (val: AddressData[]) => void;
 }
 
@@ -32,6 +33,7 @@ export const AddressProvider = ({ children }: AddressProviderProps) => {
 
   const handleSelectAddress = (val: AddressData) => setSelectedAddress(val)
   const handleSelectDeliveryType = (val: Delivery) => setDeliveryType(Delivery[val])
+  const resetSelectAddress = () => setSelectedAddress(null)
   //   const updateAddress = () => {}
 
   return (
@@ -41,6 +43,7 @@ export const AddressProvider = ({ children }: AddressProviderProps) => {
         deliveryType,
         handleSelectAddress,
         handleSelectDeliveryType,
+        resetSelectAddress,
       }}
     >
       {children}
