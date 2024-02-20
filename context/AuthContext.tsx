@@ -1,9 +1,16 @@
 'use client'
 
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
+import {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { useRouter } from 'next/navigation'
 
 import { LoginInfo, User, getUser, login, register } from '@/services/auth'
-import { useRouter } from 'next/navigation'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
@@ -20,6 +27,7 @@ type AuthContextType = {
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
   handleLogout: (user: User) => void
+  refreshUser: () => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -33,17 +41,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const isLogin = !!token
 
+  const refreshUser = useCallback(async () => {
+    try {
+      const res = await getUser()
+      setUser(res.data)
+    } catch (error) {
+      console.error('refreshUser error: ', error)
+    }
+  }, [])
+
   useEffect(() => {
     if (!token) {
       router.push('/login')
     } else {
-      getUser()
-        .then((res) => setUser(res.data))
-        .catch((error) => {
-          console.error('getUser error: ', error)
-        })
+      refreshUser()
     }
-  }, [token, router])
+  }, [token, router, refreshUser])
 
   const handleLogin = async ({ email, password }: LoginInfo) => {
     try {
@@ -96,6 +109,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         user,
         token,
         isLogin,
+        refreshUser,
         handleRegister,
         handleLogin,
         handleLogout,

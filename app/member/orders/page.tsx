@@ -66,13 +66,7 @@ const OrderCard = () => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <span className="grid grid-cols-3 gap-2">
-          <Button
-            variant="ghost"
-            className="rounded-3xl border border-gray-400 p-2 text-gray-400 hover:text-gray-400"
-          >
-            取消訂單
-          </Button>
+        <span className="grid grid-cols-2 gap-2">
           <Button
             variant="ghost"
             className="rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"

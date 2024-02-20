@@ -75,3 +75,23 @@ export const getUser = async (): Promise<UserRes> => {
 
   return data
 }
+
+export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
+  const { mobile, name, email } = user
+  const res = await fetch(`${config.api}/api/membercenter/edit/store`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
+    },
+    body: JSON.stringify({
+      mobile,
+      name,
+      email,
+    }),
+  })
+
+  const data = await res.json()
+
+  return data
+}
