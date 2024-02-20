@@ -22,8 +22,6 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   const { data: product } = await getProduct(Number(id))
   const { data: productItems } = await getProductItems({ productId: id })
 
-  console.log('productItems', productItems)
-
   return (
     <main className="mb-14 min-h-screen bg-default">
       <header className="flex items-center justify-between gap-3 bg-white p-4">
