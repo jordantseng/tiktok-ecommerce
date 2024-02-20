@@ -40,7 +40,7 @@ export const getMyCart = async (): Promise<CartsRes> => {
       page: 1,
       pagesize: 10000,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -64,7 +64,7 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
         },
       ],
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -82,7 +82,7 @@ export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
     body: JSON.stringify({
       data: req.map((opt) => opt),
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -100,7 +100,7 @@ export const deleteFromCart = async (id: number): Promise<CartsRes> => {
     body: JSON.stringify({
       del: id,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

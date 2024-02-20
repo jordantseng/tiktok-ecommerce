@@ -22,7 +22,7 @@ export const getBanners = async (): Promise<GetBannersRes> => {
       page: 1,
       pagesize: 10000,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

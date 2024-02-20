@@ -1,11 +1,6 @@
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
-// {
-//   "id": 200004,
-//   "title": "BNC"
-// },
-
 type GetProductItems = ApiRes<{
   current_page: number
   data: { id: number; title: string }[]

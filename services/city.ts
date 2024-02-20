@@ -21,7 +21,7 @@ export const getCities = async (): Promise<CityRes> => {
     headers: {
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -38,7 +38,7 @@ export const getDistrict = async (city: string): Promise<DistrictRes> => {
     body: JSON.stringify({
       city1title: city,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

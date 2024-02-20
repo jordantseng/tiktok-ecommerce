@@ -9,7 +9,7 @@ export type ProductData = {
   hits: number
   marketprice: number
   location: string
-  tags: string
+  tags: string | null
   star: number
   imgs: string[]
   number: string
@@ -75,6 +75,7 @@ export const getProducts = async ({
       price1,
       price2,
     }),
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -92,7 +93,7 @@ export const getProduct = async (id: number): Promise<GetProductRes> => {
     body: JSON.stringify({
       id,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
