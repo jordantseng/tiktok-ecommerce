@@ -63,7 +63,7 @@ export const getOrder = async (id: number): Promise<OrderRes> => {
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
     body: JSON.stringify(id),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -82,7 +82,7 @@ export const getOrders = async (): Promise<OrdersRes> => {
       page: 1,
       pagesize: 10000,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -141,8 +141,8 @@ export const previewDiscont = async (code: string): Promise<OrderRes> => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify({ discount_code: code || '' }),
-    next: { revalidate: 60 * 5 },
+    body: JSON.stringify({ discount: code || '' }),
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

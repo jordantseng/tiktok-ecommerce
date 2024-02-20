@@ -18,7 +18,7 @@ export const getAddress = async (): Promise<AddressRes> => {
       page: 1,
       pagesize: 10000,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -36,7 +36,7 @@ export const upsertAddress = async (value: AddressData): Promise<void> => {
     body: JSON.stringify({
       ...value,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -54,7 +54,7 @@ export const deleteAddress = async (id: number): Promise<void> => {
     body: JSON.stringify({
       del: id,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

@@ -9,7 +9,7 @@ export const getWebSettings = async (): Promise<WebSettingsRes> => {
     headers: {
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

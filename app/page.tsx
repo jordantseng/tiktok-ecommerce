@@ -49,7 +49,7 @@ export default async function HomePage() {
                 className="w-full"
                 imgUrl={product.imgs[0]}
                 title={product.title}
-                tags={product.tags.split(',')}
+                tags={product.tags?.split(',')}
                 price={product.price}
                 originPrice={product.marketprice}
                 sales={String(product.buycount)}

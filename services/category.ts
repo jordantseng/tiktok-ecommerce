@@ -34,7 +34,7 @@ export const getCategories = async (): Promise<getCategoriesRes> => {
       page: 1,
       pagesize: 10000,
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()
@@ -55,7 +55,7 @@ export const getSubCategories = async (categoryId: number): Promise<getSubCatego
       pagesize: 10,
       search: '',
     }),
-    next: { revalidate: 60 * 5 },
+    next: { revalidate: 0 },
   })
 
   const data = await res.json()

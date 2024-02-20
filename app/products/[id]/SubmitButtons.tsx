@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useImmer } from 'use-immer'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 import SpecDialog from '@/app/products/[id]/SpecDialog'
 import { Button } from '@/components/ui/button'
@@ -34,6 +35,7 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     selectedSize?.size === confirmedItem.size ? confirmedItem.count : 1,
   )
   const router = useRouter()
+  const { toast } = useToast()
 
   const handleSpecSelect = ({ id, size }: { id: string; size: string }) => {
     setSelectedSize({ id, size })
@@ -69,7 +71,7 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         title: product.title,
         price: product.price,
         originPrice: product.marketprice,
-        tags: product.tags.split(','),
+        tags: product.tags?.split(','),
         isSelect: false,
       }
       await handleAddToCart(item)
@@ -80,7 +82,6 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   }
 
   const handleAddToCard = async () => {
-    // TODO: show success alert
     try {
       const item: Item = {
         id: product.id,
@@ -90,10 +91,14 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         title: product.title,
         price: product.price,
         originPrice: product.marketprice,
-        tags: product.tags.split(','),
+        tags: product.tags?.split(','),
         isSelect: false,
       }
       await handleAddToCart(item)
+      toast({
+        variant: 'destructive',
+        title: '成功加入購物車！',
+      })
     } catch (error) {
       console.log(error)
     }

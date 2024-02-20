@@ -57,7 +57,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                 className="w-full border-none shadow-none"
                 imgUrl={product.imgs[0]}
                 title={product.title}
-                tags={product.tags.split(',')}
+                tags={product.tags?.split(',')}
                 price={product.price}
                 originPrice={product.marketprice}
               />

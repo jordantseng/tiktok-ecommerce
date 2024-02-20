@@ -105,7 +105,7 @@ const ShoppingCartPage = () => {
               className="h-full w-full"
               imgUrl={opt.imgs[0]}
               title={opt.title}
-              tags={opt.tags.split(',')}
+              tags={opt.tags?.split(',')}
               price={opt.price}
               originPrice={opt.marketprice}
             />
