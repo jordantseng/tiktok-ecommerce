@@ -5,10 +5,9 @@ import Image from 'next/image'
 import ProductCarousel from '@/app/products/[id]/ProductCarousel'
 import { Button } from '@/components/ui/button'
 import TitleCard from '@/app/products/[id]/TitleCard'
-import InfoCard from '@/app/products/[id]/InfoCard'
 // import SpecCard from '@/app/products/[id]/SpecCard'
 import PrevButton from '@/components/PrevButton'
-// import { Card } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import SubmitButtons from '@/app/products/[id]/SubmitButtons'
 import { getProduct } from '@/services/product'
 import { getProductItems } from '@/services/productItem'
@@ -41,9 +40,11 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         salePrice={String(product.marketprice)}
         tags={product.tags.split(',')}
       />
-      <InfoCard>
-        <div dangerouslySetInnerHTML={{ __html: product.body }} />
-      </InfoCard>
+      <Card className="m-2 border-none shadow-none">
+        <CardContent className="flex flex-col gap-2 p-3">
+          <div dangerouslySetInnerHTML={{ __html: product.body }} />
+        </CardContent>
+      </Card>
       {/* <SpecCard
         specs={[
           { key: '產地', value: '安徽' },
