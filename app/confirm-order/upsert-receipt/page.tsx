@@ -22,7 +22,7 @@ const UpsertReceiptPage = () => {
     member_id: user?.id || 0,
     name: '',
     tel: '',
-    LogisticsSubType: 'home-delivery',
+    LogisticsSubType: 'HOME_DELIVERY',
   })
   const router = useRouter()
 
@@ -58,7 +58,7 @@ const UpsertReceiptPage = () => {
 
   const handleSubmit = (val: AddressData) => {
     // const addressToSubmit =
-    //   val.LogisticsSubType === 'home-delivery' ? { ...val, LogisticsSubType: '' } : val
+    //   val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
     upsertAddress(val).then(() => {
       id ? router.push('/member/profile') : router.push('/confirm-order/choose-receipt')
     })

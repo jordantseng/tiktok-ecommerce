@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
@@ -57,13 +57,13 @@ export type OrderData = {
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup/show', { id })
+  const { data } = await axiosInstance.post('/api/membercenter/ordergroup/show', { id })
 
   return data
 }
 
 export const getOrders = async (): Promise<OrdersRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup', {
+  const { data } = await axiosInstance.post('/api/membercenter/ordergroup', {
     page: 1,
     pagesize: 10000,
   })
@@ -116,7 +116,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
 }
 
 export const previewDiscont = async (code: string): Promise<OrderRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup/review', {
+  const { data } = await axiosInstance.post('/api/membercenter/ordergroup/review', {
     discount: code || '',
   })
 

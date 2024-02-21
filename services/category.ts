@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
@@ -25,7 +25,7 @@ type getSubCategories = ApiRes<
 >
 
 export const getCategories = async (): Promise<getCategoriesRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/kindhead', {
+  const { data } = await axiosInstance.post('/api/kindhead', {
     page: 1,
     pagesize: 10000,
   })
@@ -34,7 +34,7 @@ export const getCategories = async (): Promise<getCategoriesRes> => {
 }
 
 export const getSubCategories = async (categoryId: number): Promise<getSubCategories> => {
-  const { data } = await axiosInterceptorInstance.post('/api/kindmain', {
+  const { data } = await axiosInstance.post('/api/kindmain', {
     kindhead_id: categoryId,
     page: 1,
     pagesize: 10,

@@ -29,7 +29,7 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
   const logisticFee = handleFee(
     webSettingsData || null,
     total,
-    selectedAddress?.LogisticsSubType !== 'home-delivery',
+    selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
   )
 
   return (

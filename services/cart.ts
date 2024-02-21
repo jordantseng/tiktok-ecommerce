@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type CartsRes = ApiRes<{
@@ -31,7 +31,7 @@ export type CartReq = {
 }
 
 export const getMyCart = async (): Promise<CartsRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart', {
+  const { data } = await axiosInstance.post('/api/membercenter/mycart', {
     page: 1,
     pagesize: 10000,
   })
@@ -40,7 +40,7 @@ export const getMyCart = async (): Promise<CartsRes> => {
 }
 
 export const addToCart = async (id: number, count: number): Promise<CartsRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/store', {
+  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
     data: [
       {
         productitem_id: id,
@@ -54,7 +54,7 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
 }
 
 export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/store', {
+  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
     data: req.map((opt) => opt),
   })
 
@@ -62,7 +62,7 @@ export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
 }
 
 export const deleteFromCart = async (id: number): Promise<CartsRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/destroy', {
+  const { data } = await axiosInstance.post('/api/membercenter/mycart/destroy', {
     del: id,
   })
 

@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type GetProductItems = ApiRes<{
@@ -11,7 +11,7 @@ export const getProductItems = async ({
   pageSize = 10,
   productId,
 }: any): Promise<GetProductItems> => {
-  const { data } = await axiosInterceptorInstance.post('/api/productitem', {
+  const { data } = await axiosInstance.post('/api/productitem', {
     page,
     pagesize: pageSize,
     product_id: productId,

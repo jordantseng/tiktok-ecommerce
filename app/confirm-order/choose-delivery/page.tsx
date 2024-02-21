@@ -55,9 +55,9 @@ const ChooseReceiptPage = () => {
           </div>
           <div className="flex items-center justify-between space-x-2  p-4">
             <div className="flex items-center space-x-2">
-              <Label htmlFor="home-delivery">宅配到府</Label>
+              <Label htmlFor="HOME_DELIVERY">宅配到府</Label>
             </div>
-            <RadioGroupItem value="home-delivery" id="home-delivery" />
+            <RadioGroupItem value="HOME_DELIVERY" id="HOME_DELIVERY" />
           </div>
         </RadioGroup>
       </div>

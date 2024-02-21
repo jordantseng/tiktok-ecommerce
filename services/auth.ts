@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 export type LoginRes = ApiRes<{
@@ -35,7 +35,7 @@ export type User = {
 type UserRes = ApiRes<User>
 
 export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/member/login/store', {
+  const { data } = await axiosInstance.post('/api/member/login/store', {
     email,
     password,
   })
@@ -44,7 +44,7 @@ export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> =
 }
 
 export const register = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
-  const { data } = await axiosInterceptorInstance.post('/api/member/create/store', {
+  const { data } = await axiosInstance.post('/api/member/create/store', {
     email,
     password,
   })
@@ -53,14 +53,14 @@ export const register = async ({ email, password }: LoginInfo): Promise<LoginRes
 }
 
 export const getUser = async (): Promise<UserRes> => {
-  const { data } = await axiosInterceptorInstance.get('/api/membercenter/show')
+  const { data } = await axiosInstance.get('/api/membercenter/show')
 
   return data
 }
 
 export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
   const { mobile, name, email } = user
-  const { data } = await axiosInterceptorInstance.post('/api/membercenter/edit/store', {
+  const { data } = await axiosInstance.post('/api/membercenter/edit/store', {
     mobile,
     name,
     email,

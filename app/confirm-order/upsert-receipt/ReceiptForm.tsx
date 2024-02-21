@@ -109,7 +109,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
             </FormItem>
           )}
         />
-        {value.LogisticsSubType === 'home-delivery' && (
+        {value.LogisticsSubType === 'HOME_DELIVERY' && (
           <>
             <FormField
               control={form.control}
@@ -183,7 +183,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
           </>
         )}
 
-        {value.LogisticsSubType !== 'home-delivery' && (
+        {value.LogisticsSubType !== 'HOME_DELIVERY' && (
           <>
             <FormField
               control={form.control}
