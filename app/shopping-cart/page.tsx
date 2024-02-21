@@ -96,7 +96,7 @@ const ShoppingCartPage = () => {
           </div>
         </div>
 
-        <div className="font-lg flex items-center justify-center font-semibold">✨為你推薦✨</div>
+        <div className="font-lg flex items-center justify-center font-semibold">✨ 為你推薦 ✨</div>
         <div className="mb-32 grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
           {recommends.map((opt) => (
             <MerchandiseCard

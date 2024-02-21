@@ -1,15 +1,10 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   Bolt,
   Headset,
   ChevronRight,
-  Wallet,
-  Truck,
-  WalletCards,
-  MessageSquareText,
-  BadgeJapaneseYen,
   MapPin,
   Footprints,
   MessageSquareHeart,
@@ -28,7 +23,22 @@ import { orderStatusMap } from '@/constants/member'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 import { OrderData, getOrders } from '@/services/order'
-import OrderNamItem from '@/app/member/OrderNavItem'
+import OrderNavItem from '@/app/member/OrderNavItem'
+
+function calculateOrderCount(key: keyof typeof orderStatusMap, orders: OrderData[]) {
+  switch (key) {
+    case 'checkout':
+      return orders.filter((order) => order.moneystatus === 0).length
+    case 'shipping':
+      return orders.filter((order) => order.orderstatus === 1).length
+    case 'receipt':
+      return orders.filter((order) => order.orderstatus === 3).length
+    case 'receipted':
+      return orders.filter((order) => order.orderstatus === 4).length
+    case 'refunded':
+      return orders.filter((order) => order.moneystatus === 2).length
+  }
+}
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -65,35 +75,6 @@ function AvatarDemo({ src }: { src?: string }) {
 //     </div>
 //   )
 // }
-
-const orderNavItems = [
-  {
-    title: orderStatusMap.checkout.title,
-    href: orderStatusMap.checkout.href,
-    Icon: <Wallet className="h-10 w-10 p-2" />,
-    count: 10,
-  },
-  {
-    title: orderStatusMap.shipping.title,
-    href: orderStatusMap.shipping.href,
-    Icon: <WalletCards className="h-10 w-10 p-2" />,
-  },
-  {
-    title: orderStatusMap.receipt.title,
-    href: orderStatusMap.receipt.href,
-    Icon: <Truck className="h-10 w-10 p-2" />,
-  },
-  {
-    title: orderStatusMap.receipted.title,
-    href: orderStatusMap.receipted.href,
-    Icon: <MessageSquareText className="h-10 w-10 p-2" />,
-  },
-  {
-    title: orderStatusMap.refunded.title,
-    href: orderStatusMap.refunded.href,
-    Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
-  },
-]
 
 const serviceNavItems = [
   {
@@ -194,13 +175,13 @@ const MemberPage = () => {
           </div>
 
           <div className="grid flex-1 grid-cols-5">
-            {orderNavItems.map(({ title, Icon, href, count }) => (
-              <OrderNamItem
+            {Object.values(orderStatusMap).map(({ nav: { title, Icon, href }, value }) => (
+              <OrderNavItem
                 key={title}
                 title={title}
                 Icon={Icon}
                 onClick={() => router.push(href)}
-                count={count}
+                count={calculateOrderCount(value, orders)}
               />
             ))}
           </div>
@@ -221,7 +202,7 @@ const MemberPage = () => {
 
           <div>
             <div className="font-lg flex items-center justify-center font-semibold">
-              ✨為你推薦✨
+              ✨ 為你推薦 ✨
             </div>
             <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
               {recommends.map((recommend) => (
