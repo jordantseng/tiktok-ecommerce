@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type GetProductItems = ApiRes<{
@@ -11,20 +11,11 @@ export const getProductItems = async ({
   pageSize = 10,
   productId,
 }: any): Promise<GetProductItems> => {
-  const res = await fetch(`${config.api}/api/productitem`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page,
-      pagesize: pageSize,
-      product_id: productId,
-    }),
+  const { data } = await axiosInterceptorInstance.post('/api/productitem', {
+    page,
+    pagesize: pageSize,
+    product_id: productId,
   })
-
-  const data = await res.json()
 
   return data
 }

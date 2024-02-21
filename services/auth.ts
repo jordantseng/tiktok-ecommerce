@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 export type LoginRes = ApiRes<{
@@ -35,63 +35,36 @@ export type User = {
 type UserRes = ApiRes<User>
 
 export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
-  const res = await fetch(`${config.api}/api/member/login/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
+  const { data } = await axiosInterceptorInstance.post('/api/member/login/store', {
+    email,
+    password,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const register = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
-  const res = await fetch(`${config.api}/api/member/create/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
+  const { data } = await axiosInterceptorInstance.post('/api/member/create/store', {
+    email,
+    password,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const getUser = async (): Promise<UserRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/show`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-  })
-
-  const data = await res.json()
+  const { data } = await axiosInterceptorInstance.get('/api/membercenter/show')
 
   return data
 }
 
 export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
   const { mobile, name, email } = user
-  const res = await fetch(`${config.api}/api/membercenter/edit/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      mobile,
-      name,
-      email,
-    }),
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/edit/store', {
+    mobile,
+    name,
+    email,
   })
-
-  const data = await res.json()
 
   return data
 }
