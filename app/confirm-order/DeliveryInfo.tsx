@@ -3,18 +3,13 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useAddressContext } from '@/context/AddressContext'
+import { deliveryMap } from '@/lib/payment'
 import { ChevronRight, MapPinIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
 const DeliveryInfo = () => {
   const { selectedAddress, deliveryType } = useAddressContext()
-  const deliveryMap = {
-    'home-delivery': '宅配到府',
-    FAMIC2C: '超商取貨-全家',
-    UNIMARTC2C: '超商取貨-7-11',
-    HILIFEC2C: '超商取貨-萊爾富',
-  }
   return (
     <>
       <div className="w-full p-4 pb-0">
