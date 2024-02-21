@@ -21,6 +21,7 @@ type CartData = {
   marketprice: number
   domain_id: number
   tags: string
+  online: number
 }
 
 export type CartReq = {

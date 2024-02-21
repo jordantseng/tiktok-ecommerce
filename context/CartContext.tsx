@@ -44,7 +44,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         productItemTitle: opt.productitem_title,
         productItemId: opt.productitem_id,
         tags: opt.tags.split(','),
-        isSelect: false,
+        isSelect: opt.online ? true : false,
       }))
       setItems(newItems)
     })
@@ -64,9 +64,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   }
 
   const confirmPurchase = () => {
-    const selected = getSelectedCartItems()
     const request: CartReq[] = []
-    selected.forEach((opt) => {
+    items.forEach((opt) => {
       request.push({
         productitem_id: opt.productItemId || 0,
         qty: opt.amount || 1,
