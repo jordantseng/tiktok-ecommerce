@@ -104,8 +104,8 @@ const PaymentSetting = ({ onChange }: Props) => {
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
             opt.indexOf('csv') > 0 && (
-              <SelectGroup>
-                <SelectItem key={opt} value={opt}>
+              <SelectGroup key={opt}>
+                <SelectItem value={opt}>
                   <div className="flex items-center space-x-2">
                     <StoreIcon />
                     <span>超商取貨付款</span>
