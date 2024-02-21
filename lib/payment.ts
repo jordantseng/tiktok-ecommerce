@@ -8,16 +8,23 @@ export const deliveryMap = {
 }
 
 export const handleLabel = (val: string, webSettingsData: WebSettingsData | null) => {
-  const map: Record<string, string> = {
-    'pay-when-get': '貨到付款',
-  }
   if (webSettingsData?.paykind[val] === '信用卡付款') {
     return '信用卡一次付清'
   } else if (val.indexOf('atm') > -1) {
     return 'ATM轉帳'
-  } else if (!webSettingsData?.paykind[val] && map[val]) {
-    return map[val]
   } else {
     return webSettingsData?.paykind[val] ?? '尚未選擇付款方式'
   }
+}
+
+export const handleFee = (
+  webSettingsData: WebSettingsData | null,
+  total: number,
+  isCsv: boolean,
+) => {
+  const logisticPrice = isCsv ? webSettingsData?.logisticprice_csv : webSettingsData?.logisticprice
+
+  return webSettingsData?.freelogisticprice && total > webSettingsData.freelogisticprice
+    ? 0
+    : logisticPrice || 0
 }

@@ -15,7 +15,7 @@ import React from 'react'
 import { useImmer } from 'use-immer'
 import { addOrder } from '@/services/order'
 import { useAuthContext } from '@/context/AuthContext'
-import { handleLabel } from '@/lib/payment'
+import { handleFee, handleLabel } from '@/lib/payment'
 
 const ConfirmBillPage = () => {
   const { user } = useAuthContext()
@@ -55,6 +55,12 @@ const ConfirmBillPage = () => {
   const btnDisable =
     !payStatus || (!selectedAddress?.address && !selectedAddress?.CVSAddress) || items.length === 0
 
+  const logisticFee = handleFee(
+    webSettingsData || null,
+    total,
+    selectedAddress?.LogisticsSubType !== 'home-delivery',
+  )
+
   return (
     <main className="h-full min-h-screen">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
@@ -93,7 +99,7 @@ const ConfirmBillPage = () => {
         <BottomDialog className="h-auto" title="確認訂單" onClose={() => setIsDialogOpen(false)}>
           <div>
             <div className="flex items-center justify-center p-4 text-4xl font-bold">
-              ${total + (webSettingsData?.logisticprice || 0) - 60}
+              ${total + logisticFee - (discount?.discount || 0)}
             </div>
             <div className="flex items-center justify-between border-b py-2">
               <span>付款方式</span>

@@ -6,6 +6,8 @@ import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { Button } from '@/components/ui/button'
 import BottomDialog from '@/components/BottomDialog'
 import { useImmer } from 'use-immer'
+import { handleFee } from '@/lib/payment'
+import { useAddressContext } from '@/context/AddressContext'
 
 type Props = {
   discount: { code: string; discount: number } | null
@@ -15,12 +17,19 @@ type Props = {
 const PayConfirm = ({ discount, onConfirm }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
+  const { selectedAddress } = useAddressContext()
 
   const items = getSelectedCartItems()
   const total = items.reduce(
     (accumulator, currentValue) =>
       accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
     0,
+  )
+
+  const logisticFee = handleFee(
+    webSettingsData || null,
+    total,
+    selectedAddress?.LogisticsSubType !== 'home-delivery',
   )
 
   return (
@@ -33,12 +42,12 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
             <div className="flex items-center justify-end">
               <span className=" flex text-red-400">${total}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="break-keep">運費：</span>
-              <span className="flex justify-center text-red-400">
-                ${webSettingsData?.logisticprice}
-              </span>
-            </div>
+            {logisticFee > 0 && (
+              <div className="flex items-center justify-between">
+                <span className="break-keep">運費：</span>
+                <span className="flex justify-center text-red-400">${logisticFee}</span>
+              </div>
+            )}
             {discount?.discount && (
               <div className="flex justify-end justify-between">
                 <span className="break-keep">折扣：</span>
@@ -49,7 +58,7 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
             <div className="flex items-center justify-center">
               <span className="break-keep">總計：</span>
               <span className="flex justify-center text-lg font-semibold text-red-400">
-                ${total + (webSettingsData?.logisticprice || 0) - (discount?.discount || 0)}
+                ${total + logisticFee - (discount?.discount || 0)}
               </span>
             </div>
           </div>

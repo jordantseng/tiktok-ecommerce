@@ -93,17 +93,22 @@ const PaymentSetting = ({ onChange }: Props) => {
               ),
           )}
         </SelectGroup>
-        <SelectGroup>
-          <SelectItem value="pay-when-get">
-            <div className="flex items-center space-x-2">
-              <TruckIcon />
-              <span>貨到付款</span>
-            </div>
-          </SelectItem>
-        </SelectGroup>
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf('csv') > 0 && (
+            opt.indexOf('home') > -1 && (
+              <SelectGroup key={opt}>
+                <SelectItem value={opt}>
+                  <div className="flex items-center space-x-2">
+                    <TruckIcon />
+                    <span>貨到付款</span>
+                  </div>
+                </SelectItem>
+              </SelectGroup>
+            ),
+        )}
+        {Object.keys(webSettingsData?.paykind || {}).map(
+          (opt: string) =>
+            opt.indexOf('csv') > -1 && (
               <SelectGroup key={opt}>
                 <SelectItem value={opt}>
                   <div className="flex items-center space-x-2">
