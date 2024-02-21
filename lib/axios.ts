@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use((response) => {
   const data: ApiRes<any> = response.data
   if (data.resultcode === 403) {
-    localStorage.removeItem('token')
+    // localStorage.removeItem('token')
     redirect('/login')
   }
   if (400 <= data.resultcode && data.resultcode < 500) {
