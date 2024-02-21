@@ -51,13 +51,16 @@ const PaymentSetting = ({ onChange }: Props) => {
               <span>信用卡付款</span>
             </div>
           </SelectLabel>
-          {Object.keys(webSettingsData?.paykind || {}).map((opt: string) => (
-            <SelectItem className="ml-4" key={opt} value={opt}>
-              {webSettingsData?.paykind[opt] === '信用卡付款'
-                ? '信用卡一次付清'
-                : webSettingsData?.paykind[opt]}
-            </SelectItem>
-          ))}
+          {Object.keys(webSettingsData?.paykind || {}).map(
+            (opt: string) =>
+              opt.indexOf('credit') > -1 && (
+                <SelectItem className="ml-4" key={opt} value={opt}>
+                  {webSettingsData?.paykind[opt] === '信用卡付款'
+                    ? '信用卡一次付清'
+                    : webSettingsData?.paykind[opt]}
+                </SelectItem>
+              ),
+          )}
         </SelectGroup>
         {/* TODO:無卡分期 */}
         {/* <SelectGroup>
@@ -98,14 +101,19 @@ const PaymentSetting = ({ onChange }: Props) => {
             </div>
           </SelectItem>
         </SelectGroup>
-        <SelectGroup>
-          <SelectItem value="store">
-            <div className="flex items-center space-x-2">
-              <StoreIcon />
-              <span>超商取貨付款</span>
-            </div>
-          </SelectItem>
-        </SelectGroup>
+        {Object.keys(webSettingsData?.paykind || {}).map(
+          (opt: string) =>
+            opt.indexOf('csv') > 0 && (
+              <SelectGroup>
+                <SelectItem key={opt} value={opt}>
+                  <div className="flex items-center space-x-2">
+                    <StoreIcon />
+                    <span>超商取貨付款</span>
+                  </div>
+                </SelectItem>
+              </SelectGroup>
+            ),
+        )}
       </SelectContent>
     </Select>
   )

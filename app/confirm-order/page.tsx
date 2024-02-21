@@ -11,15 +11,13 @@ import PayConfirm from '@/app/confirm-order/PayConfirm'
 import Discount from '@/app/confirm-order/DIscount'
 import DeliveryInfo from '@/app/confirm-order/DeliveryInfo'
 import PaymentSetting from '@/app/confirm-order/PaymentSetting'
-import { useRouter } from 'next/navigation'
-import React, { use } from 'react'
+import React from 'react'
 import { useImmer } from 'use-immer'
 import { addOrder } from '@/services/order'
-import { cn } from '@/lib/utils'
 import { useAuthContext } from '@/context/AuthContext'
+import { handleLabel } from '@/lib/payment'
 
 const ConfirmBillPage = () => {
-  const router = useRouter()
   const { user } = useAuthContext()
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
@@ -45,23 +43,6 @@ const ConfirmBillPage = () => {
       rcity2: selectedAddress?.city2 || '',
       raddress: selectedAddress?.address || '',
     })
-    // router.push('/confirm-order/success')
-  }
-
-  const handleLabel = (val: string) => {
-    const map: Record<string, string> = {
-      'pay-when-get': '貨到付款',
-      store: '超商取貨付款',
-    }
-    if (webSettingsData?.paykind[val] === '信用卡付款') {
-      return '信用卡一次付清'
-    } else if (val.indexOf('atm') > -1) {
-      return 'ATM轉帳'
-    } else if (!webSettingsData?.paykind[val] && map[val]) {
-      return map[val]
-    } else {
-      return webSettingsData?.paykind[val] ?? '尚未選擇付款方式'
-    }
   }
 
   const items = getSelectedCartItems()
@@ -116,7 +97,7 @@ const ConfirmBillPage = () => {
             </div>
             <div className="flex items-center justify-between border-b py-2">
               <span>付款方式</span>
-              <span>{handleLabel(payStatus || '')}</span>
+              <span>{handleLabel(payStatus || '', webSettingsData)}</span>
             </div>
             <div className="mb-2 flex items-center justify-between border-b py-2">
               <span>收件地址</span>

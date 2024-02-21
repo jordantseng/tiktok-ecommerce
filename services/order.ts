@@ -62,7 +62,7 @@ export const getOrder = async (id: number): Promise<OrderRes> => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify({ id }),
     next: { revalidate: 0 },
   })
 
