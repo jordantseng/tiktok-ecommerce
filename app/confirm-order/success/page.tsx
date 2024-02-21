@@ -39,7 +39,7 @@ const SuccessPage = () => {
             <div className="flex items-center border-b-2 p-4">
               <div className="text-md w-[25%]">運送方式</div>
               <div className="text-md flex w-[75%] justify-end">
-                {deliveryMap[(data?.LogisticsSubType || 'home-delivery') as Delivery]}
+                {deliveryMap[(data?.LogisticsSubType || 'HOME_DELIVERY') as Delivery]}
               </div>
             </div>
             <div className="flex items-center border-b-2 p-4">

@@ -35,7 +35,7 @@ const ChooseReceiptPage = () => {
               receiver={opt.name}
               phone={opt.tel}
               address={
-                (opt.LogisticsSubType === 'home-delivery'
+                (opt.LogisticsSubType === 'HOME_DELIVERY'
                   ? opt.address
                   : `${opt.CVSStoreName}(${opt.CVSAddress})`) || ''
               }
@@ -47,7 +47,7 @@ const ChooseReceiptPage = () => {
         <Button
           className="m-4 w-[90%] rounded-3xl bg-primary p-4"
           onClick={() => {
-            deliveryType !== 'home-delivery'
+            deliveryType !== 'HOME_DELIVERY'
               ? getLogistic(deliveryType)
               : router.push('/confirm-order/upsert-receipt')
           }}

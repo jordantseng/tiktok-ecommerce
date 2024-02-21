@@ -1,7 +1,7 @@
 import { WebSettingsData } from '@/types/common'
 
 export const deliveryMap = {
-  'home-delivery': '宅配到府',
+  HOME_DELIVERY: '宅配到府',
   FAMIC2C: '超商取貨-全家',
   UNIMARTC2C: '超商取貨-7-11',
   HILIFEC2C: '超商取貨-萊爾富',
