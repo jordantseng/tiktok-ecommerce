@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type CityRes = ApiRes<CityData[]>
@@ -16,32 +16,15 @@ type CityData = {
 }
 
 export const getCities = async (): Promise<CityRes> => {
-  const res = await fetch(`${config.api}/api/city1`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    next: { revalidate: 0 },
-  })
-
-  const data = await res.json()
+  const { data } = await axiosInterceptorInstance.get('/api/city1')
 
   return data
 }
 
 export const getDistrict = async (city: string): Promise<DistrictRes> => {
-  const res = await fetch(`${config.api}/api/city2`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      city1title: city,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/city2', {
+    city1title: city,
   })
-
-  const data = await res.json()
 
   return data
 }

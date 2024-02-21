@@ -1,5 +1,6 @@
 import config from '@/lib/configs'
 import { AddressData, ApiRes } from '@/types/common'
+import axiosInterceptorInstance from '@/lib/axios'
 
 type AddressRes = ApiRes<{
   current_page: number
@@ -8,56 +9,26 @@ type AddressRes = ApiRes<{
 }>
 
 export const getAddress = async (): Promise<AddressRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/myaddress`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page: 1,
-      pagesize: 10000,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/myaddress', {
+    page: 1,
+    pagesize: 10000,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const upsertAddress = async (value: AddressData): Promise<void> => {
-  const res = await fetch(`${config.api}/api/membercenter/myaddress/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      ...value,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/myaddress/store', {
+    ...value,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const deleteAddress = async (id: number): Promise<void> => {
-  const res = await fetch(`${config.api}/api/membercenter/myaddress/destroy`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      del: id,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/myaddress/destroy', {
+    del: id,
   })
-
-  const data = await res.json()
 
   return data
 }

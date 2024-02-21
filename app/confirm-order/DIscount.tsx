@@ -17,7 +17,7 @@ const Discount = ({ onDiscount }: Props) => {
   const handleDiscount = () => {
     previewDiscont(code).then(({ data }) => {
       toast({
-        variant: 'destructive',
+        className: 'bg-primary text-white',
         description: '兌換成功',
       })
       onDiscount(data.discount_code || '', data.discount || 0)

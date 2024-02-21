@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type CartsRes = ApiRes<{
@@ -31,80 +31,40 @@ export type CartReq = {
 }
 
 export const getMyCart = async (): Promise<CartsRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/mycart`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page: 1,
-      pagesize: 10000,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart', {
+    page: 1,
+    pagesize: 10000,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const addToCart = async (id: number, count: number): Promise<CartsRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/mycart/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      data: [
-        {
-          productitem_id: id,
-          qty: count || 1,
-          online: 0,
-        },
-      ],
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/store', {
+    data: [
+      {
+        productitem_id: id,
+        qty: count || 1,
+        online: 0,
+      },
+    ],
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/mycart/store`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      data: req.map((opt) => opt),
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/store', {
+    data: req.map((opt) => opt),
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const deleteFromCart = async (id: number): Promise<CartsRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/mycart/destroy`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      del: id,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/mycart/destroy', {
+    del: id,
   })
-
-  const data = await res.json()
 
   return data
 }

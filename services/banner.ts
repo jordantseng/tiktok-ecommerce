@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type GetBannersRes = ApiRes<{
@@ -12,20 +12,10 @@ type GetBannersRes = ApiRes<{
 }>
 
 export const getBanners = async (): Promise<GetBannersRes> => {
-  const res = await fetch(`${config.api}/api/banner`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page: 1,
-      pagesize: 10000,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/banner', {
+    page: 1,
+    pagesize: 10000,
   })
-
-  const data = await res.json()
 
   return data
 }

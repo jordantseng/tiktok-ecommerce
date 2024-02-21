@@ -1,3 +1,4 @@
+import axiosInterceptorInstance from '@/lib/axios'
 import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
@@ -56,36 +57,16 @@ export type OrderData = {
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/ordergroup/show`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({ id }),
-    next: { revalidate: 0 },
-  })
-
-  const data = await res.json()
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup/show', { id })
 
   return data
 }
 
 export const getOrders = async (): Promise<OrdersRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/ordergroup`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page: 1,
-      pagesize: 10000,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup', {
+    page: 1,
+    pagesize: 10000,
   })
-
-  const data = await res.json()
 
   return data
 }
@@ -135,17 +116,9 @@ export const addOrder = async (order: OrderData): Promise<void> => {
 }
 
 export const previewDiscont = async (code: string): Promise<OrderRes> => {
-  const res = await fetch(`${config.api}/api/membercenter/ordergroup/review`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({ discount: code || '' }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/membercenter/ordergroup/review', {
+    discount: code || '',
   })
-
-  const data = await res.json()
 
   return data
 }

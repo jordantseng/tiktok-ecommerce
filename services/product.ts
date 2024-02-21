@@ -1,4 +1,4 @@
-import config from '@/lib/configs'
+import axiosInterceptorInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 export type ProductData = {
@@ -56,47 +56,27 @@ export const getProducts = async ({
   price1,
   price2,
 }: getProductsArgs): Promise<GetProductsRes> => {
-  const res = await fetch(`${config.api}/api/product`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      page,
-      pagesize: pageSize,
-      search,
-      sortname: sortName,
-      sorttype: sortType,
-      searchstartdate: '2021-01-01',
-      searchenddate: '2099-12-31',
-      ...(kindheadId && { kindhead_id: kindheadId }),
-      ...(kindmainId && { kindmain_id: kindmainId }),
-      price1,
-      price2,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/product', {
+    page,
+    pagesize: pageSize,
+    search,
+    sortname: sortName,
+    sorttype: sortType,
+    searchstartdate: '2021-01-01',
+    searchenddate: '2099-12-31',
+    ...(kindheadId && { kindhead_id: kindheadId }),
+    ...(kindmainId && { kindmain_id: kindmainId }),
+    price1,
+    price2,
   })
-
-  const data = await res.json()
 
   return data
 }
 
 export const getProduct = async (id: number): Promise<GetProductRes> => {
-  const res = await fetch(`${config.api}/api/product/show`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${(typeof window !== 'undefined' && localStorage.getItem('token')) || ''}`,
-    },
-    body: JSON.stringify({
-      id,
-    }),
-    next: { revalidate: 0 },
+  const { data } = await axiosInterceptorInstance.post('/api/product/show', {
+    id,
   })
-
-  const data = await res.json()
 
   return data
 }
