@@ -1,4 +1,4 @@
-import axiosInstance from '@/lib/axios'
+import { createInstance } from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type GetProductItems = ApiRes<{
@@ -11,6 +11,7 @@ export const getProductItems = async ({
   pageSize = 10,
   productId,
 }: any): Promise<GetProductItems> => {
+  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/productitem', {
     page,
     pagesize: pageSize,

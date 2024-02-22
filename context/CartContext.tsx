@@ -28,10 +28,6 @@ type CartProviderProps = {
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useImmer<Item[]>([])
 
-  useEffect(() => {
-    handleGetMyCart()
-  }, [])
-
   const handleGetMyCart = () => {
     getMyCart().then((res) => {
       const newItems = (res?.data?.data || []).map((opt) => ({

@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
-import { useCartContext } from '@/context/CartContext'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -27,7 +26,6 @@ const formSchema = z.object({
 const LoginPage = () => {
   const { toast } = useToast()
   const router = useRouter()
-  const { handleGetMyCart } = useCartContext()
   const { handleLogin } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +52,6 @@ const LoginPage = () => {
         })
       })
       .finally(() => {
-        handleGetMyCart()
         setIsSubmitting(false)
       })
   }

@@ -21,10 +21,15 @@ const ShoppingCartPage = () => {
     updateSelected,
     getSelectedCartItems,
     updateItemAmount,
+    handleGetMyCart,
     handleRemoveFromCart,
     confirmPurchase,
   } = useCartContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
+
+  useEffect(() => {
+    handleGetMyCart()
+  }, [])
 
   useEffect(() => {
     const arr = getSelectedCartItems()
