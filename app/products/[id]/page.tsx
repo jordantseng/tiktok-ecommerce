@@ -33,8 +33,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       <ProductCarousel imgs={product.imgs} />
       <TitleCard
         title={product.title}
-        price={String(product.price)}
-        salePrice={String(product.marketprice)}
+        price={String(product.marketprice)}
+        salePrice={String(product.price)}
         tags={product.tags?.split(',') || []}
       />
       <Card className="m-2 border-none shadow-none">

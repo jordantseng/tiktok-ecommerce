@@ -1,6 +1,7 @@
 'use client'
 
 import Title from '@/components/Title'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Delivery } from '@/context/AddressContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { deliveryMap, handleLabel } from '@/lib/payment'
@@ -34,30 +35,48 @@ const SuccessPage = () => {
           <div className="rounded-lg bg-white p-4">
             <div className="flex items-center border-b-2 p-4">
               <div className="text-md w-[25%]">訂單編號</div>
-              <div className="text-md flex w-[75%] justify-end">{data?.ordergroupnumber}</div>
+              <div className="text-md flex w-[75%] justify-end">
+                {data ? data?.ordergroupnumber : <Skeleton className="h-10 w-full" />}
+              </div>
             </div>
             <div className="flex items-center border-b-2 p-4">
               <div className="text-md w-[25%]">運送方式</div>
               <div className="text-md flex w-[75%] justify-end">
-                {deliveryMap[(data?.LogisticsSubType || 'HOME_DELIVERY') as Delivery]}
+                {data ? (
+                  deliveryMap[(data?.LogisticsSubType || 'HOME_DELIVERY') as Delivery]
+                ) : (
+                  <Skeleton className="h-10 w-full" />
+                )}
               </div>
             </div>
             <div className="flex items-center border-b-2 p-4">
               <div className="text-md w-[25%]">付款方式</div>
               <div className="text-md flex w-[75%] justify-end">
-                {handleLabel(data?.paystatus || '', webSettingsData || null)}
+                {data ? (
+                  handleLabel(data?.paystatus || '', webSettingsData || null)
+                ) : (
+                  <Skeleton className="h-10 w-full" />
+                )}
               </div>
             </div>
             <div className="flex items-center border-b-2 p-4">
               <div className="text-md w-[25%]">地址</div>
               <div className="text-md flex w-[75%] flex-col justify-end">
-                <div className="flex justify-end">{data?.CVSAddress || data?.raddress}</div>
-                <div className="flex justify-end">{data?.CVSStoreName}</div>
+                {data ? (
+                  <>
+                    <div className="flex justify-end">{data?.CVSAddress || data?.raddress}</div>
+                    <div className="flex justify-end">{data?.CVSStoreName}</div>
+                  </>
+                ) : (
+                  <Skeleton className="h-10 w-full" />
+                )}
               </div>
             </div>
             <div className="flex items-center p-4">
               <div className="text-md w-[25%]">金額</div>
-              <div className="text-md flex w-[75%] justify-end">${data?.totalprice}</div>
+              <div className="text-md flex w-[75%] justify-end">
+                {data ? `$${data?.totalprice}` : <Skeleton className="h-10 w-full" />}
+              </div>
             </div>
           </div>
         </div>

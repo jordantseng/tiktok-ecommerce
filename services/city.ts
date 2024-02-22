@@ -1,4 +1,4 @@
-import { createInstance } from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type CityRes = ApiRes<CityData[]>
@@ -16,14 +16,12 @@ type CityData = {
 }
 
 export const getCities = async (): Promise<CityRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.get('/api/city1')
 
   return data
 }
 
 export const getDistrict = async (city: string): Promise<DistrictRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/city2', {
     city1title: city,
   })
