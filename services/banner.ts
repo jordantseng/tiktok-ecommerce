@@ -1,4 +1,4 @@
-import { createInstance } from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type GetBannersRes = ApiRes<{
@@ -12,7 +12,6 @@ type GetBannersRes = ApiRes<{
 }>
 
 export const getBanners = async (): Promise<GetBannersRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/banner', {
     page: 1,
     pagesize: 10000,

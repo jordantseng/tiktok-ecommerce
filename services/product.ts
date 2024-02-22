@@ -1,4 +1,4 @@
-import { createInstance } from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 export type ProductData = {
@@ -56,7 +56,6 @@ export const getProducts = async ({
   price1,
   price2,
 }: getProductsArgs): Promise<GetProductsRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/product', {
     page,
     pagesize: pageSize,
@@ -75,7 +74,6 @@ export const getProducts = async ({
 }
 
 export const getProduct = async (id: number): Promise<GetProductRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/product/show', {
     id,
   })

@@ -1,6 +1,6 @@
+import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
 import { AddressData, ApiRes } from '@/types/common'
-import { createInstance } from '@/lib/axios'
 
 type AddressRes = ApiRes<{
   current_page: number
@@ -9,7 +9,6 @@ type AddressRes = ApiRes<{
 }>
 
 export const getAddress = async (): Promise<AddressRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/membercenter/myaddress', {
     page: 1,
     pagesize: 10000,
@@ -19,7 +18,6 @@ export const getAddress = async (): Promise<AddressRes> => {
 }
 
 export const upsertAddress = async (value: AddressData): Promise<void> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/membercenter/myaddress/store', {
     ...value,
   })
@@ -28,7 +26,6 @@ export const upsertAddress = async (value: AddressData): Promise<void> => {
 }
 
 export const deleteAddress = async (id: number): Promise<void> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/membercenter/myaddress/destroy', {
     del: id,
   })

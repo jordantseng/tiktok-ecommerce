@@ -1,4 +1,4 @@
-import { createInstance } from '@/lib/axios'
+import axiosInstance from '@/lib/axios'
 import { ApiRes } from '@/types/common'
 
 type getCategoriesRes = ApiRes<{
@@ -24,7 +24,6 @@ type getSubCategories = ApiRes<
 >
 
 export const getCategories = async (): Promise<getCategoriesRes> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/kindhead', {
     page: 1,
     pagesize: 10000,
@@ -34,7 +33,6 @@ export const getCategories = async (): Promise<getCategoriesRes> => {
 }
 
 export const getSubCategories = async (categoryId: number): Promise<getSubCategories> => {
-  const axiosInstance = createInstance()
   const { data } = await axiosInstance.post('/api/kindmain', {
     kindhead_id: categoryId,
     page: 1,
