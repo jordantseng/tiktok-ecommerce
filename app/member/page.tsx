@@ -106,12 +106,24 @@ const serviceNavItems = [
 
 const MemberPage = () => {
   const router = useRouter()
-  const { user } = useAuthContext()
+  const { user, token, refreshUser } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
 
   const [orders, setOrders] = useImmer<OrderData[]>([])
 
+  const isPreparingData = !user || !token
+
   useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    } else {
+      refreshUser()
+    }
+  }, [token, router, refreshUser])
+
+  useEffect(() => {
+    if (isPreparingData) return
+
     getOrders()
       .then((res) => {
         if (res.resultcode !== 0) {
@@ -122,7 +134,11 @@ const MemberPage = () => {
       .catch((err) => {
         console.error(err)
       })
-  }, [setOrders, user])
+  }, [setOrders, user, isPreparingData])
+
+  if (isPreparingData) {
+    return null
+  }
 
   return (
     <main className="flex h-full min-h-screen flex-col">

@@ -56,14 +56,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    } else {
-      refreshUser()
-    }
-  }, [token, router, refreshUser])
-
   const handleLogin = async ({ email, password }: LoginInfo) => {
     try {
       const response = await login({ email, password })
