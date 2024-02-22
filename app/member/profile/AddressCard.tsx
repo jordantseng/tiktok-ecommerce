@@ -12,7 +12,7 @@ function AddressCard({ address, onClick }: AddressCardProps) {
   return (
     <section
       onClick={onClick}
-      className="flex items-center justify-between rounded-xl bg-white p-4"
+      className="flex cursor-pointer items-center justify-between rounded-xl bg-white p-4"
     >
       <div className="flex flex-col">
         <span className="flex items-center gap-2">

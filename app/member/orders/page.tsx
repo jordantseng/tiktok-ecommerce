@@ -171,13 +171,9 @@ const OrderPages = () => {
             <TabsTrigger className="w-4 hover:text-primary" value="all">
               全部
             </TabsTrigger>
-            {Object.values(orderStatusMap).map((status) => (
-              <TabsTrigger
-                key={status.value}
-                className="w-4 hover:text-primary"
-                value={status.value}
-              >
-                {status.title}
+            {Object.values(orderStatusMap).map(({ value, nav }) => (
+              <TabsTrigger key={value} className="w-4 hover:text-primary" value={value}>
+                {nav.title}
               </TabsTrigger>
             ))}
           </TabsList>
