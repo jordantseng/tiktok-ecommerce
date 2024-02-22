@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { ChevronRight, Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -25,8 +24,7 @@ const formSchema = z.object({
 
 const Register = () => {
   const { toast } = useToast()
-  const router = useRouter()
-  const { handleRegister } = useAuthContext()
+  const { handleRegister, handleLogout } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,7 +111,7 @@ const Register = () => {
           <div className="flex w-full">
             <div
               className="m-auto flex cursor-pointer items-center text-gray-500 transition-all hover:text-gray-400"
-              onClick={() => router.push('/login')}
+              onClick={handleLogout}
             >
               已註冊，去登入
               <ChevronRight />

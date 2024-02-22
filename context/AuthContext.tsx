@@ -27,7 +27,7 @@ type AuthContextType = {
   isLoadingUser: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
-  handleLogout: (user: User) => void
+  handleLogout: () => void
   refreshUser: () => void
 }
 
