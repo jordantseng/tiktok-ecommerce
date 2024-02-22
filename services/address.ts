@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
+import { getToken } from '@/lib/utils'
 import { AddressData, ApiRes } from '@/types/common'
 
 type AddressRes = ApiRes<{
@@ -40,7 +41,7 @@ export const getLogistic = (type: string) => {
 
   const fields = {
     logisticssubtype: type,
-    token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
+    token: getToken(),
     gobackurl: `https://${location.host}/confirm-order/upsert-receipt`,
   }
 

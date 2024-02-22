@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
+import { getToken } from '@/lib/utils'
 import { ApiRes } from '@/types/common'
 
 type OrderRes = ApiRes<OrderData>
@@ -78,7 +79,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
 
   const fields = {
     id: Date.now(),
-    token: (typeof window !== 'undefined' && localStorage.getItem('token')) || '',
+    token: getToken(),
     domain_title: order.domain_title || location.hostname,
     member_id: order.member_id || '',
     domain_id: 1,
