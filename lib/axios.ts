@@ -1,13 +1,14 @@
 import axios from 'axios'
-import config from './configs'
+import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
+import { getToken } from '@/lib/utils'
 
 const axiosInstance = axios.create({
   baseURL: config.api,
 })
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = (typeof window !== 'undefined' && localStorage.getItem('token')) || ''
+  const token = getToken()
 
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`
