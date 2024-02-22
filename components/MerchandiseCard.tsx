@@ -49,9 +49,9 @@ const MerchandiseCard = ({
 }: Props) => {
   return (
     <Card className={className}>
-      <CardHeader>
+      <CardHeader className="p-2">
         {imgUrl && (
-          <div className="relative aspect-square p-6">
+          <div className="relative aspect-square">
             <Image className="object-cover" fill src={imgUrl} alt={`product-${id}`} />
           </div>
         )}
