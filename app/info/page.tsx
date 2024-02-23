@@ -2,10 +2,21 @@
 
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+
 import Title from '@/components/Title'
+import { useAuthContext } from '@/context/AuthContext'
 
 const InfoPage = () => {
   const router = useRouter()
+  const { isLogin, handleLogout } = useAuthContext()
+
+  function toggleLogin() {
+    if (isLogin) {
+      handleLogout()
+    } else {
+      router.push('/login')
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col bg-default">
@@ -34,9 +45,9 @@ const InfoPage = () => {
 
           <div
             className="flex cursor-pointer items-center justify-between rounded-lg bg-white p-4"
-            onClick={() => router.push('/login')}
+            onClick={toggleLogin}
           >
-            <span className="font-semibold">登入/註冊</span>
+            <span className="font-semibold">{isLogin ? '登出' : '登入/註冊'}</span>
             <ChevronRight />
           </div>
         </div>

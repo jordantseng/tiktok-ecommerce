@@ -27,7 +27,7 @@ type AuthContextType = {
   isLoadingUser: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
-  handleLogout: (user: User) => void
+  handleLogout: () => void
   refreshUser: () => void
 }
 
@@ -55,14 +55,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setIsLoadingUser(false)
     }
   }, [])
-
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    } else {
-      refreshUser()
-    }
-  }, [token, router, refreshUser])
 
   const handleLogin = async ({ email, password }: LoginInfo) => {
     try {
