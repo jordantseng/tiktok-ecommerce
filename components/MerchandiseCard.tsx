@@ -49,10 +49,10 @@ const MerchandiseCard = ({
 }: Props) => {
   return (
     <Card className={className}>
-      <CardHeader className="p-2">
+      <CardHeader className="p-0 pb-2">
         {imgUrl && (
           <div className="relative aspect-square">
-            <Image className="object-cover" fill src={imgUrl} alt={`product-${id}`} />
+            <Image className="rounded-t-lg object-cover" fill src={imgUrl} alt={`product-${id}`} />
           </div>
         )}
       </CardHeader>

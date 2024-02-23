@@ -49,11 +49,19 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn('m-2 flex h-[80px] w-full max-w-[85px] items-center max-[320px]:m-0', {
-            'bg-slate-50': !editable,
-          })}
+          className={cn(
+            'relative m-2 flex h-[80px] w-full max-w-[85px] items-center max-[320px]:m-0',
+            {
+              'bg-slate-50': !editable,
+            },
+          )}
         >
-          <Image width={300} height={300} src={imgUrl || ''} alt={`product-${id}`} />
+          <Image
+            className="rounded-lg object-cover"
+            fill
+            src={imgUrl || ''}
+            alt={`product-${id}`}
+          />
         </div>
 
         <Card
