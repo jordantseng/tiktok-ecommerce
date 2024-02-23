@@ -1,13 +1,6 @@
 'use client'
 
-import {
-  PropsWithChildren,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { LoginInfo, User, getUser, login, register } from '@/services/auth'
@@ -25,6 +18,7 @@ type AuthContextType = {
   token: string
   isLogin: boolean
   isLoadingUser: boolean
+  isPreparingData: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
   handleLogout: () => void
@@ -43,6 +37,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLoadingUser, setIsLoadingUser] = useState(false)
 
   const isLogin = !!token
+
+  const isPreparingData = !user || !token
 
   const refreshUser = useCallback(async () => {
     setIsLoadingUser(true)
@@ -108,6 +104,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         token,
         isLogin,
         isLoadingUser,
+        isPreparingData,
         refreshUser,
         handleRegister,
         handleLogin,
