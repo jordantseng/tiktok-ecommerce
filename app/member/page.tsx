@@ -111,6 +111,8 @@ const MemberPage = () => {
 
   const [orders, setOrders] = useImmer<OrderData[]>([])
 
+  console.log('orders: ', orders)
+
   const isPreparingData = !user || !token
 
   useEffect(() => {
@@ -147,7 +149,7 @@ const MemberPage = () => {
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
               <Bolt
-                onClick={() => router.push('/member/profile')}
+                onClick={() => router.push('/profile')}
                 className="cursor-pointer md:h-10 md:w-10"
               />
               <Headset className="cursor-pointer md:h-10 md:w-10" />
