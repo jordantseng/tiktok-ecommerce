@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren, createContext, useContext, useEffect } from 'react'
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 import { OrderData, getOrders } from '@/services/order'
@@ -9,14 +9,17 @@ import { useRouter } from 'next/navigation'
 
 type OrderContextType = {
   orders: OrderData[]
+  isLoadingOrders: boolean
 }
 
 const OrderContext = createContext<OrderContextType | null>(null)
 
 export const OrderProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
-  const [orders, setOrders] = useImmer<OrderData[]>([])
   const { token, user, isPreparingData, refreshUser } = useAuthContext()
+
+  const [orders, setOrders] = useImmer<OrderData[]>([])
+  const [isLoadingOrders, setIsLoadingOrders] = useState(true)
 
   useEffect(() => {
     if (!token) {
@@ -29,6 +32,8 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (isPreparingData) return
 
+    setIsLoadingOrders(true)
+
     getOrders()
       .then((res) => {
         if (res.resultcode !== 0) {
@@ -39,9 +44,14 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       .catch((err) => {
         console.error(err)
       })
+      .finally(() => {
+        setIsLoadingOrders(false)
+      })
   }, [setOrders, user, isPreparingData])
 
-  return <OrderContext.Provider value={{ orders }}>{children}</OrderContext.Provider>
+  return (
+    <OrderContext.Provider value={{ orders, isLoadingOrders }}>{children}</OrderContext.Provider>
+  )
 }
 
 export const useOrderContext = () => {
