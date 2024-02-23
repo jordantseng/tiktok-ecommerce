@@ -1,5 +1,6 @@
 'use client'
 
+import { PropsWithChildren } from 'react'
 import { ScrollText } from 'lucide-react'
 import Image from 'next/image'
 
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { orderStatusMap } from '@/constants/member'
 import { useOrderContext } from '@/context/OrderContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const OrderCard = () => {
   const router = useRouter()
@@ -87,6 +89,58 @@ const OrderCard = () => {
   )
 }
 
+const OrderCardSkeleton = () => {
+  return (
+    <Card className="w-full border-none">
+      <CardHeader>
+        <CardTitle>
+          <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-20" />
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-col gap-4">
+          <Skeleton className="h-5 w-20" />
+          <div className="flex items-end justify-between">
+            <span className="flex gap-4">
+              <Skeleton className="h-16 w-16 rounded-lg" />
+              <Skeleton className="h-16 w-16 rounded-lg" />
+            </span>
+            <span className="flex flex-col items-end gap-4">
+              <Skeleton className="h-5 w-10" />
+              <Skeleton className="h-5 w-20" />
+            </span>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-end">
+        <span className="grid grid-cols-2 gap-2">
+          <Skeleton className="h-10 w-20 rounded-full" />
+          <Skeleton className="h-10 w-20 rounded-full" />
+        </span>
+      </CardFooter>
+    </Card>
+  )
+}
+
+const OrdersContainer = ({ children }: PropsWithChildren) => {
+  const { orders, isLoadingOrders } = useOrderContext()
+
+  function renderContent() {
+    if (isLoadingOrders) {
+      return Array.from({ length: 5 }).map((_, index) => <OrderCardSkeleton key={index} />)
+    }
+    if (orders.length === 0) {
+      return <NoOrder />
+    }
+    return children
+  }
+
+  return <div className="flex h-full flex-col gap-4 p-4">{renderContent()}</div>
+}
+
 const NoOrder = () => {
   return (
     <div className="m-auto flex flex-1 flex-col items-center justify-center gap-8">
@@ -97,60 +151,60 @@ const NoOrder = () => {
 }
 
 const AllOrders = () => {
+  const { orders } = useOrderContext()
   return (
-    <div className="flex h-full">
-      <NoOrder />
-    </div>
+    <OrdersContainer>
+      {orders.map((order) => (
+        <OrderCard key={order.id} />
+      ))}
+    </OrdersContainer>
   )
 }
 
 const CheckoutOrders = () => {
   return (
-    <div className="flex h-full flex-col p-4">
+    <OrdersContainer>
       <OrderCard />
-    </div>
+    </OrdersContainer>
   )
 }
 
 const ShippingOrders = () => {
   return (
-    <div className="flex h-full flex-col p-4">
+    <OrdersContainer>
       <OrderCard />
-    </div>
+    </OrdersContainer>
   )
 }
 
 const ReceiptOrders = () => {
   return (
-    <div className="flex h-full flex-col p-4">
+    <OrdersContainer>
       <OrderCard />
-    </div>
+    </OrdersContainer>
   )
 }
 
 const CommentOrders = () => {
   return (
-    <div className="flex h-full flex-col p-4">
+    <OrdersContainer>
       <OrderCard />
-    </div>
+    </OrdersContainer>
   )
 }
 
 const RefundOrders = () => {
   return (
-    <div className="flex h-full flex-col p-4">
+    <OrdersContainer>
       <OrderCard />
-    </div>
+    </OrdersContainer>
   )
 }
 
-const OrderPage = () => {
+const OrdersPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const type = searchParams.get('type')!
-
-  // TODO: start here
-  const { orders } = useOrderContext()
 
   const handleTabChange = (value: string) => {
     const newSearchPamras = new URLSearchParams(searchParams)
@@ -171,7 +225,7 @@ const OrderPage = () => {
           className="flex flex-1 flex-col overflow-x-auto"
           onValueChange={handleTabChange}
         >
-          <TabsList className="flex justify-center gap-10 bg-white pb-2 md:justify-start md:pl-4">
+          <TabsList className="sticky top-0 flex justify-center gap-10 bg-white pb-2 md:justify-start md:pl-4">
             <TabsTrigger className="w-4 hover:text-primary" value="all">
               全部
             </TabsTrigger>
@@ -206,4 +260,4 @@ const OrderPage = () => {
   )
 }
 
-export default OrderPage
+export default OrdersPage
