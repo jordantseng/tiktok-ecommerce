@@ -1,4 +1,4 @@
-import { MessageSquareMoreIcon, MenuIcon, LampFloorIcon } from 'lucide-react'
+import { MessageSquareMoreIcon, MenuIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import HeroCarousel from '@/app/HeroCarousel'
@@ -22,7 +22,9 @@ export default async function HomePage() {
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
         <h4 className="scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
         <div className="flex items-center gap-4">
-          <MessageSquareMoreIcon className="cursor-pointer" />
+          <Link href="/feedback">
+            <MessageSquareMoreIcon className="cursor-pointer" />
+          </Link>
           <Link href="/info">
             <MenuIcon />
           </Link>
