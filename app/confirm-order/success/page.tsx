@@ -21,7 +21,7 @@ const SuccessPage = () => {
     if (id) {
       getOrder(Number(id)).then(({ data }) => setData(data))
     }
-  }, [id])
+  }, [id, setData])
 
   return (
     <main className="min-h-screen">

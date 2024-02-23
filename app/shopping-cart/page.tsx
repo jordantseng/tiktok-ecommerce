@@ -12,7 +12,6 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Item, useCartContext } from '@/context/CartContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
-import { Skeleton } from '@/components/ui/skeleton'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
