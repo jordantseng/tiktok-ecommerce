@@ -17,13 +17,13 @@ const ProductsLoadingPage = () => {
         <ProductList subSidebarItems={[]}>
           {Array(5)
             .fill(null)
-            .map((product) => (
-              <>
+            .map((_, index) => (
+              <div key={index}>
                 <div className="flex flex-col space-y-3 p-2">
                   <Skeleton className="h-[300px] w-full rounded-xl" />
                 </div>
                 <hr className="mx-auto flex w-11/12" />
-              </>
+              </div>
             ))}
         </ProductList>
       </div>
