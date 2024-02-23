@@ -24,6 +24,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 import { OrderData, getOrders } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
+import { useOrderContext } from '@/context/OrderContext'
 
 function calculateOrderCount(key: keyof typeof orderStatusMap, orders: OrderData[]) {
   switch (key) {
@@ -106,14 +107,9 @@ const serviceNavItems = [
 
 const MemberPage = () => {
   const router = useRouter()
-  const { user, token, refreshUser } = useAuthContext()
+  const { user, token, isPreparingData, refreshUser } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
-
-  const [orders, setOrders] = useImmer<OrderData[]>([])
-
-  console.log('orders: ', orders)
-
-  const isPreparingData = !user || !token
+  const { orders } = useOrderContext()
 
   useEffect(() => {
     if (!token) {
@@ -122,21 +118,6 @@ const MemberPage = () => {
       refreshUser()
     }
   }, [token, router, refreshUser])
-
-  useEffect(() => {
-    if (isPreparingData) return
-
-    getOrders()
-      .then((res) => {
-        if (res.resultcode !== 0) {
-          throw new Error(res.resultmessage)
-        }
-        setOrders(res.data.data || [])
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [setOrders, user, isPreparingData])
 
   if (isPreparingData) {
     return null
