@@ -5,11 +5,12 @@ import ProductList from '@/app/products/ProductList'
 import NavBar from '@/components/NavBar'
 import PrevButton from '@/components/PrevButton'
 import Searchbar from '@/components/Searchbar'
-import MerchandiseCard from '@/components/MerchandiseCard'
 import Pagination from '@/components/Pagination'
 import { getProducts } from '@/services/product'
 import { getCategories, getSubCategories } from '@/services/category'
 import { paginationGuard } from '@/lib/guard'
+import ProductItem from '@/components/ProductItem'
+import Link from 'next/link'
 
 const PAGE_SIZE = 5
 
@@ -51,8 +52,8 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         <Sidebar activeType={type} items={categories.data} />
         <ProductList subSidebarItems={subCategories}>
           {products.data.map((product) => (
-            <>
-              <MerchandiseCard
+            <Link key={product.id} href={`/products/${product.id}`}>
+              <ProductItem
                 id={product.id}
                 className="w-full border-none shadow-none"
                 imgUrl={product.imgs[0]}
@@ -62,7 +63,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                 originPrice={product.marketprice}
               />
               <hr className="mx-auto flex w-11/12" />
-            </>
+            </Link>
           ))}
           <div className="flex items-center justify-center p-4">
             <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
