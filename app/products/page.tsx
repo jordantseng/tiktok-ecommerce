@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
 import Sidebar from '@/app/products/Sidebar'
 import ProductList from '@/app/products/ProductList'
@@ -10,7 +10,6 @@ import { getProducts } from '@/services/product'
 import { getCategories, getSubCategories } from '@/services/category'
 import { paginationGuard } from '@/lib/guard'
 import ProductItem from '@/components/ProductItem'
-import Link from 'next/link'
 
 const PAGE_SIZE = 5
 
@@ -33,10 +32,6 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   ])
 
   const category = categories.data.find(({ id }) => id === Number(type)) || categories.data[0] || []
-
-  if (!type) {
-    redirect(`products?page=1&type=${category.id}`)
-  }
 
   paginationGuard(Number(page), products.last_page, type, subType)
 

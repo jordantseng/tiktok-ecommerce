@@ -42,7 +42,7 @@ const UpsertReceiptPage = () => {
         }
       })
     }
-  }, [id])
+  }, [id, setValue])
 
   useEffect(() => {
     if (CVSStoreID && CVSStoreName && CVSAddress && LogisticsSubType) {
