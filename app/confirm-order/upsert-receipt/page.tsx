@@ -60,16 +60,13 @@ const UpsertReceiptPage = () => {
     // const addressToSubmit =
     //   val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
     upsertAddress(val).then(() => {
-      id ? router.push('/member/profile') : router.push('/confirm-order/choose-receipt')
+      id ? router.push('/profile') : router.push('/confirm-order/choose-receipt')
     })
   }
 
   return (
     <main className="min-h-screen">
-      <Title
-        title="新增收件人資訊"
-        goBackUrl={id ? '/member/profile' : '/confirm-order/choose-receipt'}
-      />
+      <Title title="新增收件人資訊" goBackUrl={id ? '/profile' : '/confirm-order/choose-receipt'} />
       <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <div className="min-h-screen w-full bg-white p-4">
           <ReceiptForm
