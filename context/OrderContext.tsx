@@ -5,6 +5,7 @@ import { useImmer } from 'use-immer'
 
 import { OrderData, getOrders } from '@/services/order'
 import { useAuthContext } from '@/context/AuthContext'
+import { useRouter } from 'next/navigation'
 
 type OrderContextType = {
   orders: OrderData[]
@@ -13,8 +14,17 @@ type OrderContextType = {
 const OrderContext = createContext<OrderContextType | null>(null)
 
 export const OrderProvider = ({ children }: PropsWithChildren) => {
+  const router = useRouter()
   const [orders, setOrders] = useImmer<OrderData[]>([])
-  const { user, isPreparingData } = useAuthContext()
+  const { token, user, isPreparingData, refreshUser } = useAuthContext()
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    } else {
+      refreshUser()
+    }
+  }, [token, router, refreshUser])
 
   useEffect(() => {
     if (isPreparingData) return

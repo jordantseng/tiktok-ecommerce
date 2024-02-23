@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { orderStatusMap } from '@/constants/member'
+import { useOrderContext } from '@/context/OrderContext'
 
 const OrderCard = () => {
   const router = useRouter()
@@ -143,10 +144,13 @@ const RefundOrders = () => {
   )
 }
 
-const OrderPages = () => {
+const OrderPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const type = searchParams.get('type')!
+
+  // TODO: start here
+  const { orders } = useOrderContext()
 
   const handleTabChange = (value: string) => {
     const newSearchPamras = new URLSearchParams(searchParams)
@@ -202,4 +206,4 @@ const OrderPages = () => {
   )
 }
 
-export default OrderPages
+export default OrderPage

@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import {
   Bolt,
   Headset,
@@ -12,7 +11,6 @@ import {
   Headphones,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useImmer } from 'use-immer'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import IconCard from '@/components/IconCard'
@@ -22,7 +20,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/member'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
-import { OrderData, getOrders } from '@/services/order'
+import { OrderData } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
 import { useOrderContext } from '@/context/OrderContext'
 
@@ -107,17 +105,9 @@ const serviceNavItems = [
 
 const MemberPage = () => {
   const router = useRouter()
-  const { user, token, isPreparingData, refreshUser } = useAuthContext()
+  const { user, isPreparingData } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
   const { orders } = useOrderContext()
-
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    } else {
-      refreshUser()
-    }
-  }, [token, router, refreshUser])
 
   if (isPreparingData) {
     return null
