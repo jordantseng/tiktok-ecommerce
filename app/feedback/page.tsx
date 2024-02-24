@@ -12,7 +12,7 @@ const FeedbackPage = () => {
 
   useEffect(() => {
     const fetchMemberFeedbacks = async () => {
-      const { data: memberFeedbacks } = await getMemberFeedbacks(1)
+      const { data: memberFeedbacks } = await getMemberFeedbacks()
       setFeedbacks(memberFeedbacks)
     }
 
