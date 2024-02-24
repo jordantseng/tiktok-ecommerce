@@ -4,12 +4,13 @@ import PrevButton from '@/components/PrevButton'
 type Props = {
   title: string
   goBackUrl?: string
+  hasPrevButton?: boolean
 }
 
-const Title = ({ title, goBackUrl }: Props) => {
+const Title = ({ title, goBackUrl, hasPrevButton = true }: Props) => {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
-      {goBackUrl ? (
+      {hasPrevButton ? (
         <>
           <div className="flex w-1/4 justify-start">
             <PrevButton redirectUrl={goBackUrl} />
