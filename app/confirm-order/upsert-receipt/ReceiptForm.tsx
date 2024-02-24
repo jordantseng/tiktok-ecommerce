@@ -71,7 +71,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
     value.tel && form.setValue('tel', value.tel)
     value.city2 && form.setValue('city2', value.city2)
     value.address && form.setValue('address', value.address)
-  }, [form, value])
+  }, [form, onGetDistrict, value])
 
   // 2. Define a submit handler.
   function handleSubmit(result: z.infer<typeof formSchema>) {
