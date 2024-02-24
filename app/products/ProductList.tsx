@@ -5,9 +5,9 @@ import SubSidebar from '@/app/products/SubSidebar'
 import { cn } from '@/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-type ProductListProps = PropsWithChildren<{ subSidebarItems: { id: number; title: string }[] }>
+type ProductListProps = PropsWithChildren<{ subSidebarItems?: { id: number; title: string }[] }>
 
-const ProductList = ({ subSidebarItems, children }: ProductListProps) => {
+const ProductList = ({ subSidebarItems = [], children }: ProductListProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const searchParams = useSearchParams()
   const router = useRouter()
