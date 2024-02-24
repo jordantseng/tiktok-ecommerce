@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type SidebarProps = {
-  items: { id: number; title: string }[]
-  activeType: string
+  items?: { id: number; title: string }[]
+  activeType?: string
 }
 
-const Sidebar = ({ items, activeType }: SidebarProps) => {
+const Sidebar = ({ items = [], activeType }: SidebarProps) => {
   return (
     <aside className="sticky top-[68px] flex h-full w-20 flex-col items-center">
       {items.map((item) => (

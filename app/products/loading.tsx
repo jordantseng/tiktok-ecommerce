@@ -13,14 +13,14 @@ const ProductsLoadingPage = () => {
         <Searchbar />
       </header>
       <div className="flex min-h-screen w-full">
-        <Sidebar activeType="" items={[]} />
-        <ProductList subSidebarItems={[]}>
+        <Sidebar />
+        <ProductList>
           {Array(5)
             .fill(null)
             .map((_, index) => (
               <div key={index}>
                 <div className="flex flex-col space-y-3 p-2">
-                  <Skeleton className="h-[300px] w-full rounded-xl" />
+                  <Skeleton className="h-[130px] w-full rounded-xl" />
                 </div>
                 <hr className="mx-auto flex w-11/12" />
               </div>

@@ -57,7 +57,7 @@ export const createMemberFeedback = async () => {
   return res.data
 }
 
-export const getMemberFeedbacks = async (orderGroupId: number) => {
+export const getMemberFeedbacks = async (orderGroupId?: number) => {
   const { data: res } = await axiosInstance.post<getFeedbackRes>('api/membercenter/feedback', {
     ordergroup_id: orderGroupId,
     page: 1,
