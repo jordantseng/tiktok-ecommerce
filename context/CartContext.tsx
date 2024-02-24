@@ -1,7 +1,7 @@
 'use client'
 import { CartReq, addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
 import { CartItem } from '@/types/common'
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 
 type CartContextType = {
@@ -28,7 +28,7 @@ type CartProviderProps = {
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useImmer<Item[]>([])
 
-  const handleGetMyCart = () => {
+  const handleGetMyCart = useCallback(() => {
     getMyCart().then((res) => {
       const newItems = (res?.data?.data || []).map((opt) => ({
         id: opt.id,
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       }))
       setItems(newItems)
     })
-  }
+  }, [setItems])
 
   const handleAddToCart = (val: CartItem) => {
     addToCart(val.productItemId || 0, val.amount || 1).then(() => handleGetMyCart())

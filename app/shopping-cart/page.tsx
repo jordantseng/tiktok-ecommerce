@@ -28,7 +28,7 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     handleGetMyCart()
-  }, [])
+  }, [handleGetMyCart])
 
   useEffect(() => {
     const arr = getSelectedCartItems()
