@@ -1,7 +1,7 @@
-import { BadgeJapaneseYen, MessageSquareText, Truck, Wallet, WalletCards } from 'lucide-react'
 import { ReactNode } from 'react'
+import { BadgeJapaneseYen, MessageSquareText, Truck, Wallet, WalletCards } from 'lucide-react'
 
-type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'refunded'
+import { OrderStatus } from '@/services/order'
 
 type NavItem = {
   title: string

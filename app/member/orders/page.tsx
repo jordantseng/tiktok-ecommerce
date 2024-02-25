@@ -9,11 +9,13 @@ import Title from '@/components/Title'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { orderStatusMap } from '@/constants/member'
+import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import { Skeleton } from '@/components/ui/skeleton'
+import { filterOrderByStatus } from '@/services/order'
+import { OrderData } from '@/services/order'
 
-const OrderCard = () => {
+const OrderCard = ({ order }: { order: OrderData }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -130,7 +132,9 @@ const OrdersContainer = ({ children }: PropsWithChildren) => {
 
   function renderContent() {
     if (isLoadingOrders) {
-      return Array.from({ length: 5 }).map((_, index) => <OrderCardSkeleton key={index} />)
+      return Array(5)
+        .fill(null)
+        .map((_, index) => <OrderCardSkeleton key={index} />)
     }
     if (orders.length === 0) {
       return <NoOrder />
@@ -155,48 +159,73 @@ const AllOrders = () => {
   return (
     <OrdersContainer>
       {orders.map((order) => (
-        <OrderCard key={order.id} />
+        <OrderCard key={order.id} order={order} />
       ))}
     </OrdersContainer>
   )
 }
 
 const CheckoutOrders = () => {
+  const { orders } = useOrderContext()
+  const checkoutOrders = filterOrderByStatus('checkout', orders)
   return (
     <OrdersContainer>
-      <OrderCard />
+      {checkoutOrders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+      {checkoutOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
   )
 }
 
 const ShippingOrders = () => {
+  const { orders } = useOrderContext()
+  const shippingOrders = filterOrderByStatus('shipping', orders)
   return (
     <OrdersContainer>
-      <OrderCard />
+      {shippingOrders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+      {shippingOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
   )
 }
 
 const ReceiptOrders = () => {
+  const { orders } = useOrderContext()
+  const receiptOrders = filterOrderByStatus('receipt', orders)
   return (
     <OrdersContainer>
-      <OrderCard />
+      {receiptOrders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+      {receiptOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
   )
 }
 
-const CommentOrders = () => {
+const ReceiptedOrders = () => {
+  const { orders } = useOrderContext()
+  const receiptedOrders = filterOrderByStatus('receipted', orders)
   return (
     <OrdersContainer>
-      <OrderCard />
+      {receiptedOrders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+      {receiptedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
   )
 }
 
-const RefundOrders = () => {
+const RefundedOrders = () => {
+  const { orders } = useOrderContext()
+  const refundedOrders = filterOrderByStatus('refunded', orders)
   return (
     <OrdersContainer>
-      <OrderCard />
+      {refundedOrders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+      {refundedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
   )
 }
@@ -249,10 +278,10 @@ const OrdersPage = () => {
             <ReceiptOrders />
           </TabsContent>
           <TabsContent className="flex-1" value={orderStatusMap.receipted.value}>
-            <CommentOrders />
+            <ReceiptedOrders />
           </TabsContent>
           <TabsContent className="flex-1" value={orderStatusMap.refunded.value}>
-            <RefundOrders />
+            <RefundedOrders />
           </TabsContent>
         </Tabs>
       </div>

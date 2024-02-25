@@ -11,6 +11,8 @@ type OrdersRes = ApiRes<{
   total: number
 }>
 
+export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'refunded'
+
 export type OrderData = {
   domain_title?: string
   member_name: string
@@ -50,9 +52,9 @@ export type OrderData = {
   paystatus?: string
   paynumber?: string
   paynotifynumber?: string
-  // 付款狀態: 尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2]
+  // 付款狀態 //尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2],已退款[4],
   moneystatus?: number
-  // 訂單狀態: 訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4]
+  // 訂單處理情況 //訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4],
   orderstatus?: number
   updated_at?: string
 }
@@ -122,4 +124,19 @@ export const previewDiscont = async (code: string): Promise<OrderRes> => {
   })
 
   return data
+}
+
+export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
+  switch (key) {
+    case 'checkout':
+      return orders.filter((order) => order.moneystatus === 0)
+    case 'shipping':
+      return orders.filter((order) => order.orderstatus === 1)
+    case 'receipt':
+      return orders.filter((order) => order.orderstatus === 3)
+    case 'receipted':
+      return orders.filter((order) => order.orderstatus === 4)
+    case 'refunded':
+      return orders.filter((order) => order.moneystatus === 4)
+  }
 }
