@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 import { BadgeJapaneseYen, MessageSquareText, Truck, Wallet, WalletCards } from 'lucide-react'
 
-import { OrderStatus } from '@/services/order'
+import { OrderStatus, OrderStatusTitle } from '@/services/order'
 
 type NavItem = {
-  title: string
+  title: OrderStatusTitle
   href: string
   Icon: ReactNode
 }

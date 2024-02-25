@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import { Skeleton } from '@/components/ui/skeleton'
-import { filterOrderByStatus } from '@/services/order'
+import { filterOrderByStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 
 const OrderCard = ({ order }: { order: OrderData }) => {
@@ -31,7 +31,7 @@ const OrderCard = ({ order }: { order: OrderData }) => {
         <CardTitle>
           <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
             <span className="text-gray-500">2021.12.27 12:23</span>
-            <p className="text-primary">待付款</p>
+            <p className="text-primary">{getOrderStatusTitle(order)}</p>
           </div>
         </CardTitle>
       </CardHeader>
