@@ -17,27 +17,12 @@ import IconCard from '@/components/IconCard'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { Skeleton } from '@/components/ui/skeleton'
-import { orderStatusMap } from '@/constants/member'
+import { orderStatusMap } from '@/constants/order'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
-import { OrderData } from '@/services/order'
+import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
 import { useOrderContext } from '@/context/OrderContext'
-
-function calculateOrderCount(key: keyof typeof orderStatusMap, orders: OrderData[]) {
-  switch (key) {
-    case 'checkout':
-      return orders.filter((order) => order.moneystatus === 0).length
-    case 'shipping':
-      return orders.filter((order) => order.orderstatus === 1).length
-    case 'receipt':
-      return orders.filter((order) => order.orderstatus === 3).length
-    case 'receipted':
-      return orders.filter((order) => order.orderstatus === 4).length
-    case 'refunded':
-      return orders.filter((order) => order.moneystatus === 2).length
-  }
-}
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -170,7 +155,7 @@ const MemberPage = () => {
                 title={title}
                 Icon={Icon}
                 onClick={() => router.push(href)}
-                count={calculateOrderCount(value, orders)}
+                count={filterOrderByStatus(value, orders).length}
               />
             ))}
           </div>
