@@ -88,7 +88,7 @@ const buttonMap: ButtonMap = {
 const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { handleContactDialogOpen } = useOrderContext()
+  const { handleContactDialogOpen, handleSelectOrder } = useOrderContext()
 
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
@@ -102,7 +102,8 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   }
 
   const handleContact = () => {
-    handleContactDialogOpen(order)
+    handleContactDialogOpen()
+    handleSelectOrder(order)
   }
 
   const handleBuyAgain = () => {}
@@ -351,7 +352,7 @@ const OrdersPage = () => {
 
   const {
     isContactDialogOpen,
-    contactOrder,
+    selectedOrder,
     contactMessage,
     contactTextareaRef,
     handleContactDialogClose,
@@ -416,7 +417,7 @@ const OrdersPage = () => {
         <BottomDialog className="h-[204]" title="與我聯絡" onClose={handleContactDialogClose}>
           <div className="flex flex-col gap-2">
             <div className="text-center text-sm text-gray-500">
-              (訂單編號 {contactOrder?.ordergroupnumber})
+              (訂單編號 {selectedOrder?.ordergroupnumber})
             </div>
             <div className="flex flex-col gap-4">
               <Textarea

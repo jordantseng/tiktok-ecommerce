@@ -21,12 +21,13 @@ import { toast } from '@/components/ui/use-toast'
 
 type OrderContextType = {
   orders: OrderData[]
-  contactOrder: OrderData | null
+  selectedOrder: OrderData | null
   contactMessage: string
   contactTextareaRef: RefObject<HTMLTextAreaElement>
   isLoadingOrders: boolean
   isContactDialogOpen: boolean
-  handleContactDialogOpen: (order: OrderData) => () => void
+  handleSelectOrder: (order: OrderData) => void
+  handleContactDialogOpen: () => void
   handleContactDialogClose: () => void
   handleContactMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
   handleContactSubmit: () => void
@@ -40,10 +41,11 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   const contactTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [orders, setOrders] = useImmer<OrderData[]>([])
+  const [selectedOrder, setSelectedOrder] = useImmer<OrderData | null>(null)
+
   const [isLoadingOrders, setIsLoadingOrders] = useState(true)
   const [isContactDialogOpen, setIsContactDialogOpen] = useState(false)
   const [contactMessage, setContactMessage] = useState('')
-  const [contactOrder, setContactOrder] = useState<OrderData | null>(null)
 
   useEffect(() => {
     if (!token) {
@@ -73,18 +75,21 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       })
   }, [setOrders, user, isPreparingData])
 
-  const handleContactDialogOpen = (order: OrderData) => () => {
+  const handleContactDialogOpen = () => {
     setIsContactDialogOpen(true)
-    setContactOrder(order)
     setTimeout(() => {
       contactTextareaRef.current?.focus()
     })
   }
 
+  const handleSelectOrder = (order: OrderData) => {
+    setSelectedOrder(order)
+  }
+
   const handleContactDialogClose = () => {
     setIsContactDialogOpen(false)
     setContactMessage('')
-    setContactOrder(null)
+    setSelectedOrder(null)
   }
 
   const handleContactMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -92,7 +97,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }
 
   const handleContactSubmit = async () => {
-    if (!contactOrder) {
+    if (!selectedOrder) {
       toast({
         description: '請選擇訂單',
         variant: 'destructive',
@@ -102,9 +107,9 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
 
     try {
       await createMemberFeedback({
-        id: contactOrder.id!,
-        domain_id: contactOrder.domain_id!,
-        ordergroup_id: Number(contactOrder.ordergroupnumber),
+        id: selectedOrder.id!,
+        domain_id: selectedOrder.domain_id!,
+        ordergroup_id: Number(selectedOrder.ordergroupnumber),
         name: user?.name || '',
         email: user?.email || '',
         tel: user?.tel || '',
@@ -137,11 +142,12 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     <OrderContext.Provider
       value={{
         orders,
-        contactOrder,
+        selectedOrder,
         contactMessage,
         contactTextareaRef,
         isLoadingOrders,
         isContactDialogOpen,
+        handleSelectOrder,
         handleContactDialogClose,
         handleContactDialogOpen,
         handleContactMessageChange,
