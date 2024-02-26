@@ -34,20 +34,16 @@ const ProductItem = ({ id, className, imgUrl, title, tags = [], price, originPri
             <CardTitle className="break-normal text-base max-[320px]:text-sm">{title}</CardTitle>
           </CardHeader>
           <CardContent className="flex justify-between px-0">
-            <div>
+            <div className="flex flex-col break-normal pb-1">
               <CardDescription className="mt-2">
-                <div className="flex flex-col">
-                  <div className="break-normal pb-1">
-                    {tags.map((opt) => (
-                      <span
-                        key={opt}
-                        className="mr-2 rounded border border-primary p-0.5 text-xs text-primary"
-                      >
-                        {opt}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                {tags.map((opt) => (
+                  <span
+                    key={opt}
+                    className="mr-2 rounded border border-primary p-0.5 text-xs text-primary"
+                  >
+                    {opt}
+                  </span>
+                ))}
               </CardDescription>
             </div>
           </CardContent>
