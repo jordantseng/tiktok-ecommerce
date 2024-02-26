@@ -58,15 +58,17 @@ function ProfilePage() {
   }, [setAddresses])
 
   useEffect(() => {
-    if (!user) return
-
-    form.reset({
-      name: user.name ?? '',
-      id: user.id.toString() ?? '',
-      mobile: user.mobile ?? '',
-      email: user.email ?? '',
-    })
-  }, [user, form])
+    if (!user) {
+      refreshUser()
+    } else {
+      form.reset({
+        name: user.name ?? '',
+        id: user.id.toString() ?? '',
+        mobile: user.mobile ?? '',
+        email: user.email ?? '',
+      })
+    }
+  }, [user, form, refreshUser])
 
   async function handleSubmit(result: z.infer<typeof formSchema>) {
     try {
