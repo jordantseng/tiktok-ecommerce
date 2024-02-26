@@ -3,14 +3,15 @@
 import { FC, PropsWithChildren } from 'react'
 import { ScrollText } from 'lucide-react'
 import Image from 'next/image'
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import Title from '@/components/Title'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
+
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
+import Title from '@/components/Title'
+import BottomDialog from '@/components/BottomDialog'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   OrderStatus,
@@ -20,6 +21,7 @@ import {
 } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
+import { Textarea } from '@/components/ui/textarea'
 
 type ButtonProps = {
   children: string
@@ -86,6 +88,7 @@ const buttonMap: ButtonMap = {
 const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { handleContactDialogOpen } = useOrderContext()
 
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
@@ -97,21 +100,18 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
     router.push(`/member/orders/detail?${newSearchPamras.toString()}`)
   }
 
-  const handleContact = () => {}
   const handleBuyAgain = () => {}
   const handleConfirmReceipt = () => {}
   const handleCheckLogistics = () => {}
   const handleCheckRefund = () => {}
   const handleRemindShipping = () => {}
+  const handleContact = () => {
+    handleContactDialogOpen(order)
+  }
 
   const actions: Record<typeof status, Action[]> = {
     all: [
       { label: '付款', onClick: handlePay, type: 'primary' },
-      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
-    ],
-    receipt: [
-      { label: '再來一單', onClick: handleBuyAgain, type: 'common' },
-      { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     checkout: [
@@ -120,6 +120,11 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
     ],
     shipping: [
       { label: '提醒發貨', onClick: handleRemindShipping, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    receipt: [
+      { label: '再來一單', onClick: handleBuyAgain, type: 'common' },
+      { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     receipted: [
@@ -347,10 +352,25 @@ const OrdersPage = () => {
   const searchParams = useSearchParams()
   const type = searchParams.get('type')!
 
+  const {
+    isContactDialogOpen,
+    contactOrder,
+    contactMessage,
+    contactTextareaRef,
+    handleContactDialogClose,
+    handleContactMessageChange,
+    handleContactSubmit,
+  } = useOrderContext()
+
   const handleTabChange = (value: string) => {
     const newSearchPamras = new URLSearchParams(searchParams)
     newSearchPamras.set('type', value)
     router.push(`/member/orders?${newSearchPamras.toString()}`)
+  }
+
+  const handleConfirmContact = async () => {
+    await handleContactSubmit()
+    handleContactDialogClose()
   }
 
   return (
@@ -395,6 +415,31 @@ const OrdersPage = () => {
           </TabsContent>
         </Tabs>
       </div>
+      {isContactDialogOpen && (
+        <BottomDialog className="h-[204]" title="與我聯絡" onClose={handleContactDialogClose}>
+          <div className="flex flex-col gap-2">
+            <div className="text-center text-sm text-gray-500">
+              (訂單編號 {contactOrder?.ordergroupnumber})
+            </div>
+            <div className="flex flex-col gap-4">
+              <Textarea
+                ref={contactTextareaRef}
+                className="flex-1 bg-white text-base outline-none"
+                defaultValue=""
+                onChange={handleContactMessageChange}
+              />
+              <Button
+                disabled={!contactMessage}
+                className="rounded-lg"
+                variant="primary"
+                onClick={handleConfirmContact}
+              >
+                確認
+              </Button>
+            </div>
+          </div>
+        </BottomDialog>
+      )}
     </main>
   )
 }
