@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import { ScrollText } from 'lucide-react'
 import Image from 'next/image'
 
@@ -12,14 +12,78 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import { Skeleton } from '@/components/ui/skeleton'
-import { filterOrderByStatus, getFormatDate, getOrderStatusTitle } from '@/services/order'
+import {
+  OrderStatus,
+  filterOrderByStatus,
+  getFormatDate,
+  getOrderStatusTitle,
+} from '@/services/order'
 import { OrderData } from '@/services/order'
+import { cn } from '@/lib/utils'
+
+type ButtonProps = {
+  children: string
+  onClick: () => void
+}
+
+const PrimaryButton = ({ children, onClick }: ButtonProps) => {
+  return (
+    <Button
+      variant="ghost"
+      className="min-w-20 rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  )
+}
+
+const SecondaryButton = ({ children, onClick }: ButtonProps) => {
+  return (
+    <Button
+      variant="ghost"
+      className="hover:whit-blue-400 min-w-20 rounded-3xl border border-blue-400 p-2 text-blue-400 hover:bg-blue-100 hover:text-blue-400"
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  )
+}
+
+const CommonButton = ({ children, onClick }: ButtonProps) => {
+  return (
+    <Button
+      variant="ghost"
+      className="min-w-20 rounded-3xl border border-foreground p-2 text-foreground hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500"
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  )
+}
+
+type ButtonType = 'primary' | 'secondary' | 'common'
+
+type ButtonMap = Record<ButtonType, FC<ButtonProps>>
+
+type Action = {
+  label: string
+  onClick: () => void
+  type: 'primary' | 'secondary' | 'common'
+}
 
 type OrderCardProps = {
   order: OrderData
+  status?: OrderStatus | 'all'
 }
 
-const OrderCard = ({ order }: OrderCardProps) => {
+const buttonMap: ButtonMap = {
+  primary: PrimaryButton,
+  secondary: SecondaryButton,
+  common: CommonButton,
+}
+
+const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -31,6 +95,41 @@ const OrderCard = ({ order }: OrderCardProps) => {
     const newSearchPamras = new URLSearchParams(searchParams)
 
     router.push(`/member/orders/detail?${newSearchPamras.toString()}`)
+  }
+
+  const handleContact = () => {}
+  const handleBuyAgain = () => {}
+  const handleConfirmReceipt = () => {}
+  const handleCheckLogistics = () => {}
+  const handleCheckRefund = () => {}
+  const handleRemindShipping = () => {}
+
+  const actions: Record<typeof status, Action[]> = {
+    all: [
+      { label: '付款', onClick: handlePay, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    receipt: [
+      { label: '再來一單', onClick: handleBuyAgain, type: 'common' },
+      { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    checkout: [
+      { label: '付款', onClick: handlePay, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    shipping: [
+      { label: '提醒發貨', onClick: handleRemindShipping, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    receipted: [
+      { label: '查看物流', onClick: handleCheckLogistics, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
+    refunded: [
+      { label: '查看退款', onClick: handleCheckRefund, type: 'primary' },
+      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
+    ],
   }
 
   return (
@@ -79,20 +178,20 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <span className="grid grid-cols-2 gap-2">
-          <Button
-            variant="ghost"
-            className="rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
-            onClick={handlePay}
-          >
-            付款
-          </Button>
-          <Button
-            variant="ghost"
-            className="hover:whit-blue-400 rounded-3xl border border-blue-400 p-2 text-blue-400 hover:bg-blue-100 hover:text-blue-400"
-          >
-            與我聯絡
-          </Button>
+        <span
+          className={cn('grid gap-2', {
+            'grid-cols-2': actions[status].length === 2,
+            'grid-cols-3': actions[status].length === 3,
+          })}
+        >
+          {actions[status].map(({ type, label, onClick }, index) => {
+            const ButtonComponent = buttonMap[type]
+            return (
+              <ButtonComponent key={index} onClick={onClick}>
+                {label}
+              </ButtonComponent>
+            )
+          })}
         </span>
       </CardFooter>
     </Card>
@@ -175,11 +274,12 @@ const AllOrders = () => {
 
 const CheckoutOrders = () => {
   const { orders } = useOrderContext()
-  const checkoutOrders = filterOrderByStatus('checkout', orders)
+  const status = 'checkout'
+  const checkoutOrders = filterOrderByStatus(status, orders)
   return (
     <OrdersContainer>
       {checkoutOrders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} order={order} status={status} />
       ))}
       {checkoutOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -188,11 +288,12 @@ const CheckoutOrders = () => {
 
 const ShippingOrders = () => {
   const { orders } = useOrderContext()
-  const shippingOrders = filterOrderByStatus('shipping', orders)
+  const status = 'shipping'
+  const shippingOrders = filterOrderByStatus(status, orders)
   return (
     <OrdersContainer>
       {shippingOrders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} order={order} status={status} />
       ))}
       {shippingOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -201,11 +302,12 @@ const ShippingOrders = () => {
 
 const ReceiptOrders = () => {
   const { orders } = useOrderContext()
-  const receiptOrders = filterOrderByStatus('receipt', orders)
+  const status = 'receipt'
+  const receiptOrders = filterOrderByStatus(status, orders)
   return (
     <OrdersContainer>
       {receiptOrders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} order={order} status={status} />
       ))}
       {receiptOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -214,11 +316,12 @@ const ReceiptOrders = () => {
 
 const ReceiptedOrders = () => {
   const { orders } = useOrderContext()
-  const receiptedOrders = filterOrderByStatus('receipted', orders)
+  const status = 'receipted'
+  const receiptedOrders = filterOrderByStatus(status, orders)
   return (
     <OrdersContainer>
       {receiptedOrders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} order={order} status={status} />
       ))}
       {receiptedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -227,11 +330,12 @@ const ReceiptedOrders = () => {
 
 const RefundedOrders = () => {
   const { orders } = useOrderContext()
-  const refundedOrders = filterOrderByStatus('refunded', orders)
+  const status = 'refunded'
+  const refundedOrders = filterOrderByStatus(status, orders)
   return (
     <OrdersContainer>
       {refundedOrders.map((order) => (
-        <OrderCard key={order.id} order={order} />
+        <OrderCard key={order.id} order={order} status={status} />
       ))}
       {refundedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -245,9 +349,7 @@ const OrdersPage = () => {
 
   const handleTabChange = (value: string) => {
     const newSearchPamras = new URLSearchParams(searchParams)
-
     newSearchPamras.set('type', value)
-
     router.push(`/member/orders?${newSearchPamras.toString()}`)
   }
 
