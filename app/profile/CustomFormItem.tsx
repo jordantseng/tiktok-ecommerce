@@ -5,6 +5,8 @@ import { ControllerRenderProps } from 'react-hook-form'
 
 import { Input } from '@/components/ui/input'
 import { FormControl, FormMessage } from '@/components/ui/form'
+import { useAuthContext } from '@/context/AuthContext'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const formSchema = z.object({
   name: z.string().min(1, { message: '姓名為必填' }),
@@ -26,6 +28,7 @@ export default function CustomFormItem<T extends FormKeys>({
   field,
   disabled,
 }: CustomFormItemProps<T>) {
+  const { isLoadingUser } = useAuthContext()
   return (
     <div className="flex min-h-12 items-center justify-between bg-white p-4 py-0 md:min-h-14">
       <span className="flex items-center gap-2">
@@ -33,11 +36,17 @@ export default function CustomFormItem<T extends FormKeys>({
         <FormMessage />
       </span>
       <FormControl className="flex-1">
-        <Input
-          className="rounded-none border-none bg-white p-0 text-right outline-none md:text-base"
-          disabled={disabled}
-          {...field}
-        />
+        {isLoadingUser ? (
+          <div className="flex justify-end">
+            <Skeleton className="h-6 w-36" />
+          </div>
+        ) : (
+          <Input
+            className="rounded-none border-none bg-white p-0 text-right outline-none md:text-base"
+            disabled={disabled}
+            {...field}
+          />
+        )}
       </FormControl>
     </div>
   )
