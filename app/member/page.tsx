@@ -94,21 +94,26 @@ const MemberPage = () => {
   const { recommends, isLoadingRecommends } = useRecommendsContext()
   const { orders } = useOrderContext()
 
-  if (isPreparingData) {
-    return null
-  }
-
   return (
     <main className="flex h-full min-h-screen flex-col">
       <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
-              <Bolt
-                onClick={() => router.push('/profile')}
-                className="cursor-pointer md:h-10 md:w-10"
-              />
-              <Headset className="cursor-pointer md:h-10 md:w-10" />
+              {isPreparingData ? (
+                <>
+                  <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
+                  <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
+                </>
+              ) : (
+                <>
+                  <Bolt
+                    onClick={() => router.push('/profile')}
+                    className="cursor-pointer md:h-10 md:w-10"
+                  />
+                  <Headset className="cursor-pointer md:h-10 md:w-10" />
+                </>
+              )}
             </div>
 
             <div className="flex w-full items-center justify-between">
@@ -139,25 +144,33 @@ const MemberPage = () => {
         <div className="relative -top-24 m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
           <div className="flex flex-1 justify-between">
             <span className="font-medium">我的訂單</span>
-            <span
-              onClick={() => router.push('/member/orders?type=all')}
-              className="flex cursor-pointer text-gray-600 transition-all hover:text-gray-500"
-            >
-              全部訂單
-              <ChevronRight />
-            </span>
+            {isPreparingData ? (
+              <Skeleton className="h-6 w-20" />
+            ) : (
+              <span
+                onClick={() => router.push('/member/orders?type=all')}
+                className="flex cursor-pointer text-gray-600 transition-all hover:text-gray-500"
+              >
+                全部訂單
+                <ChevronRight />
+              </span>
+            )}
           </div>
 
           <div className="grid flex-1 grid-cols-5">
-            {Object.values(orderStatusMap).map(({ nav: { title, Icon, href }, value }) => (
-              <OrderNavItem
-                key={title}
-                title={title}
-                Icon={Icon}
-                onClick={() => router.push(href)}
-                count={filterOrderByStatus(value, orders).length}
-              />
-            ))}
+            {isPreparingData
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <OrderNavItem title="" key={index} isLoading />
+                ))
+              : Object.values(orderStatusMap).map(({ nav: { title, Icon, href }, value }) => (
+                  <OrderNavItem
+                    key={title}
+                    title={title}
+                    Icon={Icon}
+                    onClick={() => router.push(href)}
+                    count={filterOrderByStatus(value, orders).length}
+                  />
+                ))}
           </div>
         </div>
 
@@ -168,9 +181,18 @@ const MemberPage = () => {
             </div>
 
             <div className="grid flex-1 grid-cols-5">
-              {serviceNavItems.map(({ title, Icon, href }) => (
-                <IconCard key={title} title={title} Icon={Icon} onClick={() => router.push(href)} />
-              ))}
+              {isPreparingData
+                ? Array.from({ length: 5 }).map((_, index) => (
+                    <OrderNavItem title="" key={index} isLoading />
+                  ))
+                : serviceNavItems.map(({ title, Icon, href }) => (
+                    <IconCard
+                      key={title}
+                      title={title}
+                      Icon={Icon}
+                      onClick={() => router.push(href)}
+                    />
+                  ))}
             </div>
           </div>
 
