@@ -1,3 +1,5 @@
+import { format, parse } from 'date-fns'
+
 import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
 import { getToken } from '@/lib/utils'
@@ -150,4 +152,9 @@ export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.orderstatus === 4) return '已收貨'
   if (order.moneystatus === 4) return '已退款'
   return null
+}
+
+export function getFormatDate(date: string) {
+  const parseDate = parse(date, 'yyyy-MM-dd HH:mm:ss', new Date())
+  return format(parseDate, 'yyyy.MM.dd HH:mm:ss')
 }
