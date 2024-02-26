@@ -214,16 +214,9 @@ const OrderCardSkeleton = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <Skeleton className="h-5 w-20" />
           <div className="flex items-end justify-between">
-            <span className="flex gap-4">
-              <Skeleton className="h-16 w-16 rounded-lg" />
-              <Skeleton className="h-16 w-16 rounded-lg" />
-            </span>
-            <span className="flex flex-col items-end gap-4">
-              <Skeleton className="h-5 w-10" />
-              <Skeleton className="h-5 w-20" />
-            </span>
+            <Skeleton className="h-5 w-10" />
+            <Skeleton className="h-5 w-20" />
           </div>
         </div>
       </CardContent>
