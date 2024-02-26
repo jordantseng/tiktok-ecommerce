@@ -61,6 +61,9 @@ export type OrderData = {
   // 訂單處理情況 //訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4],
   orderstatus?: number
   updated_at?: string
+  product_id?: number | null
+  product_title?: string | null
+  product_imgs?: string[] | null
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {

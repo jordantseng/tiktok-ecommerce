@@ -93,6 +93,8 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
   const totalprice = order.totalprice?.toLocaleString()
+  const productTitle = order.product_title
+  const productImgs = order.product_imgs
 
   const handlePay = () => {
     const newSearchPamras = new URLSearchParams(searchParams)
@@ -149,31 +151,26 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <p>生鮮超市</p>
+          <p>{productTitle}</p>
           <div className="flex items-end justify-between">
             <div className="flex gap-4">
-              <div className="rounded-xl bg-default p-4">
-                <Image
-                  width={100}
-                  height={100}
-                  className="md:h-25 md:w-25 h-10 w-10"
-                  src="https://img.freepik.com/free-psd/grape-fruits-isolated-transparent-background_191095-14703.jpg?w=1060&t=st=1707652451~exp=1707653051~hmac=65ed420c75cf93ae28e14b5f563205eff39194d323cb73ba78e7fae7fd00612d"
-                  alt="蘋果"
-                />
-              </div>
-              <div className="rounded-xl bg-default p-4">
-                <Image
-                  width={100}
-                  height={100}
-                  className="md:h-25 md:w-25 h-10 w-10"
-                  src="https://img.freepik.com/free-psd/grape-fruits-isolated-transparent-background_191095-14703.jpg?w=1060&t=st=1707652451~exp=1707653051~hmac=65ed420c75cf93ae28e14b5f563205eff39194d323cb73ba78e7fae7fd00612d"
-                  alt="蘋果"
-                />
-              </div>
+              {productImgs &&
+                productImgs.length > 0 &&
+                productImgs.map((image) => (
+                  <div key={image} className="rounded-xl bg-default p-4">
+                    <Image
+                      width={100}
+                      height={100}
+                      className="md:h-25 md:w-25 h-10 w-10"
+                      src={image}
+                      alt={image}
+                    />
+                  </div>
+                ))}
             </div>
 
             <div className="flex flex-col items-end gap-1 text-sm">
-              <span className="text-gray-400">共 2 件</span>
+              {/* <span className="text-gray-400">共 2 件</span> */}
               <span>
                 合計：$
                 <span className="text-xl font-bold">{totalprice}</span>
