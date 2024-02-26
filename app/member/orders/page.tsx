@@ -98,8 +98,11 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
 
   const handlePay = () => {
     const newSearchPamras = new URLSearchParams(searchParams)
-
     router.push(`/member/orders/detail?${newSearchPamras.toString()}`)
+  }
+
+  const handleContact = () => {
+    handleContactDialogOpen(order)
   }
 
   const handleBuyAgain = () => {}
@@ -107,9 +110,6 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const handleCheckLogistics = () => {}
   const handleCheckRefund = () => {}
   const handleRemindShipping = () => {}
-  const handleContact = () => {
-    handleContactDialogOpen(order)
-  }
 
   const actions: Record<typeof status, Action[]> = {
     all: [

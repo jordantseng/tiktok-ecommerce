@@ -150,10 +150,10 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
 
 export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.moneystatus === 0) return '待付款'
+  if (order.moneystatus === 4) return '已退款'
   if (order.orderstatus === 1) return '待發貨'
   if (order.orderstatus === 3) return '待收貨'
   if (order.orderstatus === 4) return '已收貨'
-  if (order.moneystatus === 4) return '已退款'
   return null
 }
 
