@@ -12,12 +12,20 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import { Skeleton } from '@/components/ui/skeleton'
-import { filterOrderByStatus, getOrderStatusTitle } from '@/services/order'
+import { filterOrderByStatus, getFormatDate, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 
-const OrderCard = ({ order }: { order: OrderData }) => {
+type OrderCardProps = {
+  order: OrderData
+}
+
+const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  const createDate = getFormatDate(order.created_at!)
+  const orderStatus = getOrderStatusTitle(order)
+  const totalprice = order.totalprice?.toLocaleString()
 
   const handlePay = () => {
     const newSearchPamras = new URLSearchParams(searchParams)
@@ -30,8 +38,8 @@ const OrderCard = ({ order }: { order: OrderData }) => {
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
-            <span className="text-gray-500">2021.12.27 12:23</span>
-            <p className="text-primary">{getOrderStatusTitle(order)}</p>
+            <span className="text-gray-500">{createDate}</span>
+            <p className="text-primary">{orderStatus}</p>
           </div>
         </CardTitle>
       </CardHeader>
@@ -64,7 +72,7 @@ const OrderCard = ({ order }: { order: OrderData }) => {
               <span className="text-gray-400">共 2 件</span>
               <span>
                 合計：$
-                <span className="text-xl font-bold">1,000</span>
+                <span className="text-xl font-bold">{totalprice}</span>
               </span>
             </div>
           </div>
