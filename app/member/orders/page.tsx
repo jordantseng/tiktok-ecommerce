@@ -1,10 +1,11 @@
 'use client'
 
-import { FC, PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { ScrollText } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { buttonMap } from '@/app/member/orders/Buttons'
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import Title from '@/components/Title'
@@ -13,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Textarea } from '@/components/ui/textarea'
 import {
   OrderStatus,
   filterOrderByStatus,
@@ -21,52 +23,6 @@ import {
 } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
-import { Textarea } from '@/components/ui/textarea'
-
-type ButtonProps = {
-  children: string
-  onClick: () => void
-}
-
-const PrimaryButton = ({ children, onClick }: ButtonProps) => {
-  return (
-    <Button
-      variant="ghost"
-      className="min-w-20 rounded-3xl border border-primary p-2 text-primary hover:bg-primary-foreground hover:text-primary"
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  )
-}
-
-const SecondaryButton = ({ children, onClick }: ButtonProps) => {
-  return (
-    <Button
-      variant="ghost"
-      className="hover:whit-blue-400 min-w-20 rounded-3xl border border-blue-400 p-2 text-blue-400 hover:bg-blue-100 hover:text-blue-400"
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  )
-}
-
-const CommonButton = ({ children, onClick }: ButtonProps) => {
-  return (
-    <Button
-      variant="ghost"
-      className="min-w-20 rounded-3xl border border-foreground p-2 text-foreground hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500"
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  )
-}
-
-type ButtonType = 'primary' | 'secondary' | 'common'
-
-type ButtonMap = Record<ButtonType, FC<ButtonProps>>
 
 type Action = {
   label: string
@@ -77,12 +33,6 @@ type Action = {
 type OrderCardProps = {
   order: OrderData
   status?: OrderStatus | 'all'
-}
-
-const buttonMap: ButtonMap = {
-  primary: PrimaryButton,
-  secondary: SecondaryButton,
-  common: CommonButton,
 }
 
 const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
