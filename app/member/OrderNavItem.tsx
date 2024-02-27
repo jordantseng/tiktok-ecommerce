@@ -15,7 +15,10 @@ function OrderNavItem({ title, Icon, count, isLoading, onClick }: OrderNavItemPr
     <div className="relative grid place-items-center" key={title}>
       <span className="relative flex">
         {isLoading ? (
-          <Skeleton className="h-12 w-12" />
+          <div className="flex flex-col items-center justify-center gap-1">
+            <Skeleton className="h-10 w-10 rounded-2xl" />
+            <Skeleton className="h-4 w-10" />
+          </div>
         ) : (
           <>
             <IconCard title={title} Icon={Icon} onClick={onClick} />
