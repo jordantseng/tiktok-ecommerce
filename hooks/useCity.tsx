@@ -12,14 +12,16 @@ export const useCity = () => {
       const res = data.map((opt) => opt.city1title)
       setCities(res)
     })
-  }, [])
+  }, [setCities])
 
   const handleGetDistrict = useCallback(
     (city: string) => {
-      getDistrict(city).then(({ data }) => {
-        const res = data.data.map((opt) => opt.city2title || '')
-        setDistricts(res)
-      })
+      if (city) {
+        getDistrict(city).then(({ data }) => {
+          const res = data.data.map((opt) => opt.city2title || '')
+          setDistricts(res)
+        })
+      }
     },
     [setDistricts],
   )

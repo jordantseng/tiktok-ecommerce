@@ -44,7 +44,6 @@ type Props = {
 }
 
 const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubmit }: Props) => {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -109,7 +108,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
             </FormItem>
           )}
         />
-        {value.LogisticsSubType === 'HOME_DELIVERY' && (
+        {value.address && (
           <>
             <FormField
               control={form.control}
@@ -117,26 +116,31 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>縣市</FormLabel>
-                  <Select
-                    onValueChange={(val) => {
-                      field.onChange(val)
-                      onGetDistrict(val)
-                    }}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="w-full bg-white">
-                        <SelectValue placeholder="請選擇..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="w-full bg-white">
-                      {cities.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
-                          {opt}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {cities.length > 0 ? (
+                    <Select
+                      key={Math.random()}
+                      onValueChange={(val) => {
+                        field.onChange(val)
+                        onGetDistrict(val)
+                      }}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full bg-white">
+                          <SelectValue placeholder="請選擇..." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="w-full bg-white">
+                        {cities.map((opt) => (
+                          <SelectItem key={opt} value={opt}>
+                            {opt}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Skeleton className="h-10 w-full" />
+                  )}
                 </FormItem>
               )}
             />
@@ -183,7 +187,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
           </>
         )}
 
-        {value.LogisticsSubType !== 'HOME_DELIVERY' && (
+        {value.LogisticsSubType !== 'HOME_DELIVERY' && !value.address && (
           <>
             <FormField
               control={form.control}
