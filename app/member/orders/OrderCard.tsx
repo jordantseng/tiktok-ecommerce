@@ -34,7 +34,7 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
 
   const handlePay = () => {
     const newSearchPamras = new URLSearchParams(searchParams)
-    router.push(`/member/orders/detail?${newSearchPamras.toString()}`)
+    router.push(`/member/orders/${order.id}?${newSearchPamras.toString()}`)
   }
 
   const handleContact = () => {

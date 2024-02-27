@@ -1,9 +1,31 @@
+'use client'
+
 import { ChevronRight, Clock4, MapPin } from 'lucide-react'
+import { useSearchParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
+
 import PrevButton from '@/components/PrevButton'
 import { Button } from '@/components/ui/button'
+import { useEffect } from 'react'
+import { getOrder } from '@/services/order'
 
-const DetailPage = () => {
+const OrderPage = () => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const type = searchParams.get('type')!
+  const orderID = pathname.split('/').pop()
+
+  useEffect(() => {
+    getOrder(Number(orderID))
+      .then((res) => {
+        // console.log(res)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [orderID])
+
   return (
     <main className="flex h-full min-h-screen flex-col">
       <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
@@ -25,7 +47,6 @@ const DetailPage = () => {
           </div>
         </div>
       </section>
-
       <section className="relative flex flex-1 flex-col bg-gray-50">
         <div className="relative -top-24 m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
           <div className="flex flex-1 justify-between">
@@ -128,4 +149,4 @@ const DetailPage = () => {
   )
 }
 
-export default DetailPage
+export default OrderPage
