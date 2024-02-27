@@ -9,18 +9,27 @@ import NavBar from '@/components/NavBar'
 import { getBanners } from '@/services/banner'
 import { getCategories } from '@/services/category'
 import { getProducts } from '@/services/product'
+import { getWebSettings } from '@/services/webSettings'
 
 export default async function HomePage() {
-  const [{ data: banners }, { data: categoryTypes }, { data: products }] = await Promise.all([
+  const [
+    { data: banners },
+    { data: categoryTypes },
+    { data: products },
+    { data: webSettingsData },
+  ] = await Promise.all([
     getBanners(),
     getCategories(),
     getProducts({ page: 1, pageSize: 4 }),
+    getWebSettings(),
   ])
 
   return (
     <main className="mb-16 bg-default">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
-        <h4 className="scroll-m-20 text-xl font-normal tracking-tight">天服能量購物商城</h4>
+        <h4 className="scroll-m-20 text-xl font-normal tracking-tight">
+          {webSettingsData?.title || '天服能量購物商城'}
+        </h4>
         <div className="flex items-center gap-4">
           <Link href="/announcement">
             <MessageSquareMoreIcon className="cursor-pointer" />
