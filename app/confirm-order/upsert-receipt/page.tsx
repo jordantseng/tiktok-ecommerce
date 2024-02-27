@@ -57,9 +57,9 @@ const UpsertReceiptPage = () => {
   }, [CVSStoreID, CVSStoreName, CVSAddress, LogisticsSubType, handleSelectDeliveryType, setValue])
 
   const handleSubmit = (val: AddressData) => {
-    // const addressToSubmit =
-    //   val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
-    upsertAddress(val).then(() => {
+    const addressToSubmit =
+      val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
+    upsertAddress(addressToSubmit).then(() => {
       id ? router.push('/profile') : router.push('/confirm-order/choose-receipt')
     })
   }

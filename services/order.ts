@@ -93,8 +93,13 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     member_id: order.member_id || '',
     domain_id: 1,
     member_name: order.member_name || '無',
-    LogisticsSubType: order.LogisticsSubType || '',
-    deliverystatus: order.CVSStoreName ? 'csv' : 'store',
+    LogisticsSubType:
+      (order.LogisticsSubType !== 'HOME_DELIVERY' ? order.LogisticsSubType : '') || '',
+    deliverystatus: order.CVSStoreName
+      ? 'CSV'
+      : order.raddress && !order.CVSAddress
+        ? 'HOME'
+        : 'store',
     CVSStoreName: order.CVSStoreName || '',
     discount: order.discount || '',
     discount_title: order.discount_title || '',

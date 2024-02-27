@@ -34,11 +34,7 @@ const ChooseReceiptPage = () => {
               key={opt.id}
               receiver={opt.name}
               phone={opt.tel}
-              address={
-                (opt.LogisticsSubType === 'HOME_DELIVERY'
-                  ? opt.address
-                  : `${opt.CVSStoreName}(${opt.CVSAddress})`) || ''
-              }
+              address={opt.address || `${opt.CVSStoreName}(${opt.CVSAddress})` || ''}
               isSelected={selectedAddress?.id === opt.id}
               onClick={() => handleSelectAddress(opt)}
             />
