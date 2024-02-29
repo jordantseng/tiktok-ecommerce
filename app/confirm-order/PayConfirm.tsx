@@ -55,12 +55,19 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
               </div>
             )}
 
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-between">
               <span className="break-keep">總計：</span>
               <span className="flex justify-center text-lg font-semibold text-red-400">
                 ${total + logisticFee - (discount?.discount || 0)}
               </span>
             </div>
+            {webSettingsData?.freelogisticprice && (
+              <div className="flex items-center justify-center">
+                <span className="break-keep text-xs font-light">
+                  滿${webSettingsData?.freelogisticprice}即可免運
+                </span>
+              </div>
+            )}
           </div>
           <Button className="m-4 w-[50%] rounded-3xl bg-primary p-4" onClick={onConfirm}>
             確認訂單
