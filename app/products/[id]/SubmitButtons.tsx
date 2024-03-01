@@ -5,7 +5,7 @@ import { useImmer } from 'use-immer'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 
-import SpecDialog from '@/app/products/[id]/SpecDialog'
+import SpecDialog from '@/components/SpecDialog'
 import { Button } from '@/components/ui/button'
 import { addToCart } from '@/services/cart'
 import { Card, CardContent } from '@/components/ui/card'
@@ -131,7 +131,17 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         onSpecSelect={handleSpecSelect}
         onCountChange={(count) => setCount(count)}
         onClose={handleDialogClose}
-        onConfirm={handleConfirm}
+        Actions={
+          <div className="flex">
+            <Button
+              className="flex-grow rounded-full text-white hover:bg-red-600"
+              type="button"
+              onClick={handleConfirm}
+            >
+              確認
+            </Button>
+          </div>
+        }
       />
       <nav className="h-22 fixed bottom-0 z-30 flex w-full max-w-md justify-around gap-2 bg-white p-2">
         <Button

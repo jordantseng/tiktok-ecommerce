@@ -17,7 +17,7 @@ const BottomDialog = ({ title, children, className = '', onClose }: BottomDialog
       <div className="fixed bottom-0 h-screen w-full bg-black/80" onClick={onClose} />
       <form
         className={cn(
-          'fixed bottom-0 mx-auto h-[280px] w-full max-w-md rounded-t-xl bg-white p-4',
+          'fixed bottom-0 mx-auto w-full max-w-md rounded-t-xl bg-white p-4',
           className,
         )}
         onSubmit={(e) => e.preventDefault()}
