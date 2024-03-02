@@ -6,7 +6,7 @@ type OrderSummaryCardProps = {
 }
 
 function OrderSummaryCard({ order }: OrderSummaryCardProps) {
-  const totalProductsPrice = order?.totalprice! - order?.totalportage! - order?.discount!
+  const totalProductsPrice = order?.totalprice! - order?.totalportage! + order?.discount!
   const totalPortage = order?.totalportage
   const totalPrice = order?.totalprice
   const discount = order?.discount
