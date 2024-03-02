@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { OrderStatus, getFormatDate, getOrderStatusTitle } from '@/services/order'
+import { getFormatDate, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
 
@@ -18,12 +18,12 @@ type Action = {
 
 type OrderCardProps = {
   order: OrderData
-  status?: OrderStatus | 'all'
 }
 
-const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
+const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const status = getOrderStatus(order)!
   const { handleContactDialogOpen, handleSelectOrder } = useOrderContext()
 
   const createDate = getFormatDate(order.created_at!)
@@ -49,10 +49,6 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
   const handleRemindShipping = () => {}
 
   const actions: Record<typeof status, Action[]> = {
-    all: [
-      { label: '付款', onClick: handlePay, type: 'primary' },
-      { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
-    ],
     checkout: [
       { label: '付款', onClick: handlePay, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
@@ -75,6 +71,8 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
   }
+
+  const action = actions[status] || []
 
   return (
     <Card className="w-full border-none">
@@ -119,11 +117,11 @@ const OrderCard = ({ order, status = 'all' }: OrderCardProps) => {
       <CardFooter className="flex justify-end">
         <span
           className={cn('grid gap-2', {
-            'grid-cols-2': actions[status].length === 2,
-            'grid-cols-3': actions[status].length === 3,
+            'grid-cols-2': action.length === 2,
+            'grid-cols-3': action.length === 3,
           })}
         >
-          {actions[status].map(({ type, label, onClick }, index) => {
+          {action.map(({ type, label, onClick }, index) => {
             const ButtonComponent = buttonMap[type]
             return (
               <ButtonComponent key={index} onClick={onClick}>
