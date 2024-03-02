@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
@@ -22,7 +22,6 @@ type OrderCardProps = {
 
 const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const status = getOrderStatus(order)!
   const { handleContactDialogOpen, handleSelectOrder } = useOrderContext()
 
@@ -33,8 +32,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const productImgs = order.product_imgs
 
   const handlePay = () => {
-    const newSearchPamras = new URLSearchParams(searchParams)
-    router.push(`/member/orders/${order.id}?${newSearchPamras.toString()}`)
+    router.push(`/member/orders/${order.id}?type=checkout`)
   }
 
   const handleContact = () => {
