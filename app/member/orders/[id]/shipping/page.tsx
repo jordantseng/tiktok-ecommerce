@@ -7,10 +7,10 @@ import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
+import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
-import { Button } from '@/components/ui/button'
 
 const ShippingPage = () => {
   const { order } = useOrderDetailContext()
@@ -43,14 +43,9 @@ const ShippingPage = () => {
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">
           <div className="p-2">
             {!order ? (
-              <Skeleton className="h-10 w-28 rounded-full" />
+              <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <Button
-                variant="ghost"
-                className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
-              >
-                提醒發貨
-              </Button>
+              <PrimaryButton onClick={() => {}}>提醒發貨</PrimaryButton>
             )}
           </div>
         </div>

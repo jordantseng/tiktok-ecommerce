@@ -7,10 +7,10 @@ import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
+import { CommonButton, PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
-import { Button } from '@/components/ui/button'
 
 const ReceiptPage = () => {
   const { order } = useOrderDetailContext()
@@ -46,21 +46,11 @@ const ReceiptPage = () => {
               {!order ? (
                 Array(2)
                   .fill(null)
-                  .map((_, index) => <Skeleton key={index} className="h-10 w-28 rounded-full" />)
+                  .map((_, index) => <Skeleton key={index} className="h-10 w-20 rounded-full" />)
               ) : (
                 <>
-                  <Button
-                    variant="ghost"
-                    className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
-                  >
-                    確認收貨
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
-                  >
-                    確認收貨
-                  </Button>
+                  <CommonButton onClick={() => {}}>再來一單</CommonButton>
+                  <PrimaryButton onClick={() => {}}>確認收貨</PrimaryButton>
                 </>
               )}
             </div>
