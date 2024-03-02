@@ -1,17 +1,18 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Clock4 } from 'lucide-react'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
 import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
+import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
+import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import PrevButton from '@/components/PrevButton'
 import { Button } from '@/components/ui/button'
 import { OrderData, getOrder, getOrderStatusTitle } from '@/services/order'
-import { useEffect, useState } from 'react'
 import { toast } from '@/components/ui/use-toast'
-import { useSearchParams } from 'next/navigation'
 import { Skeleton } from '@/components/ui/skeleton'
-import OrderSummaryCard from './OrderSummaryCard'
 
 type OrderPageProps = {
   params: {
@@ -104,27 +105,8 @@ const OrderPage = ({ params }: OrderPageProps) => {
 
         <div className="relative -top-28 flex flex-1 flex-col">
           <ShoppingItemCards order={order} />
-
           <OrderSummaryCard order={order} />
-
-          <div className="relative m-4 mt-0 flex flex-col gap-2 rounded-xl bg-white p-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">下單時間</span>
-              <span>2021.12.27 12:22:35</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">訂單編號</span>
-              <span>83837423749237492</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">支付方式</span>
-              <span>支付寶</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">交易流水號</span>
-              <span>838374237492374921939</span>
-            </div>
-          </div>
+          <TransactionInfoCard order={order} />
         </div>
 
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">

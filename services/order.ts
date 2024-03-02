@@ -17,6 +17,29 @@ export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'r
 
 export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '已退款'
 
+export enum PaymentMethodEnum {
+  homepay = '貨到付款',
+  atm = '匯款',
+  'ecpay-csv' = '超商取貨付款(綠界)',
+  'ecpay-atm' = '轉帳(綠界)',
+  'ecpay-credit' = '信用卡付款(綠界)',
+  'ecpay-credit3' = '信用卡分3期(綠界)',
+  'ecpay-credit6' = '信用卡分6期(綠界)',
+  'ecpay-credit12' = '信用卡分12期(綠界)',
+  'newbpay-atm' = '轉帳(藍新)',
+  'newbpay-credit' = '信用卡(藍新)',
+  'newbpay-credit3' = '信用卡分3期(藍新)',
+  'newbpay-credit6' = '信用卡分6期(藍新)',
+  'newbpay-credit12' = '信用卡分12期(藍新)',
+  'wanpay-credit' = '信用卡(快點付)',
+  'wanpay-credit3' = '信用卡分3期(快點付)',
+  'wanpay-credit6' = '信用卡分6期(快點付)',
+  'wanpay-credit12' = '信用卡分12期(快點付)',
+  'wanpay-credit24' = '信用卡分24期(快點付)',
+}
+
+export type PayStatus = keyof typeof PaymentMethodEnum
+
 export type OrderDetail = {
   id: number
   ordergroup_id: number
@@ -66,13 +89,19 @@ export type OrderData = {
   deliverystatus?: string
   rmemo?: string
   invoicekind?: string
-  paystatus?: string
+
+  // 付款方式 //貨到付款[homepay],匯款[atm],超商取貨付款(綠界)[ecpay-csv],轉帳(綠界)[ecpay-atm],信用卡付款(綠界)[ecpay-credit],信用卡分3期(綠界)[ecpay-credit3],信用卡分6期(綠界)[ecpay-credit6],信用卡分12期(綠界)[ecpay-credit12],轉帳(藍新)[newbpay-atm],信用卡(藍新)[newbpay-credit],信用卡分3期(藍新)[newbpay-credit3],信用卡分6期(藍新)[newbpay-credit6],信用卡分12期(藍新)[newbpay-credit12],信用卡(快點付)[wanpay-credit],信用卡分3期(快點付)[wanpay-credit3],信用卡分6期(快點付)[wanpay-credit6],信用卡分12期(快點付)[wanpay-credit12],信用卡分24期(快點付)[wanpay-credit24],
+  paystatus?: PayStatus
+
   paynumber?: string
   paynotifynumber?: string
+
   // 付款狀態 //尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2],已退款[4],
   moneystatus?: number
+
   // 訂單處理情況 //訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4],
   orderstatus?: number
+
   updated_at?: string
   product_id?: number | null
   product_title?: string | null

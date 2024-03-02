@@ -13,7 +13,11 @@ function RecipientCard({ order }: RecipientCardProps) {
       <div className="flex flex-1 justify-between">
         <span className="flex flex-1 cursor-pointer items-center justify-between gap-2">
           <div className="h-full">
-            <MapPin color="#f74843" className="mt-4" />
+            {!order ? (
+              <Skeleton className="mt-4 h-6 w-6" />
+            ) : (
+              <MapPin color="#f74843" className="mt-4" />
+            )}
           </div>
 
           <div className="flex flex-1 flex-col items-start justify-between gap-2 text-foreground">

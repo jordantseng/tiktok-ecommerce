@@ -10,16 +10,17 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
+import { PayStatus } from '@/services/order'
 import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
 import React from 'react'
 
 type Props = {
-  onChange: (val: string) => void
+  onChange: (val: PayStatus) => void
 }
 
 const PaymentSetting = ({ onChange }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
-  const handleChange = (val: string) => onChange(val)
+  const handleChange = (val: PayStatus) => onChange(val)
   return (
     // 信用卡付款(綠界)[ecpay-credit],
     // 信用卡分3期(綠界)[ecpay-credit3],
