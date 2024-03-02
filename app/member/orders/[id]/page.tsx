@@ -1,9 +1,9 @@
 'use client'
 
 import { Clock4 } from 'lucide-react'
-import Image from 'next/image'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
+import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import PrevButton from '@/components/PrevButton'
 import { Button } from '@/components/ui/button'
 import { OrderData, getOrder, getOrderStatusTitle } from '@/services/order'
@@ -102,31 +102,7 @@ const OrderPage = ({ params }: OrderPageProps) => {
         <RecipientCard order={order} />
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
-            <div className="flex flex-1 items-center justify-between gap-2">
-              <div className="rounded-xl bg-default p-4">
-                <Image
-                  width={100}
-                  height={100}
-                  className="md:h-25 md:w-25 h-10 w-10"
-                  src="https://img.freepik.com/free-psd/grape-fruits-isolated-transparent-background_191095-14703.jpg?w=1060&t=st=1707652451~exp=1707653051~hmac=65ed420c75cf93ae28e14b5f563205eff39194d323cb73ba78e7fae7fd00612d"
-                  alt="蘋果"
-                />
-              </div>
-
-              <div className="text-sm">
-                <span>彩食有機鮮菠菜彩食新鮮的菠菜 1kg/份</span>
-                <div className="flex flex-col text-gray-500">
-                  <span>規格：1kg/份</span>
-                  <span>數量：2份</span>
-                </div>
-              </div>
-
-              <span>
-                $<span className="text-lg font-bold">20.00</span>
-              </span>
-            </div>
-          </div>
+          <ShoppingItemCards order={order} />
 
           <div className="relative m-4 mt-0 flex flex-col gap-2 rounded-xl bg-white p-4 text-sm">
             <div className="flex justify-between">
