@@ -7,6 +7,7 @@ import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
+import ShippingStatusCard from '@/app/member/orders/[id]/ShippingStatusCard'
 import { CommonButton, PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
@@ -32,7 +33,8 @@ const ReceiptPage = () => {
       />
 
       <section className="relative flex flex-1 flex-col bg-gray-50">
-        <div className="relative -top-24 m-4 flex min-h-28 flex-col gap-2 rounded-xl bg-white p-4">
+        <div className="relative -top-24 flex min-h-28 flex-col gap-4 rounded-xl p-4">
+          <ShippingStatusCard order={order} />
           <RecipientCard order={order} />
         </div>
 

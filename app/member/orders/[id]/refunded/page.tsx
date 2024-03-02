@@ -31,7 +31,7 @@ const RefundedPage = () => {
       />
 
       <section className="relative flex flex-1 flex-col bg-gray-50">
-        <div className="relative -top-24 m-4 flex min-h-28 flex-col gap-2 rounded-xl bg-white p-4">
+        <div className="relative -top-24 flex min-h-28 flex-col gap-2 rounded-xl p-4">
           <RecipientCard order={order} />
         </div>
 
