@@ -60,7 +60,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           {q ? (
             <>
               <Toolbar />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-2 gap-4">
                 {products.data.map((product) => (
                   <Link key={product.id} href={`/products/${product.id}`}>
                     <MerchandiseCard

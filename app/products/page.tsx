@@ -47,7 +47,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         <Sidebar activeType={type} items={categories.data} />
         <ProductList subSidebarItems={subCategories}>
           {products.data.map((product) => (
-            <Link key={product.id} href={`/products/${product.id}`}>
+            <Link key={product.id} href={`/productDetail?id=${product.id}`}>
               <ProductItem
                 id={product.id}
                 className="w-full border-none shadow-none"
@@ -57,7 +57,6 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                 price={product.price}
                 originPrice={product.marketprice}
               />
-              <hr className="mx-auto flex w-11/12" />
             </Link>
           ))}
           <div className="flex items-center justify-center p-4">

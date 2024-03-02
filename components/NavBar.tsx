@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, ArrowDownWideNarrowIcon, ShoppingCartIcon, UserRoundIcon } from 'lucide-react'
+import Image from 'next/image'
 
 import IconCard from '@/components/IconCard'
 
@@ -13,22 +13,24 @@ const NavBar = () => {
     {
       title: '首頁',
       href: '/',
-      Icon: <HomeIcon className="h-10 w-10 p-2" />,
+      Icon: <Image src="/home.svg" height={40} width={40} alt="" className="h-10 w-10 p-2" />,
     },
     {
       title: '分類',
       href: '/products?page=1',
-      Icon: <ArrowDownWideNarrowIcon className="h-10 w-10 p-2" />,
+      Icon: <Image src="/sort.svg" height={40} width={40} alt="" className="h-10 w-10 p-2" />,
     },
     {
       title: '購物車',
       href: '/shopping-cart',
-      Icon: <ShoppingCartIcon className="h-10 w-10 p-2" />,
+      Icon: (
+        <Image src="/shopping-cart.svg" height={40} width={40} alt="" className="h-10 w-10 p-2" />
+      ),
     },
     {
       title: '我的',
       href: '/member',
-      Icon: <UserRoundIcon className="h-10 w-10 p-2" />,
+      Icon: <Image src="/user.svg" height={40} width={40} alt="" className="h-10 w-10 p-2" />,
     },
   ]
 

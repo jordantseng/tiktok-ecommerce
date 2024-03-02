@@ -2,23 +2,23 @@ import { ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import ProductCarousel from '@/app/products/[id]/ProductCarousel'
-import TitleCard from '@/app/products/[id]/TitleCard'
+import ProductCarousel from '@/app/productDetail/ProductCarousel'
+import TitleCard from '@/app/productDetail/TitleCard'
 // import SpecCard from '@/app/products/[id]/SpecCard'
 import PrevButton from '@/components/PrevButton'
 import { Card, CardContent } from '@/components/ui/card'
-import SubmitButtons from '@/app/products/[id]/SubmitButtons'
+import SubmitButtons from '@/app/productDetail/SubmitButtons'
 import { getProduct } from '@/services/product'
 import { getProductItems } from '@/services/productItem'
 
 type ProductPageProps = {
-  params: {
+  searchParams: {
     id: string
   }
 }
 
-const ProductPage = async ({ params }: ProductPageProps) => {
-  const { id } = params
+const ProductPage = async ({ searchParams }: ProductPageProps) => {
+  const { id } = searchParams
   const { data: product } = await getProduct(Number(id))
   const { data: productItems } = await getProductItems({ productId: id })
 
