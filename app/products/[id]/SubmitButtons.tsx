@@ -145,18 +145,19 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
       />
       <nav className="h-22 fixed bottom-0 z-30 flex w-full max-w-md justify-around gap-2 bg-white p-2">
         <Button
-          className="w-full rounded-3xl bg-primary"
-          disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
-          onClick={handleBuyProduct}
-        >
-          直接購買
-        </Button>
-        <Button
-          className="w-full rounded-3xl bg-primary"
+          variant="outline"
+          className="w-full rounded-3xl font-semibold"
           disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
           onClick={handleAddToCard}
         >
           加入購物車
+        </Button>
+        <Button
+          className="w-full rounded-3xl font-semibold"
+          disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
+          onClick={handleBuyProduct}
+        >
+          立即購買
         </Button>
       </nav>
     </>
