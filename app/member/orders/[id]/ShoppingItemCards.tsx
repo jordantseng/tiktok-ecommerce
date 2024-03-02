@@ -14,13 +14,16 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
     <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
       <div className="flex flex-1 items-center justify-between gap-2">
         <div className="rounded-xl bg-default p-4">
-          <Image
-            width={100}
-            height={100}
-            className="md:h-25 md:w-25 h-10 w-10"
-            src="https://img.freepik.com/free-psd/grape-fruits-isolated-transparent-background_191095-14703.jpg?w=1060&t=st=1707652451~exp=1707653051~hmac=65ed420c75cf93ae28e14b5f563205eff39194d323cb73ba78e7fae7fd00612d"
-            alt="蘋果"
-          />
+          {detail.imgs.map((img, index) => (
+            <Image
+              key={index}
+              width={100}
+              height={100}
+              className="md:h-25 md:w-25 h-10 w-10"
+              src={img}
+              alt={detail.product_title}
+            />
+          ))}
         </div>
 
         <div className="flex-1 text-sm">

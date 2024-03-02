@@ -45,6 +45,8 @@ export type OrderDetail = {
   ordergroup_id: number
   product_title: string
   productitem_title: string
+  product_imgs: string
+  imgs: string[]
   price: number
   qty: number
   product_id: number
