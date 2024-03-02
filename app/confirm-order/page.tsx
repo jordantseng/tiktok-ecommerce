@@ -13,7 +13,7 @@ import DeliveryInfo from '@/app/confirm-order/DeliveryInfo'
 import PaymentSetting from '@/app/confirm-order/PaymentSetting'
 import React from 'react'
 import { useImmer } from 'use-immer'
-import { addOrder } from '@/services/order'
+import { PayStatus, addOrder } from '@/services/order'
 import { useAuthContext } from '@/context/AuthContext'
 import { handleFee, handleLabel } from '@/lib/payment'
 
@@ -22,7 +22,7 @@ const ConfirmBillPage = () => {
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
   const { selectedAddress } = useAddressContext()
-  const [payStatus, setPayStatus] = useImmer<string | null>(null)
+  const [payStatus, setPayStatus] = useImmer<PayStatus | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useImmer(false)
   const [discount, setDiscount] = useImmer<{ code: string; discount: number } | null>(null)
 
@@ -36,7 +36,7 @@ const ConfirmBillPage = () => {
       discount_code: discount?.code || '',
       CVSAddress: selectedAddress?.CVSAddress || '',
       CVSStoreID: selectedAddress?.CVSStoreID || '',
-      paystatus: payStatus || '',
+      paystatus: payStatus!,
       rname: selectedAddress?.name || '',
       rtel: selectedAddress?.tel || '',
       rcity1: selectedAddress?.city1 || '',
