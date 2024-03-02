@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { orderStatusMap } from '@/constants/order'
@@ -22,6 +23,12 @@ const OrdersPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const type = searchParams.get('type')!
+
+  useEffect(() => {
+    if (!type) {
+      router.push('/member/orders?type=all')
+    }
+  }, [type, router])
 
   const {
     isContactDialogOpen,
