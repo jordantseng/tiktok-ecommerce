@@ -111,12 +111,16 @@ const OrderPage = ({ params }: OrderPageProps) => {
 
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">
           <div className="p-2">
-            <Button
-              variant="ghost"
-              className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
-            >
-              付款
-            </Button>
+            {!order ? (
+              <Skeleton className="h-10 w-20 rounded-full" />
+            ) : (
+              <Button
+                variant="ghost"
+                className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
+              >
+                付款
+              </Button>
+            )}
           </div>
         </div>
       </section>
