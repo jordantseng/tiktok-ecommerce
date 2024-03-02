@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { redirect } from 'next/navigation'
 
 import ProductCarousel from '@/app/productDetail/ProductCarousel'
 import TitleCard from '@/app/productDetail/TitleCard'
@@ -21,6 +21,10 @@ const ProductPage = async ({ searchParams }: ProductPageProps) => {
   const { id } = searchParams
   const { data: product } = await getProduct(Number(id))
   const { data: productItems } = await getProductItems({ productId: id })
+
+  if (!product) {
+    redirect('/')
+  }
 
   return (
     <main className="mb-14 min-h-screen bg-default">

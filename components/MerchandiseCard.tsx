@@ -83,7 +83,7 @@ const MerchandiseCard = ({
           </div>
         </div>
         {sales ? (
-          <span className="text-sm font-light text-gray-400">已售 {sales}</span>
+          <span className="break-keep text-sm font-light text-gray-400">已售 {sales}</span>
         ) : (
           <CartButton
             item={{
