@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { redirect, useSearchParams } from 'next/navigation'
 import { Clock4 } from 'lucide-react'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
@@ -10,7 +10,7 @@ import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import PrevButton from '@/components/PrevButton'
 import { Button } from '@/components/ui/button'
-import { OrderData, getOrder, getOrderStatusTitle } from '@/services/order'
+import { OrderData, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { toast } from '@/components/ui/use-toast'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -25,6 +25,7 @@ const NINE_MINUTES = 9 * 60 * 1000
 const OrderPage = ({ params }: OrderPageProps) => {
   const { id } = params
   const [order, setOrder] = useState<OrderData | null>(null)
+  const [orderError, setOrderError] = useState<boolean | null>(null)
   const [countdown, setCountdown] = useState<number>(0)
 
   const searchParams = useSearchParams()
@@ -35,7 +36,14 @@ const OrderPage = ({ params }: OrderPageProps) => {
 
     getOrder(Number(id))
       .then((res) => {
-        setOrder(res.data)
+        const order = res.data
+        const orderStatus = getOrderStatus(order)
+
+        if (orderStatus !== type) {
+          throw new Error('訂單狀態錯誤')
+        }
+
+        setOrder(order)
         setCountdown(NINE_MINUTES)
       })
       .catch((err) => {
@@ -44,8 +52,15 @@ const OrderPage = ({ params }: OrderPageProps) => {
           variant: 'destructive',
           title: err,
         })
+        setOrderError(true)
       })
-  }, [id])
+  }, [id, type])
+
+  useEffect(() => {
+    if (orderError) {
+      redirect('/member/orders?type=all')
+    }
+  }, [orderError])
 
   useEffect(() => {
     // TODO: need to set to local storage
