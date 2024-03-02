@@ -41,10 +41,22 @@ const OrderCard = ({ order }: OrderCardProps) => {
   }
 
   const handleBuyAgain = () => {}
-  const handleConfirmReceipt = () => {}
-  const handleCheckLogistics = () => {}
-  const handleCheckRefund = () => {}
-  const handleRemindShipping = () => {}
+
+  const handleConfirmReceipt = () => {
+    router.push(`/member/orders/${order.id}?type=receipt`)
+  }
+
+  const handleCheckLogistics = () => {
+    router.push(`/member/orders/${order.id}?type=receipted`)
+  }
+
+  const handleCheckRefunded = () => {
+    router.push(`/member/orders/${order.id}?type=refunded`)
+  }
+
+  const handleRemindShipping = () => {
+    router.push(`/member/orders/${order.id}?type=shipping`)
+  }
 
   const actions: Record<typeof status, Action[]> = {
     checkout: [
@@ -65,7 +77,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     refunded: [
-      { label: '查看退款', onClick: handleCheckRefund, type: 'primary' },
+      { label: '查看退款', onClick: handleCheckRefunded, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
   }
