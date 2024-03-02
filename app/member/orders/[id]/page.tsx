@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { toast } from '@/components/ui/use-toast'
 import { useSearchParams } from 'next/navigation'
 import { Skeleton } from '@/components/ui/skeleton'
+import OrderSummaryCard from './OrderSummaryCard'
 
 type OrderPageProps = {
   params: {
@@ -104,28 +105,7 @@ const OrderPage = ({ params }: OrderPageProps) => {
         <div className="relative -top-28 flex flex-1 flex-col">
           <ShoppingItemCards order={order} />
 
-          <div className="relative m-4 mt-0 flex flex-col gap-2 rounded-xl bg-white p-4 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-400">商品小計</span>
-              <span>
-                $<span className="text-lg font-bold">20.00</span>
-              </span>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex justify-between pb-2">
-                <span className="text-gray-400">活動優惠</span>
-                <span className="text-foreground">-$7</span>
-              </div>
-
-              <div className="flex justify-between border-t pt-2">
-                <span className="font-medium text-foreground">應付金額總計</span>
-                <span className="text-primary">
-                  $<span className="text-lg font-bold">13.00</span>
-                </span>
-              </div>
-            </div>
-          </div>
+          <OrderSummaryCard order={order} />
 
           <div className="relative m-4 mt-0 flex flex-col gap-2 rounded-xl bg-white p-4">
             <div className="flex justify-between text-sm">

@@ -31,9 +31,7 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
           </div>
         </div>
 
-        <span>
-          $<span className="text-lg font-bold">{detail.price.toLocaleString()}</span>
-        </span>
+        <span className="text-lg font-bold">${detail.price.toLocaleString()}</span>
       </div>
     </div>
   )
