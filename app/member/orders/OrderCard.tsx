@@ -32,7 +32,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const productImgs = order.product_imgs
 
   const handlePay = () => {
-    router.push(`/member/orders/${order.id}?type=checkout`)
+    router.push(`/member/orders/${order.id}/checkout`)
   }
 
   const handleContact = () => {
@@ -43,19 +43,19 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const handleBuyAgain = () => {}
 
   const handleConfirmReceipt = () => {
-    router.push(`/member/orders/${order.id}?type=receipt`)
+    router.push(`/member/orders/${order.id}/receipt`)
   }
 
   const handleCheckLogistics = () => {
-    router.push(`/member/orders/${order.id}?type=receipted`)
+    router.push(`/member/orders/${order.id}/receipted`)
   }
 
   const handleCheckRefunded = () => {
-    router.push(`/member/orders/${order.id}?type=refunded`)
+    router.push(`/member/orders/${order.id}/refunded`)
   }
 
   const handleRemindShipping = () => {
-    router.push(`/member/orders/${order.id}?type=shipping`)
+    router.push(`/member/orders/${order.id}/shipping`)
   }
 
   const actions: Record<typeof status, Action[]> = {
