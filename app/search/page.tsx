@@ -1,16 +1,14 @@
-import Link from 'next/link'
-
 import SearchHistory from '@/app/search/SearchHistory'
 import Toolbar from '@/app/search/Toolbar'
 import FilterDialog from '@/app/search/FilterDialog'
 import Searchbar from '@/components/Searchbar'
-import MerchandiseCard from '@/components/MerchandiseCard'
 import PrevButton from '@/components/PrevButton'
 import Pagination from '@/components/Pagination'
 import { getProducts } from '@/services/product'
 import { getCategories } from '@/services/category'
 import { cn } from '@/lib/utils'
 import { paginationGuard } from '@/lib/guard'
+import ProductList from '@/app/search/ProductList'
 
 const PAGE_SIZE = 4
 
@@ -60,23 +58,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           {q ? (
             <>
               <Toolbar />
-              <div className="grid grid-cols-2 gap-4">
-                {products.data.map((product) => (
-                  <Link key={product.id} href={`/products/${product.id}`}>
-                    <MerchandiseCard
-                      id={product.id}
-                      key={product.id}
-                      className="w-full"
-                      imgUrl={product.imgs[0]}
-                      title={product.title}
-                      tags={product.tags?.split(',')}
-                      price={product.price}
-                      originPrice={product.marketprice}
-                      sales={String(product.buycount)}
-                    />
-                  </Link>
-                ))}
-              </div>
+              <ProductList products={products} />
               <div className="flex items-center justify-center p-4">
                 <Pagination
                   page={Number(page)}
