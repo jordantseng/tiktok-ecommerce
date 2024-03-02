@@ -19,12 +19,11 @@ export const AllOrders = () => {
 
 export const CheckoutOrders = () => {
   const { orders } = useOrderContext()
-  const status = 'checkout'
-  const checkoutOrders = filterOrderByStatus(status, orders)
+  const checkoutOrders = filterOrderByStatus('checkout', orders)
   return (
     <OrdersContainer>
       {checkoutOrders.map((order) => (
-        <OrderCard key={order.id} order={order} status={status} />
+        <OrderCard key={order.id} order={order} />
       ))}
       {checkoutOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -33,12 +32,11 @@ export const CheckoutOrders = () => {
 
 export const ShippingOrders = () => {
   const { orders } = useOrderContext()
-  const status = 'shipping'
-  const shippingOrders = filterOrderByStatus(status, orders)
+  const shippingOrders = filterOrderByStatus('shipping', orders)
   return (
     <OrdersContainer>
       {shippingOrders.map((order) => (
-        <OrderCard key={order.id} order={order} status={status} />
+        <OrderCard key={order.id} order={order} />
       ))}
       {shippingOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -47,12 +45,11 @@ export const ShippingOrders = () => {
 
 export const ReceiptOrders = () => {
   const { orders } = useOrderContext()
-  const status = 'receipt'
-  const receiptOrders = filterOrderByStatus(status, orders)
+  const receiptOrders = filterOrderByStatus('receipt', orders)
   return (
     <OrdersContainer>
       {receiptOrders.map((order) => (
-        <OrderCard key={order.id} order={order} status={status} />
+        <OrderCard key={order.id} order={order} />
       ))}
       {receiptOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -61,12 +58,11 @@ export const ReceiptOrders = () => {
 
 export const ReceiptedOrders = () => {
   const { orders } = useOrderContext()
-  const status = 'receipted'
-  const receiptedOrders = filterOrderByStatus(status, orders)
+  const receiptedOrders = filterOrderByStatus('receipted', orders)
   return (
     <OrdersContainer>
       {receiptedOrders.map((order) => (
-        <OrderCard key={order.id} order={order} status={status} />
+        <OrderCard key={order.id} order={order} />
       ))}
       {receiptedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>
@@ -75,12 +71,11 @@ export const ReceiptedOrders = () => {
 
 export const RefundedOrders = () => {
   const { orders } = useOrderContext()
-  const status = 'refunded'
-  const refundedOrders = filterOrderByStatus(status, orders)
+  const refundedOrders = filterOrderByStatus('refunded', orders)
   return (
     <OrdersContainer>
       {refundedOrders.map((order) => (
-        <OrderCard key={order.id} order={order} status={status} />
+        <OrderCard key={order.id} order={order} />
       ))}
       {refundedOrders.length === 0 && <NoOrder />}
     </OrdersContainer>

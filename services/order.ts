@@ -205,6 +205,15 @@ export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   return null
 }
 
+export function getOrderStatus(order: OrderData): OrderStatus | null {
+  if (order.moneystatus === 0) return 'checkout'
+  if (order.orderstatus === 1) return 'shipping'
+  if (order.orderstatus === 3) return 'receipt'
+  if (order.orderstatus === 4 && order.moneystatus !== 4) return 'receipted'
+  if (order.moneystatus === 4) return 'refunded'
+  return null
+}
+
 export function getFormatDate(date: string) {
   const parseDate = parse(date, 'yyyy-MM-dd HH:mm:ss', new Date())
   return format(parseDate, 'yyyy.MM.dd HH:mm:ss')
