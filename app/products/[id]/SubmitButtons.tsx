@@ -62,6 +62,11 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   }
 
   const handleBuyProduct = async () => {
+    if (!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0) {
+      setIsDialogOpen(true)
+      return
+    }
+
     try {
       const item: Item = {
         id: product.id,
@@ -82,6 +87,11 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   }
 
   const handleAddToCard = async () => {
+    if (!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0) {
+      setIsDialogOpen(true)
+      return
+    }
+
     try {
       const item: Item = {
         id: product.id,
@@ -147,14 +157,14 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         <Button
           variant="outline"
           className="w-full rounded-3xl font-semibold"
-          disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
+          // disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
           onClick={handleAddToCard}
         >
           加入購物車
         </Button>
         <Button
           className="w-full rounded-3xl font-semibold"
-          disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
+          // disabled={!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0}
           onClick={handleBuyProduct}
         >
           立即購買
