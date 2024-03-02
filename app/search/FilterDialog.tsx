@@ -94,7 +94,7 @@ const FilterDialog = ({ categories }: FilterDialogProps) => {
   }
 
   return (
-    <BottomDialog className="h-[360px]" title="全部篩選" onClose={handleClose}>
+    <BottomDialog title="全部篩選" onClose={handleClose}>
       <div className="mb-2">
         <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
           類別
