@@ -68,7 +68,9 @@ const CheckoutPage = () => {
       />
 
       <section className="relative flex flex-1 flex-col bg-gray-50">
-        <RecipientCard order={order} />
+        <div className="relative -top-24 m-4 flex min-h-28 flex-col gap-2 rounded-xl bg-white p-4">
+          <RecipientCard order={order} />
+        </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
           <ShoppingItemCards order={order} />
