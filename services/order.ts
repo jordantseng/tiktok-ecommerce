@@ -17,6 +17,19 @@ export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'r
 
 export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '已退款'
 
+export type OrderDetail = {
+  id: number
+  ordergroup_id: number
+  product_title: string
+  productitem_title: string
+  price: number
+  qty: number
+  product_id: number
+  productitem_id: number
+  created_at: string | null
+  updated_at: string | null
+}
+
 export type OrderData = {
   domain_title?: string
   member_name: string
@@ -64,6 +77,7 @@ export type OrderData = {
   product_id?: number | null
   product_title?: string | null
   product_imgs?: string[] | null
+  orderdetail?: OrderDetail[]
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {
@@ -147,7 +161,7 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
     case 'receipt':
       return orders.filter((order) => order.orderstatus === 3)
     case 'receipted':
-      return orders.filter((order) => order.orderstatus === 4)
+      return orders.filter((order) => order.orderstatus === 4 && order.moneystatus !== 4)
     case 'refunded':
       return orders.filter((order) => order.moneystatus === 4)
   }
@@ -155,10 +169,10 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
 
 export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.moneystatus === 0) return '待付款'
-  if (order.moneystatus === 4) return '已退款'
   if (order.orderstatus === 1) return '待發貨'
   if (order.orderstatus === 3) return '待收貨'
-  if (order.orderstatus === 4) return '已收貨'
+  if (order.orderstatus === 4 && order.moneystatus !== 4) return '已收貨'
+  if (order.moneystatus === 4) return '已退款'
   return null
 }
 
