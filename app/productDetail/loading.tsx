@@ -14,11 +14,11 @@ const ProductLoadingPage = async () => {
         </Link>
       </header>
       <nav className="h-22 fixed bottom-0 z-30 flex w-full max-w-md justify-around gap-2 bg-white p-2">
-        <Button className="w-full rounded-3xl bg-primary" disabled>
-          直接購買
-        </Button>
-        <Button className="w-full rounded-3xl bg-primary" disabled>
+        <Button variant="outline" className="w-full rounded-3xl font-semibold" disabled>
           加入購物車
+        </Button>
+        <Button className="w-full rounded-3xl font-semibold" disabled>
+          立即購買
         </Button>
       </nav>
     </main>
