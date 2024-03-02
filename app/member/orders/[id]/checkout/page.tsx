@@ -8,7 +8,7 @@ import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
-import { Button } from '@/components/ui/button'
+import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
@@ -80,12 +80,7 @@ const CheckoutPage = () => {
             {!order ? (
               <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <Button
-                variant="ghost"
-                className="rounded-3xl border border-primary px-6 py-4 text-primary hover:bg-primary-foreground hover:text-primary"
-              >
-                付款
-              </Button>
+              <PrimaryButton onClick={() => {}}>付款</PrimaryButton>
             )}
           </div>
         </div>

@@ -8,7 +8,7 @@ type ButtonProps = {
   onClick: () => void
 }
 
-const PrimaryButton = ({ children, onClick }: ButtonProps) => {
+export const PrimaryButton = ({ children, onClick }: ButtonProps) => {
   return (
     <Button
       variant="ghost"
@@ -20,7 +20,7 @@ const PrimaryButton = ({ children, onClick }: ButtonProps) => {
   )
 }
 
-const SecondaryButton = ({ children, onClick }: ButtonProps) => {
+export const SecondaryButton = ({ children, onClick }: ButtonProps) => {
   return (
     <Button
       variant="ghost"
@@ -32,7 +32,7 @@ const SecondaryButton = ({ children, onClick }: ButtonProps) => {
   )
 }
 
-const CommonButton = ({ children, onClick }: ButtonProps) => {
+export const CommonButton = ({ children, onClick }: ButtonProps) => {
   return (
     <Button
       variant="ghost"
