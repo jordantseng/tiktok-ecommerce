@@ -1,30 +1,73 @@
 'use client'
 
-import { ChevronRight, Clock4, MapPin } from 'lucide-react'
-import { useSearchParams, usePathname } from 'next/navigation'
+import { Clock4 } from 'lucide-react'
 import Image from 'next/image'
 
+import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
 import PrevButton from '@/components/PrevButton'
 import { Button } from '@/components/ui/button'
-import { useEffect } from 'react'
-import { getOrder } from '@/services/order'
+import { OrderData, getOrder, getOrderStatusTitle } from '@/services/order'
+import { useEffect, useState } from 'react'
+import { toast } from '@/components/ui/use-toast'
+import { useSearchParams } from 'next/navigation'
+import { Skeleton } from '@/components/ui/skeleton'
 
-const OrderPage = () => {
-  const pathname = usePathname()
+type OrderPageProps = {
+  params: {
+    id: string
+  }
+}
+
+const NINE_MINUTES = 9 * 60 * 1000
+
+const OrderPage = ({ params }: OrderPageProps) => {
+  const { id } = params
+  const [order, setOrder] = useState<OrderData | null>(null)
+  const [countdown, setCountdown] = useState<number>(0)
+
   const searchParams = useSearchParams()
-
-  const type = searchParams.get('type')!
-  const orderID = pathname.split('/').pop()
+  const type = searchParams.get('type')
 
   useEffect(() => {
-    getOrder(Number(orderID))
+    setCountdown(0)
+
+    getOrder(Number(id))
       .then((res) => {
-        // console.log(res)
+        setOrder(res.data)
+        setCountdown(NINE_MINUTES)
       })
       .catch((err) => {
-        console.error(err)
+        console.error('getOrder error: ', err)
+        toast({
+          variant: 'destructive',
+          title: err,
+        })
       })
-  }, [orderID])
+  }, [id])
+
+  useEffect(() => {
+    // TODO: need to set to local storage
+    // if (countdown === 0) {
+    //   return
+    // }
+    // let timer = setInterval(() => {
+    //   setCountdown((prev) => prev - 1000)
+    // }, 1000)
+    // return () => {
+    //   if (timer) {
+    //     clearInterval(timer)
+    //   }
+    // }
+  }, [countdown])
+
+  console.log('order: ', order)
+
+  if (!type) {
+    return toast({
+      variant: 'destructive',
+      title: '訂單不存在',
+    })
+  }
 
   return (
     <main className="flex h-full min-h-screen flex-col">
@@ -37,10 +80,18 @@ const OrderPage = () => {
               <div className="flex items-center gap-2 md:gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="flex items-center justify-center gap-2 text-lg md:text-2xl">
-                    <Clock4 />
-                    待付款
+                    {!order ? <Skeleton className="h-7 w-7 rounded-full" /> : <Clock4 />}
+                    {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : getOrderStatusTitle(order)}
                   </span>
-                  <span className="text-xs md:text-base">9分鐘後訂單關閉，請及時付款哦</span>
+                  <span className="text-xs md:text-base">
+                    {!order ? (
+                      <Skeleton className="h-4 w-40 md:h-6" />
+                    ) : countdown > 0 ? (
+                      `${Math.floor(countdown / 1000 / 60)} 分鐘後訂單關閉，請及時付款哦`
+                    ) : (
+                      ''
+                    )}
+                  </span>
                 </div>
               </div>
             </div>
@@ -48,22 +99,8 @@ const OrderPage = () => {
         </div>
       </section>
       <section className="relative flex flex-1 flex-col bg-gray-50">
-        <div className="relative -top-24 m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
-          <div className="flex flex-1 justify-between">
-            <span className="flex flex-1 cursor-pointer items-center justify-between gap-2">
-              <div className="h-full">
-                <MapPin color="#f74843" />
-              </div>
+        <RecipientCard order={order} />
 
-              <div className="flex flex-col gap-2 text-foreground">
-                <span className="font-medium">北京市海淀區恆大新宏福苑西區20號樓2單元301</span>
-                <span className="text-gray-400">丢丢 15800000000</span>
-              </div>
-
-              <ChevronRight />
-            </span>
-          </div>
-        </div>
         <div className="relative -top-28 flex flex-1 flex-col">
           <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
             <div className="flex flex-1 items-center justify-between gap-2">
