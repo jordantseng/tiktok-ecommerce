@@ -28,10 +28,6 @@ export const OrderDetailProvider = ({ id, children }: OrderDetailProviderProps) 
   const [orderError, setOrderError] = useState<boolean | null>(null)
   const [orderStatusTitle, setOrderStatusTitle] = useState<OrderStatusTitle | null>(null)
 
-  console.log('order', order)
-  console.log('orderStatusTitle', orderStatusTitle)
-  console.log('orderError', orderError)
-
   useEffect(() => {
     if (order) {
       const title = getOrderStatusTitle(order)!

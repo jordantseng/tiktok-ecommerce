@@ -7,7 +7,6 @@ import { useToast } from '@/components/ui/use-toast'
 
 import SpecDialog from '@/components/SpecDialog'
 import { Button } from '@/components/ui/button'
-import { addToCart } from '@/services/cart'
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronRightIcon } from 'lucide-react'
 import { ProductData } from '@/services/product'

@@ -23,7 +23,7 @@ type OrderCardProps = {
 const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter()
   const status = getOrderStatus(order)!
-  const { handleContactDialogOpen, handleSelectOrder } = useOrderContext()
+  const { handleContactDialogOpen, handleSelectOrder, handleBuyAgain } = useOrderContext()
 
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
@@ -39,8 +39,6 @@ const OrderCard = ({ order }: OrderCardProps) => {
     handleContactDialogOpen()
     handleSelectOrder(order)
   }
-
-  const handleBuyAgain = () => {}
 
   const handleConfirmReceipt = () => {
     router.push(`/member/orders/${order.id}/receipt`)
@@ -68,7 +66,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     receipt: [
-      { label: '再來一單', onClick: handleBuyAgain, type: 'common' },
+      { label: '再來一單', onClick: handleBuyAgain(order.orderdetail), type: 'common' },
       { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],

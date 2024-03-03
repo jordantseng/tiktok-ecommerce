@@ -1,5 +1,13 @@
 'use client'
-import { CartReq, addToCart, deleteFromCart, getMyCart, updatePurchase } from '@/services/cart'
+import {
+  CartBodyItem,
+  CartReq,
+  addToCart,
+  addToCarts,
+  deleteFromCart,
+  getMyCart,
+  updatePurchase,
+} from '@/services/cart'
 import { CartItem } from '@/types/common'
 import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
@@ -8,6 +16,7 @@ type CartContextType = {
   items: Item[]
   handleGetMyCart: () => void
   handleAddToCart: (val: CartItem) => void
+  handleAddToCarts: (carts: CartBodyItem[]) => void
   handleRemoveFromCart: (id: number) => void
   updateItemAmount: (id: number, amount: number) => void
   updateSelected: (id: number, isSelect: boolean) => void
@@ -50,6 +59,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     addToCart(val.productItemId || 0, val.amount || 1).then(() => handleGetMyCart())
   }
 
+  const handleAddToCarts = (carts: CartBodyItem[]) => {
+    addToCarts(carts).then(() => handleGetMyCart())
+  }
+
   const handleRemoveFromCart = (id: number) => {
     deleteFromCart(id)
     setItems((draft) => draft.filter((opt) => opt.id !== id))
@@ -85,6 +98,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         items,
         handleGetMyCart,
         handleAddToCart,
+        handleAddToCarts,
         handleRemoveFromCart,
         updateSelected,
         updateItemAmount,
