@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronRight, Loader2 } from 'lucide-react'
+import { ChevronRight, Eye, EyeOff, Loader2, XCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -41,6 +41,7 @@ const LoginPage = () => {
   const errors = form.formState.errors
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
@@ -73,29 +74,53 @@ const LoginPage = () => {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <>
-                      <Input
-                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                        placeholder="請輸入 Email"
-                        {...field}
-                      />
+                    <div>
+                      <div className="relative flex">
+                        <Input
+                          className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                          placeholder="請輸入 Email"
+                          {...field}
+                        />
+                        {email && (
+                          <div
+                            className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center"
+                            onClick={() => form.setValue('email', '')}
+                          >
+                            <XCircle className="h-4 w-4 md:h-6 md:w-6" />
+                          </div>
+                        )}
+                      </div>
                       {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
-                    </>
+                    </div>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <>
-                      <Input
-                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                        placeholder="請輸入密碼"
-                        type="password"
-                        {...field}
-                      />
+                    <div>
+                      <div className="relative flex">
+                        <Input
+                          className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                          placeholder="請輸入密碼"
+                          type={showPassword ? 'text' : 'password'}
+                          {...field}
+                        />
+                        {password && (
+                          <div
+                            className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4 md:h-6 md:w-6" />
+                            ) : (
+                              <Eye className="h-4 w-4 md:h-6 md:w-6" />
+                            )}
+                          </div>
+                        )}
+                      </div>
                       {errors.password && <FormMessage>{errors.password.message}</FormMessage>}
-                    </>
+                    </div>
                   )}
                 />
               </div>
