@@ -64,7 +64,7 @@ const LoginPage = () => {
 
       <div className="flex flex-1 flex-col justify-between gap-4 p-6 text-sm">
         <div className="flex flex-col gap-4">
-          <span className="text-xl font-bold">登入</span>
+          <span className="text-xl font-bold">電子信箱登錄</span>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -100,12 +100,12 @@ const LoginPage = () => {
                 />
               </div>
               <Button
-                disabled={!email || !password}
+                disabled={!email || !password || isSubmitting}
                 type="submit"
                 variant="primary"
                 className="rounded-full"
               >
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '登入'}
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '登錄'}
               </Button>
             </form>
           </Form>
