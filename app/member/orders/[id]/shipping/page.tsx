@@ -3,11 +3,11 @@
 import { Truck } from 'lucide-react'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
-import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
+import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
@@ -38,7 +38,7 @@ const ShippingPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <ShoppingItemCards order={order} />
+          <ShoppingSummaryCards order={order} />
           <OrderSummaryCard order={order} />
           <TransactionInfoCard order={order} />
           <OrderMemoCard order={order} />
