@@ -9,9 +9,9 @@ import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
 import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
+import { useToast } from '@/components/ui/use-toast'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
-import { useToast } from '@/components/ui/use-toast'
 
 const ShippingPage = () => {
   const { order, orderStatusTitle } = useOrderDetailContext()

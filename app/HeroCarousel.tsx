@@ -46,7 +46,7 @@ const HeroCarousel = ({ items }: HeroCarouselProps) => {
             <div className="p-1">
               <Card>
                 <CardContent className="relative flex aspect-video items-center justify-center p-6">
-                  <Image alt={item.title} src={item.img} fill />
+                  <Image className="rounded-lg" alt={item.title} src={item.img} fill />
                 </CardContent>
               </Card>
             </div>
