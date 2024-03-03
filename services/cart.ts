@@ -53,6 +53,20 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
   return data
 }
 
+export type CartBodyItem = {
+  productitem_id: number
+  qty: number
+  online: number
+}
+
+export const addToCarts = async (carts: CartBodyItem[]): Promise<CartsRes> => {
+  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
+    data: carts,
+  })
+
+  return data
+}
+
 export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
   const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
     data: req.map((opt) => opt),

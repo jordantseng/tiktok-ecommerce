@@ -14,10 +14,11 @@ import { useImmer } from 'use-immer'
 import { useRouter } from 'next/navigation'
 import { format } from 'date-fns'
 
-import { OrderData, getOrders } from '@/services/order'
+import { OrderData, OrderDetail, getOrders } from '@/services/order'
 import { createMemberFeedback } from '@/services/feedback'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from '@/components/ui/use-toast'
+import { useCartContext } from './CartContext'
 
 type OrderContextType = {
   orders: OrderData[]
@@ -26,6 +27,7 @@ type OrderContextType = {
   contactTextareaRef: RefObject<HTMLTextAreaElement>
   isLoadingOrders: boolean
   isContactDialogOpen: boolean
+  handleBuyAgain: (orderDetail: OrderDetail[] | undefined) => () => void
   handleSelectOrder: (order: OrderData) => void
   handleContactDialogOpen: () => void
   handleContactDialogClose: () => void
@@ -38,6 +40,8 @@ const OrderContext = createContext<OrderContextType | null>(null)
 export const OrderProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
   const { token, user, isPreparingData, refreshUser } = useAuthContext()
+  const { handleAddToCarts } = useCartContext()
+
   const contactTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [orders, setOrders] = useImmer<OrderData[]>([])
@@ -138,6 +142,29 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const handleBuyAgain = (orderDetail: OrderDetail[] | undefined) => async () => {
+    if (!orderDetail) {
+      toast({
+        variant: 'destructive',
+        title: '無法再次購買',
+      })
+      return
+    }
+
+    const cartItems = orderDetail.map((item) => ({
+      productitem_id: item.productitem_id,
+      qty: item.qty,
+      online: 0,
+    }))
+
+    await handleAddToCarts(cartItems)
+
+    toast({
+      className: 'bg-cyan-500 text-white',
+      title: '已將商品加入購物車',
+    })
+  }
+
   return (
     <OrderContext.Provider
       value={{
@@ -147,6 +174,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         contactTextareaRef,
         isLoadingOrders,
         isContactDialogOpen,
+        handleBuyAgain,
         handleSelectOrder,
         handleContactDialogClose,
         handleContactDialogOpen,

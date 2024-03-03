@@ -8,11 +8,13 @@ import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import ShippingStatusCard from '@/app/member/orders/[id]/ShippingStatusCard'
 import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
-import { CommonButton, PrimaryButton } from '@/app/member/orders/Buttons'
+import { CommonButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { useOrderContext } from '@/context/OrderContext'
 
 const ReceiptPage = () => {
+  const { handleBuyAgain } = useOrderContext()
   const { order, orderStatusTitle } = useOrderDetailContext()
 
   return (
@@ -50,8 +52,7 @@ const ReceiptPage = () => {
                   .map((_, index) => <Skeleton key={index} className="h-10 w-20 rounded-full" />)
               ) : (
                 <>
-                  <CommonButton onClick={() => {}}>再來一單</CommonButton>
-                  <PrimaryButton onClick={() => {}}>確認收貨</PrimaryButton>
+                  <CommonButton onClick={handleBuyAgain(order?.orderdetail)}>再來一單</CommonButton>
                 </>
               )}
             </div>
