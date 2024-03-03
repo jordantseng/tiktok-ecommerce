@@ -48,7 +48,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
     if (!orderID) {
       toast({
         variant: 'destructive',
-        title: '訂單編號錯誤',
+        description: '訂單編號錯誤',
       })
       return
     }
@@ -58,11 +58,6 @@ const OrderCard = ({ order }: OrderCardProps) => {
     try {
       const { data } = await getOrder(orderID)
       const orderDetail = data.orderdetail
-
-      if (!orderDetail) {
-        throw new Error('訂單資料錯誤')
-      }
-
       handleBuyAgain(orderDetail)()
     } catch (error) {
       console.error('getOrder error: ', error)

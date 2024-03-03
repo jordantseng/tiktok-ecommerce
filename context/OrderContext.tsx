@@ -144,25 +144,29 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
 
   const handleBuyAgain = (orderDetail: OrderDetail[] | undefined) => async () => {
     if (!orderDetail) {
-      toast({
-        variant: 'destructive',
-        title: '無法再次購買',
-      })
-      return
+      throw new Error('orderDetail is undefined')
     }
 
-    const cartItems = orderDetail.map((item) => ({
-      productitem_id: item.productitem_id,
-      qty: item.qty,
-      online: 0,
-    }))
+    try {
+      const cartItems = orderDetail.map((item) => ({
+        productitem_id: item.productitem_id,
+        qty: item.qty,
+        online: 0,
+      }))
 
-    await handleAddToCarts(cartItems)
+      await handleAddToCarts(cartItems)
 
-    toast({
-      className: 'bg-cyan-500 text-white',
-      title: '已將商品加入購物車',
-    })
+      toast({
+        className: 'bg-cyan-500 text-white',
+        description: '已將商品加入購物車',
+      })
+    } catch (error) {
+      console.error('handleBuyAgain error: ', error)
+      toast({
+        variant: 'destructive',
+        description: `加入購物車失敗: ${error}`,
+      })
+    }
   }
 
   return (

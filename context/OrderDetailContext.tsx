@@ -58,7 +58,7 @@ export const OrderDetailProvider = ({ id, children }: OrderDetailProviderProps) 
         console.error('getOrder error: ', err)
         toast({
           variant: 'destructive',
-          title: err.message,
+          description: err.message,
         })
         setOrderError(true)
       })
