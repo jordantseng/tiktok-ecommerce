@@ -7,8 +7,9 @@ export const deliveryMap = {
   HILIFEC2C: '超商取貨-萊爾富',
 }
 
-export const handleLabel = (val: string, webSettingsData: WebSettingsData | null) => {
-  if (webSettingsData?.paykind[val] === '信用卡付款') {
+export const handleLabel = (val: string | null, webSettingsData: WebSettingsData | null) => {
+  if (!val) return ''
+  if (webSettingsData?.paykind[val] === '信用卡') {
     return '信用卡一次付清'
   } else if (val.indexOf('atm') > -1) {
     return 'ATM轉帳'

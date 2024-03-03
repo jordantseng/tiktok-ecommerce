@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 import { previewDiscont } from '@/services/order'
+import Image from 'next/image'
 import React from 'react'
 import { useImmer } from 'use-immer'
 
@@ -13,27 +14,47 @@ type Props = {
 
 const Discount = ({ onDiscount }: Props) => {
   const [code, setCode] = useImmer('')
+  const [isActived, setIsActived] = useImmer(false)
   const { toast } = useToast()
-  const handleDiscount = () => {
-    previewDiscont(code).then(({ data }) => {
+  const handleDiscount = (checked: boolean) => {
+    if (checked) {
+      previewDiscont(code)
+        .then(({ data }) => {
+          toast({
+            className: 'bg-primary text-white',
+            description: '兌換成功',
+          })
+          onDiscount(data.discount_code || '', data.discount || 0)
+        })
+        .catch(() =>
+          toast({
+            className: 'bg-primary text-white',
+            description: '兌換失敗',
+          }),
+        )
+    } else {
       toast({
         className: 'bg-primary text-white',
-        description: '兌換成功',
+        description: '取消兌換',
       })
-      onDiscount(data.discount_code || '', data.discount || 0)
-    })
+      onDiscount('', 0)
+    }
+    setIsActived(checked)
   }
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-white p-2">
-      <span>優惠券：</span>
+    <div className="flex items-center justify-between rounded-lg bg-white px-2 py-0">
+      <div className="relative flex h-[18px] min-w-[18px]">
+        <Image alt="discount" fill src="/Tickets.png" />
+      </div>
       <Input
-        className="w-[40%]"
-        placeholder="請輸入優惠代碼"
+        className="m-2 w-full bg-white"
+        placeholder="請輸入優惠券"
         onChange={(val) => setCode(val.target.value)}
       />
-      <Button disabled={!code} className="w-[30%]" onClick={handleDiscount}>
-        確認兌換
+      {/* <Checkbox className="rounded-lg" disabled={!code} onCheckedChange={handleDiscount} /> */}
+      <Button disabled={!code} className="w-[30%]" onClick={() => handleDiscount(!isActived)}>
+        {isActived ? '確認兌換' : '取消兌換'}
       </Button>
     </div>
   )

@@ -11,11 +11,14 @@ import PayConfirm from '@/app/confirm-order/PayConfirm'
 import Discount from '@/app/confirm-order/DIscount'
 import DeliveryInfo from '@/app/confirm-order/DeliveryInfo'
 import PaymentSetting from '@/app/confirm-order/PaymentSetting'
+import PayDetail from '@/app/confirm-order/PayDetail'
 import React from 'react'
 import { useImmer } from 'use-immer'
 import { PayStatus, addOrder } from '@/services/order'
 import { useAuthContext } from '@/context/AuthContext'
 import { handleFee, handleLabel } from '@/lib/payment'
+import { ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 const ConfirmBillPage = () => {
   const { user } = useAuthContext()
@@ -65,8 +68,7 @@ const ConfirmBillPage = () => {
     <main className="h-full min-h-screen">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
       <div className={'flex min-h-screen w-full flex-col items-center bg-default'}>
-        <DeliveryInfo />
-        <div className="w-full p-4">
+        <div className="w-full p-4 pb-2">
           <div className="rounded-lg bg-white">
             {items.map((opt) => (
               <CartItem
@@ -85,17 +87,51 @@ const ConfirmBillPage = () => {
             ))}
           </div>
         </div>
-        <div className="w-full px-4">
-          <Discount onDiscount={(code, discount) => setDiscount({ code, discount })} />
-        </div>
-        <div className="w-full p-4">
+        <DeliveryInfo />
+        <div className="w-full px-4 pb-1 pt-2">
           <div className="rounded-lg bg-white p-2">
-            <PaymentSetting onChange={(val) => setPayStatus(val)} />
+            <Discount onDiscount={(code, discount) => setDiscount({ code, discount })} />
           </div>
         </div>
-        <PayConfirm discount={discount} onConfirm={() => setIsDialogOpen(true)} />
+        <div className="w-full px-4 py-1">
+          <div className="rounded-lg bg-white p-2">
+            {/* <PaymentSetting onChange={(val) => setPayStatus(val)} /> */}
+            <div className="flex items-center justify-between rounded-lg bg-white pl-2">
+              <div className="flex items-center space-x-2">
+                <div className="relative flex h-[18px] min-w-[18px]">
+                  <Image alt="info" fill src="/Money.png" />
+                </div>
+                <span>付款方式</span>
+              </div>
+              <Button className="font-light" variant="ghost" onClick={() => setIsDialogOpen(true)}>
+                {handleLabel(payStatus, webSettingsData)} <ChevronRight />
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="w-full px-4 py-1 pb-2">
+          <div className="rounded-lg bg-white p-2">
+            <PayDetail discount={discount} />
+          </div>
+        </div>
+        <PayConfirm discount={discount} onConfirm={() => handleAddOrder()} />
       </div>
       {isDialogOpen && (
+        <BottomDialog
+          className="h-auto"
+          title="選擇支付方式"
+          onClose={() => setIsDialogOpen(false)}
+        >
+          <PaymentSetting
+            value={payStatus}
+            onChange={(val) => {
+              setPayStatus(val)
+              setIsDialogOpen(false)
+            }}
+          />
+        </BottomDialog>
+      )}
+      {/* {isDialogOpen && (
         <BottomDialog className="h-auto" title="確認訂單" onClose={() => setIsDialogOpen(false)}>
           <div>
             <div className="flex items-center justify-center p-4 text-4xl font-bold">
@@ -126,7 +162,7 @@ const ConfirmBillPage = () => {
             </Button>
           </div>
         </BottomDialog>
-      )}
+      )} */}
     </main>
   )
 }

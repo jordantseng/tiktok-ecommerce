@@ -1,26 +1,27 @@
 'use client'
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { useAddressContext } from '@/context/AddressContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { PayStatus } from '@/services/order'
-import { CircleDollarSignIcon, CreditCardIcon, StoreIcon, TruckIcon } from 'lucide-react'
+import { ChevronsUpDown } from 'lucide-react'
+import Image from 'next/image'
 import React from 'react'
+import { useImmer } from 'use-immer'
 
 type Props = {
   onChange: (val: PayStatus) => void
+  value: string | null
 }
 
-const PaymentSetting = ({ onChange }: Props) => {
+const PaymentSetting = ({ value, onChange }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
-  const handleChange = (val: PayStatus) => onChange(val)
+  const handleChange = (val: PayStatus) => setSelected(val)
+  const { deliveryType } = useAddressContext()
+  const [selected, setSelected] = useImmer<PayStatus | null>(null)
   return (
     // 信用卡付款(綠界)[ecpay-credit],
     // 信用卡分3期(綠界)[ecpay-credit3],
@@ -40,88 +41,176 @@ const PaymentSetting = ({ onChange }: Props) => {
     // 信用卡分6期(快點付)[wanpay-credit6],
     // 信用卡分12期(快點付)[wanpay-credit12],
     // 信用卡分24期(快點付)[wanpay-credit24],
-    <Select onValueChange={handleChange}>
-      <SelectTrigger className="w-full bg-white">
-        <SelectValue placeholder="請選擇付款方式" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>
-            <div className="flex items-center space-x-2">
-              <CreditCardIcon />
-              <span>信用卡付款</span>
-            </div>
-          </SelectLabel>
-          {Object.keys(webSettingsData?.paykind || {}).map(
-            (opt: string) =>
-              opt.indexOf('credit') > -1 && (
-                <SelectItem className="ml-4" key={opt} value={opt}>
-                  {webSettingsData?.paykind[opt] === '信用卡付款'
-                    ? '信用卡一次付清'
-                    : webSettingsData?.paykind[opt]}
-                </SelectItem>
-              ),
-          )}
-        </SelectGroup>
-        {/* TODO:無卡分期 */}
-        {/* <SelectGroup>
-          <SelectLabel>
-            <div className="flex items-center space-x-2">
-              <CreditCardIcon />
-              <span>無卡分期</span>
-            </div>
-          </SelectLabel>
-          <SelectItem className="ml-4" value="ecpay-no-credit3">
-            無卡分3期
-          </SelectItem>
-          <SelectItem className="ml-4" value="ecpay-no-credit6">
-            無卡分6期
-          </SelectItem>
-          <SelectItem className="ml-4" value="ecpay-no-credit12">
-            無卡分12期
-          </SelectItem>
-        </SelectGroup> */}
-        <SelectGroup>
-          {Object.keys(webSettingsData?.paykind || {}).map(
-            (opt: string) =>
-              opt.indexOf('atm') > 0 && (
-                <SelectItem key={opt} value={opt}>
+    <>
+      <RadioGroup
+        className="w-full bg-white"
+        defaultValue={value || ''}
+        onValueChange={handleChange}
+      >
+        <div className="flex items-center justify-between space-x-2  p-4">
+          <Collapsible className="w-full">
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="credit">
                   <div className="flex items-center space-x-2">
-                    <CircleDollarSignIcon />
-                    <span>ATM轉帳</span>
+                    <div className="item-center relative flex h-5 w-5 justify-center">
+                      <Image alt="credit" fill src="/Credit.png" />
+                    </div>
+                    <span>信用卡付款</span>
                   </div>
-                </SelectItem>
-              ),
-          )}
-        </SelectGroup>
+                </Label>
+                <ChevronsUpDown className="h-4 w-4" />
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              {Object.keys(webSettingsData?.paykind || {}).map(
+                (opt: string) =>
+                  opt.indexOf('credit') > -1 && (
+                    <div key={opt} className="ml-4 flex space-x-2 p-4">
+                      <RadioGroupItem value={opt} id={opt} />
+                      <div className="flex items-center space-x-2">
+                        <Label htmlFor={opt}>{webSettingsData?.paykind[opt]}</Label>
+                      </div>
+                    </div>
+                  ),
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf('home') > -1 && (
-              <SelectGroup key={opt}>
-                <SelectItem value={opt}>
-                  <div className="flex items-center space-x-2">
-                    <TruckIcon />
-                    <span>貨到付款</span>
-                  </div>
-                </SelectItem>
-              </SelectGroup>
+            opt.indexOf('atm') > -1 && (
+              <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor={opt}>
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="atm" fill src="/Group.png" />
+                      </div>
+                      <span>ATM轉帳</span>
+                    </div>
+                  </Label>
+                </div>
+                <RadioGroupItem value={opt} id={opt} />
+              </div>
             ),
         )}
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf('csv') > -1 && (
-              <SelectGroup key={opt}>
-                <SelectItem value={opt}>
-                  <div className="flex items-center space-x-2">
-                    <StoreIcon />
-                    <span>超商取貨付款</span>
-                  </div>
-                </SelectItem>
-              </SelectGroup>
+            opt.indexOf(deliveryType !== 'HOME_DELIVERY' ? 'csv' : 'home') > -1 && (
+              <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor={opt}>
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="atm" fill src="/Cash.png" />
+                      </div>
+                      <span>貨到付款</span>
+                    </div>
+                  </Label>
+                </div>
+                <RadioGroupItem value={opt} id={opt} />
+              </div>
             ),
         )}
-      </SelectContent>
-    </Select>
+      </RadioGroup>
+      <Button
+        className="w-full rounded-full"
+        variant="primary"
+        onClick={() => selected && onChange(selected)}
+      >
+        確認
+      </Button>
+    </>
+
+    // <Select onValueChange={handleChange}>
+    //   <SelectTrigger className="w-full bg-white">
+    //     <SelectValue placeholder="請選擇付款方式" />
+    //   </SelectTrigger>
+    //   <SelectContent>
+    //     <SelectGroup>
+    //       <SelectLabel>
+    //         <div className="flex items-center space-x-2">
+    //           <div className="item-center relative flex h-5 w-5 justify-center">
+    //             <Image alt="credit" fill src="/Credit.png" />
+    //           </div>
+    //           <span>信用卡付款</span>
+    //         </div>
+    //       </SelectLabel>
+    // {Object.keys(webSettingsData?.paykind || {}).map(
+    //   (opt: string) =>
+    //     opt.indexOf('credit') > -1 && (
+    //       <SelectItem className="ml-4" key={opt} value={opt}>
+    //         {webSettingsData?.paykind[opt] === '信用卡付款'
+    //           ? '信用卡一次付清'
+    //           : webSettingsData?.paykind[opt]}
+    //       </SelectItem>
+    //     ),
+    // )}
+    //     </SelectGroup>
+    //     {/* TODO:無卡分期 */}
+    //     {/* <SelectGroup>
+    //       <SelectLabel>
+    //         <div className="flex items-center space-x-2">
+    //           <CreditCardIcon />
+    //           <span>無卡分期</span>
+    //         </div>
+    //       </SelectLabel>
+    //       <SelectItem className="ml-4" value="ecpay-no-credit3">
+    //         無卡分3期
+    //       </SelectItem>
+    //       <SelectItem className="ml-4" value="ecpay-no-credit6">
+    //         無卡分6期
+    //       </SelectItem>
+    //       <SelectItem className="ml-4" value="ecpay-no-credit12">
+    //         無卡分12期
+    //       </SelectItem>
+    //     </SelectGroup> */}
+    //     <SelectGroup>
+    //       {Object.keys(webSettingsData?.paykind || {}).map(
+    //         (opt: string) =>
+    //           opt.indexOf('atm') > 0 && (
+    //             <SelectItem key={opt} value={opt}>
+    //               <div className="flex items-center space-x-2">
+    //                 <div className="item-center relative flex h-5 w-5 justify-center">
+    //                   <Image alt="atm" fill src="/Group.png" />
+    //                 </div>
+    //                 <span>ATM轉帳</span>
+    //               </div>
+    //             </SelectItem>
+    //           ),
+    //       )}
+    //     </SelectGroup>
+    //     {Object.keys(webSettingsData?.paykind || {}).map(
+    //       (opt: string) =>
+    //         opt.indexOf('home') > -1 && (
+    //           <SelectGroup key={opt}>
+    //             <SelectItem value={opt}>
+    //               <div className="flex items-center space-x-2">
+    //                 <div className="item-center relative flex h-5 w-5 justify-center">
+    //                   <Image alt="atm" fill src="/Cash.png" />
+    //                 </div>
+    //                 <span>貨到付款</span>
+    //               </div>
+    //             </SelectItem>
+    //           </SelectGroup>
+    //         ),
+    //     )}
+    //     {Object.keys(webSettingsData?.paykind || {}).map(
+    //       (opt: string) =>
+    //         opt.indexOf('csv') > -1 && (
+    //           <SelectGroup key={opt}>
+    //             <SelectItem value={opt}>
+    //               <div className="flex items-center space-x-2">
+    //                 <StoreIcon />
+    //                 <span>超商取貨付款</span>
+    //               </div>
+    //             </SelectItem>
+    //           </SelectGroup>
+    //         ),
+    //     )}
+    //   </SelectContent>
+    // </Select>
   )
 }
 
