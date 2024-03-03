@@ -21,7 +21,7 @@ const ProductList = ({ subSidebarItems = [], children }: ProductListProps) => {
   }
 
   return (
-    <div className="relative w-full bg-white" style={{ width: 'calc(100% - 80px)' }}>
+    <div className="relative w-[calc(100%-80px)] bg-white">
       <SubSidebar
         isOpen={isOpen}
         onSidebarOpen={() => setIsOpen(!isOpen)}
