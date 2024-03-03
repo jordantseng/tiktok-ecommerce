@@ -52,14 +52,6 @@ const CheckoutPage = () => {
     }
   }
 
-  const handlePay = () => {
-    if (order?.paystatus?.includes('atm')) {
-      router.push(`/member/orders/atm-detail/checkout?id=${order.ordergroupnumber}`)
-    } else {
-      //TODO credit call repay api
-    }
-  }
-
   return (
     <>
       <OrderHeaderInfoCard
