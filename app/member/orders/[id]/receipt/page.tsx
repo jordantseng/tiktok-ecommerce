@@ -10,13 +10,10 @@ import ShippingStatusCard from '@/app/member/orders/[id]/ShippingStatusCard'
 import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
 import { CommonButton, PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
 
 const ReceiptPage = () => {
-  const { order } = useOrderDetailContext()
-
-  console.log('order: ', order)
+  const { order, orderStatusTitle } = useOrderDetailContext()
 
   return (
     <>
@@ -24,7 +21,7 @@ const ReceiptPage = () => {
         title={
           <>
             {!order ? <Skeleton className="h-7 w-7 rounded-full" /> : <ShoppingBag />}
-            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : getOrderStatusTitle(order)}
+            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : orderStatusTitle}
           </>
         }
         description={

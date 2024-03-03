@@ -3,7 +3,13 @@
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react'
 import { redirect, usePathname } from 'next/navigation'
 
-import { OrderData, getOrder, getOrderStatus } from '@/services/order'
+import {
+  OrderData,
+  OrderStatusTitle,
+  getOrder,
+  getOrderStatus,
+  getOrderStatusTitle,
+} from '@/services/order'
 import { toast } from '@/components/ui/use-toast'
 
 type OrderDetailProviderProps = PropsWithChildren<{
@@ -12,6 +18,7 @@ type OrderDetailProviderProps = PropsWithChildren<{
 
 type OrderDetailContextType = {
   order: OrderData | null
+  orderStatusTitle: OrderStatusTitle | null
 }
 
 const OrderDetailContext = createContext<OrderDetailContextType | null>(null)
@@ -19,6 +26,18 @@ const OrderDetailContext = createContext<OrderDetailContextType | null>(null)
 export const OrderDetailProvider = ({ id, children }: OrderDetailProviderProps) => {
   const [order, setOrder] = useState<OrderData | null>(null)
   const [orderError, setOrderError] = useState<boolean | null>(null)
+  const [orderStatusTitle, setOrderStatusTitle] = useState<OrderStatusTitle | null>(null)
+
+  console.log('order', order)
+  console.log('orderStatusTitle', orderStatusTitle)
+  console.log('orderError', orderError)
+
+  useEffect(() => {
+    if (order) {
+      const title = getOrderStatusTitle(order)!
+      setOrderStatusTitle(title)
+    }
+  }, [order])
 
   const pathname = usePathname()
   const orderType = pathname.split('/').pop()
@@ -55,7 +74,11 @@ export const OrderDetailProvider = ({ id, children }: OrderDetailProviderProps) 
     }
   }, [orderError])
 
-  return <OrderDetailContext.Provider value={{ order }}>{children}</OrderDetailContext.Provider>
+  return (
+    <OrderDetailContext.Provider value={{ order, orderStatusTitle }}>
+      {children}
+    </OrderDetailContext.Provider>
+  )
 }
 
 export const useOrderDetailContext = () => {
