@@ -11,13 +11,12 @@ import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
 
 const NINE_MINUTES = 9 * 60 * 1000
 
 const CheckoutPage = () => {
-  const { order } = useOrderDetailContext()
+  const { order, orderStatusTitle } = useOrderDetailContext()
   const [countdown, setCountdown] = useState<number>(0)
 
   useEffect(() => {
@@ -43,15 +42,13 @@ const CheckoutPage = () => {
     // }
   }, [countdown])
 
-  console.log('order: ', order)
-
   return (
     <>
       <OrderHeaderInfoCard
         title={
           <>
             {!order ? <Skeleton className="h-7 w-7 rounded-full" /> : <Clock4 />}
-            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : getOrderStatusTitle(order)}
+            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : orderStatusTitle}
           </>
         }
         description={

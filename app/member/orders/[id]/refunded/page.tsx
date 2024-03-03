@@ -2,16 +2,18 @@
 
 import { BadgeJapaneseYen } from 'lucide-react'
 
-import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
+import ShoppingSummaryActionCards from '@/app/member/orders/[id]/ShoppingSummaryActionCards'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getOrderStatusTitle } from '@/services/order'
+import { OrderDetail } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
 
 const RefundedPage = () => {
-  const { order } = useOrderDetailContext()
+  const { order, orderStatusTitle } = useOrderDetailContext()
 
-  console.log('order: ', order)
+  const handleCheckRefund = (detail: OrderDetail) => {
+    console.log('check refund', detail)
+  }
 
   return (
     <>
@@ -19,7 +21,7 @@ const RefundedPage = () => {
         title={
           <>
             {!order ? <Skeleton className="h-7 w-7 rounded-full" /> : <BadgeJapaneseYen />}
-            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : getOrderStatusTitle(order)}
+            {!order ? <Skeleton className="h-7 w-14 md:h-8" /> : orderStatusTitle}
           </>
         }
         description={
@@ -28,8 +30,12 @@ const RefundedPage = () => {
       />
 
       <section className="relative flex flex-1 flex-col bg-gray-50">
-        <div className="relative -top-24 flex flex-1 flex-col">
-          <ShoppingItemCards order={order} />
+        <div className="relative -top-24 flex flex-1 flex-col gap-4 p-4">
+          <ShoppingSummaryActionCards
+            title={orderStatusTitle}
+            order={order}
+            onClick={handleCheckRefund}
+          />
         </div>
       </section>
     </>
