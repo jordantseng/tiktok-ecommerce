@@ -12,11 +12,13 @@ import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { useRouter } from 'next/navigation'
 
 const NINE_MINUTES = 9 * 60 * 1000
 
 const CheckoutPage = () => {
   const { order, orderStatusTitle } = useOrderDetailContext()
+  const router = useRouter()
   const [countdown, setCountdown] = useState<number>(0)
 
   useEffect(() => {
@@ -41,6 +43,14 @@ const CheckoutPage = () => {
     //   }
     // }
   }, [countdown])
+
+  const handlePay = () => {
+    if (order?.paystatus?.includes('atm')) {
+      router.push(`/member/orders/atm-detail/checkout?id=${order.ordergroupnumber}`)
+    } else {
+      //TODO credit call repay api
+    }
+  }
 
   return (
     <>
@@ -81,7 +91,7 @@ const CheckoutPage = () => {
             {!order ? (
               <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <PrimaryButton onClick={() => {}}>付款</PrimaryButton>
+              <PrimaryButton onClick={handlePay}>付款</PrimaryButton>
             )}
           </div>
         </div>

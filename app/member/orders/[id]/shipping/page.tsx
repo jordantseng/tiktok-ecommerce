@@ -11,9 +11,19 @@ import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { useToast } from '@/components/ui/use-toast'
 
 const ShippingPage = () => {
   const { order, orderStatusTitle } = useOrderDetailContext()
+  const { toast } = useToast()
+
+  const handleRemind = () => {
+    // Boss say only do this is fine
+    toast({
+      className: 'bg-primary text-white',
+      description: '已通知賣家',
+    })
+  }
 
   return (
     <>
@@ -46,7 +56,7 @@ const ShippingPage = () => {
             {!order ? (
               <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <PrimaryButton onClick={() => {}}>提醒發貨</PrimaryButton>
+              <PrimaryButton onClick={handleRemind}>提醒發貨</PrimaryButton>
             )}
           </div>
         </div>
