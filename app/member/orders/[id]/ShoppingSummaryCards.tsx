@@ -63,7 +63,13 @@ function ShoppingSummaryCards({ order }: ShoppingSummaryCardsProps) {
     return <ShoppingSummaryCardSkeleton />
   }
 
-  return order.orderdetail.map((item) => <ShoppingSummaryCard detail={item} key={item.id} />)
+  return (
+    <main>
+      {order.orderdetail.map((item) => (
+        <ShoppingSummaryCard detail={item} key={item.id} />
+      ))}
+    </main>
+  )
 }
 
 export default ShoppingSummaryCards
