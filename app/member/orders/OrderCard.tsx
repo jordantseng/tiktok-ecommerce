@@ -6,14 +6,17 @@ import { useRouter } from 'next/navigation'
 import { buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { getFormatDate, getOrderStatus, getOrderStatusTitle } from '@/services/order'
+import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
+import { useToast } from '@/components/ui/use-toast'
+import { useState } from 'react'
 
 type Action = {
   label: string
   onClick: () => void
   type: 'primary' | 'secondary' | 'common'
+  isLoading?: boolean
 }
 
 type OrderCardProps = {
@@ -23,18 +26,56 @@ type OrderCardProps = {
 const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter()
   const status = getOrderStatus(order)!
+
+  const { toast } = useToast()
   const { handleContactDialogOpen, handleSelectOrder, handleBuyAgain } = useOrderContext()
+
+  const [isBuying, setIsBuying] = useState(false)
 
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
+
   const totalprice = order.totalprice?.toLocaleString()
   const productTitle = order.product_title
   const productImgs = order.product_imgs
-  const orderDetail = order.orderdetail
   const orderID = order.id
 
   const handlePay = () => {
     router.push(`/member/orders/${orderID}/checkout`)
+  }
+
+  const handleBuyMore = async () => {
+    if (!orderID) {
+      toast({
+        variant: 'destructive',
+        title: '訂單編號錯誤',
+      })
+      return
+    }
+
+    setIsBuying(true)
+
+    try {
+      const { data } = await getOrder(orderID)
+      const orderDetail = data.orderdetail
+
+      if (!orderDetail) {
+        throw new Error('訂單資料錯誤')
+      }
+
+      handleBuyAgain(orderDetail)()
+    } catch (error) {
+      console.error('getOrder error: ', error)
+
+      if (error instanceof Error) {
+        toast({
+          variant: 'destructive',
+          description: error.message,
+        })
+      }
+    } finally {
+      setIsBuying(false)
+    }
   }
 
   const handleContact = () => {
@@ -68,7 +109,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     receipt: [
-      { label: '再來一單', onClick: handleBuyAgain(orderDetail), type: 'common' },
+      { label: '再來一單', onClick: handleBuyMore, type: 'common', isLoading: isBuying },
       { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
@@ -131,10 +172,10 @@ const OrderCard = ({ order }: OrderCardProps) => {
             'grid-cols-3': action.length === 3,
           })}
         >
-          {action.map(({ type, label, onClick }, index) => {
+          {action.map(({ type, label, isLoading, onClick }, index) => {
             const ButtonComponent = buttonMap[type]
             return (
-              <ButtonComponent key={index} onClick={onClick}>
+              <ButtonComponent key={index} onClick={onClick} isLoading={isLoading}>
                 {label}
               </ButtonComponent>
             )
