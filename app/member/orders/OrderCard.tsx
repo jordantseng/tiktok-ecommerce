@@ -30,9 +30,11 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const totalprice = order.totalprice?.toLocaleString()
   const productTitle = order.product_title
   const productImgs = order.product_imgs
+  const orderDetail = order.orderdetail
+  const orderID = order.id
 
   const handlePay = () => {
-    router.push(`/member/orders/${order.id}/checkout`)
+    router.push(`/member/orders/${orderID}/checkout`)
   }
 
   const handleContact = () => {
@@ -41,19 +43,19 @@ const OrderCard = ({ order }: OrderCardProps) => {
   }
 
   const handleConfirmReceipt = () => {
-    router.push(`/member/orders/${order.id}/receipt`)
+    router.push(`/member/orders/${orderID}/receipt`)
   }
 
   const handleCheckLogistics = () => {
-    router.push(`/member/orders/${order.id}/receipted`)
+    router.push(`/member/orders/${orderID}/receipted`)
   }
 
   const handleCheckRefunded = () => {
-    router.push(`/member/orders/${order.id}/refunded`)
+    router.push(`/member/orders/${orderID}/refunded`)
   }
 
   const handleRemindShipping = () => {
-    router.push(`/member/orders/${order.id}/shipping`)
+    router.push(`/member/orders/${orderID}/shipping`)
   }
 
   const actions: Record<typeof status, Action[]> = {
@@ -66,7 +68,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     receipt: [
-      { label: '再來一單', onClick: handleBuyAgain(order.orderdetail), type: 'common' },
+      { label: '再來一單', onClick: handleBuyAgain(orderDetail), type: 'common' },
       { label: '確認收貨', onClick: handleConfirmReceipt, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
