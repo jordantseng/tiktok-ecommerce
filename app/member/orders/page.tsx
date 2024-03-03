@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { cn } from '@/lib/utils'
 import { orderStatusMap } from '@/constants/order'
 import { useOrderContext } from '@/context/OrderContext'
 import Title from '@/components/Title'
@@ -23,6 +24,9 @@ const OrdersPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const type = searchParams.get('type')!
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     if (!type) {
@@ -51,18 +55,32 @@ const OrdersPage = () => {
     handleContactDialogClose()
   }
 
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const isScrolled = scrollRef.current.scrollTop > 0
+      setIsScrolled(isScrolled)
+    }
+  }
+
   return (
     <main className="flex min-h-screen flex-col bg-default">
       <Title title="訂單" goBackUrl="/member" />
 
       <div className="flex flex-1">
         <Tabs
+          ref={scrollRef}
           value={type}
           defaultValue="all"
-          className="flex flex-1 flex-col overflow-x-auto"
+          className="flex h-[calc(100vh-60px)] flex-1 flex-col overflow-x-auto"
           onValueChange={handleTabChange}
+          onScroll={handleScroll}
         >
-          <TabsList className="sticky top-0 flex justify-center gap-10 bg-white pb-2 md:justify-start md:pl-4">
+          <TabsList
+            className={cn(
+              'sticky top-0 flex justify-center gap-10 bg-white pb-2 transition-all md:justify-start md:pl-4',
+              { 'shadow-md': isScrolled },
+            )}
+          >
             <TabsTrigger className="w-4 hover:text-primary" value="all">
               全部
             </TabsTrigger>
