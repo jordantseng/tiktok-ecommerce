@@ -109,6 +109,9 @@ export type OrderData = {
   product_title?: string | null
   product_imgs?: string[] | null
   orderdetail?: OrderDetail[]
+  paybranch?: string
+  payaccount?: string
+  payexpiredate?: string
 }
 
 export const getOrder = async (id: number): Promise<OrderRes> => {
@@ -149,7 +152,9 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     discount: order.discount || '',
     discount_title: order.discount_title || '',
     discount_code: order.discount_code || '',
-    gobackurl: `https://${location.host}/confirm-order/success`,
+    gobackurl: order.paystatus?.includes('atm')
+      ? `https://${location.host}/member/orders/atm-detail/checkout`
+      : `https://${location.host}/confirm-order/success`,
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',

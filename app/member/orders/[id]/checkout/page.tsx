@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Clock4 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
 import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
@@ -12,7 +13,6 @@ import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
-import { useRouter } from 'next/navigation'
 
 const NINE_MINUTES = 9 * 60 * 1000
 
@@ -43,6 +43,14 @@ const CheckoutPage = () => {
     //   }
     // }
   }, [countdown])
+
+  const handlePay = () => {
+    if (order?.paystatus?.includes('atm')) {
+      router.push(`/member/orders/atm-detail/checkout?id=${order.ordergroupnumber}`)
+    } else {
+      //TODO credit call repay api
+    }
+  }
 
   const handlePay = () => {
     if (order?.paystatus?.includes('atm')) {
