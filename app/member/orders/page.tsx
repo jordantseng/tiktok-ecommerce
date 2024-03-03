@@ -76,16 +76,19 @@ const OrdersPage = () => {
           onScroll={handleScroll}
         >
           <TabsList
-            className={cn(
-              'sticky top-0 flex justify-center gap-10 bg-white pb-2 transition-all md:justify-start md:pl-4',
-              { 'shadow-md': isScrolled },
-            )}
+            className={cn('sticky top-0 flex justify-center gap-10 bg-white pb-2 transition-all', {
+              'shadow-md': isScrolled,
+            })}
           >
-            <TabsTrigger className="w-4 hover:text-primary" value="all">
+            <TabsTrigger className="w-4 cursor-pointer hover:text-primary" value="all">
               全部
             </TabsTrigger>
             {Object.values(orderStatusMap).map(({ value, nav }) => (
-              <TabsTrigger key={value} className="w-4 hover:text-primary" value={value}>
+              <TabsTrigger
+                key={value}
+                className="w-4 cursor-pointer hover:text-primary"
+                value={value}
+              >
                 {nav.title}
               </TabsTrigger>
             ))}
