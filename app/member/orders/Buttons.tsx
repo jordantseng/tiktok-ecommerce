@@ -49,7 +49,8 @@ export const CommonButton = ({ children, onClick, isLoading }: ButtonProps) => {
   )
 }
 
-type ButtonType = 'primary' | 'secondary' | 'common'
+export type ButtonType = 'primary' | 'secondary' | 'common'
+
 type ButtonMap = Record<ButtonType, FC<ButtonProps>>
 
 export const buttonMap: ButtonMap = {
