@@ -1,22 +1,22 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { buttonMap } from '@/app/member/orders/Buttons'
+import { ButtonType, buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useToast } from '@/components/ui/use-toast'
 import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
-import { useToast } from '@/components/ui/use-toast'
-import { useState } from 'react'
 
 type Action = {
   label: string
-  onClick: () => void
-  type: 'primary' | 'secondary' | 'common'
+  type: ButtonType
   isLoading?: boolean
+  onClick: () => void
 }
 
 type OrderCardProps = {
