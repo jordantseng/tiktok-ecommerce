@@ -3,11 +3,11 @@
 import { ShoppingBag } from 'lucide-react'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
-import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import ShippingStatusCard from '@/app/member/orders/[id]/ShippingStatusCard'
+import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
 import { CommonButton, PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
@@ -39,7 +39,7 @@ const ReceiptPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <ShoppingItemCards order={order} />
+          <ShoppingSummaryCards order={order} />
           <OrderSummaryCard order={order} />
           <TransactionInfoCard order={order} />
         </div>
