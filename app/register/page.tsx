@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import { ChevronRight, Loader2 } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -20,7 +20,12 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: '密碼長度至少 8 個字元',
   }),
+  verificationCode: z.string().min(6, {
+    message: '驗證碼長度至少 6 個字元',
+  }),
 })
+
+let countdownInterval: NodeJS.Timeout
 
 const Register = () => {
   const { toast } = useToast()
@@ -33,12 +38,13 @@ const Register = () => {
       password: '',
     },
   })
-
   const email = form.watch('email')
   const password = form.watch('password')
+  const verificationCode = form.watch('verificationCode')
   const errors = form.formState.errors
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [countdown, setCountdown] = useState(0)
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
@@ -52,6 +58,28 @@ const Register = () => {
       .finally(() => {
         setIsSubmitting(false)
       })
+  }
+
+  const handleGetVerificationCode = async (e: MouseEvent) => {
+    e.preventDefault()
+
+    if (countdownInterval) {
+      clearInterval(countdownInterval)
+    }
+
+    const ONE_MINUTE = 60
+    setCountdown(ONE_MINUTE)
+
+    // TODO: handle get verification code
+    countdownInterval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 0) {
+          clearInterval(countdownInterval)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
   }
 
   return (
@@ -74,7 +102,7 @@ const Register = () => {
                     <>
                       <Input
                         className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                        placeholder="請輸入 Email"
+                        placeholder="請輸入正確 Email"
                         {...field}
                       />
                       {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
@@ -96,9 +124,35 @@ const Register = () => {
                     </>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="verificationCode"
+                  render={({ field }) => (
+                    <div className="relative flex items-center">
+                      <Input
+                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                        placeholder="請輸入 Email 驗證碼"
+                        {...field}
+                      />
+                      {errors.verificationCode && (
+                        <FormMessage>{errors.verificationCode.message}</FormMessage>
+                      )}
+                      {countdown > 0 ? (
+                        <span className="absolute right-4 text-gray-500">{countdown} 秒</span>
+                      ) : (
+                        <Button
+                          onClick={handleGetVerificationCode}
+                          className="absolute right-0 cursor-pointer bg-transparent font-normal text-gray-500 hover:text-gray-400"
+                        >
+                          獲取驗證碼
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                />
               </div>
               <Button
-                disabled={!email || !password}
+                disabled={!email || !password || !verificationCode || isSubmitting}
                 type="submit"
                 variant="primary"
                 className="rounded-full"
@@ -113,7 +167,7 @@ const Register = () => {
               className="m-auto flex cursor-pointer items-center text-gray-500 transition-all hover:text-gray-400"
               onClick={handleLogout}
             >
-              已註冊，去登入
+              已註冊，去登錄
               <ChevronRight />
             </div>
           </div>
