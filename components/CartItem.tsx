@@ -75,7 +75,7 @@ const CartItem = ({
               <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <CardDescription className="mt-2">
                 <div className="flex flex-col">
-                  <div className="mb-2">{productItemTitle}</div>
+                  <div className="mb-2">規格：{productItemTitle}</div>
                   <div className="truncate pb-1">
                     {editable ? (
                       tags.map((opt) => (

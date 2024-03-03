@@ -56,7 +56,7 @@ const DeliveryInfo = () => {
                 )}
                 <div className={cn('flex items-center', { 'pt-4': selectedAddress.CVSStoreName })}>
                   <div
-                    className={cn('relative min-h-20', {
+                    className={cn('relative min-h-24', {
                       'w-28': selectedAddress.CVSStoreName,
                       'flex w-10 items-center': !selectedAddress.CVSStoreName,
                     })}
