@@ -2,11 +2,8 @@
 
 import { CheckCircle2 } from 'lucide-react'
 
-import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
 import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
-import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
-import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderStatusTitle } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
