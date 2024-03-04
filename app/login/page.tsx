@@ -86,7 +86,7 @@ const LoginPage = () => {
                             className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center"
                             onClick={() => form.setValue('email', '')}
                           >
-                            <XCircle className="h-4 w-4 md:h-6 md:w-6" />
+                            <XCircle className="h-4 w-4 text-white md:h-6 md:w-6" fill="#cccccc" />
                           </div>
                         )}
                       </div>
@@ -112,9 +112,17 @@ const LoginPage = () => {
                             onClick={() => setShowPassword((prev) => !prev)}
                           >
                             {showPassword ? (
-                              <EyeOff className="h-4 w-4 md:h-6 md:w-6" />
+                              <EyeOff
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                fill="#cccccc"
+                                stroke="#cccccc"
+                              />
                             ) : (
-                              <Eye className="h-4 w-4 md:h-6 md:w-6" />
+                              <Eye
+                                className="-mr-[2px] h-[20px] w-[20px] md:-mr-1 md:h-[32px] md:w-[32px]"
+                                fill="#cccccc"
+                                stroke="#ffffff"
+                              />
                             )}
                           </div>
                         )}
