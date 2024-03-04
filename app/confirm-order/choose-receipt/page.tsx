@@ -43,7 +43,7 @@ const ChooseReceiptPage = () => {
         <Button
           className="m-4 w-[90%] rounded-3xl bg-primary p-4"
           onClick={() => {
-            deliveryType !== 'HOME_DELIVERY'
+            deliveryType && deliveryType !== 'HOME_DELIVERY'
               ? getLogistic(deliveryType)
               : router.push('/confirm-order/upsert-receipt')
           }}

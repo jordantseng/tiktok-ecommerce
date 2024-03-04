@@ -62,13 +62,6 @@ const PayDetail = ({ discount }: Props) => {
               ${total + logisticFee - (discount?.discount || 0)}
             </span>
           </div>
-          {webSettingsData?.freelogisticprice && (
-            <div className="flex items-center justify-center">
-              <span className="break-keep text-xs font-light">
-                滿${webSettingsData?.freelogisticprice}即可免運
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>

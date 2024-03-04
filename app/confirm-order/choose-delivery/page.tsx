@@ -9,7 +9,7 @@ import { CollapsibleTrigger } from '@radix-ui/react-collapsible'
 import { ChevronsUpDown } from 'lucide-react'
 import React from 'react'
 
-const ChooseReceiptPage = () => {
+const ChooseDeliveryPage = () => {
   const { handleSelectDeliveryType, deliveryType, resetSelectAddress } = useAddressContext()
   return (
     <main className="min-h-screen">
@@ -17,7 +17,7 @@ const ChooseReceiptPage = () => {
       <div className="flex min-h-screen w-full flex-col items-center bg-default">
         <RadioGroup
           className="w-full bg-white"
-          defaultValue={deliveryType}
+          defaultValue={deliveryType || ''}
           onValueChange={(val) => {
             resetSelectAddress()
             handleSelectDeliveryType(val as Delivery)
@@ -65,4 +65,4 @@ const ChooseReceiptPage = () => {
   )
 }
 
-export default ChooseReceiptPage
+export default ChooseDeliveryPage
