@@ -38,7 +38,9 @@ export type User = {
 
 type UserRes = ApiRes<User>
 
-type EmailCodeRes = ApiRes<{}>
+type ChangePasswordRes = ApiRes<{
+  id: string
+}>
 
 export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
   const { data } = await axiosInstance.post('/api/member/login/store', {
@@ -59,7 +61,7 @@ export const register = async ({ email, password, code }: RegisterInfo): Promise
   return data
 }
 
-export const getEmailCode = async (email: string): Promise<ApiRes<EmailCodeRes>> => {
+export const getEmailCode = async (email: string): Promise<ApiRes<{}>> => {
   const { data } = await axiosInstance.post('/api/member/emailcode/send', {
     email,
   })
@@ -80,6 +82,22 @@ export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserR
     mobile,
     name,
     email,
+  })
+
+  return data
+}
+
+export const forgetPassword = async (email: string): Promise<ApiRes<{}>> => {
+  const { data } = await axiosInstance.post('/api/member/forgetpwd/store', {
+    email,
+  })
+
+  return data
+}
+
+export const changePassword = async (password: string): Promise<ChangePasswordRes> => {
+  const { data } = await axiosInstance.post('/api/membercenter/changepassword/store', {
+    password,
   })
 
   return data

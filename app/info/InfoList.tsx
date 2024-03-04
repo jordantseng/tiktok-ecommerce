@@ -3,6 +3,7 @@ import { ChevronRightIcon } from 'lucide-react'
 
 import { getPages } from '@/services/page'
 import LoginTab from '@/app/info/LoginTab'
+import ResetPasswordTab from '@/app/info/ResetPasswordTab'
 
 const InfoList = async () => {
   const { data: pages } = await getPages()
@@ -26,6 +27,7 @@ const InfoList = async () => {
           <ChevronRightIcon />
         </Link>
       ))}
+      <ResetPasswordTab />
       <LoginTab />
     </div>
   )
