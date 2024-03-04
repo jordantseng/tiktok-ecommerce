@@ -39,7 +39,7 @@ const OrderContext = createContext<OrderContextType | null>(null)
 
 export const OrderProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
-  const { token, user, isPreparingData, refreshUser } = useAuthContext()
+  const { token, user, isPreparingAuthData, refreshUser } = useAuthContext()
   const { handleAddToCarts } = useCartContext()
 
   const contactTextareaRef = useRef<HTMLTextAreaElement>(null)
@@ -60,7 +60,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }, [token, router, refreshUser])
 
   useEffect(() => {
-    if (isPreparingData) return
+    if (isPreparingAuthData) return
 
     setIsLoadingOrders(true)
 
@@ -77,7 +77,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       .finally(() => {
         setIsLoadingOrders(false)
       })
-  }, [setOrders, user, isPreparingData])
+  }, [setOrders, user, isPreparingAuthData])
 
   const handleContactDialogOpen = () => {
     setIsContactDialogOpen(true)

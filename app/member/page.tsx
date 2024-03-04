@@ -90,7 +90,7 @@ const serviceNavItems = [
 
 const MemberPage = () => {
   const router = useRouter()
-  const { user, isPreparingData } = useAuthContext()
+  const { user, isPreparingAuthData } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
   const { orders } = useOrderContext()
 
@@ -100,7 +100,7 @@ const MemberPage = () => {
         <div className="grid place-items-center gap-10 p-4">
           <div className="relative flex w-full flex-col gap-4">
             <div className="absolute right-0 top-0 flex gap-4">
-              {isPreparingData ? (
+              {isPreparingAuthData ? (
                 <>
                   <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
                   <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
@@ -144,7 +144,7 @@ const MemberPage = () => {
         <div className="relative -top-24 m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
           <div className="flex flex-1 justify-between">
             <span className="font-medium">我的訂單</span>
-            {isPreparingData ? (
+            {isPreparingAuthData ? (
               <Skeleton className="h-6 w-20" />
             ) : (
               <span
@@ -158,7 +158,7 @@ const MemberPage = () => {
           </div>
 
           <div className="grid flex-1 grid-cols-5">
-            {isPreparingData
+            {isPreparingAuthData
               ? Array.from({ length: 5 }).map((_, index) => (
                   <OrderNavItem title="" key={index} isLoading />
                 ))
@@ -181,7 +181,7 @@ const MemberPage = () => {
             </div>
 
             <div className="grid flex-1 grid-cols-5">
-              {isPreparingData
+              {isPreparingAuthData
                 ? Array.from({ length: 5 }).map((_, index) => (
                     <OrderNavItem title="" key={index} isLoading />
                   ))
