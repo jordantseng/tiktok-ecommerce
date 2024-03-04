@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { FormControl, FormMessage } from '@/components/ui/form'
 import { useAuthContext } from '@/context/AuthContext'
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 
 export const formSchema = z.object({
   name: z.string().min(1, { message: '姓名為必填' }),
@@ -35,14 +36,16 @@ export default function CustomFormItem<T extends FormKeys>({
         {label}
         <FormMessage />
       </span>
-      <FormControl className="flex-1">
+      <FormControl className="max-w-48 flex-[1] md:max-w-60">
         {isLoadingUser ? (
           <div className="flex justify-end">
             <Skeleton className="h-6 w-36" />
           </div>
         ) : (
           <Input
-            className="rounded-none border-none bg-white p-0 text-right outline-none md:text-base"
+            className={cn('bg-white text-right md:text-base', {
+              'border-none p-0 outline-none': disabled,
+            })}
             disabled={disabled}
             {...field}
           />
