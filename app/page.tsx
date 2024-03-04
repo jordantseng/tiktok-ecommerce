@@ -54,7 +54,7 @@ export default async function HomePage() {
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
         <div className="grid grid-cols-2 gap-4">
           {products.data.map((product) => (
-            <Link key={product.id} href={`/productDetail?id=${product.id}`}>
+            <Link key={product.id} href={`/product-detail?id=${product.id}`}>
               <MerchandiseCard
                 id={product.id}
                 className="w-full"
