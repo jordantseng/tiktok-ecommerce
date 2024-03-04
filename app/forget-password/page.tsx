@@ -12,13 +12,11 @@ import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   email: z.string().email({
     message: '請輸入正確的 Email 格式',
-  }),
-  password: z.string().min(8, {
-    message: '密碼長度至少 8 個字元',
   }),
   verificationCode: z.string().min(6, {
     message: '驗證碼長度至少 6 個字元',
@@ -27,7 +25,8 @@ const formSchema = z.object({
 
 let countdownInterval: NodeJS.Timeout
 
-const RegisterPage = () => {
+const ForgetPasswordPage = () => {
+  const router = useRouter()
   const { toast } = useToast()
   const { handleRegister, handleLogout } = useAuthContext()
 
@@ -35,11 +34,10 @@ const RegisterPage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      password: '',
+      verificationCode: '',
     },
   })
   const email = form.watch('email')
-  const password = form.watch('password')
   const verificationCode = form.watch('verificationCode')
   const errors = form.formState.errors
 
@@ -48,16 +46,18 @@ const RegisterPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    handleRegister(values)
-      .catch((error: string) => {
-        toast({
-          variant: 'destructive',
-          description: error.toString(),
-        })
-      })
-      .finally(() => {
-        setIsSubmitting(false)
-      })
+    console.log('forget-password submit:', values)
+    router.push('reset-password')
+    // handleRegister(values)
+    //   .catch((error: string) => {
+    //     toast({
+    //       variant: 'destructive',
+    //       description: error.toString(),
+    //     })
+    //   })
+    //   .finally(() => {
+    //     setIsSubmitting(false)
+    //   })
   }
 
   const handleGetVerificationCode = async (e: MouseEvent) => {
@@ -90,7 +90,7 @@ const RegisterPage = () => {
 
       <div className="flex flex-1 flex-col justify-between gap-4 p-6 text-sm">
         <div className="flex flex-col gap-4">
-          <span className="text-xl font-bold">註冊</span>
+          <span className="text-xl font-bold">忘記密碼</span>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -106,21 +106,6 @@ const RegisterPage = () => {
                         {...field}
                       />
                       {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
-                    </>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <>
-                      <Input
-                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                        placeholder="請輸入密碼"
-                        type="password"
-                        {...field}
-                      />
-                      {errors.password && <FormMessage>{errors.password.message}</FormMessage>}
                     </>
                   )}
                 />
@@ -151,30 +136,31 @@ const RegisterPage = () => {
                   )}
                 />
               </div>
+
+              <div className="flex items-center">
+                <span
+                  // onClick={() => router.push('forget-password')}
+                  className="flex cursor-pointer items-center text-gray-500 transition-all hover:text-gray-400"
+                >
+                  收不到驗證碼？
+                  <ChevronRight className="h-4 w-4" />
+                </span>
+              </div>
+
               <Button
-                disabled={!email || !password || !verificationCode || isSubmitting}
+                disabled={!email || !verificationCode || !verificationCode || isSubmitting}
                 type="submit"
                 variant="primary"
                 className="rounded-full"
               >
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '註冊'}
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '重新設定密碼'}
               </Button>
             </form>
           </Form>
-
-          <div className="flex w-full">
-            <div
-              className="m-auto flex cursor-pointer items-center text-gray-500 transition-all hover:text-gray-400"
-              onClick={handleLogout}
-            >
-              已註冊，去登錄
-              <ChevronRight className="h-4 w-4" />
-            </div>
-          </div>
         </div>
       </div>
     </main>
   )
 }
 
-export default RegisterPage
+export default ForgetPasswordPage
