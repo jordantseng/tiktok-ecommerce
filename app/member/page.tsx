@@ -1,28 +1,18 @@
 'use client'
 
-import {
-  Bolt,
-  Headset,
-  ChevronRight,
-  MapPin,
-  Footprints,
-  MessageSquareHeart,
-  Building2,
-  Headphones,
-} from 'lucide-react'
+import { Bolt, Headset, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import IconCard from '@/components/IconCard'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/order'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
+import { useOrderContext } from '@/context/OrderContext'
 import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
-import { useOrderContext } from '@/context/OrderContext'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -60,33 +50,33 @@ function AvatarDemo({ src }: { src?: string }) {
 //   )
 // }
 
-const serviceNavItems = [
-  {
-    title: '收貨地址',
-    href: '/address',
-    Icon: <MapPin className="h-10 w-10 p-2" />,
-  },
-  {
-    title: '足跡',
-    href: '/footprints',
-    Icon: <Footprints className="h-10 w-10 p-2" />,
-  },
-  {
-    title: '我的收藏',
-    href: 'my-favorites',
-    Icon: <MessageSquareHeart className="h-10 w-10 p-2" />,
-  },
-  {
-    title: '服務中心',
-    href: '/service-center',
-    Icon: <Building2 className="h-10 w-10 p-2" />,
-  },
-  {
-    title: '在線客服',
-    href: '/online-service',
-    Icon: <Headphones className="h-10 w-10 p-2" />,
-  },
-]
+// const serviceNavItems = [
+//   {
+//     title: '收貨地址',
+//     href: '/address',
+//     Icon: <MapPin className="h-10 w-10 p-2" />,
+//   },
+//   {
+//     title: '足跡',
+//     href: '/footprints',
+//     Icon: <Footprints className="h-10 w-10 p-2" />,
+//   },
+//   {
+//     title: '我的收藏',
+//     href: 'my-favorites',
+//     Icon: <MessageSquareHeart className="h-10 w-10 p-2" />,
+//   },
+//   {
+//     title: '服務中心',
+//     href: '/service-center',
+//     Icon: <Building2 className="h-10 w-10 p-2" />,
+//   },
+//   {
+//     title: '在線客服',
+//     href: '/online-service',
+//     Icon: <Headphones className="h-10 w-10 p-2" />,
+//   },
+// ]
 
 const MemberPage = () => {
   const router = useRouter()
@@ -175,7 +165,7 @@ const MemberPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <div className="relative m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
+          {/* <div className="relative m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
             <div className="flex flex-1 justify-between">
               <span className="font-medium">我的服務</span>
             </div>
@@ -194,9 +184,9 @@ const MemberPage = () => {
                     />
                   ))}
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          <div className="mt-4">
             <div className="font-lg flex items-center justify-center font-semibold">
               ✨ 為你推薦 ✨
             </div>
