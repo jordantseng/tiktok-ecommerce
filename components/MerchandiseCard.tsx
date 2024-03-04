@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
-
+import { StarIcon } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { CartItem } from '@/types/common'
-import CartButton from './CartButton'
+import CartButton from '@/components/CartButton'
 
 type Props = CartItem & {
   className?: string
   sales?: string
+  stars?: number
 }
 
 const MerchandiseSkeleton = () => (
@@ -46,7 +47,13 @@ const MerchandiseCard = ({
   price,
   originPrice,
   sales,
+  stars,
 }: Props) => {
+  const starIcons = []
+  for (let i = 0; i < (stars || 0); i++) {
+    starIcons.push(<StarIcon fill="#eddb21" className="h-4 w-4" strokeWidth={0} />)
+  }
+
   return (
     <Card className={className}>
       <CardHeader className="p-0 pb-2">
@@ -56,7 +63,7 @@ const MerchandiseCard = ({
           </div>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-2">
         <CardTitle className="truncate pb-2">{title}</CardTitle>
         <CardDescription className="mt-4 truncate py-1">
           {tags.length > 0 ? (
@@ -73,28 +80,43 @@ const MerchandiseCard = ({
           )}
         </CardDescription>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <div className="flex items-center">
-          <div className="mr-3 flex flex-col">
-            <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
-              ${originPrice}
-            </span>
-            {price && <span className="text-md font-bold text-red-600">${price}</span>}
-          </div>
-        </div>
+      <CardFooter className="flex justify-between px-2">
         {sales ? (
-          <span className="break-keep text-sm font-light text-gray-400">已售 {sales}</span>
+          <div className="flex flex-col items-center">
+            <div className="ml-2 flex w-full space-x-2">
+              {price && <span className="text-md font-bold text-red-600">${price}</span>}
+              <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+                ${originPrice}
+              </span>
+            </div>
+            <div className="mt-1 flex w-full items-center ">
+              {starIcons}
+              <span className="ml-1 flex break-keep text-xs font-light text-gray-400">
+                已售 {sales}
+              </span>
+            </div>
+          </div>
         ) : (
-          <CartButton
-            item={{
-              id,
-              imgUrl,
-              title,
-              tags,
-              price,
-              originPrice,
-            }}
-          />
+          <>
+            <div className="flex items-center">
+              <div className="ml-2 flex w-full space-x-2">
+                {price && <span className="text-md font-bold text-red-600">${price}</span>}
+                <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+                  ${originPrice}
+                </span>
+              </div>
+            </div>
+            <CartButton
+              item={{
+                id,
+                imgUrl,
+                title,
+                tags,
+                price,
+                originPrice,
+              }}
+            />
+          </>
         )}
       </CardFooter>
     </Card>

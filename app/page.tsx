@@ -64,6 +64,7 @@ export default async function HomePage() {
                 price={product.price}
                 originPrice={product.marketprice}
                 sales={String(product.buycount)}
+                stars={product.star}
               />
             </Link>
           ))}

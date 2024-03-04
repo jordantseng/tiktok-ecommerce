@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
 import { CartItem } from '@/types/common'
+import { Select } from './ui/select'
+import { ChevronDown } from 'lucide-react'
 
 type Props = CartItem & {
   isChecked?: boolean
@@ -50,7 +52,7 @@ const CartItem = ({
         )}
         <div
           className={cn(
-            'relative m-2 flex h-[80px] w-full max-w-[85px] items-center max-[320px]:m-0',
+            'relative m-2 flex h-[120px] w-full max-w-[100px] items-center max-[320px]:m-0',
             {
               'bg-slate-50': !editable,
             },
@@ -70,13 +72,12 @@ const CartItem = ({
             'w-56': !editable,
           })}
         >
-          <CardHeader className={cn('px-0', { 'flex-row': !editable })}>
+          <CardHeader className={cn('px-0 pb-0', { 'flex-row': !editable })}>
             <div className="max-w-[150px] max-[320px]:max-w-[80px]">
               <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <CardDescription className="mt-2">
                 <div className="flex flex-col">
-                  <div className="mb-2">規格：{productItemTitle}</div>
-                  <div className="truncate pb-1">
+                  <div className="truncate pb-1 max-[320px]:pl-2">
                     {editable ? (
                       tags.map((opt) => (
                         <span
@@ -92,6 +93,11 @@ const CartItem = ({
                       </span>
                     )}
                   </div>
+                  {editable && (
+                    <div className="mt-1 flex items-center justify-between bg-default p-1">
+                      規格：{productItemTitle} <ChevronDown />
+                    </div>
+                  )}
                 </div>
               </CardDescription>
             </div>
@@ -100,11 +106,14 @@ const CartItem = ({
                 ${(amount || 1) * (price || originPrice)}
               </div>
             )}
-          </CardHeader>
-          <CardContent className="flex justify-between px-0">
             {editable && (
-              <div className="flex">
-                <div className="mr-4 flex flex-col">
+              <div className="flex max-[350px]:flex-col">
+                <div className="ml-2 flex w-full items-center space-x-2">
+                  {price && (
+                    <span className="max-[320px]:text-md text-lg font-bold text-red-600">
+                      ${price}
+                    </span>
+                  )}
                   <span
                     className={
                       price
@@ -114,23 +123,17 @@ const CartItem = ({
                   >
                     ${originPrice}
                   </span>
-                  {price && (
-                    <span className="max-[320px]:text-md text-lg font-bold text-red-600">
-                      ${price}
-                    </span>
-                  )}
                 </div>
-                <Counter
-                  className={cn({ 'items-end': price !== undefined })}
-                  buttonClassName={cn('hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto', {
-                    'items-end': price !== undefined,
-                  })}
-                  value={amount || 1}
-                  isLeftCounterDisabled={amount === 1}
-                  onChange={(val) => onChange && onChange(val)}
-                />
               </div>
             )}
+          </CardHeader>
+          <CardContent className="flex w-full justify-end p-0">
+            <Counter
+              buttonClassName="hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto"
+              value={amount || 1}
+              isLeftCounterDisabled={amount === 1}
+              onChange={(val) => onChange && onChange(val)}
+            />
           </CardContent>
         </Card>
         {editable && <ConfirmDeleteDialog onConfirm={() => onDelete && onDelete(id)} />}

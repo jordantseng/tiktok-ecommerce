@@ -37,6 +37,7 @@ const ProductList = ({ products }: ProductListProps) => {
             price={product.price}
             originPrice={product.marketprice}
             sales={String(product.buycount)}
+            stars={product.star}
           />
         </Link>
       ))}
