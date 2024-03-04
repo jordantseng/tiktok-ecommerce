@@ -3,7 +3,8 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { LoginInfo, User, getUser, login, register } from '@/services/auth'
+import { LoginInfo, User, getEmailCode, getUser, login, register } from '@/services/auth'
+import { useToast } from '@/components/ui/use-toast'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
@@ -21,6 +22,7 @@ type AuthContextType = {
   isPreparingAuthData: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
+  handleGetEmailCode: (email: string) => Promise<void>
   handleLogout: () => void
   refreshUser: () => void
 }
@@ -29,6 +31,8 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
+
+  const { toast } = useToast()
 
   const [user, setUser] = useState<User | null>(null)
 
@@ -97,6 +101,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     router.push('/login')
   }
 
+  const handleGetEmailCode = async (email: string) => {
+    try {
+      const response = await getEmailCode(email)
+      toast({
+        className: 'bg-cyan-500 text-white',
+        description: response.resultmessage,
+      })
+    } catch (error) {
+      console.error('handleRegister error: ', error)
+      toast({
+        variant: 'destructive',
+        description: error?.toString(),
+      })
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -109,6 +129,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         handleRegister,
         handleLogin,
         handleLogout,
+        handleGetEmailCode,
       }}
     >
       {children}

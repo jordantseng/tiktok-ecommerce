@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
-import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
@@ -27,10 +26,10 @@ let countdownInterval: NodeJS.Timeout
 
 const ForgetPasswordPage = () => {
   const router = useRouter()
-  const { toast } = useToast()
-  const { handleRegister, handleLogout } = useAuthContext()
+  const { handleGetEmailCode } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
+    mode: 'onChange',
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
@@ -60,9 +59,7 @@ const ForgetPasswordPage = () => {
     //   })
   }
 
-  const handleGetVerificationCode = async (e: MouseEvent) => {
-    e.preventDefault()
-
+  const handleCountDown = () => {
     if (countdownInterval) {
       clearInterval(countdownInterval)
     }
@@ -70,7 +67,6 @@ const ForgetPasswordPage = () => {
     const ONE_MINUTE = 60
     setCountdown(ONE_MINUTE)
 
-    // TODO: handle get verification code
     countdownInterval = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 0) {
@@ -80,6 +76,12 @@ const ForgetPasswordPage = () => {
         return prev - 1
       })
     }, 1000)
+  }
+
+  const handleGetVerificationCode = async (e: MouseEvent) => {
+    e.preventDefault()
+    await handleGetEmailCode(email)
+    handleCountDown()
   }
 
   return (
@@ -114,24 +116,27 @@ const ForgetPasswordPage = () => {
                   name="verificationCode"
                   render={({ field }) => (
                     <div className="relative flex items-center">
-                      <Input
-                        className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
-                        placeholder="請輸入 Email 驗證碼"
-                        {...field}
-                      />
-                      {errors.verificationCode && (
-                        <FormMessage>{errors.verificationCode.message}</FormMessage>
-                      )}
-                      {countdown > 0 ? (
-                        <span className="absolute right-4 text-gray-500">{countdown} 秒</span>
-                      ) : (
-                        <Button
-                          onClick={handleGetVerificationCode}
-                          className="absolute right-0 cursor-pointer bg-transparent font-normal text-gray-500 hover:text-gray-400"
-                        >
-                          獲取驗證碼
-                        </Button>
-                      )}
+                      <div className="flex flex-1 flex-col">
+                        <Input
+                          className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-6 outline-none"
+                          placeholder="請輸入 Email 驗證碼"
+                          {...field}
+                        />
+                        {countdown > 0 ? (
+                          <span className="absolute right-4 text-gray-500">{countdown} 秒</span>
+                        ) : (
+                          <Button
+                            disabled={!email || isSubmitting || Boolean(errors.email?.message)}
+                            onClick={handleGetVerificationCode}
+                            className="absolute right-0 top-1 cursor-pointer bg-transparent font-normal text-gray-500 hover:text-gray-400"
+                          >
+                            獲取驗證碼
+                          </Button>
+                        )}
+                        {errors.verificationCode && (
+                          <FormMessage>{errors.verificationCode.message}</FormMessage>
+                        )}
+                      </div>
                     </div>
                   )}
                 />
