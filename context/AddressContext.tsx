@@ -14,7 +14,7 @@ export enum Delivery {
 type AddressContextType = {
   //   addresses: AddressData[],
   selectedAddress: AddressData | null
-  deliveryType: Delivery
+  deliveryType: Delivery | null
   handleSelectAddress: (val: AddressData) => void
   handleSelectDeliveryType: (val: Delivery) => void
   resetSelectAddress: () => void
@@ -29,7 +29,7 @@ type AddressProviderProps = {
 
 export const AddressProvider = ({ children }: AddressProviderProps) => {
   const [selectedAddress, setSelectedAddress] = useImmer<AddressData | null>(null)
-  const [deliveryType, setDeliveryType] = useImmer<Delivery>(Delivery['HOME_DELIVERY'])
+  const [deliveryType, setDeliveryType] = useImmer<Delivery | null>(null)
 
   const handleSelectAddress = (val: AddressData) => setSelectedAddress(val)
   const handleSelectDeliveryType = (val: Delivery) => setDeliveryType(Delivery[val])

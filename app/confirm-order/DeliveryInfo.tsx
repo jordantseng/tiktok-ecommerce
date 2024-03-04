@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useAddressContext } from '@/context/AddressContext'
+import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { deliveryMap } from '@/lib/payment'
 import { cn } from '@/lib/utils'
 import { ChevronRight, MapPinIcon } from 'lucide-react'
@@ -10,7 +11,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const DeliveryInfo = () => {
+type Props = {
+  onClick: () => void
+}
+
+const DeliveryInfo = ({ onClick }: Props) => {
+  const { webSettingsData } = useWebSettingsContext()
   const { selectedAddress, deliveryType } = useAddressContext()
 
   const renderStoreIcon = () => {
@@ -27,25 +33,39 @@ const DeliveryInfo = () => {
   }
   return (
     <>
-      <div className="w-full p-4 pb-0">
-        <div className="flex items-center justify-between rounded-lg bg-white p-2">
-          <span>取貨方式</span>
-          <Link href="/confirm-order/choose-delivery">
-            <Button className="font-light" variant="ghost">
-              {deliveryMap[deliveryType]} <ChevronRight />
-            </Button>
-          </Link>
+      <div className="flex justify-between rounded-lg bg-white pl-2">
+        <div className="flex items-center space-x-2">
+          <div className="relative flex h-[18px] min-w-[18px]">
+            <Image alt="info" fill src="/truck.png" />
+          </div>
+          <span>寄送方式</span>
+        </div>
+        <div className="flex">
+          {deliveryType && (
+            <div className="flex items-center">
+              <span className="font-light">{deliveryMap[deliveryType]}</span>
+              <span className="ml-2 text-red-400">
+                $
+                {deliveryType === 'HOME_DELIVERY'
+                  ? webSettingsData?.logisticprice
+                  : webSettingsData?.logisticprice_csv}
+              </span>
+            </div>
+          )}
+          <Button className="font-light" variant="ghost" onClick={onClick}>
+            <ChevronRight />
+          </Button>
         </div>
       </div>
+      <Separator />
       <div className="w-full p-4 pb-0">
-        {selectedAddress ? (
+        {selectedAddress && (
           <div className="flex flex-col items-center rounded-lg bg-white p-2">
             <div className="flex w-full items-center p-2">
               <span className="font-semibold">
                 取貨人： {selectedAddress.name} {selectedAddress.tel}
               </span>
             </div>
-            <Separator />
             <div className="flex w-full items-center p-2">
               <div className="flex w-full flex-col justify-between">
                 {selectedAddress.CVSStoreName && (
@@ -56,8 +76,8 @@ const DeliveryInfo = () => {
                 )}
                 <div className={cn('flex items-center', { 'pt-4': selectedAddress.CVSStoreName })}>
                   <div
-                    className={cn('relative min-h-24', {
-                      'w-28': selectedAddress.CVSStoreName,
+                    className={cn('relative', {
+                      'min-h-24 w-28': selectedAddress.CVSStoreName,
                       'flex w-10 items-center': !selectedAddress.CVSStoreName,
                     })}
                   >
@@ -67,29 +87,24 @@ const DeliveryInfo = () => {
                     <span className="p-2 font-light">
                       {selectedAddress.CVSAddress || selectedAddress.address}
                     </span>
-                    <Link href="/confirm-order/choose-receipt">
-                      <Button className="font-light" variant="ghost">
-                        切換
-                        <ChevronRight />
-                      </Button>
-                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col items-center rounded-lg bg-white p-2">
-            <div className="flex w-full items-center justify-between p-2">
-              <span className="font-semibold">請選擇收件地址</span>
-              <Link href="/confirm-order/choose-receipt">
-                <Button variant="ghost">
-                  <ChevronRight />
-                </Button>
-              </Link>
-            </div>
-          </div>
         )}
+        {/* {(
+              <div className="flex flex-col items-center rounded-lg bg-white p-2">
+                <div className="flex w-full items-center justify-between p-2">
+                  <span className="font-semibold">請選擇收件地址</span>
+                  <Link href="/confirm-order/choose-receipt">
+                    <Button variant="ghost">
+                      <ChevronRight />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            )} */}
       </div>
     </>
   )

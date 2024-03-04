@@ -19,6 +19,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { handleFee, handleLabel } from '@/lib/payment'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import ChooseDelivery from './ChooseDelivery'
 
 const ConfirmBillPage = () => {
   const { user } = useAuthContext()
@@ -26,8 +27,24 @@ const ConfirmBillPage = () => {
   const { getSelectedCartItems } = useCartContext()
   const { selectedAddress } = useAddressContext()
   const [payStatus, setPayStatus] = useImmer<PayStatus | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useImmer(false)
+  const [isDialogOpen, setIsDialogOpen] = useImmer({
+    open: false,
+    type: 'pay',
+  })
   const [discount, setDiscount] = useImmer<{ code: string; discount: number } | null>(null)
+
+  const handleOpen = (type: string) => {
+    setIsDialogOpen((draft) => {
+      draft.open = true
+      draft.type = type
+    })
+  }
+
+  const handleClose = () => {
+    setIsDialogOpen((draft) => {
+      draft.open = false
+    })
+  }
 
   const handleAddOrder = () => {
     addOrder({
@@ -87,8 +104,19 @@ const ConfirmBillPage = () => {
             ))}
           </div>
         </div>
-        <DeliveryInfo />
-        <div className="w-full px-4 pb-1 pt-2">
+        {total - (webSettingsData?.freelogisticprice || 0) < 0 && (
+          <div className="flex items-center justify-center">
+            <span className="break-keep text-xs font-bold text-red-400">
+              您還差${(webSettingsData?.freelogisticprice || 0) - total},即可享有免運費
+            </span>
+          </div>
+        )}
+        <div className="w-full px-4 py-1">
+          <div className="rounded-lg bg-white p-2">
+            <DeliveryInfo onClick={() => handleOpen('delivery')} />
+          </div>
+        </div>
+        <div className="w-full px-4 py-1">
           <div className="rounded-lg bg-white p-2">
             <Discount onDiscount={(code, discount) => setDiscount({ code, discount })} />
           </div>
@@ -99,11 +127,11 @@ const ConfirmBillPage = () => {
             <div className="flex items-center justify-between rounded-lg bg-white pl-2">
               <div className="flex items-center space-x-2">
                 <div className="relative flex h-[18px] min-w-[18px]">
-                  <Image alt="info" fill src="/Money.png" />
+                  <Image alt="info" fill src="/money.png" />
                 </div>
                 <span>付款方式</span>
               </div>
-              <Button className="font-light" variant="ghost" onClick={() => setIsDialogOpen(true)}>
+              <Button className="font-light" variant="ghost" onClick={() => handleOpen('pay')}>
                 {handleLabel(payStatus, webSettingsData)} <ChevronRight />
               </Button>
             </div>
@@ -116,19 +144,20 @@ const ConfirmBillPage = () => {
         </div>
         <PayConfirm discount={discount} onConfirm={() => handleAddOrder()} />
       </div>
-      {isDialogOpen && (
-        <BottomDialog
-          className="h-auto"
-          title="選擇支付方式"
-          onClose={() => setIsDialogOpen(false)}
-        >
+      {isDialogOpen.open && isDialogOpen.type === 'pay' && (
+        <BottomDialog className="h-auto" title="選擇支付方式" onClose={handleClose}>
           <PaymentSetting
             value={payStatus}
             onChange={(val) => {
               setPayStatus(val)
-              setIsDialogOpen(false)
+              handleClose()
             }}
           />
+        </BottomDialog>
+      )}
+      {isDialogOpen.open && isDialogOpen.type === 'delivery' && (
+        <BottomDialog className="h-auto" title="選擇收件方式" onClose={handleClose}>
+          <ChooseDelivery />
         </BottomDialog>
       )}
       {/* {isDialogOpen && (
