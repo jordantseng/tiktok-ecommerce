@@ -1,11 +1,9 @@
-import { ChevronRightIcon } from 'lucide-react'
-
 import Title from '@/components/Title'
 import { getQNAs } from '@/services/qna'
-import { getPage, getPages } from '@/services/page'
+import { getPage } from '@/services/page'
 import CollapsibleTab from '@/app/info/CollapsibleTab'
-import LoginTab from '@/app/info/LoginTab'
-import Link from 'next/link'
+import InfoList from '@/app/info/InfoList'
+import { getWebSettings } from '@/services/webSettings'
 
 type InfoPageProps = {
   searchParams: {
@@ -16,40 +14,20 @@ type InfoPageProps = {
 
 const InfoPage = async ({ searchParams }: InfoPageProps) => {
   const { type, typeId } = searchParams
-
-  const { data: pages } = await getPages()
   const { data: details } = type === '常見問題' ? await getQNAs() : await getPage(Number(typeId))
+  const { data: settings } = await getWebSettings()
 
   return (
-    <main className="flex min-h-screen flex-col bg-default">
+    <main className="flex min-h-screen flex-col bg-background">
       <Title title={type || '服務中心'} />
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         {!type ? (
-          <div className="flex flex-col gap-4">
-            <Link
-              href="/info?type=常見問題"
-              className="flex cursor-pointer items-center justify-between rounded-lg bg-white p-4"
-            >
-              <span className="font-semibold">常見問題</span>
-              <ChevronRightIcon />
-            </Link>
-            {pages.map((page) => (
-              <Link
-                href={`/info?type=${page.title}&typeId=${page.id}`}
-                key={page.id}
-                className="flex cursor-pointer items-center justify-between rounded-lg bg-white p-4"
-              >
-                <span className="font-semibold">{page.title}</span>
-                <ChevronRightIcon />
-              </Link>
-            ))}
-            <LoginTab />
-          </div>
+          <InfoList />
         ) : (
           <>
             {Array.isArray(details) && type === '常見問題' ? (
-              details.map((detail) => (
-                <CollapsibleTab key={detail.id} title={detail.title} body={detail.body} />
+              details.map(({ id, title, body }) => (
+                <CollapsibleTab key={id} title={title} body={body} />
               ))
             ) : (
               <div
@@ -61,11 +39,10 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
           </>
         )}
         <div className="flex flex-col gap-2 p-4 text-gray-700">
-          <span>公司名稱：天服能量有限公司</span>
-          <span>公司地址：台北市中山北路二段 33 號</span>
-          <span>聯繫方式：02-23333392</span>
-          <span>微信：skychakra888</span>
-          <span>信箱：skychakraservice@gmail.com</span>
+          <span>公司名稱：{settings.title}</span>
+          <span>公司地址：{settings.address}</span>
+          <span>聯繫方式：{settings.mobile}</span>
+          <span>信箱：{settings.email}</span>
         </div>
       </div>
     </main>

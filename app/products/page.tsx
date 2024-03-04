@@ -38,8 +38,8 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   const { data: subCategories } = await getSubCategories(category.id)
 
   return (
-    <main className="mb-16 min-h-screen bg-default">
-      <header className="sticky top-0 z-50 flex items-center gap-3 bg-default p-4">
+    <main className="mb-16 min-h-screen bg-background">
+      <header className="sticky top-0 z-50 flex items-center gap-3 bg-background p-4">
         <PrevButton />
         <Searchbar />
       </header>
@@ -47,7 +47,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         <Sidebar activeType={type} items={categories.data} />
         <ProductList subSidebarItems={subCategories}>
           {products.data.map((product) => (
-            <Link key={product.id} href={`/productDetail?id=${product.id}`}>
+            <Link key={product.id} href={`/product-detail?id=${product.id}`}>
               <ProductItem
                 id={product.id}
                 className="w-full border-none shadow-none"

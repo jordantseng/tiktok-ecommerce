@@ -41,7 +41,9 @@ export type WebSettingsData = {
   keyword: string
   description: string
   email: string
+  mobile: string
   logisticprice: number
+  address: string
   freelogisticprice?: number
   logisticprice_csv?: number
   jsonbody: string

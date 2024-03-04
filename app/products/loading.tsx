@@ -7,8 +7,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 const ProductsLoadingPage = () => {
   return (
-    <main className="mb-16 min-h-screen bg-default">
-      <header className="sticky top-0 z-50 flex items-center gap-3 bg-default p-4">
+    <main className="mb-16 min-h-screen bg-background">
+      <header className="sticky top-0 z-50 flex items-center gap-3 bg-background p-4">
         <PrevButton />
         <Searchbar />
       </header>

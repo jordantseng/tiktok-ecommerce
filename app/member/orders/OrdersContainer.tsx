@@ -11,7 +11,7 @@ const OrderCardSkeleton = () => (
   <Card className="w-full border-none">
     <CardHeader>
       <CardTitle>
-        <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
+        <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
           <Skeleton className="h-5 w-20" />
           <Skeleton className="h-5 w-20" />
         </div>

@@ -35,7 +35,7 @@ const NavBar = () => {
   ]
 
   return (
-    <nav className="h-22 fixed bottom-0 z-50 flex w-full max-w-md justify-around bg-white">
+    <nav className="h-22 fixed bottom-0 z-50 flex w-full max-w-md justify-around bg-white drop-shadow-2xl">
       {navItems.map((item, index) => {
         const splitedPathname = item.href.split('?')[0]
         return (

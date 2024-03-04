@@ -25,7 +25,7 @@ export default async function HomePage() {
   ])
 
   return (
-    <main className="mb-16 bg-default">
+    <main className="mb-16 bg-background">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
         <h4 className="scroll-m-20 text-xl font-normal tracking-tight">
           {webSettingsData?.title || '天服能量購物商城'}
@@ -54,7 +54,7 @@ export default async function HomePage() {
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
         <div className="grid grid-cols-2 gap-4">
           {products.data.map((product) => (
-            <Link key={product.id} href={`/productDetail?id=${product.id}`}>
+            <Link key={product.id} href={`/product-detail?id=${product.id}`}>
               <MerchandiseCard
                 id={product.id}
                 className="w-full"

@@ -84,7 +84,7 @@ const ConfirmBillPage = () => {
   return (
     <main className="h-full min-h-screen">
       <Title title="確認訂單" goBackUrl="/shopping-cart" />
-      <div className={'flex min-h-screen w-full flex-col items-center bg-default'}>
+      <div className={'flex min-h-screen w-full flex-col items-center bg-background'}>
         <div className="w-full p-4 pb-2">
           <div className="rounded-lg bg-white">
             {items.map((opt) => (

@@ -14,7 +14,7 @@ const ChooseDeliveryPage = () => {
   return (
     <main className="min-h-screen">
       <Title title="選擇收件方式" goBackUrl="/confirm-order" />
-      <div className="flex min-h-screen w-full flex-col items-center bg-default">
+      <div className="flex min-h-screen w-full flex-col items-center bg-background">
         <RadioGroup
           className="w-full bg-white"
           defaultValue={deliveryType || ''}

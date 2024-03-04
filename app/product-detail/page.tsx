@@ -2,12 +2,12 @@ import { ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import ProductCarousel from '@/app/productDetail/ProductCarousel'
-import TitleCard from '@/app/productDetail/TitleCard'
+import ProductCarousel from '@/app/product-detail/ProductCarousel'
+import TitleCard from '@/app/product-detail/TitleCard'
 // import SpecCard from '@/app/products/[id]/SpecCard'
 import PrevButton from '@/components/PrevButton'
 import { Card, CardContent } from '@/components/ui/card'
-import SubmitButtons from '@/app/productDetail/SubmitButtons'
+import SubmitButtons from '@/app/product-detail/SubmitButtons'
 import { getProduct } from '@/services/product'
 import { getProductItems } from '@/services/productItem'
 
@@ -27,7 +27,7 @@ const ProductPage = async ({ searchParams }: ProductPageProps) => {
   }
 
   return (
-    <main className="mb-14 min-h-screen bg-default">
+    <main className="mb-14 min-h-screen bg-background">
       <header className="flex items-center justify-between gap-3 bg-white p-4">
         <PrevButton />
         <Link href="/shopping-cart">

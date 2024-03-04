@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 
 const ProductLoadingPage = async () => {
   return (
-    <main className="mb-14 min-h-screen bg-default">
+    <main className="mb-14 min-h-screen bg-background">
       <header className="flex items-center justify-between gap-3 bg-white p-4">
         <PrevButton />
         <Link href="/shopping-cart">

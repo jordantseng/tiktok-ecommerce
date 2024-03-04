@@ -94,7 +94,7 @@ const CartItem = ({
                     )}
                   </div>
                   {editable && (
-                    <div className="mt-1 flex items-center justify-between bg-default p-1">
+                    <div className="mt-1 flex items-center justify-between bg-background p-1">
                       規格：{productItemTitle} <ChevronDown />
                     </div>
                   )}

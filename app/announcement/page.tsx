@@ -6,7 +6,7 @@ const AnnouncementPage = async () => {
   const { data } = await getAnnouncements()
 
   return (
-    <main className="flex min-h-screen flex-col bg-default">
+    <main className="flex min-h-screen flex-col bg-background">
       <Title title="最新消息" />
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         {data.map((opt) => (
