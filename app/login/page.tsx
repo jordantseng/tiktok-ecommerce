@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronRight, Eye, EyeOff, Loader2, XCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -12,7 +12,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
-import { useToast } from '@/components/ui/use-toast'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -25,7 +24,10 @@ const formSchema = z.object({
 
 const LoginPage = () => {
   const router = useRouter()
-  const { toast } = useToast()
+  const searchParams = useSearchParams()
+  const type = searchParams.get('type')
+  const isReset = type === 'reset'
+
   const { handleLogin } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,18 +45,10 @@ const LoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    handleLogin(values)
-      .catch((error: string) => {
-        toast({
-          variant: 'destructive',
-          description: error.toString(),
-        })
-      })
-      .finally(() => {
-        setIsSubmitting(false)
-      })
+    await handleLogin(values, isReset)
+    setIsSubmitting(false)
   }
 
   return (

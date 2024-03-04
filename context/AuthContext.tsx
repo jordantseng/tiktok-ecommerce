@@ -7,6 +7,8 @@ import {
   LoginInfo,
   RegisterInfo,
   User,
+  changePassword,
+  forgetPassword,
   getEmailCode,
   getUser,
   login,
@@ -29,8 +31,10 @@ type AuthContextType = {
   isLoadingUser: boolean
   isPreparingAuthData: boolean
   handleRegister: (registerInfo: RegisterInfo) => Promise<void>
-  handleLogin: (loginInfo: LoginInfo) => Promise<void>
+  handleLogin: (loginInfo: LoginInfo, isReset: boolean) => Promise<void>
   handleGetEmailCode: (email: string) => Promise<void>
+  handleForgetPassword: (email: string) => Promise<void>
+  handleChangePassword: (email: string) => Promise<void>
   handleLogout: () => void
   refreshUser: () => void
 }
@@ -39,17 +43,13 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
-
   const { toast } = useToast()
 
   const [user, setUser] = useState<User | null>(null)
-
   const [token, setToken] = useState(getLocalStorageToken())
-
   const [isLoadingUser, setIsLoadingUser] = useState(false)
 
   const isLogin = !!token
-
   const isPreparingAuthData = !user || !token
 
   const refreshUser = useCallback(async () => {
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }, [])
 
-  const handleLogin = async ({ email, password }: LoginInfo) => {
+  const handleLogin = async ({ email, password }: LoginInfo, isReset: boolean) => {
     try {
       const response = await login({ email, password })
       const data = response.data
@@ -75,11 +75,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       } else {
         setToken(apiToken)
         localStorage.setItem('token', apiToken)
-        router.push('/')
+        isReset ? router.push('/reset-password') : router.push('/')
       }
     } catch (error) {
       console.error('handleLogin error: ', error)
-      throw error
+      toast({
+        variant: 'destructive',
+        description: error instanceof Error ? `${error.message}` : `${error}`,
+      })
     }
   }
 
@@ -124,7 +127,50 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       console.error('handleRegister error: ', error)
       toast({
         variant: 'destructive',
-        description: error?.toString(),
+        description: error instanceof Error ? `${error.message}` : `${error}`,
+      })
+    }
+  }
+
+  const handleForgetPassword = async (email: string) => {
+    try {
+      const { resultcode, resultmessage } = await forgetPassword(email)
+
+      if (resultcode === 0) {
+        toast({
+          className: 'bg-cyan-500 text-white',
+          description: resultmessage,
+        })
+        router.push('/login?type=reset')
+      } else {
+        throw new Error(resultmessage)
+      }
+    } catch (error) {
+      console.error('handleForgetPassword error: ', error)
+      toast({
+        variant: 'destructive',
+        description: error instanceof Error ? `${error.message}` : `${error}`,
+      })
+    }
+  }
+
+  const handleChangePassword = async (email: string) => {
+    try {
+      const { resultcode, resultmessage } = await changePassword(email)
+
+      if (resultcode === 0) {
+        toast({
+          className: 'bg-cyan-500 text-white',
+          description: resultmessage,
+        })
+      } else {
+        throw new Error(resultmessage)
+      }
+    } catch (error) {
+      console.error('handleChangePassword error: ', error)
+      toast({
+        variant: 'destructive',
+        description: error instanceof Error ? `${error.message}` : `${error}`,
       })
     }
   }
@@ -142,6 +188,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         handleLogin,
         handleLogout,
         handleGetEmailCode,
+        handleForgetPassword,
+        handleChangePassword,
       }}
     >
       {children}
