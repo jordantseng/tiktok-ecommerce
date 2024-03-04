@@ -12,14 +12,19 @@ import { Button } from '@/components/ui/button'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useAuthContext } from '@/context/AuthContext'
 
-const formSchema = z.object({
-  password: z.string().min(8, {
-    message: '密碼長度至少 8 個字元',
-  }),
-  passwordAgain: z.string().min(8, {
-    message: '密碼長度至少 8 個字元',
-  }),
-})
+const formSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: '密碼長度至少 8 個字元',
+    }),
+    passwordAgain: z.string().min(8, {
+      message: '密碼長度至少 8 個字元',
+    }),
+  })
+  .refine((data) => data.password === data.passwordAgain, {
+    message: '兩次密碼輸入不一致',
+    path: ['passwordAgain'],
+  })
 
 function ResetPasswordContent({ callback }: { callback: () => void }) {
   const { handleChangePassword } = useAuthContext()
