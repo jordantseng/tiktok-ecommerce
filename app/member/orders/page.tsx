@@ -63,7 +63,7 @@ const OrdersPage = () => {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-default">
+    <main className="flex min-h-screen flex-col bg-background">
       <Title title="訂單" goBackUrl="/member" />
 
       <div className="flex flex-1">

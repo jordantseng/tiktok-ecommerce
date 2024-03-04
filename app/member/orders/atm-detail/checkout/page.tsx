@@ -16,7 +16,7 @@ const AtmDetailPage = () => {
   return (
     <>
       <Title title="付款" goBackUrl="/member/orders" />
-      <div className={'flex min-h-screen w-full flex-col items-center bg-default'}>
+      <div className={'flex min-h-screen w-full flex-col items-center bg-background'}>
         <div className="w-full p-2">
           <div className="rounded-lg bg-white">
             <div className="flex w-full flex-col justify-between rounded-lg bg-white p-4">
@@ -27,7 +27,7 @@ const AtmDetailPage = () => {
                 <div className="text-lg font-bold">轉帳資訊</div>
               </div>
               <span className="py-2 text-xs font-light">＊請使用下方付款帳號完成繳款。</span>
-              <div className="mt-2 flex items-center rounded-lg bg-default p-2">
+              <div className="mt-2 flex items-center rounded-lg bg-background p-2">
                 <div className="flex w-full flex-col space-y-2">
                   {!order ? (
                     <Skeleton className="h-10 w-full" />
@@ -39,7 +39,7 @@ const AtmDetailPage = () => {
                   )}
                 </div>
               </div>
-              <div className="mt-2 flex items-center rounded-lg bg-default p-2">
+              <div className="mt-2 flex items-center rounded-lg bg-background p-2">
                 <div className="flex w-full flex-col space-y-2">
                   {!order ? (
                     <Skeleton className="h-10 w-full" />
@@ -51,7 +51,7 @@ const AtmDetailPage = () => {
                   )}
                 </div>
               </div>
-              <div className="mt-2 flex items-center rounded-lg bg-default p-2">
+              <div className="mt-2 flex items-center rounded-lg bg-background p-2">
                 <div className="flex w-full flex-col space-y-2">
                   {!order ? (
                     <Skeleton className="h-10 w-full" />
@@ -63,7 +63,7 @@ const AtmDetailPage = () => {
                   )}
                 </div>
               </div>
-              <div className="mt-2 flex items-center rounded-lg bg-default p-2">
+              <div className="mt-2 flex items-center rounded-lg bg-background p-2">
                 <div className="flex w-full flex-col space-y-2">
                   {!order ? (
                     <Skeleton className="h-10 w-full" />

@@ -30,7 +30,7 @@ const ConfirmDeleteDialog = ({ onConfirm }: Props) => {
           <AlertDialogDescription>確定要刪除此筆內容嗎？</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="bg-default">取消</AlertDialogCancel>
+          <AlertDialogCancel className="bg-background">取消</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>確認</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

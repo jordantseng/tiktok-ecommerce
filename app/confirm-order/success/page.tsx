@@ -26,7 +26,7 @@ const SuccessPage = () => {
   return (
     <main className="min-h-screen">
       <Title title="付款" goBackUrl="/" />
-      <div className="flex min-h-screen w-full flex-col items-center bg-default">
+      <div className="flex min-h-screen w-full flex-col items-center bg-background">
         <div className="flex flex-col items-center justify-center p-20">
           <CheckIcon className="h-[100px] w-[100px] rounded-full bg-primary text-white" />
           <div className="my-4 text-lg">付款完成</div>

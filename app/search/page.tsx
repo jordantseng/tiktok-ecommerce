@@ -46,11 +46,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   return (
     <>
       <main
-        className={cn('min-h-screen bg-default', {
+        className={cn('min-h-screen bg-background', {
           'bg-white': !q,
         })}
       >
-        <header className="sticky top-0 z-40 flex items-center gap-3 bg-default px-4 py-4">
+        <header className="sticky top-0 z-40 flex items-center gap-3 bg-background px-4 py-4">
           <PrevButton />
           <Searchbar />
         </header>

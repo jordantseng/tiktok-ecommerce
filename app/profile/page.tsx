@@ -92,7 +92,7 @@ function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-default">
+    <main className="min-h-screen bg-background">
       <Title title="個人中心" goBackUrl="/member" />
 
       <div className="flex flex-col gap-4 p-4">

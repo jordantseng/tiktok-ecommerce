@@ -124,7 +124,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
     <Card className="w-full border-none">
       <CardHeader>
         <CardTitle>
-          <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
+          <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
             <span className="text-gray-500">{createDate}</span>
             <p className="text-primary">{orderStatus}</p>
           </div>
@@ -138,7 +138,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
               {productImgs &&
                 productImgs.length > 0 &&
                 productImgs.map((image) => (
-                  <div key={image} className="rounded-xl bg-default p-4">
+                  <div key={image} className="rounded-xl bg-background p-4">
                     <Image
                       width={100}
                       height={100}

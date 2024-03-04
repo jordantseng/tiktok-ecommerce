@@ -75,7 +75,7 @@ const ShoppingCartPage = () => {
   return (
     <main className="mb-16 h-full min-h-screen">
       <Title title="購物車" hasPrevButton={false} />
-      <div className="relative flex min-h-screen w-full flex-col items-center bg-default">
+      <div className="relative flex min-h-screen w-full flex-col items-center bg-background">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
             {items.map((opt, index) => (

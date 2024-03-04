@@ -25,7 +25,7 @@ export default async function HomePage() {
   ])
 
   return (
-    <main className="mb-16 bg-default">
+    <main className="mb-16 bg-background">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
         <h4 className="scroll-m-20 text-xl font-normal tracking-tight">
           {webSettingsData?.title || '天服能量購物商城'}

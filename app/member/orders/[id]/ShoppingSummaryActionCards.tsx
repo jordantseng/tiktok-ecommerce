@@ -18,7 +18,7 @@ function ShoppingSummaryActionCard({ detail, title, onClick }: ShoppingSummaryAc
     <Card className="w-full border-none">
       <CardHeader>
         <CardTitle>
-          <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
+          <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
             <span>{detail.updated_at && getFormatDate(detail.updated_at)}</span>
             <span className="text-primary">{title}</span>
           </div>
@@ -28,7 +28,7 @@ function ShoppingSummaryActionCard({ detail, title, onClick }: ShoppingSummaryAc
         <div className="flex flex-col gap-4">
           <div className="flex flex-1 items-end justify-between gap-2">
             {detail.imgs.map((img, index) => (
-              <div key={index} className="rounded-xl bg-default p-4">
+              <div key={index} className="rounded-xl bg-background p-4">
                 <Image
                   width={100}
                   height={100}
@@ -66,7 +66,7 @@ function ShoppingSummaryActionCardSkeleton() {
     <Card className="w-full border-none">
       <CardHeader>
         <CardTitle>
-          <div className="flex justify-between border-b border-default pb-4 text-sm font-normal">
+          <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
             <Skeleton className="h-5 w-20" />
             <Skeleton className="h-5 w-20" />
           </div>
