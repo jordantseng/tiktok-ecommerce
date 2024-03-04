@@ -10,6 +10,10 @@ export type LoginInfo = {
   password: string
 }
 
+export type RegisterInfo = LoginInfo & {
+  code: string
+}
+
 export type User = {
   id: number
   domain_id: number
@@ -45,10 +49,11 @@ export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> =
   return data
 }
 
-export const register = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
+export const register = async ({ email, password, code }: RegisterInfo): Promise<LoginRes> => {
   const { data } = await axiosInstance.post('/api/member/create/store', {
     email,
     password,
+    code,
   })
 
   return data

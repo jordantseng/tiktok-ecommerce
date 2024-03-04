@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
-import { useToast } from '@/components/ui/use-toast'
 
 const formSchema = z.object({
   email: z.string().email({
@@ -28,7 +27,6 @@ const formSchema = z.object({
 let countdownInterval: NodeJS.Timeout
 
 const RegisterPage = () => {
-  const { toast } = useToast()
   const { handleRegister, handleLogout, handleGetEmailCode } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,16 +47,11 @@ const RegisterPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    handleRegister(values)
-      .catch((error: string) => {
-        toast({
-          variant: 'destructive',
-          description: error.toString(),
-        })
-      })
-      .finally(() => {
-        setIsSubmitting(false)
-      })
+    await handleRegister({
+      ...values,
+      code: verificationCode,
+    })
+    setIsSubmitting(false)
   }
 
   const handleCountDown = () => {
