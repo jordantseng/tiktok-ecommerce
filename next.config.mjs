@@ -3,13 +3,6 @@ const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns: [
-      // TODO: remove mock url
-      {
-        protocol: 'https',
-        hostname: 'gmedia.playstation.com',
-        port: '',
-        pathname: '/**/*',
-      },
       {
         protocol: 'https',
         hostname: 'img.freepik.com',
