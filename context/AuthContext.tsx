@@ -18,7 +18,7 @@ type AuthContextType = {
   token: string
   isLogin: boolean
   isLoadingUser: boolean
-  isPreparingData: boolean
+  isPreparingAuthData: boolean
   handleRegister: (loginInfo: LoginInfo) => Promise<void>
   handleLogin: (loginInfo: LoginInfo) => Promise<void>
   handleLogout: () => void
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const isLogin = !!token
 
-  const isPreparingData = !user || !token
+  const isPreparingAuthData = !user || !token
 
   const refreshUser = useCallback(async () => {
     setIsLoadingUser(true)
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         token,
         isLogin,
         isLoadingUser,
-        isPreparingData,
+        isPreparingAuthData,
         refreshUser,
         handleRegister,
         handleLogin,
