@@ -34,6 +34,8 @@ export type User = {
 
 type UserRes = ApiRes<User>
 
+type EmailCodeRes = ApiRes<{}>
+
 export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
   const { data } = await axiosInstance.post('/api/member/login/store', {
     email,
@@ -47,6 +49,14 @@ export const register = async ({ email, password }: LoginInfo): Promise<LoginRes
   const { data } = await axiosInstance.post('/api/member/create/store', {
     email,
     password,
+  })
+
+  return data
+}
+
+export const getEmailCode = async (email: string): Promise<ApiRes<EmailCodeRes>> => {
+  const { data } = await axiosInstance.post('/api/member/emailcode/send', {
+    email,
   })
 
   return data
