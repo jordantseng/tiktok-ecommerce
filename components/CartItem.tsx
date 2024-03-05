@@ -89,6 +89,7 @@ const CartItem = ({
                       ))
                     ) : (
                       <span className="flex flex-col">
+                        <span className="text-sm font-light"> 規格：{productItemTitle}</span>
                         <span className="text-sm font-light">數量：{amount}</span>
                       </span>
                     )}
