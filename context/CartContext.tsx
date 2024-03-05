@@ -46,6 +46,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         title: opt.title,
         price: opt.price,
         originPrice: opt.marketprice,
+        product_id: opt.product_id,
         productItemTitle: opt.productitem_title,
         productItemId: opt.productitem_id,
         tags: opt.tags.split(','),

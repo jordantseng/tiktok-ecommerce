@@ -14,6 +14,7 @@ type CartData = {
   company: string
   expertise: string
   info: string
+  product_id: string
   productitem_title: string
   productitem_id: number
   qty: number

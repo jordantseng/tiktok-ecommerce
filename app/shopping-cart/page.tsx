@@ -10,11 +10,16 @@ import NavBar from '@/components/NavBar'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import CartSpecDialog from '@/app/shopping-cart/CartSpecDialog'
 import { Item, useCartContext } from '@/context/CartContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
+import { getProductItems } from '@/services/productItem'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
+  const [isDialogOpen, setIsDialogOpen] = useImmer(false)
+  const [specs, setSpecs] = useImmer<{ id: number; title: string }[]>([])
+  const [selectProductItem, setSelectProductItem] = useImmer<Item | null>(null)
   const {
     items,
     updateSelected,
@@ -72,9 +77,40 @@ const ShoppingCartPage = () => {
     updateSelected(item.id, res)
   }
 
+  const handleChangeProductItem = (item: Item) => {
+    getProductItems({ productId: item.product_id }).then(({ data }) => {
+      setSpecs(data.data)
+      setSelectProductItem(item)
+      setIsDialogOpen(true)
+    })
+  }
+
+  const handleSpecSelect = ({ id, size }: { id: string; size: string }) => {
+    setSelectProductItem((draft) => {
+      if (draft) {
+        draft.productItemId = Number(id)
+        draft.productItemTitle = size
+      }
+    })
+  }
+
+  const handleAmountChange = (amount: number) => {
+    setSelectProductItem((draft) => {
+      if (draft) {
+        draft.amount = amount
+      }
+    })
+  }
+
+  const handleClose = () => {
+    setSelectProductItem(null)
+    setIsDialogOpen(false)
+    setSpecs([])
+  }
+
   return (
     <main className="mb-16 h-full min-h-screen">
-      <Title title="購物車" hasPrevButton={false} />
+      <Title title={`購物車(${items.length})`} hasPrevButton={false} />
       <div className="relative flex min-h-screen w-full flex-col items-center bg-background">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
@@ -95,6 +131,7 @@ const ShoppingCartPage = () => {
                 onSelect={(res) => handleSelect(opt, res)}
                 onChange={(val) => handlePriceChange(opt, val)}
                 onDelete={(id) => handleRemoveFromCart(id)}
+                onChangeProductItem={() => handleChangeProductItem(opt)}
               />
             ))}
           </div>
@@ -155,6 +192,14 @@ const ShoppingCartPage = () => {
         </div>
       </div>
       <NavBar />
+      <CartSpecDialog
+        open={isDialogOpen}
+        specs={specs}
+        selectProductItem={selectProductItem}
+        onAmountChange={handleAmountChange}
+        onSpecSelect={handleSpecSelect}
+        onClose={handleClose}
+      />
     </main>
   )
 }
