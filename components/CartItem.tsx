@@ -9,6 +9,7 @@ import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
 import { CartItem } from '@/types/common'
 import { Select } from './ui/select'
 import { ChevronDown } from 'lucide-react'
+import { Button } from './ui/button'
 
 type Props = CartItem & {
   isChecked?: boolean
@@ -17,6 +18,7 @@ type Props = CartItem & {
   onChange?: (value: number) => void
   onSelect?: (value: boolean) => void
   onDelete?: (value: number) => void
+  onChangeProductItem?: () => void
 }
 
 const CartItem = ({
@@ -34,6 +36,7 @@ const CartItem = ({
   onSelect,
   onChange,
   onDelete,
+  onChangeProductItem,
 }: Props) => {
   return (
     <div className="flex w-auto flex-col border-b p-2">
@@ -51,12 +54,9 @@ const CartItem = ({
           <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
         )}
         <div
-          className={cn(
-            'relative m-2 flex h-[120px] w-full max-w-[100px] items-center max-[320px]:m-0',
-            {
-              'bg-slate-50': !editable,
-            },
-          )}
+          className={cn('relative m-2 flex h-[130px] w-full max-w-[130px] items-center', {
+            'bg-slate-50': !editable,
+          })}
         >
           <Image
             className="rounded-lg object-cover"
@@ -75,7 +75,7 @@ const CartItem = ({
           <CardHeader className={cn('px-0 pb-0', { 'flex-row': !editable })}>
             <div className="max-w-[150px] max-[320px]:max-w-[80px]">
               <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
-              <CardDescription className="mt-2">
+              <div className="mt-2">
                 <div className="flex flex-col">
                   <div className="truncate pb-1 max-[320px]:pl-2">
                     {editable ? (
@@ -94,12 +94,18 @@ const CartItem = ({
                     )}
                   </div>
                   {editable && (
-                    <div className="mt-1 flex items-center justify-between bg-background p-1">
-                      規格：{productItemTitle} <ChevronDown />
+                    <div className="mt-1 flex items-center justify-between bg-background">
+                      <Button
+                        className="h-8 truncate p-1 font-normal"
+                        variant="ghost"
+                        onClick={() => onChangeProductItem && onChangeProductItem()}
+                      >
+                        規格：{productItemTitle} <ChevronDown />
+                      </Button>
                     </div>
                   )}
                 </div>
-              </CardDescription>
+              </div>
             </div>
             {!editable && (
               <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
