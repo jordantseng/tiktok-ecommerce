@@ -20,7 +20,7 @@ const ConfirmDeleteDialog = ({ onConfirm }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className="text-red-400">
+        <Button variant="ghost" className="px-1 text-red-400">
           <Trash2Icon />
         </Button>
       </AlertDialogTrigger>

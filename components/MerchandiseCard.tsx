@@ -85,7 +85,11 @@ const MerchandiseCard = ({
           <div className="flex flex-col items-center">
             <div className="ml-2 flex w-full space-x-2">
               {price && <span className="text-md font-bold text-red-600">${price}</span>}
-              <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+              <span
+                className={
+                  price ? 'flex items-center text-xs font-light line-through' : 'text-md font-bold'
+                }
+              >
                 ${originPrice}
               </span>
             </div>
@@ -101,7 +105,13 @@ const MerchandiseCard = ({
             <div className="flex items-center">
               <div className="ml-2 flex w-full space-x-2">
                 {price && <span className="text-md font-bold text-red-600">${price}</span>}
-                <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+                <span
+                  className={
+                    price
+                      ? 'flex items-center text-sm font-light line-through'
+                      : 'text-md flex items-center font-bold'
+                  }
+                >
                   ${originPrice}
                 </span>
               </div>

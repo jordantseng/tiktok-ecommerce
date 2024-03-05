@@ -50,7 +50,13 @@ const ProductItem = ({ id, className, imgUrl, title, tags = [], price, originPri
           <CardFooter className="flex justify-between px-2 pb-1">
             <div className="mr-3 flex space-x-2">
               {price && <span className="text-md font-bold text-red-600">${price}</span>}
-              <span className={price ? 'text-sm font-light line-through' : 'text-md font-bold'}>
+              <span
+                className={
+                  price
+                    ? 'flex items-center text-sm  font-light line-through'
+                    : 'text-md flex items-center  font-bold'
+                }
+              >
                 ${originPrice}
               </span>
             </div>

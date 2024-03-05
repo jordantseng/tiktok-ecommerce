@@ -14,7 +14,7 @@ type Props = {
 const PayDetail = ({ discount }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
-  const { selectedAddress } = useAddressContext()
+  const { selectedAddress, deliveryType } = useAddressContext()
 
   const items = getSelectedCartItems()
   const total = items.reduce(
@@ -23,11 +23,13 @@ const PayDetail = ({ discount }: Props) => {
     0,
   )
 
-  const logisticFee = handleFee(
-    webSettingsData || null,
-    total,
-    selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
-  )
+  const logisticFee = deliveryType
+    ? handleFee(
+        webSettingsData || null,
+        total,
+        selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
+      )
+    : 0
 
   return (
     <div className="flex w-full flex-col justify-between bg-white p-2">
