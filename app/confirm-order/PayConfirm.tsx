@@ -8,14 +8,15 @@ import { handleFee } from '@/lib/payment'
 import { useAddressContext } from '@/context/AddressContext'
 
 type Props = {
+  payStatus: string | null
   discount: { code: string; discount: number } | null
   onConfirm: () => void
 }
 
-const PayConfirm = ({ discount, onConfirm }: Props) => {
+const PayConfirm = ({ payStatus, discount, onConfirm }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
   const { getSelectedCartItems } = useCartContext()
-  const { selectedAddress } = useAddressContext()
+  const { selectedAddress, deliveryType } = useAddressContext()
 
   const items = getSelectedCartItems()
   const total = items.reduce(
@@ -24,11 +25,13 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
     0,
   )
 
-  const logisticFee = handleFee(
-    webSettingsData || null,
-    total,
-    selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
-  )
+  const logisticFee = deliveryType
+    ? handleFee(
+        webSettingsData || null,
+        total,
+        selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
+      )
+    : 0
 
   return (
     <>
@@ -42,7 +45,11 @@ const PayConfirm = ({ discount, onConfirm }: Props) => {
           </span>
         </div>
         <div className="flex items-center space-x-4">
-          <Button className="m-4 w-auto rounded-3xl bg-primary p-4" onClick={onConfirm}>
+          <Button
+            className="m-4 w-auto rounded-3xl bg-primary p-4"
+            disabled={!deliveryType || !payStatus}
+            onClick={onConfirm}
+          >
             確認訂單
           </Button>
         </div>

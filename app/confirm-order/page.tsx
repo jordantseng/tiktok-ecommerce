@@ -142,7 +142,7 @@ const ConfirmBillPage = () => {
             <PayDetail discount={discount} />
           </div>
         </div>
-        <PayConfirm discount={discount} onConfirm={() => handleAddOrder()} />
+        <PayConfirm payStatus={payStatus} discount={discount} onConfirm={() => handleAddOrder()} />
       </div>
       {isDialogOpen.open && isDialogOpen.type === 'pay' && (
         <BottomDialog className="h-auto" title="選擇支付方式" onClose={handleClose}>
@@ -157,7 +157,7 @@ const ConfirmBillPage = () => {
       )}
       {isDialogOpen.open && isDialogOpen.type === 'delivery' && (
         <BottomDialog className="h-auto" title="選擇收件方式" onClose={handleClose}>
-          <ChooseDelivery />
+          <ChooseDelivery onConfirm={handleClose} />
         </BottomDialog>
       )}
       {/* {isDialogOpen && (
