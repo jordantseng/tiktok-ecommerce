@@ -6,11 +6,39 @@ import { useRouter } from 'next/navigation'
 import { ButtonType, buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/use-toast'
 import { ShoppingItemCard } from '@/components/ShoppingItemCards'
 import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
+
+export const OrderCardSkeleton = () => (
+  <Card className="w-full border-none">
+    <CardHeader>
+      <CardTitle>
+        <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
+          <Skeleton className="h-5 w-20" />
+          <Skeleton className="h-5 w-20" />
+        </div>
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-end justify-between">
+          <Skeleton className="h-[72px] w-[72px] rounded-xl" />
+          <Skeleton className="h-5 w-20" />
+        </div>
+      </div>
+    </CardContent>
+    <CardFooter className="flex justify-end">
+      <span className="grid grid-cols-2 gap-2">
+        <Skeleton className="h-10 w-20 rounded-full" />
+        <Skeleton className="h-10 w-20 rounded-full" />
+      </span>
+    </CardFooter>
+  </Card>
+)
 
 type Action = {
   label: string

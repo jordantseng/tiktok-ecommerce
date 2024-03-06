@@ -23,12 +23,12 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
             <Image
               width={100}
               height={100}
-              className="md:h-25 md:w-25 h-10 w-10"
+              className="h-10 w-10"
               src={detail.imgs[0]}
               alt={detail.product_title}
             />
           ) : (
-            <div className="md:h-25 md:w-25 h-10 w-10" />
+            <div className="h-10 w-10" />
           )}
         </div>
         {/* <div className="grid grid-cols-3 gap-2">
@@ -37,7 +37,7 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
               <Image
                 width={100}
                 height={100}
-                className="md:h-25 md:w-25 h-10 w-10"
+                className="h-10 w-10"
                 src={img}
                 alt={detail.product_title}
               />
@@ -63,7 +63,7 @@ function ShoppingItemCardSkeleton() {
   return (
     <div className="flex flex-1 items-end justify-between gap-2">
       <div className="rounded-xl bg-background p-4">
-        <Skeleton className="md:h-25 md:w-25 h-10 w-10" />
+        <Skeleton className="h-10 w-10" />
       </div>
 
       <div className="flex flex-1 flex-col gap-2 text-sm">
