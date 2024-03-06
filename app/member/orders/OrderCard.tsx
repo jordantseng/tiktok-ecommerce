@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import { ButtonType, buttonMap } from '@/app/member/orders/Buttons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
+import { ShoppingItemCard } from '@/components/ShoppingItemCards'
 import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn } from '@/lib/utils'
@@ -35,9 +35,10 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const createDate = getFormatDate(order.created_at!)
   const orderStatus = getOrderStatusTitle(order)
 
-  const totalprice = order.totalprice?.toLocaleString()
+  const totalprice = order.totalprice
   const productTitle = order.product_title
   const productImgs = order.product_imgs
+  const productItemTitle = order.productitem_title
   const orderID = order.id
 
   const handlePay = () => {
@@ -132,8 +133,15 @@ const OrderCard = ({ order }: OrderCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <p>{productTitle}</p>
-          <div className="flex items-end justify-between">
+          <ShoppingItemCard
+            detail={{
+              imgs: productImgs || [],
+              product_title: productTitle || '',
+              productitem_title: productItemTitle || '',
+              price: totalprice || 0,
+            }}
+          />
+          {/* <div className="flex items-end justify-between">
             <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
               {productImgs &&
                 productImgs.length > 0 &&
@@ -151,13 +159,12 @@ const OrderCard = ({ order }: OrderCardProps) => {
             </div>
 
             <div className="flex flex-col items-end gap-1 text-sm">
-              {/* <span className="text-gray-400">共 2 件</span> */}
               <span>
                 合計：$
                 <span className="text-xl font-bold">{totalprice}</span>
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
