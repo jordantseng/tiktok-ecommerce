@@ -66,7 +66,10 @@ const UpsertReceiptPage = () => {
 
   return (
     <main className="min-h-screen">
-      <Title title="新增收件人資訊" goBackUrl={id ? '/profile' : '/confirm-order/choose-receipt'} />
+      <Title
+        title={id ? '編輯收件人資訊' : '新增收件人資訊'}
+        goBackUrl={id ? '/profile' : '/confirm-order/choose-receipt'}
+      />
       <div className="flex min-h-screen w-full flex-col items-center bg-background">
         <div className="min-h-screen w-full bg-white p-4">
           <ReceiptForm

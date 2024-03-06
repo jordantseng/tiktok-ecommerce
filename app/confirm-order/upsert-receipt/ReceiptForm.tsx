@@ -79,6 +79,11 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
     onSubmit({ ...value, ...result })
   }
 
+  const isStore = () =>
+    value.LogisticsSubType === 'FAMIC2C' ||
+    value.LogisticsSubType === 'UNIMARTC2C' ||
+    value.LogisticsSubType === 'HILIFEC2C'
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
@@ -108,7 +113,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
             </FormItem>
           )}
         />
-        {value.address && (
+        {!isStore() ? (
           <>
             <FormField
               control={form.control}
@@ -185,9 +190,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
               )}
             />
           </>
-        )}
-
-        {value.LogisticsSubType !== 'HOME_DELIVERY' && !value.address && (
+        ) : (
           <>
             <FormField
               control={form.control}
