@@ -43,13 +43,11 @@ const HeroCarousel = ({ items }: HeroCarouselProps) => {
       <CarouselContent>
         {items.map((item) => (
           <CarouselItem key={item.id}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="relative flex aspect-video items-center justify-center p-6">
-                  <Image className="rounded-lg" alt={item.title} src={item.img} fill />
-                </CardContent>
-              </Card>
-            </div>
+            <Card>
+              <CardContent className="relative flex aspect-video items-center justify-center p-6">
+                <Image className="rounded-lg" alt={item.title} src={item.img} fill />
+              </CardContent>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>
