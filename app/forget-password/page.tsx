@@ -32,11 +32,10 @@ const ForgetPasswordPage = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    handleForgetPassword(values.email).then(() => {
-      setIsSubmitting(false)
-    })
+    await handleForgetPassword(values.email)
+    setIsSubmitting(false)
   }
 
   return (

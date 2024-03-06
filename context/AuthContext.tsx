@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         variant: 'destructive',
         description: error instanceof Error ? `${error.message}` : `${error}`,
       })
+      throw error
     }
   }
 
@@ -129,6 +130,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         variant: 'destructive',
         description: error instanceof Error ? `${error.message}` : `${error}`,
       })
+      throw error
     }
   }
 
@@ -151,6 +153,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         variant: 'destructive',
         description: error instanceof Error ? `${error.message}` : `${error}`,
       })
+      throw error
     }
   }
 
@@ -172,6 +175,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         variant: 'destructive',
         description: error instanceof Error ? `${error.message}` : `${error}`,
       })
+      throw error
     }
   }
 
