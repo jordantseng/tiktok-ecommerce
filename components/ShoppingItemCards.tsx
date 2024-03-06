@@ -1,17 +1,17 @@
 'use client'
 
 import Image from 'next/image'
+import { PropsWithChildren } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { OrderData, OrderSpec } from '@/services/order'
-import { PropsWithChildren } from 'react'
+import { OrderData, OrderDetail } from '@/services/order'
 
 function CardContainer({ children }: PropsWithChildren) {
   return <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">{children}</div>
 }
 
 type ShoppingItemCardProps = {
-  detail: OrderSpec
+  detail: OrderDetail
 }
 
 function ShoppingItemCard({ detail }: ShoppingItemCardProps) {

@@ -26,8 +26,15 @@ export const OrderCardSkeleton = () => (
     <CardContent>
       <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between">
-          <Skeleton className="h-[72px] w-[72px] rounded-xl" />
-          <Skeleton className="h-5 w-20" />
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-[72px] w-[72px] rounded-xl" />
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+          </div>
+          <Skeleton className="h-5 w-16" />
         </div>
       </div>
     </CardContent>
@@ -161,14 +168,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <ShoppingItemCard
-            detail={{
-              imgs: productImgs || [],
-              product_title: productTitle || '',
-              productitem_title: productItemTitle || '',
-              price: totalprice || 0,
-            }}
-          />
+          {order.orderdetail && <ShoppingItemCard detail={order.orderdetail[0]} />}
           {/* <div className="flex items-end justify-between">
             <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
               {productImgs &&
