@@ -45,10 +45,9 @@ function ResetPasswordContent({ callback }: { callback: () => void }) {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    handleChangePassword(values.password).then(() => {
-      setIsSubmitting(false)
-      callback()
-    })
+    await handleChangePassword(values.password)
+    setIsSubmitting(false)
+    callback()
   }
 
   return (
