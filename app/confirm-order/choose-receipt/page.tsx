@@ -28,7 +28,11 @@ const ChooseReceiptPage = () => {
       <Title title="選擇收件人資訊" goBackUrl="/confirm-order" />
       <div className="flex min-h-screen w-full flex-col items-center bg-background">
         {addresses
-          .filter((opt) => opt.LogisticsSubType === deliveryType)
+          .filter(
+            (opt) =>
+              opt.LogisticsSubType === deliveryType ||
+              (deliveryType === 'HOME_DELIVERY' && !opt.LogisticsSubType && opt.address),
+          )
           .map((opt) => (
             <ReceiptInfo
               key={opt.id}
