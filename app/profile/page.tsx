@@ -141,16 +141,14 @@ function ProfilePage() {
               />
             </section>
 
-            {user && form.formState.isDirty && (
-              <Button
-                disabled={isLoadingUser}
-                type="submit"
-                className="mt-4 rounded-lg"
-                variant="primary"
-              >
-                {isLoadingUser ? <Loader2 className="h-4 w-4 animate-spin" /> : '確認修改'}
-              </Button>
-            )}
+            <Button
+              disabled={isLoadingUser || !user || !form.formState.isDirty}
+              type="submit"
+              className="mt-4 rounded-lg"
+              variant="primary"
+            >
+              {isLoadingUser ? <Loader2 className="h-4 w-4 animate-spin" /> : '確認修改'}
+            </Button>
           </form>
         </Form>
 
