@@ -134,7 +134,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         <div className="flex flex-col gap-4">
           <p>{productTitle}</p>
           <div className="flex items-end justify-between">
-            <div className="flex gap-4">
+            <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
               {productImgs &&
                 productImgs.length > 0 &&
                 productImgs.map((image) => (
