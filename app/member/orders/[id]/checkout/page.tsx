@@ -5,13 +5,13 @@ import { Clock4 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import RecipientCard from '@/app/member/orders/[id]/RecipientCard'
-import ShoppingItemCards from '@/app/member/orders/[id]/ShoppingItemCards'
 import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
 import { PrimaryButton } from '@/app/member/orders/Buttons'
 import { Skeleton } from '@/components/ui/skeleton'
+import ShoppingItemCards from '@/components/ShoppingItemCards'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
 
 const NINE_MINUTES = 9 * 60 * 1000

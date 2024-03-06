@@ -56,7 +56,7 @@ export const addToCart = async (id: number, count: number): Promise<CartsRes> =>
 
 export type CartBodyItem = {
   productitem_id: number
-  qty: number
+  qty?: number
   online: number
 }
 
