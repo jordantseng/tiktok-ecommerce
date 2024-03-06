@@ -38,17 +38,14 @@ export enum PaymentMethodEnum {
   'wanpay-credit24' = '信用卡分24期(快點付)',
 }
 
-export type OrderSpec = {
+export type PayStatus = keyof typeof PaymentMethodEnum
+
+export type OrderDetail = {
   imgs: string[]
   product_title: string
   productitem_title: string
   price: number
   qty?: number
-}
-
-export type PayStatus = keyof typeof PaymentMethodEnum
-
-export type OrderDetail = OrderSpec & {
   id: number
   ordergroup_id: number
   product_imgs: string
