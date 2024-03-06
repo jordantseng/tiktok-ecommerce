@@ -45,7 +45,7 @@ const Discount = ({ onDiscount }: Props) => {
   return (
     <div className="flex items-center justify-between rounded-lg bg-white px-2 py-0">
       <div className="relative flex h-[18px] min-w-[18px]">
-        <Image alt="discount" fill src="/Tickets.png" />
+        <Image alt="discount" fill src="/tickets.png" />
       </div>
       <Input
         className="m-2 w-full bg-white"
