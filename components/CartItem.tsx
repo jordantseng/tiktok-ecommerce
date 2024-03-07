@@ -135,12 +135,14 @@ const CartItem = ({
             )}
           </CardHeader>
           <CardContent className="flex w-full justify-end p-0">
-            <Counter
-              buttonClassName="hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto"
-              value={amount || 1}
-              isLeftCounterDisabled={amount === 1}
-              onChange={(val) => onChange && onChange(val)}
-            />
+            {editable && (
+              <Counter
+                buttonClassName="hover:bg-inherit max-[320px]:w-auto max-[320px]:h-auto"
+                value={amount || 1}
+                isLeftCounterDisabled={amount === 1}
+                onChange={(val) => onChange && onChange(val)}
+              />
+            )}
           </CardContent>
         </Card>
         {editable && <ConfirmDeleteDialog onConfirm={() => onDelete && onDelete(id)} />}
