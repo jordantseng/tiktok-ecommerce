@@ -139,7 +139,12 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           {deliveryType === 'HILIFEC2C' && renderReceipt()}
         </div>
       </RadioGroup>
-      <Button className="w-full rounded-full" variant="primary" onClick={onConfirm}>
+      <Button
+        className="w-full rounded-full"
+        variant="primary"
+        disabled={!deliveryType || !selectedAddress}
+        onClick={onConfirm}
+      >
         確認
       </Button>
     </>
