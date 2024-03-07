@@ -48,7 +48,9 @@ export default async function HomePage() {
         </div>
         <div className="mb-2 grid grid-cols-4 gap-2">
           {categoryTypes.data.map((type) => (
-            <IconCard key={type.id} title={type.title} imgUrl={type.imgs} />
+            <Link href={`/products?page=1&type=${type.id}`} key={type.id}>
+              <IconCard title={type.title} imgUrl={type.imgs} />
+            </Link>
           ))}
         </div>
         <h4 className="mb-2 scroll-m-20 text-xl font-medium tracking-tight">猜你喜歡</h4>
