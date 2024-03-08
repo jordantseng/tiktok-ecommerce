@@ -71,9 +71,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const orderStatus = getOrderStatusTitle(order)
 
   const totalprice = order.totalprice
-  const productTitle = order.product_title
   const productImgs = order.product_imgs
-  const productItemTitle = order.productitem_title
   const orderID = order.id
 
   const handlePay = () => {
@@ -168,7 +166,14 @@ const OrderCard = ({ order }: OrderCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          {order.orderdetail && <ShoppingItemCard detail={order.orderdetail[0]} />}
+          {order.orderdetail && (
+            <ShoppingItemCard
+              detail={{
+                ...order.orderdetail[0],
+                price: Number(totalprice),
+              }}
+            />
+          )}
           {/* <div className="flex items-end justify-between">
             <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
               {productImgs &&
