@@ -1,4 +1,4 @@
-import { format, parse } from 'date-fns'
+import { addHours, format } from 'date-fns'
 
 import axiosInstance from '@/lib/axios'
 import config from '@/lib/configs'
@@ -236,6 +236,7 @@ export function getOrderStatus(order: OrderData): OrderStatus | null {
 }
 
 export function getFormatDate(date: string) {
-  const parseDate = parse(date, 'yyyy-MM-dd HH:mm:ss', new Date())
-  return format(parseDate, 'yyyy.MM.dd HH:mm:ss')
+  // we add 8 hours first for parsing from utc time
+  const localDate = addHours(date, 8)
+  return format(localDate, 'yyyy.MM.dd HH:mm:ss')
 }
