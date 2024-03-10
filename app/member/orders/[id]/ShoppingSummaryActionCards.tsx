@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { OrderData, OrderDetail, OrderStatusTitle, getFormatDate } from '@/services/order'
-import { CommonButton, PrimaryButton } from '../Buttons'
+import { CommonButton, PrimaryButton } from '@/components/OrderButtons'
 
 type ShoppingSummaryActionCardProps = {
   detail: OrderDetail

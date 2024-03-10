@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { ButtonType, buttonMap } from '@/app/member/orders/Buttons'
+import { ButtonType, buttonMap } from '@/components/OrderButtons'
 import { useOrderContext } from '@/context/OrderContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'

@@ -1,8 +1,9 @@
 'use client'
 
 import { FC } from 'react'
-import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
 
 type ButtonProps = {
   children: string
