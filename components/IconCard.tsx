@@ -26,7 +26,7 @@ const IconCard = ({ title, isActive, Icon, imgUrl, onClick }: IconCardProps) => 
       )}
       <h4
         className={cn(
-          'md:text-md mb-2 scroll-m-20 text-sm font-normal text-gray-500 md:tracking-wider',
+          'md:text-md mb-2 scroll-m-20 text-sm font-normal text-gray-600 md:tracking-wider',
           {
             'text-primary': isActive,
           },

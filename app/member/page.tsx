@@ -1,6 +1,6 @@
 'use client'
 
-import { Bolt, Headset, ChevronRight } from 'lucide-react'
+import { SquarePen, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -88,24 +88,7 @@ const MemberPage = () => {
     <main className="flex h-full min-h-screen flex-col">
       <section className="relative bg-gradient-to-r from-primary-alt to-primary pb-20 text-white">
         <div className="grid place-items-center gap-10 p-4">
-          <div className="relative flex w-full flex-col gap-4">
-            <div className="absolute right-0 top-0 flex gap-4">
-              {isPreparingAuthData ? (
-                <>
-                  <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
-                  <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
-                </>
-              ) : (
-                <>
-                  <Bolt
-                    onClick={() => router.push('/profile')}
-                    className="cursor-pointer md:h-10 md:w-10"
-                  />
-                  <Headset className="cursor-pointer md:h-10 md:w-10" />
-                </>
-              )}
-            </div>
-
+          <div className="relative flex w-full gap-4">
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2 md:gap-4">
                 {user ? (
@@ -115,14 +98,25 @@ const MemberPage = () => {
                 )}
 
                 <div className="flex flex-col gap-1">
-                  <span className="min-h-7 text-lg md:min-h-8 md:text-2xl">
-                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.name}
+                  <span className="min-h-7 text-lg font-medium md:min-h-8 md:text-2xl">
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.id}
                   </span>
-                  <span className="min-h-4 text-xs md:min-h-8 md:text-base">
-                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.tiktokid}
+                  <span className="min-h-5 text-xs md:min-h-8 md:text-base">
+                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.email}
                   </span>
                 </div>
               </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              {isPreparingAuthData ? (
+                <Skeleton className="h-6 w-6 md:h-10 md:w-10" />
+              ) : (
+                <SquarePen
+                  onClick={() => router.push('/profile')}
+                  className="cursor-pointer md:h-10 md:w-10"
+                />
+              )}
             </div>
 
             {/* <NumericInfo /> */}
@@ -133,7 +127,9 @@ const MemberPage = () => {
       <section className="relative flex flex-1 flex-col bg-gray-50">
         <div className="relative -top-24 m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
           <div className="flex flex-1 justify-between">
-            <span className="font-medium">我的訂單</span>
+            <span className="font-medium">
+              {isPreparingAuthData ? <Skeleton className="h-6 w-20" /> : '我的訂單'}
+            </span>
             {isPreparingAuthData ? (
               <Skeleton className="h-6 w-20" />
             ) : (
@@ -188,7 +184,7 @@ const MemberPage = () => {
 
           <div className="mt-4">
             <div className="font-lg flex items-center justify-center font-semibold">
-              ✨ 為你推薦 ✨
+              {isPreparingAuthData ? <Skeleton className="h-8 w-20" /> : '為您推薦'}
             </div>
             <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
               {recommends.map((recommend) => (

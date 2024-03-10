@@ -15,8 +15,8 @@ function OrderNavItem({ title, Icon, count, isLoading, onClick }: OrderNavItemPr
     <div className="relative grid place-items-center" key={title}>
       <span className="relative flex">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center gap-1">
-            <Skeleton className="h-10 w-10 rounded-2xl" />
+          <div className="flex flex-col items-center justify-center gap-3">
+            <Skeleton className="h-8 w-8 rounded-full" />
             <Skeleton className="h-4 w-10" />
           </div>
         ) : (
