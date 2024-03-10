@@ -9,7 +9,7 @@ type ShippingStatusCardProps = {
 
 function ShippingStatusCard({ order }: ShippingStatusCardProps) {
   return (
-    <div className="flex flex-1 justify-between rounded-xl bg-white p-4">
+    <div className="flex min-h-[104px] flex-1 justify-between rounded-xl bg-white p-4">
       <span className="flex flex-1 cursor-pointer items-center justify-between gap-2">
         <div className="h-full">
           {!order ? <Skeleton className="h-6 w-6" /> : <Truck color="#f74843" className="" />}
