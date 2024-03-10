@@ -13,10 +13,13 @@ import { PrimaryButton } from '@/components/OrderButtons'
 import { Skeleton } from '@/components/ui/skeleton'
 import ShoppingItemCards from '@/components/ShoppingItemCards'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { payOrder } from '@/services/order'
+import { useToast } from '@/components/ui/use-toast'
 
 const NINE_MINUTES = 9 * 60 * 1000
 
 const CheckoutPage = () => {
+  const { toast } = useToast()
   const { order, orderStatusTitle } = useOrderDetailContext()
   const router = useRouter()
   const [countdown, setCountdown] = useState<number>(0)
@@ -45,10 +48,17 @@ const CheckoutPage = () => {
   }, [countdown])
 
   const handlePay = () => {
+    if (!order?.id) {
+      return toast({
+        variant: 'destructive',
+        description: 'No Order Id Offered',
+      })
+    }
+
     if (order?.paystatus?.includes('atm')) {
       router.push(`/member/orders/atm-detail/checkout?id=${order.ordergroupnumber}`)
     } else {
-      //TODO credit call repay api
+      payOrder(order?.id)
     }
   }
 
