@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2 } from 'lucide-react'
+import { ChevronRightIcon, Loader2 } from 'lucide-react'
 import { useImmer } from 'use-immer'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -91,6 +91,10 @@ function ProfilePage() {
     }
   }
 
+  function handleEditAvatar() {
+    router.push(`/profile/avatar/${user?.id}`)
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Title title="個人中心" goBackUrl="/member" />
@@ -101,11 +105,16 @@ function ProfilePage() {
             <section className="flex flex-col divide-y divide-secondary overflow-hidden rounded-lg">
               <div className="flex items-center justify-between bg-white p-4 py-2">
                 <span>頭像</span>
-                <span className="flex items-center gap-2">
+                <span className="flex cursor-pointer items-center gap-2" onClick={handleEditAvatar}>
                   {user ? (
                     <AvatarDemo src={user.img ?? ''} />
                   ) : (
                     <Skeleton className="h-8 w-8 rounded-full md:h-10 md:w-10" />
+                  )}
+                  {user ? (
+                    <ChevronRightIcon className="h-4 w-4 text-gray-600" />
+                  ) : (
+                    <Skeleton className="h-4 w-4" />
                   )}
                 </span>
               </div>
