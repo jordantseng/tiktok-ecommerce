@@ -15,36 +15,23 @@ type ShoppingItemCardProps = {
 }
 
 function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
+  const productImages = detail.product.imgs
   return (
     <div className="flex flex-1 items-end justify-between">
       <span className="flex items-center gap-4">
         <div className="rounded-xl bg-background p-4">
-          {Array.isArray(detail.imgs) && detail.imgs[0] ? (
+          {Array.isArray(productImages) && productImages[0] ? (
             <Image
               width={100}
               height={100}
               className="h-10 w-10"
-              src={detail.imgs[0]}
+              src={productImages[0]}
               alt={detail.product_title}
             />
           ) : (
             <div className="h-10 w-10" />
           )}
         </div>
-        {/* <div className="grid grid-cols-3 gap-2">
-          {detail.imgs.map((img, index) => (
-            <div key={index} className="rounded-xl bg-background p-4">
-              <Image
-                width={100}
-                height={100}
-                className="h-10 w-10"
-                src={img}
-                alt={detail.product_title}
-              />
-            </div>
-          ))}
-        </div> */}
-
         <div className="flex-1 text-sm">
           <span>{detail.product_title}</span>
           <div className="flex flex-col text-gray-500">

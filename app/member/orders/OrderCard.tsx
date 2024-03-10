@@ -71,7 +71,6 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const orderStatus = getOrderStatusTitle(order)
 
   const totalprice = order.totalprice
-  const productImgs = order.product_imgs
   const orderID = order.id
 
   const handlePay = () => {
@@ -174,30 +173,6 @@ const OrderCard = ({ order }: OrderCardProps) => {
               }}
             />
           )}
-          {/* <div className="flex items-end justify-between">
-            <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
-              {productImgs &&
-                productImgs.length > 0 &&
-                productImgs.map((image) => (
-                  <div key={image} className="rounded-xl bg-background p-4">
-                    <Image
-                      width={100}
-                      height={100}
-                      className="md:h-25 md:w-25 h-10 w-10"
-                      src={image}
-                      alt={image}
-                    />
-                  </div>
-                ))}
-            </div>
-
-            <div className="flex flex-col items-end gap-1 text-sm">
-              <span>
-                合計：$
-                <span className="text-xl font-bold">{totalprice}</span>
-              </span>
-            </div>
-          </div> */}
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
