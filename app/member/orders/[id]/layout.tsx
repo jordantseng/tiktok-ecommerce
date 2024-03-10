@@ -3,11 +3,11 @@
 import { OrderDetailProvider } from '@/context/OrderDetailContext'
 import { PropsWithChildren } from 'react'
 
-type RootLayoutProps = {
+type RootLayoutProps = PropsWithChildren<{
   params: {
     id: string
   }
-} & PropsWithChildren
+}>
 
 export default function RootLayout({ children, params }: Readonly<RootLayoutProps>) {
   const { id } = params
