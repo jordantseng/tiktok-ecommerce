@@ -131,6 +131,7 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
           <ChevronRightIcon />
         </CardContent>
       </Card>
+      <div className="h-2 w-full bg-background" />
       <SpecDialog
         specs={specs}
         confirmedItem={confirmedItem}
