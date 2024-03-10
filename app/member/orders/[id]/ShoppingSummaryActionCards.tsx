@@ -27,7 +27,7 @@ function ShoppingSummaryActionCard({ detail, title, onClick }: ShoppingSummaryAc
       <CardContent>
         <div className="flex flex-col gap-4">
           <div className="flex flex-1 items-end justify-between gap-2">
-            {detail.imgs.map((img, index) => (
+            {detail.product.imgs.map((img, index) => (
               <div key={index} className="rounded-xl bg-background p-4">
                 <Image
                   width={100}

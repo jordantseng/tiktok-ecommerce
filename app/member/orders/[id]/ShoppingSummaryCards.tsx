@@ -13,7 +13,7 @@ function ShoppingSummaryCard({ detail }: ShoppingSummaryCardProps) {
   return (
     <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
       <div className="flex flex-1 items-end justify-between gap-2">
-        {detail.imgs.map((img, index) => (
+        {detail.product.imgs.map((img, index) => (
           <div key={index} className="rounded-xl bg-background p-4">
             <Image
               width={100}

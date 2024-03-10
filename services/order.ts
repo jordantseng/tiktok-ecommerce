@@ -13,6 +13,20 @@ type OrdersRes = ApiRes<{
   total: number
 }>
 
+type ProductItem = {
+  id: number
+  product_id: number
+  title: string
+  created_at: string
+  updated_at: string
+}
+
+type Product = {
+  id: number
+  title: string
+  imgs: string[]
+}
+
 export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'refunded'
 
 export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '已退款'
@@ -41,16 +55,16 @@ export enum PaymentMethodEnum {
 export type PayStatus = keyof typeof PaymentMethodEnum
 
 export type OrderDetail = {
-  imgs: string[]
-  product_title: string
+  product: Product
+  product_id: number
+  productitem: ProductItem
   productitem_title: string
+  product_title: string
+  productitem_id: number
   price: number
   qty?: number
   id: number
   ordergroup_id: number
-  product_imgs: string
-  product_id: number
-  productitem_id: number
   created_at: string | null
   updated_at: string | null
 }
@@ -108,7 +122,6 @@ export type OrderData = {
   product_id?: number | null
   product_title?: string | null
   productitem_title?: string | null
-  product_imgs?: string[] | null
   orderdetail?: OrderDetail[]
   paybranch?: string
   payaccount?: string
