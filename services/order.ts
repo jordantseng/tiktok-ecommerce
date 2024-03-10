@@ -194,6 +194,31 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   document.body.removeChild(form)
 }
 
+export const payOrder = async (id: number): Promise<void> => {
+  const form = document.createElement('form')
+
+  form.method = 'post'
+  form.action = `${config.api}/membercenter/ordergroup/repay`
+
+  const fields = {
+    id,
+    token: getToken(),
+  }
+
+  // Append input elements to the form
+  Object.entries(fields).forEach(([name, value]) => {
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = name
+    input.value = value.toString()
+    form.appendChild(input)
+  })
+
+  document.body.appendChild(form)
+  form.submit()
+  document.body.removeChild(form)
+}
+
 export const previewDiscont = async (code: string): Promise<OrderRes> => {
   const { data } = await axiosInstance.post('/api/membercenter/ordergroup/review', {
     discount: code || '',
