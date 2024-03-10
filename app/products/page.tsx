@@ -59,7 +59,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
               />
             </Link>
           ))}
-          <div className="flex items-center justify-center p-4">
+          <div className="sticky bottom-16 flex items-center justify-center bg-white p-4">
             <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
           </div>
         </ProductList>
