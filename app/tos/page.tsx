@@ -6,7 +6,7 @@ const TosPage = async () => {
 
   return (
     <main className="flex min-h-screen flex-col bg-background">
-      <Title title="隱私權政策" goBackUrl="/" />
+      <Title title="服務條款" goBackUrl="/" />
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         <div>
           <div>
