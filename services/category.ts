@@ -24,12 +24,28 @@ type getSubCategories = ApiRes<
 >
 
 export const getCategories = async (): Promise<getCategoriesRes> => {
-  const { data } = await axiosInstance.post('/api/kindhead', {
-    page: 1,
-    pagesize: 10000,
+  const response = await fetch('https://test.tkshop.live/api/kindhead', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      page: 1,
+      pagesize: 10000,
+    }),
+    cache: 'no-store',
   })
 
-  return data
+  const result = await response.json()
+
+  return result
+
+  // const { data } = await axiosInstance.post('/api/kindhead', {
+  //   page: 1,
+  //   pagesize: 10000,
+  // })
+
+  // return data
 }
 
 export const getSubCategories = async (categoryId: number): Promise<getSubCategories> => {
