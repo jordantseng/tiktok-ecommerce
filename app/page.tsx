@@ -20,7 +20,7 @@ export default async function HomePage() {
   ] = await Promise.all([
     getBanners(),
     getCategories(),
-    getProducts({ page: 1, pageSize: 4 }),
+    getProducts({ page: 1, pageSize: 10000 }),
     getWebSettings(),
   ])
 
