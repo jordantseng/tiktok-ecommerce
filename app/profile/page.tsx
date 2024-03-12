@@ -57,6 +57,8 @@ function ProfilePage() {
     })
   }, [setAddresses])
 
+  console.log('user', user)
+
   useEffect(() => {
     if (!user) {
       refreshUser()

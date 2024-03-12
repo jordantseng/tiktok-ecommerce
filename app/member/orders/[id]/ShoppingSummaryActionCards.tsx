@@ -53,7 +53,7 @@ function ShoppingSummaryActionCard({ detail, title, onClick }: ShoppingSummaryAc
         {typeof onClick === 'function' && title === '已收貨' && (
           <CommonButton onClick={() => onClick(detail)}>再買一次</CommonButton>
         )}
-        {typeof onClick === 'function' && title === '已退款' && (
+        {typeof onClick === 'function' && title === '取消/退款' && (
           <PrimaryButton onClick={() => onClick(detail)}>查看退款</PrimaryButton>
         )}
       </CardFooter>
