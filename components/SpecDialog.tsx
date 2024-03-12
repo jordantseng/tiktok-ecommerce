@@ -6,6 +6,7 @@ import BottomDialog from '@/components/BottomDialog'
 import { cn } from '@/lib/utils'
 
 type SpecDialogProps = {
+  unitTitle?: string
   specs: { id: number; title: string }[]
   confirmedItem: {
     id: string
@@ -27,6 +28,7 @@ type SpecDialogProps = {
 }
 
 const SpecDialog = ({
+  unitTitle = '',
   specs,
   confirmedItem,
   open,
@@ -49,7 +51,7 @@ const SpecDialog = ({
         {Image}
         <div className="mb-2">
           <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
-            尺寸
+            {unitTitle}
           </h5>
           <div className="grid grid-cols-4 gap-6">
             {specs.map((spec) => (
