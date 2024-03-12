@@ -18,9 +18,13 @@ type SubmitButtonsProps = {
 }
 
 const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
+  const defaultSelectedSize = { id: String(specs[0].id), size: specs[0].title }
+
   const { handleAddToCart } = useCartContext()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(null)
+  const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(
+    specs.length === 1 ? defaultSelectedSize : null,
+  )
   const [confirmedItem, updateConfirmedItem] = useImmer<{
     id: string
     size: string
@@ -44,7 +48,9 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   const handleDialogClose = () => {
     setIsDialogOpen(false)
     setCount(1)
-    setSelectedSize({ id: confirmedItem.id, size: confirmedItem.size })
+    setSelectedSize(
+      specs.length === 1 ? defaultSelectedSize : { id: confirmedItem.id, size: confirmedItem.size },
+    )
   }
 
   const handleConfirm = async () => {
@@ -131,8 +137,8 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
           <ChevronRightIcon />
         </CardContent>
       </Card>
-      <div className="h-2 w-full bg-background" />
       <SpecDialog
+        unitTitle={product.unit}
         specs={specs}
         confirmedItem={confirmedItem}
         open={isDialogOpen}
