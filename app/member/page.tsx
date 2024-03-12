@@ -1,6 +1,6 @@
 'use client'
 
-import { SquarePen, ChevronRight } from 'lucide-react'
+import { SquarePen, ChevronRight, User, Info, NotebookText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -25,58 +25,33 @@ function AvatarDemo({ src }: { src?: string }) {
   )
 }
 
-// function NumericInfo() {
-//   const { user } = useAuthContext()
-//   const infos = [
-//     { count: 51, label: '餘額(元)' },
-//     { count: 51, label: '優惠券' },
-//     { count: 51, label: '積分' },
-//   ]
-//   return (
-//     <div className="grid grid-cols-3">
-//       {infos.map(({ count, label }) => (
-//         <div key={label} className="flex flex-col items-center justify-between">
-//           <span className="text-xl md:text-2xl">
-//             {!user ? (
-//               <Skeleton className="h-7 w-7 md:h-8 md:w-8" />
-//             ) : (
-//               Number(count).toLocaleString()
-//             )}
-//           </span>
-//           <span className="text-sm font-extrabold md:text-base">{label}</span>
-//         </div>
-//       ))}
-//     </div>
-//   )
-// }
-
-// const serviceNavItems = [
-//   {
-//     title: '收貨地址',
-//     href: '/address',
-//     Icon: <MapPin className="h-10 w-10 p-2" />,
-//   },
-//   {
-//     title: '足跡',
-//     href: '/footprints',
-//     Icon: <Footprints className="h-10 w-10 p-2" />,
-//   },
-//   {
-//     title: '我的收藏',
-//     href: 'my-favorites',
-//     Icon: <MessageSquareHeart className="h-10 w-10 p-2" />,
-//   },
-//   {
-//     title: '服務中心',
-//     href: '/service-center',
-//     Icon: <Building2 className="h-10 w-10 p-2" />,
-//   },
-//   {
-//     title: '在線客服',
-//     href: '/online-service',
-//     Icon: <Headphones className="h-10 w-10 p-2" />,
-//   },
-// ]
+const navLinks = [
+  {
+    title: '帳號設定',
+    href: '/profile',
+    Icon: User,
+  },
+  {
+    title: '常見問題',
+    href: '/info?type=常見問題',
+    Icon: Info,
+  },
+  {
+    title: '隱私政策',
+    href: '/privacy',
+    Icon: NotebookText,
+  },
+  // {
+  //   title: '退換貨政策',
+  //   href: '/refund',
+  //   Icon: SendToBack,
+  // },
+  // {
+  //   title: '與客服即時交談',
+  //   href: '/service',
+  //   Icon: MessageCircleMore,
+  // },
+]
 
 const MemberPage = () => {
   const router = useRouter()
@@ -118,8 +93,6 @@ const MemberPage = () => {
                 />
               )}
             </div>
-
-            {/* <NumericInfo /> */}
           </div>
         </div>
       </section>
@@ -161,27 +134,28 @@ const MemberPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          {/* <div className="relative m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
-            <div className="flex flex-1 justify-between">
-              <span className="font-medium">我的服務</span>
-            </div>
+          <div className="relative m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
+            {navLinks.map(({ title, href, Icon }) => (
+              <div
+                key={title}
+                onClick={() => router.push(href)}
+                className="flex cursor-pointer items-center justify-between gap-1"
+              >
+                {isPreparingAuthData ? (
+                  <Skeleton className="h-6 w-full" />
+                ) : (
+                  <>
+                    <div className="flex gap-2">
+                      <Icon className="text-primary" />
+                      <span>{title}</span>
+                    </div>
 
-            <div className="grid flex-1 grid-cols-5">
-              {isPreparingAuthData
-                ? Array.from({ length: 5 }).map((_, index) => (
-                    <OrderNavItem title="" key={index} isLoading />
-                  ))
-                : serviceNavItems.map(({ title, Icon, href }) => (
-                    <IconCard
-                      key={title}
-                      title={title}
-                      Icon={Icon}
-                      onClick={() => router.push(href)}
-                    />
-                  ))}
-            </div>
-          </div> */}
-
+                    <ChevronRight className="h-4 w-4" />
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
           <div className="mt-4">
             <div className="font-lg flex items-center justify-center font-semibold">
               {isPreparingAuthData ? <Skeleton className="h-8 w-20" /> : '為您推薦'}
