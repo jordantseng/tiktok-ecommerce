@@ -20,5 +20,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            # Commands to run on the VM after SSHing in
-            echo "Successfully SSHed into VM on branch merge to main."
+            cd ..
+            cd var/www/tiktok-ecommerce/
+            npm run build
+            pm2 stop tiktok-ecommerce
+            pm2 restart tiktok-ecommerce
+            echo "Successfully deployed"
