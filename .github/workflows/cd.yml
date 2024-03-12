@@ -23,6 +23,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /var/www/tiktok-ecommerce
+            nvm use default
             node --version
+            ls
             npm run build
             echo "Successfully deployed"
