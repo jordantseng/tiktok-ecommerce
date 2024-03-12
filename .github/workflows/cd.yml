@@ -25,6 +25,6 @@ jobs:
             cd /var/www/tiktok-ecommerce
             which node
             node --version
-            ls
+            env
             npm run build
             echo "Successfully deployed"
