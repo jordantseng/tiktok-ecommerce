@@ -13,7 +13,7 @@ type Props = {
 const CartButton = ({ item }: Props) => {
   const router = useRouter()
   // TODO: this component should use context api
-  const handleClick = () => router.push(`/products/${item.id}`)
+  const handleClick = () => router.push(`/product-detail?id=${item.id}`)
 
   return (
     <Button
