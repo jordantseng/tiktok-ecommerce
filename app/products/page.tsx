@@ -10,6 +10,7 @@ import { getProducts } from '@/services/product'
 import { getCategories, getSubCategories } from '@/services/category'
 import { paginationGuard } from '@/lib/guard'
 import ProductItem from '@/components/ProductItem'
+import ProductNotFound from '@/components/ProductNotFound'
 
 const PAGE_SIZE = 5
 
@@ -46,19 +47,23 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
       <div className="flex min-h-screen w-full">
         <Sidebar activeType={type} items={categories.data} />
         <ProductList subSidebarItems={subCategories}>
-          {products.data.map((product) => (
-            <Link key={product.id} href={`/product-detail?id=${product.id}`}>
-              <ProductItem
-                id={product.id}
-                className="w-full border-none shadow-none"
-                imgUrl={product.imgs[0]}
-                title={product.title}
-                tags={product.tags?.split(',')}
-                price={product.price}
-                originPrice={product.marketprice}
-              />
-            </Link>
-          ))}
+          {products.data.length === 0 ? (
+            <ProductNotFound />
+          ) : (
+            products.data.map((product) => (
+              <Link key={product.id} href={`/product-detail?id=${product.id}`}>
+                <ProductItem
+                  id={product.id}
+                  className="w-full border-none shadow-none"
+                  imgUrl={product.imgs[0]}
+                  title={product.title}
+                  tags={product.tags?.split(',')}
+                  price={product.price}
+                  originPrice={product.marketprice}
+                />
+              </Link>
+            ))
+          )}
           <div className="sticky bottom-16 flex items-center justify-center bg-white p-4">
             <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
           </div>

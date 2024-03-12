@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import MerchandiseCard from '@/components/MerchandiseCard'
 import { ProductData } from '@/services/product'
+import ProductNotFound from '@/components/ProductNotFound'
 
 type ProductListProps = {
   products: {
@@ -15,12 +15,7 @@ type ProductListProps = {
 
 const ProductList = ({ products }: ProductListProps) => {
   if (products.data.length === 0) {
-    return (
-      <div className="mt-16 flex flex-col items-center justify-center gap-4">
-        <Image src="/not-found.svg" className="size-32" height={40} width={40} alt="" />
-        <h5 className="text-gray-500">抱歉，没有找到商品哦</h5>
-      </div>
-    )
+    return <ProductNotFound />
   }
 
   return (
