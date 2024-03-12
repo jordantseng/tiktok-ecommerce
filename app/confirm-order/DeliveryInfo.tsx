@@ -58,6 +58,11 @@ const DeliveryInfo = ({ onClick }: Props) => {
         </div>
       </div>
       <Separator />
+      {(!deliveryType || !selectedAddress) && (
+        <div className="font-lg flex items-center justify-center font-bold text-red-400">
+          ⚠️請選擇寄送方式才能確認訂單⚠️
+        </div>
+      )}
       <div className="w-full p-4 pb-0">
         {selectedAddress && (
           <div className="flex flex-col items-center rounded-lg bg-white p-2">

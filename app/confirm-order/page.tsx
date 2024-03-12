@@ -135,6 +135,11 @@ const ConfirmBillPage = () => {
                 {handleLabel(payStatus, webSettingsData)} <ChevronRight />
               </Button>
             </div>
+            {!payStatus && (
+              <div className="font-lg flex items-center justify-center font-bold text-red-400">
+                ⚠️請選擇付款方式才能確認訂單⚠️
+              </div>
+            )}
           </div>
         </div>
         <div className="w-full px-4 py-1 pb-2">
