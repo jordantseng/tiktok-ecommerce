@@ -8,6 +8,7 @@ import CartItem from '@/components/CartItem'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
 import Title from '@/components/Title'
+import RecommendTitle from '@/components/RecommendTitle'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import CartSpecDialog from '@/app/shopping-cart/CartSpecDialog'
@@ -137,7 +138,8 @@ const ShoppingCartPage = () => {
           </div>
         </div>
 
-        <div className="font-lg flex items-center justify-center font-semibold">✨ 為你推薦 ✨</div>
+        <RecommendTitle />
+
         <div className="mb-32 grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
           {recommends.map((opt) => (
             <MerchandiseCard

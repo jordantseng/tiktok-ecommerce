@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
+import RecommendTitle from '@/components/RecommendTitle'
 import { Skeleton } from '@/components/ui/skeleton'
 import { orderStatusMap } from '@/constants/order'
 import { useAuthContext } from '@/context/AuthContext'
@@ -157,8 +158,8 @@ const MemberPage = () => {
             ))}
           </div>
           <div className="mt-4">
-            <div className="font-lg flex items-center justify-center font-semibold">
-              {isPreparingAuthData ? <Skeleton className="h-8 w-20" /> : '為您推薦'}
+            <div className="font-lg flex items-center justify-center">
+              {isPreparingAuthData ? <Skeleton className="h-8 w-20" /> : <RecommendTitle />}
             </div>
             <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
               {recommends.map((recommend) => (
