@@ -29,7 +29,7 @@ type Product = {
 
 export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'refunded'
 
-export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '已退款'
+export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '取消/退款'
 
 export enum PaymentMethodEnum {
   homepay = '貨到付款',
@@ -112,7 +112,7 @@ export type OrderData = {
   paynumber?: string
   paynotifynumber?: string
 
-  // 付款狀態 //尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2],已退款[4],
+  // 付款狀態 //尚未收到款項[0],付款成功[1],付款金額錯誤[3],付款失敗[2],取消/退款[4],
   moneystatus?: number
 
   // 訂單處理情況 //訂單通知[0],訂單處理中[1],取消訂購通知[2],貨品寄出通知[3],訂單結案[4],
@@ -247,7 +247,7 @@ export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.orderstatus === 1) return '待發貨'
   if (order.orderstatus === 3) return '待收貨'
   if (order.orderstatus === 4 && order.moneystatus !== 4) return '已收貨'
-  if (order.moneystatus === 4) return '已退款'
+  if (order.moneystatus === 4) return '取消/退款'
   return null
 }
 

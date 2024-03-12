@@ -53,7 +53,7 @@ export const orderStatusMap: OrderStatusMap = {
   refunded: {
     value: 'refunded',
     nav: {
-      title: '已退款',
+      title: '取消/退款',
       href: '/member/orders?type=refunded',
       Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
     },
