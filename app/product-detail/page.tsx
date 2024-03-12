@@ -20,7 +20,7 @@ type ProductPageProps = {
   }
 }
 
-const ProductPage = async ({ searchParams }: ProductPageProps) => {
+const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
   const { id } = searchParams
   const { data: product } = await getProduct(Number(id))
   const { data: productItems } = await getProductItems({ productId: id })
@@ -96,11 +96,6 @@ const ProductPage = async ({ searchParams }: ProductPageProps) => {
           </div>
         </CardContent>
       </Card>
-      <Card className="m-2 border-none shadow-none">
-        <CardContent className="flex flex-col gap-2 p-3">
-          <div dangerouslySetInnerHTML={{ __html: product.body }} />
-        </CardContent>
-      </Card>
       {/* <SpecCard
         specs={[
           { key: '產地', value: '安徽' },
@@ -119,8 +114,14 @@ const ProductPage = async ({ searchParams }: ProductPageProps) => {
         </div>
       </Card> */}
       <SubmitButtons product={product} specs={productItems.data} />
+      <Card className="m-2 border-none shadow-none">
+        <CardContent className="flex flex-col gap-2 p-3">
+          <div dangerouslySetInnerHTML={{ __html: product.body }} />
+        </CardContent>
+      </Card>
+      <div className="h-2 w-full bg-background" />
     </main>
   )
 }
 
-export default ProductPage
+export default ProductDetailPage
