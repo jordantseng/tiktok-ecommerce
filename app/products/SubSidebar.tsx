@@ -24,7 +24,7 @@ const SubSidebar = ({ subSidebarItems, isOpen, onSidebarOpen, onClick }: SubSide
         {isOpen ? (
           <h4 className="flex items-center text-sm font-normal tracking-tight">全部分類</h4>
         ) : (
-          <div className="flex gap-2 overflow-x-scroll">
+          <div className="flex gap-2 overflow-hidden overflow-x-scroll">
             {subSidebarItems.map((item) => (
               <Badge
                 key={item.id}
