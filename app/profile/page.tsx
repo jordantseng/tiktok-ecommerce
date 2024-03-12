@@ -92,7 +92,7 @@ function ProfilePage() {
   }
 
   function handleEditAvatar() {
-    router.push(`/profile/avatar/${user?.id}`)
+    router.push('/profile/avatar')
   }
 
   return (
