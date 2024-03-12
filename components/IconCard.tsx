@@ -20,7 +20,9 @@ const IconCard = ({ title, isActive, Icon, imgUrl, onClick }: IconCardProps) => 
     >
       {Icon && <div className={`${isActive ? 'text-primary' : ''}`}>{Icon}</div>}
       {imgUrl && (
-        <Image src={imgUrl} width={24} height={24} className="h-14 w-14 rounded-lg" alt={title} />
+        <div className="relative size-14">
+          <Image className="rounded-lg object-cover" src={imgUrl} fill alt={title} />
+        </div>
       )}
       <h4
         className={cn(
