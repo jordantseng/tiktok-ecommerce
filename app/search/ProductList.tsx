@@ -21,7 +21,7 @@ const ProductList = ({ products }: ProductListProps) => {
   return (
     <div className="grid grid-cols-2 gap-4">
       {products.data.map((product) => (
-        <Link key={product.id} href={`/products/${product.id}`}>
+        <Link key={product.id} href={`/product-detail?id=${product.id}`}>
           <MerchandiseCard
             id={product.id}
             key={product.id}
