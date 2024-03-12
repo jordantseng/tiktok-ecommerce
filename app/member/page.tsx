@@ -159,7 +159,7 @@ const MemberPage = () => {
           </div>
           <div className="mt-4">
             <div className="font-lg flex items-center justify-center">
-              {isPreparingAuthData ? <Skeleton className="h-8 w-20" /> : <RecommendTitle />}
+              {isPreparingAuthData ? <Skeleton className="h-8 w-32" /> : <RecommendTitle />}
             </div>
             <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
               {recommends.map((recommend) => (
