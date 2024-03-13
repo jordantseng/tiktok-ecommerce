@@ -45,12 +45,10 @@ const PayDetail = ({ discount }: Props) => {
             <span className="break-keep">商品總金額：</span>
             <span className="flex">${total}</span>
           </div>
-          {logisticFee > 0 && (
-            <div className="flex items-center justify-between text-sm font-light">
-              <span className="break-keep">運費總金額：</span>
-              <span className="flex justify-center">${logisticFee}</span>
-            </div>
-          )}
+          <div className="flex items-center justify-between text-sm font-light">
+            <span className="break-keep">運費總金額：</span>
+            <span className="flex justify-center">${logisticFee}</span>
+          </div>
 
           {discount?.discount && (
             <div className="flex justify-end justify-between text-sm font-light">

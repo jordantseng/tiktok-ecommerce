@@ -22,6 +22,10 @@ const PaymentSetting = ({ value, onChange }: Props) => {
   const handleChange = (val: PayStatus) => setSelected(val)
   const { deliveryType } = useAddressContext()
   const [selected, setSelected] = useImmer<PayStatus | null>(null)
+  const creditCount = Object.keys(webSettingsData?.paykind || {}).filter((opt) =>
+    opt.includes('credit'),
+  )
+
   return (
     // 信用卡付款(綠界)[ecpay-credit],
     // 信用卡分3期(綠界)[ecpay-credit3],
@@ -48,34 +52,55 @@ const PaymentSetting = ({ value, onChange }: Props) => {
         onValueChange={handleChange}
       >
         <div className="flex items-center justify-between space-x-2  p-4">
-          <Collapsible className="w-full">
-            <CollapsibleTrigger className="w-full">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="credit">
-                  <div className="flex items-center space-x-2">
-                    <div className="item-center relative flex h-5 w-5 justify-center">
-                      <Image alt="credit" fill src="/credit.png" />
-                    </div>
-                    <span>信用卡付款</span>
-                  </div>
-                </Label>
-                <ChevronsUpDown className="h-4 w-4" />
-              </div>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              {Object.keys(webSettingsData?.paykind || {}).map(
-                (opt: string) =>
-                  opt.indexOf('credit') > -1 && (
-                    <div key={opt} className="ml-4 flex space-x-2 p-4">
-                      <RadioGroupItem value={opt} id={opt} />
-                      <div className="flex items-center space-x-2">
-                        <Label htmlFor={opt}>{webSettingsData?.paykind[opt]}</Label>
+          {creditCount.length > 1 ? (
+            <Collapsible className="w-full">
+              <CollapsibleTrigger className="w-full">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="credit">
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="credit" fill src="/credit.png" />
                       </div>
+                      <span>信用卡付款</span>
                     </div>
-                  ),
-              )}
-            </CollapsibleContent>
-          </Collapsible>
+                  </Label>
+                  <ChevronsUpDown className="h-4 w-4" />
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                {Object.keys(webSettingsData?.paykind || {}).map(
+                  (opt: string) =>
+                    opt.indexOf('credit') > -1 && (
+                      <div key={opt} className="ml-4 flex space-x-2 p-4">
+                        <RadioGroupItem value={opt} id={opt} />
+                        <div className="flex items-center space-x-2">
+                          <Label htmlFor={opt}>{webSettingsData?.paykind[opt]}</Label>
+                        </div>
+                      </div>
+                    ),
+                )}
+              </CollapsibleContent>
+            </Collapsible>
+          ) : (
+            Object.keys(webSettingsData?.paykind || {}).map(
+              (opt: string) =>
+                opt.indexOf('credit') > -1 && (
+                  <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                    <div className="flex items-center space-x-2">
+                      <Label htmlFor={opt}>
+                        <div className="flex items-center space-x-2">
+                          <div className="item-center relative flex h-5 w-5 justify-center">
+                            <Image alt="atm" fill src="/credit.png" />
+                          </div>
+                          <span>信用卡付款</span>
+                        </div>
+                      </Label>
+                    </div>
+                    <RadioGroupItem value={opt} id={opt} />
+                  </div>
+                ),
+            )
+          )}
         </div>
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>

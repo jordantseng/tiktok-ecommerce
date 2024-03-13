@@ -51,7 +51,11 @@ const CartItem = ({
       )}
       <div className={cn('flex items-center justify-center', className)}>
         {editable && (
-          <Checkbox className="rounded-full" checked={isChecked} onCheckedChange={onSelect} />
+          <Checkbox
+            className="h-6 w-6 rounded-full"
+            checked={isChecked}
+            onCheckedChange={onSelect}
+          />
         )}
         <div
           className={cn('relative m-2 flex h-[130px] w-full max-w-[130px] items-center', {
@@ -145,7 +149,7 @@ const CartItem = ({
             )}
           </CardContent>
         </Card>
-        {editable && <ConfirmDeleteDialog onConfirm={() => onDelete && onDelete(id)} />}
+        {editable && onDelete && <ConfirmDeleteDialog onConfirm={() => onDelete && onDelete(id)} />}
       </div>
     </div>
   )

@@ -17,7 +17,7 @@ export const RecommendsProvider = ({ children }: PropsWithChildren) => {
   const [isLoadingRecommends, setIsLoadingRecommends] = useState(true)
 
   useEffect(() => {
-    getProducts({ page: 1, pageSize: 2 })
+    getProducts({ page: 1, pageSize: 10000 })
       .then(({ data }) => {
         setRecommends(data.data)
       })
