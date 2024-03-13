@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { paginationGuard } from '@/lib/guard'
 import ProductList from '@/app/search/ProductList'
 
-const PAGE_SIZE = 4
+const PAGE_SIZE = 15
 
 type SearchPageProps = {
   searchParams: {

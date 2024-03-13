@@ -12,7 +12,7 @@ import { paginationGuard } from '@/lib/guard'
 import ProductItem from '@/components/ProductItem'
 import ProductNotFound from '@/components/ProductNotFound'
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 15
 
 type ProductsPageProps = {
   searchParams: { page: string; type: string; subType: string; q: string }
