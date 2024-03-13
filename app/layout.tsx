@@ -8,7 +8,6 @@ import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
 import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
-import { RecommendsProvider } from '@/context/RecommendsContext'
 import { getWebSettings } from '@/services/webSettings'
 
 const inter = Inter({
