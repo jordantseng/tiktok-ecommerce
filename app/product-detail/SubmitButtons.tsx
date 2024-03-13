@@ -128,14 +128,14 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         onClick={() => setIsDialogOpen(true)}
       >
         <CardContent className="flex justify-between gap-2 p-3">
-          <div>
+          <h4 className="text-sm font-semibold">
             已選
             {confirmedItem.count !== 0 && (
               <>
                 {confirmedItem.size} - x{confirmedItem.count}
               </>
             )}
-          </div>
+          </h4>
           <ChevronRightIcon />
         </CardContent>
       </Card>

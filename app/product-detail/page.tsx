@@ -71,7 +71,7 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
       />
       <Card className="m-2 border-none shadow-none">
         <CardContent className="flex flex-col gap-2 p-3">
-          <h3 className="line-clamp-2 text-lg font-semibold tracking-wide">運送付款方式</h3>
+          <h3 className="line-clamp-2 text-sm font-semibold tracking-wide">運送付款方式</h3>
           <div className="flex">
             <div className="flex items-start">
               <Image
