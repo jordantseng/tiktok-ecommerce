@@ -168,7 +168,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     discount_code: order.discount_code || '',
     gobackurl: order.paystatus?.includes('atm')
       ? `https://${location.host}/member/orders/atm-detail/checkout`
-      : `https://${location.host}/confirm-order/success`,
+      : `https://${location.host}/confirm-order/result`,
     CVSAddress: order.CVSAddress || '',
     CVSStoreID: order.CVSStoreID || '',
     paystatus: order.paystatus || '',
