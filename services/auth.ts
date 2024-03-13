@@ -76,11 +76,10 @@ export const getUser = async (): Promise<UserRes> => {
 }
 
 export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
-  const { mobile, name, email } = user
+  const { mobile, email } = user
 
   const { data } = await axiosInstance.post('/api/membercenter/edit/store', {
     mobile,
-    name,
     email,
   })
 

@@ -44,10 +44,10 @@ function ProfilePage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
       id: '',
       mobile: '',
       email: '',
+      password: '',
     },
   })
 
@@ -62,10 +62,10 @@ function ProfilePage() {
       refreshUser()
     } else {
       form.reset({
-        name: user.name ?? '',
         id: user.id.toString() ?? '',
         mobile: user.mobile ?? '',
         email: user.email ?? '',
+        password: '********',
       })
     }
   }, [user, form, refreshUser])
@@ -120,34 +120,50 @@ function ProfilePage() {
               </div>
 
               <FormField
-                name="name"
+                name="id"
                 control={form.control}
-                render={({ field }) => (
-                  <CustomFormItem disabled={!user} label="暱稱" field={field} />
-                )}
+                render={({ field }) => <CustomFormItem disabled label="ID" field={field} />}
               />
 
               <FormField
-                name="id"
+                name="email"
                 control={form.control}
-                render={({ field }) => <CustomFormItem disabled label="身分證字號" field={field} />}
+                render={({ field }) => <CustomFormItem disabled label="電子信箱" field={field} />}
               />
 
               <FormField
                 name="mobile"
                 control={form.control}
                 render={({ field }) => (
-                  <CustomFormItem disabled={!user} label="電話" field={field} />
+                  <CustomFormItem disabled={!user} label="手機號碼" type="number" field={field} />
                 )}
               />
 
               <FormField
-                name="email"
+                name="password"
                 control={form.control}
                 render={({ field }) => (
-                  <CustomFormItem disabled={!user} label="E-mail" field={field} />
+                  <CustomFormItem disabled type="password" label="登入密碼" field={field} />
                 )}
               />
+              {/* <CustomFormItemLayout label="密碼">
+                <FormControl className="max-w-48 flex-[1] md:max-w-60">
+                  {isLoadingUser ? (
+                    <div className="flex justify-end">
+                      <Skeleton className="h-6 w-36" />
+                    </div>
+                  ) : (
+                    <Input
+                    // className={cn('appearance-none bg-white text-right md:text-base', {
+                    //   'border-none p-0 outline-none': disabled,
+                    // })}
+                    // disabled={disabled}
+                    // type={type}
+                    // {...field}
+                    />
+                  )}
+                </FormControl>
+              </CustomFormItemLayout> */}
             </section>
 
             <Button
