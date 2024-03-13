@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { BadgeJapaneseYen, MessageSquareText, Truck, Wallet, WalletCards } from 'lucide-react'
+import { CheckCircle2, Truck, Wallet, WalletCards, XCircle } from 'lucide-react'
 
 import { OrderStatus, OrderStatusTitle } from '@/services/order'
 
@@ -47,7 +47,7 @@ export const orderStatusMap: OrderStatusMap = {
     nav: {
       title: '已收貨',
       href: '/member/orders?type=receipted',
-      Icon: <MessageSquareText className="h-10 w-10 p-2" />,
+      Icon: <CheckCircle2 className="h-10 w-10 p-2" />,
     },
   },
   refunded: {
@@ -55,7 +55,7 @@ export const orderStatusMap: OrderStatusMap = {
     nav: {
       title: '取消/退款',
       href: '/member/orders?type=refunded',
-      Icon: <BadgeJapaneseYen className="h-10 w-10 p-2" />,
+      Icon: <XCircle className="h-10 w-10 p-2" />,
     },
   },
 }
