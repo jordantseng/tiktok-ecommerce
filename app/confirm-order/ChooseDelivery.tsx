@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
+import { getLogistic } from '@/services/address'
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -18,7 +19,9 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
   const router = useRouter()
   const { handleSelectDeliveryType, deliveryType, resetSelectAddress, selectedAddress } =
     useAddressContext()
-  const handleClick = () => router.push('/confirm-order/choose-receipt')
+  const handleClick = (type: string) => {
+    type !== 'HOME_DELIVERY' ? getLogistic(type) : router.push('/confirm-order/upsert-receipt')
+  }
   const renderReceipt = () => (
     <div className="flex w-full flex-col justify-between">
       {selectedAddress?.name && (
@@ -64,10 +67,9 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <Button
             className="mx-auto flex items-center justify-center text-red-400"
             variant="ghost"
-            disabled={deliveryType !== 'HOME_DELIVERY'}
-            onClick={handleClick}
+            onClick={() => handleClick('HOME_DELIVERY')}
           >
-            ＋新增/選擇 宅配地址
+            ＋新增 宅配地址
             <ChevronRight className="h-4 w-4" />
           </Button>
           {deliveryType === 'HOME_DELIVERY' && renderReceipt()}
@@ -86,10 +88,9 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <Button
             className="mx-auto flex items-center justify-center text-red-400"
             variant="ghost"
-            disabled={deliveryType !== 'FAMIC2C'}
-            onClick={handleClick}
+            onClick={() => handleClick('FAMIC2C')}
           >
-            ＋新增/選擇 全家門市
+            ＋新增 全家門市
             <ChevronRight className="h-4 w-4" />
           </Button>
           {deliveryType === 'FAMIC2C' && renderReceipt()}
@@ -108,10 +109,9 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <Button
             className="mx-auto flex items-center justify-center text-red-400"
             variant="ghost"
-            disabled={deliveryType !== 'UNIMARTC2C'}
-            onClick={handleClick}
+            onClick={() => handleClick('UNIMARTC2C')}
           >
-            ＋新增/選擇 7-11門市
+            ＋新增 7-11門市
             <ChevronRight className="h-4 w-4" />
           </Button>
           {deliveryType === 'UNIMARTC2C' && renderReceipt()}
@@ -130,10 +130,9 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <Button
             className="mx-auto flex items-center justify-center text-red-400"
             variant="ghost"
-            disabled={deliveryType !== 'HILIFEC2C'}
-            onClick={handleClick}
+            onClick={() => handleClick('HILIFEC2C')}
           >
-            ＋新增/選擇 萊爾富門市
+            ＋新增 萊爾富門市
             <ChevronRight className="h-4 w-4" />
           </Button>
           {deliveryType === 'HILIFEC2C' && renderReceipt()}

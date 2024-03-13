@@ -1,7 +1,7 @@
 'use client'
 import { AddressData } from '@/types/common'
 
-import { ReactNode, createContext, useContext } from 'react'
+import { ReactNode, createContext, useCallback, useContext } from 'react'
 import { useImmer } from 'use-immer'
 
 export enum Delivery {
@@ -31,7 +31,10 @@ export const AddressProvider = ({ children }: AddressProviderProps) => {
   const [selectedAddress, setSelectedAddress] = useImmer<AddressData | null>(null)
   const [deliveryType, setDeliveryType] = useImmer<Delivery | null>(null)
 
-  const handleSelectAddress = (val: AddressData) => setSelectedAddress(val)
+  const handleSelectAddress = useCallback(
+    (val: AddressData) => setSelectedAddress(val),
+    [setSelectedAddress],
+  )
   const handleSelectDeliveryType = (val: Delivery) => setDeliveryType(Delivery[val])
   const resetSelectAddress = () => setSelectedAddress(null)
   //   const updateAddress = () => {}

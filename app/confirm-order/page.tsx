@@ -12,26 +12,31 @@ import Discount from '@/app/confirm-order/DIscount'
 import DeliveryInfo from '@/app/confirm-order/DeliveryInfo'
 import PaymentSetting from '@/app/confirm-order/PaymentSetting'
 import PayDetail from '@/app/confirm-order/PayDetail'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import { PayStatus, addOrder } from '@/services/order'
 import { useAuthContext } from '@/context/AuthContext'
 import { handleFee, handleLabel } from '@/lib/payment'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
 import ChooseDelivery from './ChooseDelivery'
 
 const ConfirmBillPage = () => {
   const { user } = useAuthContext()
   const { webSettingsData } = useWebSettingsContext()
-  const { getSelectedCartItems } = useCartContext()
+  const { getSelectedCartItems, handleGetMyCart } = useCartContext()
   const { selectedAddress } = useAddressContext()
+  const router = useRouter()
   const [payStatus, setPayStatus] = useImmer<PayStatus | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useImmer({
     open: false,
     type: 'pay',
   })
   const [discount, setDiscount] = useImmer<{ code: string; discount: number } | null>(null)
+  useEffect(() => {
+    handleGetMyCart()
+  }, [handleGetMyCart])
 
   const handleOpen = (type: string) => {
     setIsDialogOpen((draft) => {
@@ -113,7 +118,7 @@ const ConfirmBillPage = () => {
         )}
         <div className="w-full px-4 py-1">
           <div className="rounded-lg bg-white p-2">
-            <DeliveryInfo onClick={() => handleOpen('delivery')} />
+            <DeliveryInfo onClick={() => router.push('/confirm-order/choose-delivery')} />
           </div>
         </div>
         <div className="w-full px-4 py-1">
