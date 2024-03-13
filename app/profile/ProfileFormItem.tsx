@@ -24,19 +24,19 @@ export const formSchema = z.object({
 
 type FormKeys = keyof typeof formSchema.shape
 
-type CustomFormItemProps<T extends FormKeys> = {
+type ProfileFormItemProps<T extends FormKeys> = {
   label: string
   disabled?: boolean
   field?: ControllerRenderProps<z.infer<typeof formSchema>, T>
   type?: HTMLInputTypeAttribute
 }
 
-export default function CustomFormItem<T extends FormKeys>({
+export default function ProfileFormItem<T extends FormKeys>({
   label,
   field,
   disabled,
   type = 'text',
-}: CustomFormItemProps<T>) {
+}: ProfileFormItemProps<T>) {
   const { isLoadingUser } = useAuthContext()
   return (
     <div className="flex min-h-12 items-center justify-between bg-white p-4 py-0 md:min-h-14">

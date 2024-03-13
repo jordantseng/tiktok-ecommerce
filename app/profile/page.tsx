@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import AddressCard from '@/app/profile/AddressCard'
-import CustomFormItem, { formSchema } from '@/app/profile/CustomFormItem'
+import ProfileFormItem, { formSchema } from '@/app/profile/ProfileFormItem'
 import { useAuthContext } from '@/context/AuthContext'
 import { AddressData } from '@/types/common'
 import { getAddress } from '@/services/address'
@@ -122,20 +122,20 @@ function ProfilePage() {
               <FormField
                 name="id"
                 control={form.control}
-                render={({ field }) => <CustomFormItem disabled label="ID" field={field} />}
+                render={({ field }) => <ProfileFormItem disabled label="ID" field={field} />}
               />
 
               <FormField
                 name="email"
                 control={form.control}
-                render={({ field }) => <CustomFormItem disabled label="電子信箱" field={field} />}
+                render={({ field }) => <ProfileFormItem disabled label="電子信箱" field={field} />}
               />
 
               <FormField
                 name="mobile"
                 control={form.control}
                 render={({ field }) => (
-                  <CustomFormItem disabled={!user} label="手機號碼" type="number" field={field} />
+                  <ProfileFormItem disabled={!user} label="手機號碼" type="number" field={field} />
                 )}
               />
 
@@ -143,7 +143,7 @@ function ProfilePage() {
                 name="password"
                 control={form.control}
                 render={({ field }) => (
-                  <CustomFormItem disabled type="password" label="登入密碼" field={field} />
+                  <ProfileFormItem disabled type="password" label="登入密碼" field={field} />
                 )}
               />
               {/* <CustomFormItemLayout label="密碼">
