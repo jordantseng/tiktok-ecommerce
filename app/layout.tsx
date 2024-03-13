@@ -43,18 +43,12 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <AddressProvider>
-              <RecommendsProvider>
-                <body
-                  className={cn(
-                    'touch-none bg-black font-sans antialiased',
-                    inter.variable,
-                    inter.className,
-                  )}
-                >
-                  <div className="max-w-mdtouch-none mx-auto min-h-screen w-full">{children}</div>
-                  <Toaster />
-                </body>
-              </RecommendsProvider>
+              <body
+                className={cn('bg-black font-sans antialiased', inter.variable, inter.className)}
+              >
+                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
+                <Toaster />
+              </body>
             </AddressProvider>
           </CartProvider>
         </AuthProvider>
