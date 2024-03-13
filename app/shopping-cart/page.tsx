@@ -15,9 +15,11 @@ import CartSpecDialog from '@/app/shopping-cart/CartSpecDialog'
 import { Item, useCartContext } from '@/context/CartContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 import { getProductItems } from '@/services/productItem'
+import PrevButton from '@/components/PrevButton'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
+  const [editMode, setEditMode] = useImmer(false)
   const [isDialogOpen, setIsDialogOpen] = useImmer(false)
   const [specs, setSpecs] = useImmer<{ id: number; title: string }[]>([])
   const [selectProductItem, setSelectProductItem] = useImmer<Item | null>(null)
@@ -111,7 +113,14 @@ const ShoppingCartPage = () => {
 
   return (
     <main className="mb-16 h-full min-h-screen">
-      <Title title={`購物車(${items.length})`} hasPrevButton={false} />
+      <header className="flex items-center justify-between gap-3 bg-white p-4">
+        <div className="w-1/4" />
+        <h4 className="w-1/2 text-center text-xl font-normal tracking-tight">{`購物車(${items.length})`}</h4>
+        <Button className="w-1/4" variant="ghost" onClick={() => setEditMode(!editMode)}>
+          {editMode ? '完成' : '編輯'}
+        </Button>
+      </header>
+      {/* <Title title={`購物車(${items.length})`} hasPrevButton={false} /> */}
       <div className="relative flex min-h-screen w-full flex-col items-center bg-background">
         <div className="w-full p-4">
           <div className="rounded-lg bg-white">
@@ -131,8 +140,8 @@ const ShoppingCartPage = () => {
                 productItemTitle={opt.productItemTitle}
                 onSelect={(res) => handleSelect(opt, res)}
                 onChange={(val) => handlePriceChange(opt, val)}
-                onDelete={(id) => handleRemoveFromCart(id)}
                 onChangeProductItem={() => handleChangeProductItem(opt)}
+                {...(editMode && { onDelete: (id) => handleRemoveFromCart(id) })}
               />
             ))}
           </div>
@@ -145,12 +154,14 @@ const ShoppingCartPage = () => {
             <MerchandiseCard
               id={opt.id}
               key={opt.id}
-              className="h-full w-full"
+              className="h-auto w-full"
               imgUrl={opt.imgs[0]}
               title={opt.title}
               tags={opt.tags?.split(',')}
               price={opt.price}
               originPrice={opt.marketprice}
+              sales={String(opt.buycount)}
+              stars={opt.star}
             />
           ))}
 
@@ -166,12 +177,12 @@ const ShoppingCartPage = () => {
               checked={getSelectedCartItems().length === items.length}
             />
             <label htmlFor="terms" className="text-lg font-medium">
-              全選
+              {getSelectedCartItems().length === items.length ? '不全選' : '全選'}
             </label>
           </div>
           <div className="flex items-center space-x-4">
             <div className="felx">
-              <span>總計：</span>
+              <span>總計:</span>
               <span className="text-lg font-semibold text-red-400">${total}</span>
             </div>
             <Link

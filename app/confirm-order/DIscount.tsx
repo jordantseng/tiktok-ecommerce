@@ -54,7 +54,7 @@ const Discount = ({ onDiscount }: Props) => {
       />
       {/* <Checkbox className="rounded-lg" disabled={!code} onCheckedChange={handleDiscount} /> */}
       <Button disabled={!code} className="w-[30%]" onClick={() => handleDiscount(!isActived)}>
-        {isActived ? '確認兌換' : '取消兌換'}
+        {isActived ? '取消' : '兌換'}
       </Button>
     </div>
   )

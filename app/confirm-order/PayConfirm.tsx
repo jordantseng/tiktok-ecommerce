@@ -39,7 +39,7 @@ const PayConfirm = ({ payStatus, discount, onConfirm }: Props) => {
         <span className="mr-1 flex items-center">共計:</span>
         <span className="mr-4 flex items-center md:mr-8">{items.length}件</span>
         <div className="flex items-center justify-between">
-          <span className="break-keep">總計：</span>
+          <span className="break-keep">總計:</span>
           <span className="flex justify-center text-lg font-semibold text-red-400">
             ${total + logisticFee - (discount?.discount || 0)}
           </span>
