@@ -17,10 +17,10 @@ const SpecCard = ({ specs }: SpecCardProps) => {
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {specs.map((spec) => (
                       <tr className="flex" key={spec.key}>
-                        <th className="flex flex-1 whitespace-nowrap border-r bg-secondary px-6 py-4 text-sm font-medium text-gray-800">
+                        <th className="flex flex-1 overflow-x-scroll whitespace-nowrap border-r bg-secondary px-4 py-4 text-sm font-medium text-gray-800">
                           {spec.key}
                         </th>
-                        <td className="flex flex-1 whitespace-nowrap px-6 py-4 text-sm text-gray-800">
+                        <td className="flex flex-1 overflow-x-scroll whitespace-nowrap px-4 py-4 text-sm text-gray-800">
                           {spec.value}
                         </td>
                       </tr>
