@@ -1,6 +1,4 @@
 import { ReactNode } from 'react'
-
-import { OrderProvider } from '@/context/OrderContext'
 import { RecommendsProvider } from '@/context/RecommendsContext'
 
 export default function RootLayout({
@@ -8,9 +6,5 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode
 }>) {
-  return (
-    <RecommendsProvider>
-      <OrderProvider>{children}</OrderProvider>
-    </RecommendsProvider>
-  )
+  return <RecommendsProvider>{children}</RecommendsProvider>
 }
