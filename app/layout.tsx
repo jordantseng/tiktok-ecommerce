@@ -44,9 +44,13 @@ export default function RootLayout({
           <CartProvider>
             <AddressProvider>
               <body
-                className={cn('bg-black font-sans antialiased', inter.variable, inter.className)}
+                className={cn(
+                  'touch-none bg-black font-sans antialiased',
+                  inter.variable,
+                  inter.className,
+                )}
               >
-                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
+                <div className="max-w-mdtouch-none mx-auto min-h-screen w-full">{children}</div>
                 <Toaster />
               </body>
             </AddressProvider>
