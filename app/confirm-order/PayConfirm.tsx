@@ -35,7 +35,7 @@ const PayConfirm = ({ payStatus, discount, onConfirm }: Props) => {
 
   return (
     <>
-      <div className="flex w-full items-center justify-between bg-white px-6">
+      <div className="sticky bottom-0 flex w-full items-center justify-between bg-white px-6">
         <span className="mr-1 flex items-center">共計:</span>
         <span className="mr-4 flex items-center md:mr-8">{items.length}件</span>
         <div className="flex items-center justify-between">
