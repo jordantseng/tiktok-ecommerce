@@ -20,7 +20,7 @@ type SubmitButtonsProps = {
 const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   const defaultSelectedSize = { id: String(specs[0].id), size: specs[0].title }
 
-  const { handleAddToCart } = useCartContext()
+  const { handleAddToCart, items } = useCartContext()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(
     specs.length === 1 ? defaultSelectedSize : null,
@@ -40,11 +40,12 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   )
   const router = useRouter()
   const { toast } = useToast()
+  const nowAmount = items.find((opt) => opt.id === product.id)?.amount || 0
 
   const item: Item = {
     id: product.id,
     productItemId: Number(confirmedItem?.id),
-    amount: confirmedItem.count,
+    amount: nowAmount + confirmedItem.count,
     imgUrl: product.imgs[0],
     title: product.title,
     price: product.price,
