@@ -25,6 +25,7 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(
     specs.length === 1 ? defaultSelectedSize : null,
   )
+  const [selectedButtonType, setSeleectedButtonType] = useState<'addToCart' | 'buyProduct' | ''>('')
   const [confirmedItem, updateConfirmedItem] = useImmer<{
     id: string
     size: string
@@ -40,6 +41,18 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   const router = useRouter()
   const { toast } = useToast()
 
+  const item: Item = {
+    id: product.id,
+    productItemId: Number(confirmedItem?.id),
+    amount: confirmedItem.count,
+    imgUrl: product.imgs[0],
+    title: product.title,
+    price: product.price,
+    originPrice: product.marketprice,
+    tags: product.tags?.split(','),
+    isSelect: false,
+  }
+
   const handleSpecSelect = ({ id, size }: { id: string; size: string }) => {
     setSelectedSize({ id, size })
     setCount(1)
@@ -53,8 +66,24 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     )
   }
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     if (!selectedSize?.id || !selectedSize?.size) {
+      return
+    }
+
+    if (selectedButtonType === 'addToCart') {
+      handleAddToCart(item)
+      setIsDialogOpen(false)
+      toast({
+        variant: 'destructive',
+        title: '成功加入購物車！',
+      })
+      return
+    }
+
+    if (selectedButtonType === 'buyProduct') {
+      handleAddToCart(item)
+      router.push('/shopping-cart')
       return
     }
 
@@ -66,57 +95,30 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     })
   }
 
-  const handleBuyProduct = async () => {
+  const handleBuyProductClick = () => {
     if (!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0) {
+      setSeleectedButtonType('buyProduct')
       setIsDialogOpen(true)
       return
     }
 
-    try {
-      const item: Item = {
-        id: product.id,
-        productItemId: Number(confirmedItem?.id),
-        amount: confirmedItem.count,
-        imgUrl: product.imgs[0],
-        title: product.title,
-        price: product.price,
-        originPrice: product.marketprice,
-        tags: product.tags?.split(','),
-        isSelect: false,
-      }
-      await handleAddToCart(item)
-      router.push('/shopping-cart')
-    } catch (error) {
-      console.log(error)
-    }
+    handleAddToCart(item)
+    router.push('/shopping-cart')
   }
 
-  const handleAddToCard = async () => {
+  const handleAddToCartClick = () => {
     if (!confirmedItem.id || !confirmedItem.size || confirmedItem.count <= 0) {
+      setSeleectedButtonType('addToCart')
       setIsDialogOpen(true)
       return
     }
 
-    try {
-      const item: Item = {
-        id: product.id,
-        productItemId: Number(confirmedItem?.id),
-        amount: confirmedItem.count,
-        imgUrl: product.imgs[0],
-        title: product.title,
-        price: product.price,
-        originPrice: product.marketprice,
-        tags: product.tags?.split(','),
-        isSelect: false,
-      }
-      await handleAddToCart(item)
-      toast({
-        variant: 'destructive',
-        title: '成功加入購物車！',
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    handleAddToCart(item)
+    setIsDialogOpen(false)
+    toast({
+      variant: 'destructive',
+      title: '成功加入購物車！',
+    })
   }
 
   return (
@@ -126,14 +128,14 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         onClick={() => setIsDialogOpen(true)}
       >
         <CardContent className="flex justify-between gap-2 p-3">
-          <div>
+          <h4 className="text-sm font-semibold">
             已選
             {confirmedItem.count !== 0 && (
               <>
                 {confirmedItem.size} - x{confirmedItem.count}
               </>
             )}
-          </div>
+          </h4>
           <ChevronRightIcon />
         </CardContent>
       </Card>
@@ -163,11 +165,11 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
         <Button
           variant="outline"
           className="w-full rounded-3xl font-semibold"
-          onClick={handleAddToCard}
+          onClick={handleAddToCartClick}
         >
           加入購物車
         </Button>
-        <Button className="w-full rounded-3xl font-semibold" onClick={handleBuyProduct}>
+        <Button className="w-full rounded-3xl font-semibold" onClick={handleBuyProductClick}>
           立即購買
         </Button>
       </nav>

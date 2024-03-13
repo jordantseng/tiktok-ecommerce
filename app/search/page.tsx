@@ -51,7 +51,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         })}
       >
         <header className="sticky top-0 z-40 flex items-center gap-3 bg-background px-4 py-4">
-          <PrevButton />
+          <PrevButton redirectUrl="/" />
           <Searchbar />
         </header>
         <div className="p-4">

@@ -1,5 +1,6 @@
 import { MessageSquareMoreIcon, MenuIcon } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import HeroCarousel from '@/app/HeroCarousel'
 import Searchbar from '@/components/Searchbar'
@@ -27,7 +28,10 @@ export default async function HomePage() {
   return (
     <main className="mb-16 bg-background">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
-        <h4 className="scroll-m-20 text-xl font-normal tracking-tight">
+        <h4 className="flex scroll-m-20 items-center gap-2 text-xl font-normal tracking-tight">
+          <Link href="/">
+            <Image src="/fake-logo.png" width={30} height={30} alt="logo" />
+          </Link>
           {webSettingsData?.title || '天服能量購物商城'}
         </h4>
         <div className="flex items-center gap-4">
