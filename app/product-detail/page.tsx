@@ -51,8 +51,8 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
   }
 
   return (
-    <main className="mb-14 min-h-screen bg-background">
-      <header className="flex items-center justify-between gap-3 bg-white p-4">
+    <main className="mb-14 mt-14 min-h-screen bg-background">
+      <header className="fixed top-0 z-50 flex w-full max-w-md items-center justify-between gap-3 bg-white p-4">
         <PrevButton />
         <Link href="/shopping-cart">
           <ShoppingCartIcon className="text-gray-400" />
