@@ -60,6 +60,8 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
                   tags={product.tags?.split(',')}
                   price={product.price}
                   originPrice={product.marketprice}
+                  stars={product.star}
+                  sales={String(product.buycount)}
                 />
               </Link>
             ))

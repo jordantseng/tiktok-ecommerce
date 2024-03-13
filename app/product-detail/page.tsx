@@ -64,6 +64,10 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
         price={String(product.marketprice)}
         salePrice={String(product.price)}
         tags={product.tags?.split(',') || []}
+        stars={product.star}
+        sales={String(product.buycount)}
+        type={product.kindhead_title}
+        subType={product.kindmain_title}
       />
       <Card className="m-2 border-none shadow-none">
         <CardContent className="flex flex-col gap-2 p-3">

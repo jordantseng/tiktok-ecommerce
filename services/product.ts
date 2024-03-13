@@ -23,6 +23,8 @@ export type ProductData = {
   body: string
   specs: { title: string }[]
   unit: string
+  kindhead_title: string
+  kindmain_title: string
 }
 
 type GetProductsRes = ApiRes<{
