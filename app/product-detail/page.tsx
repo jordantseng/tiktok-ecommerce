@@ -5,9 +5,9 @@ import Image from 'next/image'
 
 import ProductCarousel from '@/app/product-detail/ProductCarousel'
 import TitleCard from '@/app/product-detail/TitleCard'
-// import SpecCard from '@/app/products/[id]/SpecCard'
+import SpecCard from '@/app/product-detail/SpecCard'
 import PrevButton from '@/components/PrevButton'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import SubmitButtons from '@/app/product-detail/SubmitButtons'
 import { getProduct } from '@/services/product'
 import { getProductItems } from '@/services/productItem'
@@ -64,6 +64,10 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
         price={String(product.marketprice)}
         salePrice={String(product.price)}
         tags={product.tags?.split(',') || []}
+        stars={product.star}
+        sales={String(product.buycount)}
+        type={product.kindhead_title}
+        subType={product.kindmain_title}
       />
       <Card className="m-2 border-none shadow-none">
         <CardContent className="flex flex-col gap-2 p-3">
@@ -96,13 +100,6 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
           </div>
         </CardContent>
       </Card>
-      {/* <SpecCard
-        specs={[
-          { key: '產地', value: '安徽' },
-          { key: '規格', value: '180+/份' },
-          { key: '有效日期', value: '30天' },
-        ]}
-      /> */}
       {/* <Card className="m-2 border-none shadow-none">
         <div className="relative h-screen w-full">
           <Image
@@ -114,7 +111,16 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
         </div>
       </Card> */}
       <SubmitButtons product={product} specs={productItems.data} />
+      {product.specs.length > 0 && (
+        <SpecCard
+          specs={product.specs.map(({ title, body }) => ({
+            key: title,
+            value: body,
+          }))}
+        />
+      )}
       <Card className="m-2 border-none shadow-none">
+        <CardTitle className="p-3 pb-0 text-sm font-semibold">商品詳情</CardTitle>
         <CardContent className="flex flex-col gap-2 p-3">
           <div dangerouslySetInnerHTML={{ __html: product.body }} />
         </CardContent>

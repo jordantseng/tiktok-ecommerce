@@ -9,6 +9,8 @@ export type CartItem = {
   productItemTitle?: string
   productItemId?: number
   product_id?: string
+  stars?: number
+  sales?: string
 }
 
 export type ApiRes<Data> = {

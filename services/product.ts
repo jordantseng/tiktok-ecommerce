@@ -21,8 +21,10 @@ export type ProductData = {
   updated_at: string
   buycount: number
   body: string
-  specs: { title: string }[]
+  specs: { title: string; body: string }[]
   unit: string
+  kindhead_title: string
+  kindmain_title: string
 }
 
 type GetProductsRes = ApiRes<{
