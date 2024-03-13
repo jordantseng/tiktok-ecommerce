@@ -50,7 +50,7 @@ export default function RootLayout({
                   inter.className,
                 )}
               >
-                <div className="max-w-mdtouch-none mx-auto min-h-screen w-full">{children}</div>
+                <div className="mx-auto min-h-screen w-full max-w-md touch-none">{children}</div>
                 <Toaster />
               </body>
             </AddressProvider>
