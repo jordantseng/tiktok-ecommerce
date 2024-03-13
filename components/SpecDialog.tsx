@@ -53,7 +53,7 @@ const SpecDialog = ({
           <h5 className="text-md mb-2 flex flex-1 scroll-m-20 justify-start font-normal tracking-tight">
             {unitTitle}
           </h5>
-          <div className="grid grid-cols-4 gap-6">
+          <div className="flex flex-wrap gap-2">
             {specs.map((spec) => (
               <Badge
                 key={spec.id}
