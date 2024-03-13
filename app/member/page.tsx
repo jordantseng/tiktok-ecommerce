@@ -14,6 +14,7 @@ import { useRecommendsContext } from '@/context/RecommendsContext'
 import { useOrderContext } from '@/context/OrderContext'
 import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
+import { cn } from '@/lib/utils'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -135,15 +136,17 @@ const MemberPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <div className="relative m-4 flex flex-col gap-5 rounded-xl bg-white p-4">
-            {navLinks.map(({ title, href, Icon }) => (
+          <div className="relative m-4 flex flex-col rounded-xl bg-white px-2">
+            {navLinks.map(({ title, href, Icon }, index, source) => (
               <div
                 key={title}
                 onClick={() => router.push(href)}
-                className="flex cursor-pointer items-center justify-between gap-1"
+                className={cn('flex cursor-pointer items-center justify-between gap-1 p-2', {
+                  'border-b border-gray-200': index !== source.length - 1,
+                })}
               >
                 {isPreparingAuthData ? (
-                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-7 w-full" />
                 ) : (
                   <>
                     <div className="flex gap-2">
