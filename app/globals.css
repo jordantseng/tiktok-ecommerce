@@ -75,6 +75,10 @@
     @apply border-border;
   }
   body {
+    font-size: 16px;
     @apply bg-background text-foreground;
+  }
+  input[type='text'] {
+    font-size: inherit;
   }
 }
