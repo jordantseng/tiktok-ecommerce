@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronRightIcon } from 'lucide-react'
 import { ProductData } from '@/services/product'
-import { Item, useCartContext } from '@/context/CartContext'
+import { useCartContext } from '@/context/CartContext'
 
 type SubmitButtonsProps = {
   product: ProductData
@@ -40,18 +40,17 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   )
   const router = useRouter()
   const { toast } = useToast()
-  const nowAmount = items.find((opt) => opt.id === product.id)?.amount || 0
 
-  const item: Item = {
+  const nowAmount = items.find((opt) => opt.id === product.id)?.amount || 0
+  const item = {
     id: product.id,
-    productItemId: Number(confirmedItem?.id),
-    amount: nowAmount + confirmedItem.count,
+    productItemId: Number(selectedSize?.id),
+    amount: nowAmount + count,
     imgUrl: product.imgs[0],
     title: product.title,
     price: product.price,
     originPrice: product.marketprice,
     tags: product.tags?.split(','),
-    isSelect: false,
   }
 
   const handleSpecSelect = ({ id, size }: { id: string; size: string }) => {
@@ -72,6 +71,12 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
       return
     }
 
+    updateConfirmedItem((draft) => {
+      draft.id = selectedSize.id
+      draft.size = selectedSize.size
+      draft.count = count
+    })
+
     if (selectedButtonType === 'addToCart') {
       handleAddToCart(item)
       setIsDialogOpen(false)
@@ -89,11 +94,6 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     }
 
     setIsDialogOpen(false)
-    updateConfirmedItem((draft) => {
-      draft.id = selectedSize.id
-      draft.size = selectedSize.size
-      draft.count = count
-    })
   }
 
   const handleBuyProductClick = () => {
