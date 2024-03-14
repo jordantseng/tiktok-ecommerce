@@ -15,6 +15,7 @@ import { useOrderContext } from '@/context/OrderContext'
 import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 function AvatarDemo({ src }: { src?: string }) {
   return (
@@ -164,18 +165,22 @@ const MemberPage = () => {
             <div className="font-lg flex items-center justify-center">
               {isPreparingAuthData ? <Skeleton className="h-8 w-32" /> : <RecommendTitle />}
             </div>
-            <div className="grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
+            <div className="grid grid-cols-2 gap-4 px-4 max-[320px]:w-full max-[320px]:grid-cols-1">
               {recommends.map((recommend) => (
-                <MerchandiseCard
-                  className="h-full w-full"
-                  id={recommend.id}
-                  key={recommend.id}
-                  imgUrl={recommend.imgs[0]}
-                  title={recommend.title}
-                  tags={recommend.tags?.split(',')}
-                  price={recommend.price}
-                  originPrice={recommend.marketprice}
-                />
+                <Link key={recommend.id} href={`/product-detail?id=${recommend.id}`}>
+                  <MerchandiseCard
+                    className="w-full"
+                    id={recommend.id}
+                    key={recommend.id}
+                    imgUrl={recommend.imgs[0]}
+                    title={recommend.title}
+                    tags={recommend.tags?.split(',')}
+                    price={recommend.price}
+                    originPrice={recommend.marketprice}
+                    sales={String(recommend.buycount)}
+                    stars={recommend.star}
+                  />
+                </Link>
               ))}
               {isLoadingRecommends &&
                 Array.from({ length: 2 }).map((_, index) => <MerchandiseSkeleton key={index} />)}
