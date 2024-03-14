@@ -148,21 +148,22 @@ const ShoppingCartPage = () => {
         </div>
 
         <RecommendTitle />
-
-        <div className="mb-32 grid w-full grid-cols-2 place-items-center gap-4 p-4 max-[320px]:grid-cols-1">
+        <div className="grid grid-cols-2 gap-4 max-[320px]:w-full max-[320px]:grid-cols-1">
           {recommends.map((opt) => (
-            <MerchandiseCard
-              id={opt.id}
-              key={opt.id}
-              className="h-auto w-full"
-              imgUrl={opt.imgs[0]}
-              title={opt.title}
-              tags={opt.tags?.split(',')}
-              price={opt.price}
-              originPrice={opt.marketprice}
-              sales={String(opt.buycount)}
-              stars={opt.star}
-            />
+            <Link key={opt.id} href={`/product-detail?id=${opt.id}`}>
+              <MerchandiseCard
+                id={opt.id}
+                key={opt.id}
+                className="w-full"
+                imgUrl={opt.imgs[0]}
+                title={opt.title}
+                tags={opt.tags?.split(',')}
+                price={opt.price}
+                originPrice={opt.marketprice}
+                sales={String(opt.buycount)}
+                stars={opt.star}
+              />
+            </Link>
           ))}
 
           {isLoadingRecommends &&
