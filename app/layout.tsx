@@ -44,12 +44,12 @@ export default function RootLayout({
             <AddressProvider>
               <body
                 className={cn(
-                  'touch-none bg-black font-sans antialiased',
+                  'touch-pan-x touch-pan-y bg-black font-sans antialiased',
                   inter.variable,
                   inter.className,
                 )}
               >
-                <div className="mx-auto min-h-screen w-full max-w-md touch-none">{children}</div>
+                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
                 <Toaster />
               </body>
             </AddressProvider>
