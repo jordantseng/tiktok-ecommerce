@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to Remote VM
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - name: Install Node.js
