@@ -23,6 +23,7 @@ type CartData = {
   domain_id: number
   tags: string
   online: number
+  unit: string
 }
 
 export type CartReq = {

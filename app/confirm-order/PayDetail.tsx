@@ -50,12 +50,10 @@ const PayDetail = ({ discount }: Props) => {
             <span className="flex justify-center">${logisticFee}</span>
           </div>
 
-          {discount?.discount && (
-            <div className="flex justify-end justify-between text-sm font-light">
-              <span className="break-keep">折扣折抵：</span>
-              <span className="mb-2 flex border-b-2">-${discount.discount}</span>
-            </div>
-          )}
+          <div className="flex items-center justify-between text-sm font-light">
+            <span className="break-keep">折扣折抵：</span>
+            <span className="mb-2 flex border-b-2">-${discount?.discount || 0}</span>
+          </div>
           <div className="flex items-center justify-between text-sm font-bold">
             <span className="break-keep">總付款金額：</span>
             <span className="flex justify-center text-lg font-semibold text-red-400">

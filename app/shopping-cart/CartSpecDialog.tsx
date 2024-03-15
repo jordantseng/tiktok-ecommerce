@@ -50,6 +50,7 @@ const CartSpecDialog = ({
       onSpecSelect={onSpecSelect}
       onCountChange={onAmountChange}
       onClose={onClose}
+      unitTitle={selectProductItem?.unit}
       Image={
         <div className="flex">
           {selectProductItem && (

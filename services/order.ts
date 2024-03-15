@@ -221,7 +221,7 @@ export const payOrder = async (id: number): Promise<void> => {
 
 export const previewDiscont = async (code: string): Promise<OrderRes> => {
   const { data } = await axiosInstance.post('/api/membercenter/ordergroup/review', {
-    discount: code || '',
+    discount_code: code || '',
   })
 
   return data

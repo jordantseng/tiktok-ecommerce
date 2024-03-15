@@ -1,5 +1,6 @@
 export type CartItem = {
   id: number
+  unit?: string
   imgUrl?: string
   title: string
   tags?: string[]
