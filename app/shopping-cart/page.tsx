@@ -148,7 +148,7 @@ const ShoppingCartPage = () => {
         </div>
 
         <RecommendTitle />
-        <div className="grid grid-cols-2 gap-4 max-[320px]:w-full max-[320px]:grid-cols-1">
+        <div className="grid grid-cols-2 gap-4 pb-32 max-[320px]:w-full max-[320px]:grid-cols-1">
           {recommends.map((opt) => (
             <Link key={opt.id} href={`/product-detail?id=${opt.id}`}>
               <MerchandiseCard
