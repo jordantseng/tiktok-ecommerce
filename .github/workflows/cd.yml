@@ -16,7 +16,7 @@ jobs:
       - name: Run build task
         run: npm run build --if-present
       - name: Set PATH
-        run: echo "export PATH=\$PATH:root/.nvm/versions/node/v20.9.0/bin" >> $GITHUB_ENV
+        run: echo "export PATH=\$PATH:/root/.nvm/versions/node/v20.9.0/bin/pm2" >> $GITHUB_ENV
       - name: Debug Environment
         run: |
           echo "PATH: $PATH"
