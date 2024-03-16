@@ -33,7 +33,7 @@ export default async function HomePage() {
             <Link href="/">
               <Image src="/fake-logo.png" width={30} height={30} alt="logo" />
             </Link>
-            {webSettingsData?.title || '天服能量購物商城'}
+            {/* {webSettingsData?.title || '天服能量購物商城'} */}
           </h4>
           <div className="flex items-center gap-4">
             <Link href="/announcement">
