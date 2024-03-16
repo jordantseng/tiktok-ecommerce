@@ -15,6 +15,13 @@ jobs:
         run: npm install
       - name: Run build task
         run: npm run build --if-present
+      - name: Set PATH
+        run: echo "export PATH=\$PATH:/root/.nvm/versions/node/v20.9.0/bin/pm2" >> $GITHUB_ENV
+      - name: Debug Environment
+        run: |
+          echo "PATH: $PATH"
+          echo "SHELL: $SHELL"
+        shell: bash
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         with:
@@ -28,4 +35,4 @@ jobs:
           SCRIPT_BEFORE: ls
           SCRIPT_AFTER: |
             node --version
-            pm2 restart tiktok-ecommerce
+            /root/.nvm/versions/node/v20.9.0/bin/pm2 restart tiktok-ecommerce
