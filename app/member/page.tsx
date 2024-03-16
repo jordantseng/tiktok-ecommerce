@@ -137,7 +137,7 @@ const MemberPage = () => {
         </div>
 
         <div className="relative -top-28 flex flex-1 flex-col">
-          <div className="relative m-4 flex flex-col rounded-xl bg-white px-2">
+          {/* <div className="relative m-4 flex flex-col rounded-xl bg-white px-2">
             {navLinks.map(({ title, href, Icon }, index, source) => (
               <div
                 key={title}
@@ -160,8 +160,8 @@ const MemberPage = () => {
                 )}
               </div>
             ))}
-          </div>
-          <div className="mt-4">
+          </div> */}
+          <div className="mt-4 flex flex-col gap-4">
             <div className="font-lg flex items-center justify-center">
               {isPreparingAuthData ? <Skeleton className="h-8 w-32" /> : <RecommendTitle />}
             </div>

@@ -7,7 +7,6 @@ import Link from 'next/link'
 import CartItem from '@/components/CartItem'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
 import NavBar from '@/components/NavBar'
-import Title from '@/components/Title'
 import RecommendTitle from '@/components/RecommendTitle'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -15,7 +14,6 @@ import CartSpecDialog from '@/app/shopping-cart/CartSpecDialog'
 import { Item, useCartContext } from '@/context/CartContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 import { getProductItems } from '@/services/productItem'
-import PrevButton from '@/components/PrevButton'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
@@ -148,7 +146,8 @@ const ShoppingCartPage = () => {
         </div>
 
         <RecommendTitle />
-        <div className="grid grid-cols-2 gap-4 pb-32 max-[320px]:w-full max-[320px]:grid-cols-1">
+
+        <div className="grid w-full grid-cols-2 gap-4 p-4 pb-32 max-[320px]:w-full max-[320px]:grid-cols-1">
           {recommends.map((opt) => (
             <Link key={opt.id} href={`/product-detail?id=${opt.id}`}>
               <MerchandiseCard
