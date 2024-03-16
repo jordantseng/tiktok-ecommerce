@@ -35,4 +35,4 @@ jobs:
           SCRIPT_BEFORE: ls
           SCRIPT_AFTER: |
             node --version
-            pm2 restart tiktok-ecommerce
+            /root/.nvm/versions/node/v20.9.0/bin/pm2 restart tiktok-ecommerce
