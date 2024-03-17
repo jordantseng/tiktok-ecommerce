@@ -14,11 +14,11 @@ function ShoppingSummaryCard({ detail }: ShoppingSummaryCardProps) {
     <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
       <div className="flex flex-1 items-end justify-between gap-2">
         {detail.product.imgs.map((img, index) => (
-          <div key={index} className="rounded-xl bg-background p-4">
+          <div key={index} className="">
             <Image
               width={100}
               height={100}
-              className="md:h-25 md:w-25 h-10 w-10"
+              className="h-16 w-16 rounded-xl md:h-20 md:w-20"
               src={img}
               alt={detail.product_title}
             />
@@ -41,8 +41,8 @@ function ShoppingSummaryCardSkeleton() {
   return (
     <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">
       <div className="flex flex-1 items-end justify-between gap-2">
-        <div className="rounded-xl bg-background p-4">
-          <Skeleton className="md:h-25 md:w-25 h-10 w-10" />
+        <div>
+          <Skeleton className="h-16 w-16 rounded-xl md:h-20 md:w-20" />
         </div>
 
         <div className="flex flex-col items-end gap-2">

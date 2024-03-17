@@ -129,7 +129,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
 
   const actions: Record<typeof status, Action[]> = {
     checkout: [
-      { label: '付款', onClick: handlePay, type: 'primary' },
+      { label: '去結帳', onClick: handlePay, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     shipping: [

@@ -101,7 +101,7 @@ const CheckoutPage = () => {
             {!order ? (
               <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <PrimaryButton onClick={handlePay}>付款</PrimaryButton>
+              <PrimaryButton onClick={handlePay}>去結帳</PrimaryButton>
             )}
           </div>
         </div>
