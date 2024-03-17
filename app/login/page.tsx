@@ -48,7 +48,7 @@ const LoginPage = () => {
   const type = searchParams.get('type')
   const isReset = type === 'reset'
 
-  const { handleLogin } = useAuthContext()
+  const { handleLoginEmail } = useAuthContext()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,7 +67,7 @@ const LoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    await handleLogin(values, isReset)
+    await handleLoginEmail(values, isReset)
     setIsSubmitting(false)
   }
 

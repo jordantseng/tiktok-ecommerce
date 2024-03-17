@@ -42,7 +42,7 @@ type ChangePasswordRes = ApiRes<{
   id: string
 }>
 
-export const login = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
+export const loginEmail = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
   const { data } = await axiosInstance.post('/api/member/login/store', {
     email,
     password,
