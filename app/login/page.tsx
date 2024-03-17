@@ -179,7 +179,7 @@ const LoginPage = () => {
           </div>
         </div>
 
-        <div className="flex w-full flex-col items-center gap-2">
+        <div className="mb-16 flex w-full flex-col items-center gap-2">
           <span className="text-sm text-gray-500">其他登入方式</span>
           <TiktokLoginButton />
         </div>
