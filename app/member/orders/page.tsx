@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 import { orderStatusMap } from '@/constants/order'
-import { useOrderContext } from '@/context/OrderContext'
 import Title from '@/components/Title'
 import BottomDialog from '@/components/BottomDialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -19,6 +18,7 @@ import {
   ReceiptedOrders,
   RefundedOrders,
 } from '@/app/member/orders/Orders'
+import { useContactContext } from '@/context/ContactContext'
 
 const OrdersPage = () => {
   const router = useRouter()
@@ -42,7 +42,7 @@ const OrdersPage = () => {
     handleContactDialogClose,
     handleContactMessageChange,
     handleContactSubmit,
-  } = useOrderContext()
+  } = useContactContext()
 
   const handleTabChange = (value: string) => {
     const newSearchPamras = new URLSearchParams(searchParams)

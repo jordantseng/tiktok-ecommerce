@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 
 import { OrderProvider } from '@/context/OrderContext'
 import { RecommendsProvider } from '@/context/RecommendsContext'
+import { ContactProvider } from '@/context/ContactContext'
 
 export default function RootLayout({
   children,
@@ -10,7 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <RecommendsProvider>
-      <OrderProvider>{children}</OrderProvider>
+      <OrderProvider>
+        <ContactProvider>{children}</ContactProvider>
+      </OrderProvider>
     </RecommendsProvider>
   )
 }

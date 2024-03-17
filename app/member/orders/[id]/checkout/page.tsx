@@ -56,7 +56,7 @@ const CheckoutPage = () => {
     }
 
     if (order?.paystatus?.includes('atm')) {
-      router.push(`/member/orders/atm-detail/checkout?id=${order.id}`)
+      router.push(`/atm-detail/checkout?id=${order.id}`)
     } else {
       payOrder(order?.id)
     }
