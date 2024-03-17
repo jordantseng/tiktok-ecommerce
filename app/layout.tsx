@@ -9,6 +9,7 @@ import { AddressProvider } from '@/context/AddressContext'
 import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
 import { getWebSettings } from '@/services/webSettings'
+import { NavigationProvider } from '@/context/NavigationContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,22 +40,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <WebSettingsProvider>
-        <AuthProvider>
-          <CartProvider>
-            <AddressProvider>
-              <body
-                className={cn(
-                  'touch-pan-x touch-pan-y bg-black font-sans antialiased',
-                  inter.variable,
-                  inter.className,
-                )}
-              >
-                <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
-                <Toaster />
-              </body>
-            </AddressProvider>
-          </CartProvider>
-        </AuthProvider>
+        <NavigationProvider>
+          <AuthProvider>
+            <CartProvider>
+              <AddressProvider>
+                <body
+                  className={cn(
+                    'touch-pan-x touch-pan-y bg-black font-sans antialiased',
+                    inter.variable,
+                    inter.className,
+                  )}
+                >
+                  <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
+                  <Toaster />
+                </body>
+              </AddressProvider>
+            </CartProvider>
+          </AuthProvider>
+        </NavigationProvider>
       </WebSettingsProvider>
     </html>
   )

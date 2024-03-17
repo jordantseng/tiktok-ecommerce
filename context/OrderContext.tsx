@@ -17,8 +17,9 @@ import { format } from 'date-fns'
 import { OrderData, OrderDetail, getOrders } from '@/services/order'
 import { createMemberFeedback } from '@/services/feedback'
 import { useAuthContext } from '@/context/AuthContext'
+import { useCartContext } from '@/context/CartContext'
+import { useNavigationContext } from '@/context/NavigationContext'
 import { toast } from '@/components/ui/use-toast'
-import { useCartContext } from './CartContext'
 
 type OrderContextType = {
   orders: OrderData[]
@@ -39,8 +40,10 @@ const OrderContext = createContext<OrderContextType | null>(null)
 
 export const OrderProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
+
   const { token, user, isPreparingAuthData, refreshUser } = useAuthContext()
   const { handleAddToCarts } = useCartContext()
+  const { setFromPath } = useNavigationContext()
 
   const contactTextareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -53,11 +56,12 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (!token) {
+      setFromPath()
       router.push('/login')
     } else {
       refreshUser()
     }
-  }, [token, router, refreshUser])
+  }, [token, router, refreshUser, setFromPath])
 
   useEffect(() => {
     if (isPreparingAuthData) return

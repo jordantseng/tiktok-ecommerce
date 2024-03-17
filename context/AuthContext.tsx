@@ -15,6 +15,7 @@ import {
   register,
 } from '@/services/auth'
 import { useToast } from '@/components/ui/use-toast'
+import { useNavigationContext } from './NavigationContext'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
@@ -44,6 +45,7 @@ const AuthContext = createContext<AuthContextType | null>(null)
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
   const { toast } = useToast()
+  const { setFromPath } = useNavigationContext()
 
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState(getLocalStorageToken())
@@ -112,6 +114,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setUser(null)
     setToken('')
     localStorage.removeItem('token')
+    setFromPath('/')
     router.push('/login')
   }
 
