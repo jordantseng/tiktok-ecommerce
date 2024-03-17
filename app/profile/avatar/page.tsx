@@ -4,6 +4,7 @@ import Title from '@/components/Title'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuthContext } from '@/context/AuthContext'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useState } from 'react'
 
 function AvatarDemo({ src }: { src?: string }) {
@@ -22,12 +23,15 @@ type AvatarPageProps = {}
 function AvatarPage({}: AvatarPageProps) {
   const { user, isLoadingUser, refreshUser } = useAuthContext()
   const [imgUrl, setImgUrl] = useState<string | undefined>()
+  const router = useRouter()
 
   useEffect(() => {
     if (!user) {
       refreshUser()
+    } else if (!user.email) {
+      router.push('/edit-email')
     }
-  }, [user, refreshUser])
+  }, [user, router, refreshUser])
 
   function handleUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]

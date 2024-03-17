@@ -61,18 +61,25 @@ function ProfilePage() {
     if (!user) {
       refreshUser()
     } else {
-      form.reset({
-        id: user.id.toString() ?? '',
-        mobile: user.mobile ?? '',
-        email: user.email ?? '',
-        password: '********',
-      })
+      if (!user.email) {
+        router.push('/edit-email')
+      } else {
+        form.reset({
+          id: user.id.toString() ?? '',
+          mobile: user.mobile ?? '',
+          email: user.email ?? '',
+          password: '********',
+        })
+      }
     }
-  }, [user, form, refreshUser])
+  }, [user, form, router, refreshUser])
 
   async function handleSubmit(result: z.infer<typeof formSchema>) {
     try {
-      const { resultcode, resultmessage } = await updateUser(result)
+      const { resultcode, resultmessage } = await updateUser({
+        ...result,
+        name: user?.name,
+      })
 
       if (resultcode === 0) {
         refreshUser()

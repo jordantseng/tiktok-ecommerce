@@ -59,9 +59,13 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       setFromPath()
       router.push('/login')
     } else {
-      refreshUser()
+      if (!user) {
+        refreshUser()
+      } else if (!user.email) {
+        router.push('/edit-email')
+      }
     }
-  }, [token, router, refreshUser, setFromPath])
+  }, [token, router, user, refreshUser, setFromPath])
 
   useEffect(() => {
     if (isPreparingAuthData) return

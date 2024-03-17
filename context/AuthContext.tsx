@@ -1,7 +1,14 @@
 'use client'
 
-import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import {
   LoginInfo,
@@ -12,6 +19,7 @@ import {
   getEmailCode,
   getUser,
   loginEmail,
+  loginTiktok,
   register,
 } from '@/services/auth'
 import { useToast } from '@/components/ui/use-toast'
@@ -33,6 +41,7 @@ type AuthContextType = {
   isPreparingAuthData: boolean
   handleRegister: (registerInfo: RegisterInfo) => Promise<void>
   handleLoginEmail: (loginInfo: LoginInfo, isReset: boolean) => Promise<void>
+  handleLoginTiktok: () => void
   handleGetEmailCode: (email: string) => Promise<void>
   handleForgetPassword: (email: string) => Promise<void>
   handleChangePassword: (email: string) => Promise<void>
@@ -43,9 +52,13 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const router = useRouter()
   const { toast } = useToast()
-  const { setFromPath } = useNavigationContext()
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const tiktokToken = searchParams.get('token')
+
+  const { from, setFromPath } = useNavigationContext()
 
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState(getLocalStorageToken())
@@ -53,6 +66,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const isLogin = !!token
   const isPreparingAuthData = !user || !token
+
+  useEffect(() => {
+    if (tiktokToken) {
+      setToken(tiktokToken)
+      setFromPath()
+      localStorage.setItem('token', tiktokToken)
+      router.push('/edit-email')
+    }
+  }, [tiktokToken, router, pathname, setFromPath])
 
   const refreshUser = useCallback(async () => {
     setIsLoadingUser(true)
@@ -86,6 +108,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         description: error instanceof Error ? `${error.message}` : `${error}`,
       })
     }
+  }
+
+  const handleLoginTiktok = () => {
+    const callbackURL = window.location.origin + from
+    loginTiktok(callbackURL)
   }
 
   const handleRegister = async ({ email, password, code }: RegisterInfo) => {
@@ -190,6 +217,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         refreshUser,
         handleRegister,
         handleLoginEmail,
+        handleLoginTiktok,
         handleLogout,
         handleGetEmailCode,
         handleForgetPassword,
