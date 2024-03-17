@@ -19,12 +19,12 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
   return (
     <div className="flex flex-1 items-end justify-between">
       <span className="flex items-center gap-4">
-        <div className="rounded-xl bg-background p-4">
+        <div>
           {Array.isArray(productImages) && productImages[0] ? (
             <Image
               width={100}
               height={100}
-              className="h-10 w-10"
+              className="h-16 w-16 rounded-xl"
               src={productImages[0]}
               alt={detail.product_title}
             />
@@ -49,8 +49,8 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
 function ShoppingItemCardSkeleton() {
   return (
     <div className="flex flex-1 items-end justify-between gap-2">
-      <div className="rounded-xl bg-background p-4">
-        <Skeleton className="h-10 w-10" />
+      <div>
+        <Skeleton className="h-14 w-14 rounded-xl" />
       </div>
 
       <div className="flex flex-1 flex-col gap-2 text-sm">

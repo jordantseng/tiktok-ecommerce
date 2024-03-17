@@ -14,7 +14,6 @@ import { useRecommendsContext } from '@/context/RecommendsContext'
 import { useOrderContext } from '@/context/OrderContext'
 import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
-import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
 function AvatarDemo({ src }: { src?: string }) {
