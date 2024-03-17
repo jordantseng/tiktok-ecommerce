@@ -1,18 +1,16 @@
 'use client'
+import Image from 'next/image'
+
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
-import { useOrderContext } from '@/context/OrderContext'
+import { useContactContext } from '@/context/ContactContext'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
-import Image from 'next/image'
 
 const AtmDetailPage = () => {
   const { order } = useOrderDetailContext()
-  const { handleContactMessageChange, contactMessage, handleContactSubmit } = useOrderContext()
-  const handleConfirmContact = async () => {
-    await handleContactSubmit()
-  }
+  const { handleContactMessageChange, contactMessage, handleContactSubmit } = useContactContext()
   return (
     <>
       <Title title="付款" goBackUrl="/member/orders" />
@@ -87,7 +85,7 @@ const AtmDetailPage = () => {
                 disabled={!contactMessage}
                 className="ml-auto mt-2 w-[25%] rounded-lg"
                 variant="primary"
-                onClick={handleConfirmContact}
+                onClick={handleContactSubmit}
               >
                 送出
               </Button>

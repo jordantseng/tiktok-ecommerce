@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { ButtonType, buttonMap } from '@/components/OrderButtons'
 import { useOrderContext } from '@/context/OrderContext'
+import { useContactContext } from '@/context/ContactContext'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/use-toast'
@@ -63,7 +64,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
   const status = getOrderStatus(order)!
 
   const { toast } = useToast()
-  const { handleContactDialogOpen, handleSelectOrder, handleBuyAgain } = useOrderContext()
+  const { handleContactDialogOpen, handleSelectOrder } = useContactContext()
+  const { handleBuyAgain } = useOrderContext()
 
   const [isBuying, setIsBuying] = useState(false)
 
