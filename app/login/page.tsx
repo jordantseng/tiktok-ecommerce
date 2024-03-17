@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 
 function TiktokLoginButton() {
-  function handleLoginTiktok() {}
+  const { handleLoginTiktok } = useAuthContext()
   return (
     <Avatar
       onClick={handleLoginTiktok}

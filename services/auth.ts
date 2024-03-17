@@ -1,4 +1,5 @@
 import axiosInstance from '@/lib/axios'
+import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
 export type LoginRes = ApiRes<{
@@ -51,6 +52,30 @@ export const loginEmail = async ({ email, password }: LoginInfo): Promise<LoginR
   return data
 }
 
+export const loginTiktok = async (callbackURL: string): Promise<void> => {
+  const form = document.createElement('form')
+
+  form.method = 'post'
+  form.action = `${config.api}/sso/tiktok`
+
+  const fields = {
+    client_gobackurl: callbackURL,
+  }
+
+  // Append input elements to the form
+  Object.entries(fields).forEach(([name, value]) => {
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = name
+    input.value = value.toString()
+    form.appendChild(input)
+  })
+
+  document.body.appendChild(form)
+  form.submit()
+  document.body.removeChild(form)
+}
+
 export const register = async ({ email, password, code }: RegisterInfo): Promise<LoginRes> => {
   const { data } = await axiosInstance.post('/api/member/create/store', {
     email,
@@ -76,12 +101,16 @@ export const getUser = async (): Promise<UserRes> => {
 }
 
 export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
-  const { mobile, email } = user
+  const { mobile, email, name } = user
 
-  const { data } = await axiosInstance.post('/api/membercenter/edit/store', {
-    mobile,
+  const body: typeof user = {
     email,
-  })
+  }
+
+  if (mobile) body.mobile = mobile
+  if (name) body.name = name
+
+  const { data } = await axiosInstance.post('/api/membercenter/edit/store', body)
 
   return data
 }
