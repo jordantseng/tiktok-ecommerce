@@ -40,7 +40,7 @@ const CartItem = ({
 }: Props) => {
   return (
     <div className="flex w-auto flex-col border-b p-2">
-      {!editable && (
+      {/* {!editable && (
         <div className="ml-auto">
           {tags.map((opt) => (
             <span key={opt} className="mx-1 text-red-400">
@@ -48,7 +48,7 @@ const CartItem = ({
             </span>
           ))}
         </div>
-      )}
+      )} */}
       <div className={cn('flex items-center justify-center', className)}>
         {editable && (
           <Checkbox
@@ -58,8 +58,9 @@ const CartItem = ({
           />
         )}
         <div
-          className={cn('relative m-2 flex h-[130px] w-full max-w-[130px] items-center', {
-            'bg-slate-50': !editable,
+          className={cn('relative m-2 flex  w-full max-w-[130px] items-center', {
+            'h-[80px] max-w-[80px] bg-slate-50': !editable,
+            'h-[130px]': editable,
           })}
         >
           <Image
@@ -76,7 +77,7 @@ const CartItem = ({
             'w-56': !editable,
           })}
         >
-          <CardHeader className={cn('px-0 pb-0', { 'flex-row': !editable })}>
+          <CardHeader className={cn('px-0 pb-0', { 'flex-row justify-between pt-2': !editable })}>
             <div className="max-w-[150px] max-[320px]:max-w-[80px]">
               <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
               <div className="mt-2">
@@ -113,7 +114,7 @@ const CartItem = ({
               </div>
             </div>
             {!editable && (
-              <div className="ml-auto text-lg font-bold md:ml-2" style={{ marginTop: 0 }}>
+              <div className="text-lg font-bold" style={{ marginTop: 0 }}>
                 ${(amount || 1) * (price || originPrice)}
               </div>
             )}
