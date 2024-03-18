@@ -32,12 +32,8 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     if (!token) {
       setFromPath()
       router.push('/login')
-    } else {
-      if (!user) {
-        refreshUser()
-      } else if (!user.email) {
-        router.push('/edit-email')
-      }
+    } else if (!user) {
+      refreshUser()
     }
   }, [token, router, user, refreshUser, setFromPath])
 
