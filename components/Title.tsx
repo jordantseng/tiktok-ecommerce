@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import PrevButton from '@/components/PrevButton'
 
 type Props = {
   title: string
   goBackUrl?: string
   hasPrevButton?: boolean
+  rightComponent?: ReactNode
 }
 
-const Title = ({ title, goBackUrl, hasPrevButton = true }: Props) => {
+const Title = ({ title, goBackUrl, rightComponent, hasPrevButton = true }: Props) => {
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
+    <header className="sticky top-0 z-10 flex items-center justify-between bg-white p-4">
       {hasPrevButton ? (
         <>
           <div className="flex w-1/4 justify-start">
@@ -21,6 +22,7 @@ const Title = ({ title, goBackUrl, hasPrevButton = true }: Props) => {
       ) : (
         <h4 className="w-full text-center text-xl font-normal tracking-tight">{title}</h4>
       )}
+      {rightComponent && <div className="absolute right-4">{rightComponent}</div>}
     </header>
   )
 }

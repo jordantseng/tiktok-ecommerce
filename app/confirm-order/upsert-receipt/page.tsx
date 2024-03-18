@@ -16,7 +16,6 @@ const UpsertReceiptPage = () => {
   const { cities, districts, handleGetDistrict } = useCity()
   const { handleSelectDeliveryType } = useAddressContext()
   const { user } = useAuthContext()
-  const searchParams = useSearchParams()
   const [value, setValue] = useImmer<AddressData>({
     title: format(new Date(), 'yyyymmddHHMMSSS') + user?.name,
     member_id: user?.id || 0,
@@ -24,9 +23,13 @@ const UpsertReceiptPage = () => {
     tel: '',
     LogisticsSubType: 'HOME_DELIVERY',
   })
+
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const id = searchParams.get('id')
+  const from = searchParams.get('from')
+
   const CVSStoreID = searchParams.get('CVSStoreID')
   const CVSStoreName = searchParams.get('CVSStoreName')
   const CVSAddress = searchParams.get('CVSAddress')
@@ -60,7 +63,7 @@ const UpsertReceiptPage = () => {
     const addressToSubmit =
       val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
     upsertAddress(addressToSubmit).then(() => {
-      id ? router.push('/profile') : router.push('/confirm-order/choose-receipt')
+      router.push(from || id ? '/profile' : '/confirm-order/choose-receipt')
     })
   }
 
@@ -68,7 +71,7 @@ const UpsertReceiptPage = () => {
     <main className="min-h-screen">
       <Title
         title={id ? '編輯收件人資訊' : '新增收件人資訊'}
-        goBackUrl={id ? '/profile' : '/confirm-order/choose-delivery'}
+        goBackUrl={from || id ? '/profile' : '/confirm-order/choose-delivery'}
       />
       <div className="flex min-h-screen w-full flex-col items-center bg-background">
         <div className="min-h-screen w-full bg-white p-4">
