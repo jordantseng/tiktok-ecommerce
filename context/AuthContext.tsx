@@ -72,9 +72,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setToken(tiktokToken)
       setFromPath()
       localStorage.setItem('token', tiktokToken)
+      router.replace(from || '/')
+    }
+  }, [tiktokToken, router, pathname, setFromPath, from])
+
+  useEffect(() => {
+    if (user && !user?.email) {
       router.push('/edit-email')
     }
-  }, [tiktokToken, router, pathname, setFromPath])
+  }, [user, router])
 
   const refreshUser = useCallback(async () => {
     setIsLoadingUser(true)

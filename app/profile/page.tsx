@@ -61,16 +61,12 @@ function ProfilePage() {
     if (!user) {
       refreshUser()
     } else {
-      if (!user.email) {
-        router.push('/edit-email')
-      } else {
-        form.reset({
-          id: user.id.toString() ?? '',
-          mobile: user.mobile ?? '',
-          email: user.email ?? '',
-          password: '********',
-        })
-      }
+      form.reset({
+        id: user.id.toString() ?? '',
+        mobile: user.mobile ?? '',
+        email: user.email ?? '',
+        password: '********',
+      })
     }
   }, [user, form, router, refreshUser])
 

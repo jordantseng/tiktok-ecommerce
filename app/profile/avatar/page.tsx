@@ -28,8 +28,6 @@ function AvatarPage({}: AvatarPageProps) {
   useEffect(() => {
     if (!user) {
       refreshUser()
-    } else if (!user.email) {
-      router.push('/edit-email')
     }
   }, [user, router, refreshUser])
 
