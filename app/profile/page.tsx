@@ -10,48 +10,18 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import AddressCard from '@/app/profile/AddressCard'
+import MyAvatar from '@/app/profile/MyAvatar'
+import StatusButton from '@/app/profile/StatusButton'
 import ProfileFormItem, { ProfileFormItemLayout, formSchema } from '@/app/profile/ProfileFormItem'
 import { useAuthContext } from '@/context/AuthContext'
 import { AddressData } from '@/types/common'
 import { getAddress } from '@/services/address'
 import Title from '@/components/Title'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { updateUser } from '@/services/auth'
 import { Form, FormField } from '@/components/ui/form'
-import { cn } from '@/lib/utils'
-
-function AvatarDemo({ src }: { src?: string }) {
-  return (
-    <Avatar className="h-8 w-8 border-2 md:h-10 md:w-10">
-      <AvatarImage src={src || 'https://github.com/shadcn.png'} alt="@shadcn" />
-      <AvatarFallback>
-        <Skeleton className="h-8 w-8 md:h-10 md:w-10" />
-      </AvatarFallback>
-    </Avatar>
-  )
-}
-
-function StatusButton({ title, disabled }: { title: string; disabled?: boolean }) {
-  const { isLoadingUser } = useAuthContext()
-  return (
-    <Button
-      onClick={(e) => e.preventDefault()}
-      variant="ghost"
-      className={cn(
-        'h-full min-w-20 cursor-default rounded-lg border border-primary bg-primary-foreground p-2 font-bold text-primary',
-        {
-          'border-none bg-gray-100 text-gray-800': disabled,
-        },
-      )}
-      disabled={isLoadingUser}
-    >
-      {isLoadingUser ? <Loader2 className="h-4 w-4 animate-spin" /> : title}
-    </Button>
-  )
-}
 
 function ProfilePage() {
   const router = useRouter()
@@ -147,7 +117,7 @@ function ProfilePage() {
                 <span className="text-gray-500">頭像</span>
                 <span className="flex cursor-pointer items-center gap-2" onClick={handleEditAvatar}>
                   {user ? (
-                    <AvatarDemo src={user.img ?? ''} />
+                    <MyAvatar src={user.img ?? ''} />
                   ) : (
                     <Skeleton className="h-8 w-8 rounded-full md:h-10 md:w-10" />
                   )}
