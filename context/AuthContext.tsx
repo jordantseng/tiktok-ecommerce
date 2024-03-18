@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       } else {
         setToken(apiToken)
         localStorage.setItem('token', apiToken)
-        isReset ? router.push('/reset-password') : router.push('/')
+        isReset ? router.push('/reset-password') : router.push(from || '/')
       }
     } catch (error) {
       console.error('handleLoginEmail error: ', error)
