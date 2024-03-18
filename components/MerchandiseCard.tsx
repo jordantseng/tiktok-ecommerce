@@ -51,7 +51,7 @@ const MerchandiseCard = ({
 }: Props) => {
   const starIcons = []
   for (let i = 0; i < (stars || 0); i++) {
-    starIcons.push(<StarIcon fill="#eddb21" className="h-4 w-4" strokeWidth={0} />)
+    starIcons.push(<StarIcon key={i} fill="#eddb21" className="h-4 w-4" strokeWidth={0} />)
   }
 
   return (
