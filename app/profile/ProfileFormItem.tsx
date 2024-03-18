@@ -27,15 +27,19 @@ type FormKeys = keyof typeof formSchema.shape
 type ProfileFormItemProps<T extends FormKeys> = {
   label: string
   disabled?: boolean
+  readOnly?: boolean
   field?: ControllerRenderProps<z.infer<typeof formSchema>, T>
   type?: HTMLInputTypeAttribute
+  onClick?: () => void
 }
 
 export default function ProfileFormItem<T extends FormKeys>({
   label,
   field,
   disabled,
+  readOnly,
   type = 'text',
+  onClick,
 }: ProfileFormItemProps<T>) {
   const { isLoadingUser } = useAuthContext()
   return (
@@ -49,16 +53,23 @@ export default function ProfileFormItem<T extends FormKeys>({
               <Skeleton className="h-6 w-36" />
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div
+              onClick={onClick}
+              className={cn('flex items-center gap-2', {
+                'cursor-pointer': readOnly,
+              })}
+            >
               <Input
                 className={cn('appearance-none bg-white text-right md:text-base', {
-                  'border-none p-0 outline-none': disabled,
+                  'border-none p-0 outline-none': disabled || readOnly,
+                  'cursor-pointer text-gray-400': readOnly,
                 })}
                 disabled={disabled}
+                readOnly={readOnly}
                 type={type}
                 {...field}
               />
-              {type === 'password' && <ExternalLink className="cursor-pointer text-gray-500" />}
+              {type === 'password' && <ExternalLink className="cursor-pointer text-gray-400" />}
             </div>
           )}
         </FormControl>

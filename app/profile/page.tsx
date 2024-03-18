@@ -142,13 +142,21 @@ function ProfilePage() {
                 )}
               />
 
-              {/* <FormField
+              <FormField
                 name="password"
                 control={form.control}
                 render={({ field }) => (
-                  <ProfileFormItem disabled type="password" label="登入密碼" field={field} />
+                  <ProfileFormItem
+                    readOnly
+                    onClick={() => {
+                      router.push('/reset-password')
+                    }}
+                    type="password"
+                    label="登入密碼"
+                    field={field}
+                  />
                 )}
-              /> */}
+              />
               {/* <CustomFormItemLayout label="密碼">
                 <FormControl className="max-w-48 flex-[1] md:max-w-60">
                   {isLoadingUser ? (
