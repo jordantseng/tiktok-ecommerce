@@ -44,7 +44,7 @@ type AuthContextType = {
   handleLoginTiktok: () => void
   handleGetEmailCode: (email: string) => Promise<void>
   handleForgetPassword: (email: string) => Promise<void>
-  handleChangePassword: (email: string) => Promise<void>
+  handleChangePassword: (password: string) => Promise<void>
   handleLogout: () => void
   refreshUser: () => void
 }
@@ -190,9 +190,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const handleChangePassword = async (email: string) => {
+  const handleChangePassword = async (password: string) => {
     try {
-      const { resultcode, resultmessage } = await changePassword(email)
+      const { resultcode, resultmessage } = await changePassword(password)
 
       if (resultcode === 0) {
         toast({
