@@ -129,7 +129,7 @@ function ProfilePage() {
         goBackUrl="/member"
         rightComponent={
           <Button
-            type="submit"
+            onClick={form.handleSubmit(handleSubmit)}
             disabled={isLoadingUser || !user || !form.formState.isDirty}
             className="rounded-lg"
             variant="ghost"
@@ -141,7 +141,7 @@ function ProfilePage() {
 
       <div className="flex flex-col gap-4 p-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col">
+          <form className="flex w-full flex-col">
             <section className="flex flex-col divide-y divide-secondary overflow-hidden rounded-lg">
               <div className="flex items-center justify-between bg-white p-4 py-2">
                 <span className="text-gray-500">頭像</span>
