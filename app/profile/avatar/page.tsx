@@ -1,26 +1,14 @@
 'use client'
 
+import { ChangeEvent, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 import Title from '@/components/Title'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuthContext } from '@/context/AuthContext'
-import { useRouter } from 'next/router'
-import { ChangeEvent, useEffect, useState } from 'react'
 
-function AvatarDemo({ src }: { src?: string }) {
-  return (
-    <Avatar className="h-48 w-48 border-4">
-      <AvatarImage src={src || 'https://github.com/shadcn.png'} alt="@shadcn" />
-      <AvatarFallback>
-        <Skeleton className="h-48 w-48" />
-      </AvatarFallback>
-    </Avatar>
-  )
-}
-
-type AvatarPageProps = {}
-
-function AvatarPage({}: AvatarPageProps) {
+function AvatarPage() {
   const { user, isLoadingUser, refreshUser } = useAuthContext()
   const [imgUrl, setImgUrl] = useState<string | undefined>()
   const router = useRouter()
@@ -54,7 +42,15 @@ function AvatarPage({}: AvatarPageProps) {
           </div>
           <div className="grid place-items-center gap-4 overflow-hidden">
             {user ? (
-              <AvatarDemo src={user.img || imgUrl} />
+              <Avatar className="h-48 w-48 border-4">
+                <AvatarImage
+                  src={user.img || imgUrl || 'https://github.com/shadcn.png'}
+                  alt="@shadcn"
+                />
+                <AvatarFallback>
+                  <Skeleton className="h-48 w-48" />
+                </AvatarFallback>
+              </Avatar>
             ) : (
               <Skeleton className="h-48 w-48 rounded-full" />
             )}

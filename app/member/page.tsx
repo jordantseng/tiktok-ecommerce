@@ -2,6 +2,7 @@
 
 import { SquarePen, ChevronRight, User, Info, NotebookText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import MerchandiseCard, { MerchandiseSkeleton } from '@/components/MerchandiseCard'
@@ -14,18 +15,6 @@ import { useRecommendsContext } from '@/context/RecommendsContext'
 import { useOrderContext } from '@/context/OrderContext'
 import { filterOrderByStatus } from '@/services/order'
 import OrderNavItem from '@/app/member/OrderNavItem'
-import Link from 'next/link'
-
-function AvatarDemo({ src }: { src?: string }) {
-  return (
-    <Avatar className="h-12 w-12 border-2 md:h-20 md:w-20">
-      <AvatarImage src={src || 'https://github.com/shadcn.png'} alt="@shadcn" />
-      <AvatarFallback>
-        <Skeleton className="h-12 w-12 md:h-20 md:w-20" />
-      </AvatarFallback>
-    </Avatar>
-  )
-}
 
 const navLinks = [
   {
@@ -69,7 +58,12 @@ const MemberPage = () => {
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2 md:gap-4">
                 {user ? (
-                  <AvatarDemo src={user.img ?? ''} />
+                  <Avatar className="h-12 w-12 border-2 md:h-20 md:w-20">
+                    <AvatarImage src={user.img || 'https://github.com/shadcn.png'} alt="@shadcn" />
+                    <AvatarFallback>
+                      <Skeleton className="h-12 w-12 md:h-20 md:w-20" />
+                    </AvatarFallback>
+                  </Avatar>
                 ) : (
                   <Skeleton className="h-12 w-12 rounded-full md:h-20 md:w-20" />
                 )}
