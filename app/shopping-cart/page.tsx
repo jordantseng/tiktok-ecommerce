@@ -114,7 +114,11 @@ const ShoppingCartPage = () => {
       <header className="flex items-center justify-between gap-3 bg-white p-4">
         <div className="w-1/4" />
         <h4 className="w-1/2 text-center text-xl font-normal tracking-tight">{`購物車(${items.length})`}</h4>
-        <Button className="w-1/4" variant="ghost" onClick={() => setEditMode(!editMode)}>
+        <Button
+          className="h-full w-1/4 py-[5px]"
+          variant="ghost"
+          onClick={() => setEditMode(!editMode)}
+        >
           {editMode ? '完成' : '編輯'}
         </Button>
       </header>
