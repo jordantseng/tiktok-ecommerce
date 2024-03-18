@@ -7,10 +7,17 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { useContactContext } from '@/context/ContactContext'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { useEffect } from 'react'
 
 const AtmDetailPage = () => {
   const { order } = useOrderDetailContext()
-  const { handleContactMessageChange, contactMessage, handleContactSubmit } = useContactContext()
+  const { handleContactMessageChange, contactMessage, handleContactSubmit, handleSelectOrder } =
+    useContactContext()
+  useEffect(() => {
+    if (order?.id) {
+      handleSelectOrder(order)
+    }
+  }, [handleSelectOrder, order])
   return (
     <>
       <Title title="付款" goBackUrl="/member/orders" />

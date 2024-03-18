@@ -13,7 +13,7 @@ import { useImmer } from 'use-immer'
 import { format } from 'date-fns'
 
 import { OrderData } from '@/services/order'
-import { createMemberFeedback } from '@/services/feedback'
+import { FeedbackData, createMemberFeedback, getMemberFeedbacks } from '@/services/feedback'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from '@/components/ui/use-toast'
 
@@ -22,6 +22,7 @@ type ContactContextType = {
   contactMessage: string
   contactTextareaRef: RefObject<HTMLTextAreaElement>
   isContactDialogOpen: boolean
+  handleGetContactById: (id: number) => Promise<FeedbackData[]>
   handleSelectOrder: (order: OrderData) => void
   handleContactDialogOpen: () => void
   handleContactDialogClose: () => void
@@ -104,6 +105,20 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const handleGetContactById = async (id: number) => {
+    try {
+      const data = await getMemberFeedbacks(id)
+      return data.data
+    } catch (error) {
+      console.error(error)
+      toast({
+        description: `取得失敗: ${error}`,
+        variant: 'destructive',
+      })
+      return []
+    }
+  }
+
   return (
     <ContactContext.Provider
       value={{
@@ -114,6 +129,7 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
         handleContactDialogOpen,
         handleContactMessageChange,
         handleContactSubmit,
+        handleGetContactById,
         handleSelectOrder,
         isContactDialogOpen,
       }}
