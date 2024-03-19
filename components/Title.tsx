@@ -22,7 +22,7 @@ const Title = ({ title, goBackUrl, rightComponent, hasPrevButton = true }: Props
       ) : (
         <h4 className="w-full text-center text-xl font-normal tracking-tight">{title}</h4>
       )}
-      {rightComponent && <div className="absolute right-4">{rightComponent}</div>}
+      {rightComponent && <div className="absolute right-0">{rightComponent}</div>}
     </header>
   )
 }
