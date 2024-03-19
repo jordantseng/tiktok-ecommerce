@@ -30,10 +30,10 @@ jobs:
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: '-rlgoDzvc -i --delete'
-          SOURCE: '.next/'
+          SOURCE: '.next/ public/'
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-          TARGET: '/var/www/tiktok-ecommerce/.next'
+          TARGET: '/var/www/tiktok-ecommerce'
           EXCLUDE: '/.next/, /node_modules/'
           SCRIPT_BEFORE: ls
           SCRIPT_AFTER: |
