@@ -10,6 +10,7 @@ import { CartItem } from '@/types/common'
 import { Select } from './ui/select'
 import { ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
+import Link from 'next/link'
 
 type Props = CartItem & {
   isChecked?: boolean
@@ -23,6 +24,7 @@ type Props = CartItem & {
 
 const CartItem = ({
   id,
+  product_id,
   isChecked,
   editable,
   className,
@@ -63,12 +65,14 @@ const CartItem = ({
             'h-[130px]': editable,
           })}
         >
-          <Image
-            className="rounded-lg object-cover"
-            fill
-            src={imgUrl || ''}
-            alt={`product-${id}`}
-          />
+          <Link href={`/product-detail?id=${product_id}`}>
+            <Image
+              className="rounded-lg object-cover"
+              fill
+              src={imgUrl || ''}
+              alt={`product-${product_id}`}
+            />
+          </Link>
         </div>
 
         <Card

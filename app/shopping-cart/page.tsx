@@ -137,6 +137,7 @@ const ShoppingCartPage = () => {
                 title={opt.title}
                 price={opt.price}
                 tags={opt.tags}
+                product_id={opt.product_id}
                 originPrice={opt.originPrice}
                 productItemId={opt.productItemId}
                 productItemTitle={opt.productItemTitle}

@@ -33,7 +33,10 @@ const DeliveryInfo = ({ onClick }: Props) => {
   }
   return (
     <>
-      <div className="flex justify-between rounded-lg bg-white pl-2">
+      <div
+        className="flex cursor-pointer justify-between rounded-lg bg-white pl-2"
+        onClick={onClick}
+      >
         <div className="flex items-center space-x-2">
           <div className="relative flex h-[18px] min-w-[18px]">
             <Image alt="info" fill src="/truck.png" />
@@ -52,7 +55,7 @@ const DeliveryInfo = ({ onClick }: Props) => {
               </span>
             </div>
           )}
-          <Button className="font-light" variant="ghost" onClick={onClick}>
+          <Button className="font-light" variant="ghost">
             <ChevronRight />
           </Button>
         </div>
@@ -63,7 +66,7 @@ const DeliveryInfo = ({ onClick }: Props) => {
           ⚠️請選擇寄送方式才能確認訂單⚠️
         </div>
       )}
-      <div className="w-full p-4 pb-0">
+      <div className="w-full cursor-pointer p-4 pb-0" onClick={onClick}>
         {selectedAddress && (
           <div className="flex flex-col items-center rounded-lg bg-white p-2">
             <div className="flex w-full items-center p-2">

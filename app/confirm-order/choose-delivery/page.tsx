@@ -26,13 +26,13 @@ const ChooseDeliveryPage = () => {
   useEffect(() => {
     if (pathname === '/confirm-order/choose-delivery') {
       getAddress().then(({ data }) => {
-        if (data.data && data.data.length > 0) {
+        if (data.data && data.data.length > 0 && !selectedAddress) {
           handleSelectAddress(data.data[0])
         }
         setAddresses(data?.data || [])
       })
     }
-  }, [handleSelectAddress, pathname, setAddresses])
+  }, [handleSelectAddress, pathname, selectedAddress, setAddresses])
 
   const handleClick = (type: string) => {
     type !== 'HOME_DELIVERY' ? getLogistic(type) : router.push('/confirm-order/upsert-receipt')
@@ -77,7 +77,7 @@ const ChooseDeliveryPage = () => {
           }}
         >
           <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full" defaultOpen>
+            <Collapsible className="w-full" defaultOpen={deliveryType === 'HOME_DELIVERY'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label className="text-md" htmlFor="HOME_DELIVERY">
@@ -109,7 +109,7 @@ const ChooseDeliveryPage = () => {
             </Collapsible>
           </div>
           <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full">
+            <Collapsible className="w-full" defaultOpen={deliveryType === 'FAMIC2C'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label className="text-md" htmlFor="FAMIC2C">
@@ -139,7 +139,7 @@ const ChooseDeliveryPage = () => {
             </Collapsible>
           </div>
           <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full">
+            <Collapsible className="w-full" defaultChecked={deliveryType === 'UNIMARTC2C'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label className="text-md" htmlFor="UNIMARTC2C">
@@ -169,7 +169,7 @@ const ChooseDeliveryPage = () => {
             </Collapsible>
           </div>
           <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full">
+            <Collapsible className="w-full" defaultOpen={deliveryType === 'HILIFEC2C'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label className="text-md" htmlFor="HILIFEC2C">
