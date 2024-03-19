@@ -102,6 +102,7 @@ const ConfirmBillPage = () => {
                 title={opt.title}
                 price={opt.price}
                 tags={opt.tags}
+                product_id={opt.product_id}
                 originPrice={opt.originPrice}
                 productItemTitle={opt.productItemTitle}
                 productItemId={opt.productItemId}
@@ -129,14 +130,17 @@ const ConfirmBillPage = () => {
         <div className="w-full px-4 py-1">
           <div className="rounded-lg bg-white p-2">
             {/* <PaymentSetting onChange={(val) => setPayStatus(val)} /> */}
-            <div className="flex items-center justify-between rounded-lg bg-white pl-2">
+            <div
+              className="flex cursor-pointer items-center justify-between rounded-lg bg-white pl-2"
+              onClick={() => handleOpen('pay')}
+            >
               <div className="flex items-center space-x-2">
                 <div className="relative flex h-[18px] min-w-[18px]">
                   <Image alt="info" fill src="/money.png" />
                 </div>
                 <span>付款方式</span>
               </div>
-              <Button className="font-light" variant="ghost" onClick={() => handleOpen('pay')}>
+              <Button className="font-light" variant="ghost">
                 {handleLabel(payStatus, webSettingsData)} <ChevronRight />
               </Button>
             </div>
