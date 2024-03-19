@@ -139,7 +139,7 @@ const ChooseDeliveryPage = () => {
             </Collapsible>
           </div>
           <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full" defaultChecked={deliveryType === 'UNIMARTC2C'}>
+            <Collapsible className="w-full" defaultOpen={deliveryType === 'UNIMARTC2C'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label className="text-md" htmlFor="UNIMARTC2C">
