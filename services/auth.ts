@@ -39,7 +39,7 @@ export type User = {
 
 type UserRes = ApiRes<User>
 
-type ChangePasswordRes = ApiRes<{
+type SuccessRes = ApiRes<{
   id: string
 }>
 
@@ -123,10 +123,32 @@ export const forgetPassword = async (email: string): Promise<ApiRes<{}>> => {
   return data
 }
 
-export const changePassword = async (password: string): Promise<ChangePasswordRes> => {
+export const changePassword = async (password: string): Promise<SuccessRes> => {
   const { data } = await axiosInstance.post('/api/membercenter/changepassword/store', {
     password,
   })
+
+  return data
+}
+
+export const checkEmailExist = async (email: string, dict: string): Promise<SuccessRes> => {
+  const { data } = await axiosInstance.post('/api/member/emailcheck', {
+    email,
+    dict,
+  })
+
+  return data
+}
+
+type RegisterTiktokInfo = {
+  dict: string
+  email: string
+  name: string
+  password: string
+}
+
+export const registerTiktok = async (tiktokInfo: RegisterTiktokInfo): Promise<SuccessRes> => {
+  const { data } = await axiosInstance.post('/api/member/tiktok/store', tiktokInfo)
 
   return data
 }
