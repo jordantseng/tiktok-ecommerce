@@ -53,10 +53,12 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const { toast } = useToast()
+
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const tiktokToken = searchParams.get('token')
+  const dict = searchParams.get('dict')
 
   const { from, setFromPath } = useNavigationContext()
 
@@ -73,14 +75,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setFromPath()
       localStorage.setItem('token', tiktokToken)
       router.replace(from || '/')
+    } else if (dict) {
+      setFromPath()
+      localStorage.setItem('dict', dict)
+      router.replace(from || '/')
     }
-  }, [tiktokToken, router, pathname, setFromPath, from])
+  }, [tiktokToken, router, from, dict, setFromPath])
 
   useEffect(() => {
-    if (user && !user?.email) {
+    if (user && !user?.email && pathname !== '/edit-email') {
       router.push('/edit-email')
     }
-  }, [user, router])
+  }, [user, router, pathname])
 
   const refreshUser = useCallback(async () => {
     setIsLoadingUser(true)
