@@ -39,6 +39,7 @@ type AuthContextType = {
   isLogin: boolean
   isLoadingUser: boolean
   isPreparingAuthData: boolean
+  handleSetToken: (token: string) => void
   handleRegister: (registerInfo: RegisterInfo) => Promise<void>
   handleLoginEmail: (loginInfo: LoginInfo, isReset: boolean) => Promise<void>
   handleLoginTiktok: () => void
@@ -70,18 +71,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const isLogin = !!token
   const isPreparingAuthData = !user || !token
 
+  const handleSetToken = useCallback((token: string) => {
+    setToken(token)
+    localStorage.setItem('token', token)
+  }, [])
+
   useEffect(() => {
     if (tiktokToken) {
-      setToken(tiktokToken)
       setFromPath()
-      localStorage.setItem('token', tiktokToken)
+      handleSetToken(tiktokToken)
       router.replace(from || '/')
     } else if (dict) {
       setFromPath()
       localStorage.setItem('dict', dict)
       router.replace(from || '/')
     }
-  }, [tiktokToken, router, from, dict, setFromPath])
+  }, [tiktokToken, router, from, dict, setFromPath, handleSetToken])
 
   useEffect(() => {
     if (user && !user?.email && pathname !== '/edit-email') {
@@ -110,8 +115,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (!apiToken) {
         throw new Error(response.resultmessage)
       } else {
-        setToken(apiToken)
-        localStorage.setItem('token', apiToken)
+        handleSetToken(apiToken)
         isReset ? router.push('/reset-password') : router.push(from || '/')
       }
     } catch (error) {
@@ -142,8 +146,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (!apiToken) {
         throw new Error(response.resultmessage)
       } else {
-        setToken(apiToken)
-        localStorage.setItem('token', apiToken)
+        handleSetToken(apiToken)
         router.push('/')
       }
     } catch (error) {
@@ -233,6 +236,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         isLoadingUser,
         isPreparingAuthData,
         refreshUser,
+        handleSetToken,
         handleRegister,
         handleLoginEmail,
         handleLoginTiktok,

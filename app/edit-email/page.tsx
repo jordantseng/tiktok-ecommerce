@@ -29,7 +29,7 @@ function EditEmailPage() {
   const [couldEditPassword, setCouldEditPassword] = useState(false)
 
   const { from } = useNavigationContext()
-  const { token, user, refreshUser } = useAuthContext()
+  const { token, user, refreshUser, handleSetToken } = useAuthContext()
   const { toast } = useToast()
   const router = useRouter()
 
@@ -127,7 +127,7 @@ function EditEmailPage() {
     }
 
     try {
-      const { resultcode, resultmessage } = await registerTiktok({
+      const { resultcode, resultmessage, data } = await registerTiktok({
         dict,
         name: user?.name || '',
         email: values.email,
@@ -140,6 +140,7 @@ function EditEmailPage() {
           className: 'bg-cyan-500 text-white',
         })
         refreshUser()
+        data?.token && handleSetToken(data.token)
         localStorage.removeItem('dict')
         router.push(from || '/')
       } else {

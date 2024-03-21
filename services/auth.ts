@@ -150,7 +150,13 @@ type RegisterTiktokInfo = {
   password: string
 }
 
-export const registerTiktok = async (tiktokInfo: RegisterTiktokInfo): Promise<SuccessRes> => {
+type RegisterTiktokRes = ApiRes<{
+  token: string
+}>
+
+export const registerTiktok = async (
+  tiktokInfo: RegisterTiktokInfo,
+): Promise<RegisterTiktokRes> => {
   const { data } = await axiosInstance.post('/api/member/tiktok/store', tiktokInfo)
 
   return data
