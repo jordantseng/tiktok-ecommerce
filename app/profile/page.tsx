@@ -26,9 +26,11 @@ import { Form, FormField } from '@/components/ui/form'
 function ProfilePage() {
   const router = useRouter()
   const { toast } = useToast()
-  const { user, isLoadingUser, refreshUser } = useAuthContext()
+  const { user, isLoadingUser, refreshUser, handleBindTiktok } = useAuthContext()
 
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
+
+  const noTiktokId = !user?.tiktokid
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -90,6 +92,19 @@ function ProfilePage() {
   function handleAddAddress(e: MouseEvent) {
     e.preventDefault()
     router.push('/confirm-order/upsert-receipt?from=/profile')
+  }
+
+  function handleBindTiktokAccount(e: MouseEvent) {
+    e.preventDefault()
+
+    if (noTiktokId) {
+      handleBindTiktok()
+    } else {
+      toast({
+        variant: 'destructive',
+        description: '已經綁定過 Tiktok 帳號',
+      })
+    }
   }
 
   return (
@@ -179,7 +194,11 @@ function ProfilePage() {
                   </div>
                 }
               >
-                <StatusButton title="連動" disabled={!user?.tiktokid} />
+                <StatusButton
+                  title="連動"
+                  disabled={noTiktokId}
+                  onClick={handleBindTiktokAccount}
+                />
               </ProfileFormItemLayout>
             </section>
 
