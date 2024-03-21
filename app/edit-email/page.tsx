@@ -33,12 +33,6 @@ function EditEmailPage() {
   const { toast } = useToast()
   const router = useRouter()
 
-  useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    }
-  }, [token, router])
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,9 +40,24 @@ function EditEmailPage() {
       password: '',
     },
   })
+
   const email = form.watch('email')
   const password = form.watch('password')
   const errors = form.formState.errors
+
+  const isEmailDirty = form.getFieldState('email').isDirty
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/login')
+    }
+  }, [token, router])
+
+  useEffect(() => {
+    if (isEmailDirty) {
+      setCouldEditPassword(false)
+    }
+  }, [isEmailDirty])
 
   async function handleUpdateUser(values: z.infer<typeof formSchema>) {
     try {
@@ -80,6 +89,17 @@ function EditEmailPage() {
       const { resultcode, resultmessage } = await checkEmailExist(values.email, dict)
 
       if (resultcode === 0) {
+        // reset isDirty to monitor email change toggle couldEditPassword state
+        form.reset(
+          {
+            email: values.email,
+            password: '',
+          },
+          {
+            keepDirty: false,
+          },
+        )
+
         setCouldEditPassword(true)
         toast({
           description: 'Email 可以使用，請輸入密碼',
@@ -169,25 +189,30 @@ function EditEmailPage() {
                     <div className="flex flex-col items-end gap-1">
                       <div className="flex w-full flex-col">
                         <label className="text-sm text-gray-500">電子信箱</label>
-                        <div className="relative flex flex-1">
-                          <Input
-                            className=" rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-0 outline-none"
-                            {...field}
-                          />
-                          {email && (
-                            <div
-                              className="absolute bottom-0 right-1 top-0 flex cursor-pointer items-center"
-                              onClick={() => form.setValue('email', '')}
-                            >
-                              <XCircle
-                                className="h-4 w-4 text-white md:h-6 md:w-6"
-                                fill="#cccccc"
-                              />
-                            </div>
-                          )}
+                        <div className="flex gap-2">
+                          <div className="relative flex flex-1 flex-col items-start gap-1">
+                            <Input
+                              className="rounded-none border-b border-l-0 border-r-0 border-t-0 bg-transparent px-0 py-0 outline-none"
+                              {...field}
+                            />
+                            {email && (
+                              <div
+                                className="absolute bottom-0 right-1 top-2 flex cursor-pointer"
+                                onClick={() => form.setValue('email', '')}
+                              >
+                                <XCircle
+                                  className="h-4 w-4 text-white md:h-6 md:w-6"
+                                  fill="#cccccc"
+                                />
+                              </div>
+                            )}
+                            {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
+                          </div>
+                          <Button disabled={!email} type="submit" className="rounded-xl">
+                            驗證
+                          </Button>
                         </div>
                       </div>
-                      {errors.email && <FormMessage>{errors.email.message}</FormMessage>}
                     </div>
                   )}
                 />
@@ -238,10 +263,9 @@ function EditEmailPage() {
               </div>
 
               <Button
-                disabled={!email || isSubmitting}
+                disabled={!email || isSubmitting || (couldEditPassword && !password)}
                 type="submit"
-                variant="primary"
-                className="rounded-full"
+                className={cn('rounded-xl', { hidden: !couldEditPassword })}
               >
                 {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '確認'}
               </Button>
