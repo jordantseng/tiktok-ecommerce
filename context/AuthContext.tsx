@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const tiktokToken = searchParams.get('token')
-  const dict = searchParams.get('dict')
+  const tiktokDict = searchParams.get('dict')
 
   const { from, setFromPath } = useNavigationContext()
 
@@ -76,17 +76,31 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     localStorage.setItem('token', token)
   }, [])
 
-  useEffect(() => {
-    if (tiktokToken) {
+  const handleTiktokToken = useCallback(
+    (token: string) => {
       setFromPath()
-      handleSetToken(tiktokToken)
+      handleSetToken(token)
       router.replace(from || '/')
-    } else if (dict) {
+    },
+    [from, router, setFromPath, handleSetToken],
+  )
+
+  const handleTiktokDict = useCallback(
+    (dict: string) => {
       setFromPath()
       localStorage.setItem('dict', dict)
       router.replace(from || '/')
+    },
+    [from, router, setFromPath],
+  )
+
+  useEffect(() => {
+    if (tiktokToken) {
+      handleTiktokToken(tiktokToken)
+    } else if (tiktokDict) {
+      handleTiktokDict(tiktokDict)
     }
-  }, [tiktokToken, router, from, dict, setFromPath, handleSetToken])
+  }, [tiktokToken, tiktokDict, handleTiktokToken, handleTiktokDict])
 
   useEffect(() => {
     if (user && !user?.email && pathname !== '/edit-email') {
