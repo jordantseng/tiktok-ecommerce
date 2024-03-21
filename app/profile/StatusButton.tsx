@@ -3,12 +3,19 @@ import { Loader2 } from 'lucide-react'
 import { useAuthContext } from '@/context/AuthContext'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { MouseEvent } from 'react'
 
-function StatusButton({ title, disabled }: { title: string; disabled?: boolean }) {
+type StatusButtonProps = {
+  title: string
+  disabled?: boolean
+  onClick?: (e: MouseEvent) => void
+}
+
+function StatusButton({ title, disabled, onClick }: StatusButtonProps) {
   const { isLoadingUser } = useAuthContext()
   return (
     <Button
-      onClick={(e) => e.preventDefault()}
+      onClick={onClick}
       variant="ghost"
       className={cn(
         'h-full min-w-20 cursor-default rounded-lg border border-primary bg-primary-foreground p-2 font-bold text-primary',

@@ -52,7 +52,7 @@ export const loginEmail = async ({ email, password }: LoginInfo): Promise<LoginR
   return data
 }
 
-export const loginTiktok = async (callbackURL: string): Promise<void> => {
+export const loginTiktok = async (callbackURL: string, token?: string): Promise<void> => {
   const form = document.createElement('form')
 
   form.method = 'post'
@@ -60,6 +60,9 @@ export const loginTiktok = async (callbackURL: string): Promise<void> => {
 
   const fields = {
     client_gobackurl: callbackURL,
+
+    // email login and want to bind tiktokid too
+    ...(token && { token }),
   }
 
   // Append input elements to the form

@@ -23,7 +23,7 @@ import {
   register,
 } from '@/services/auth'
 import { useToast } from '@/components/ui/use-toast'
-import { useNavigationContext } from './NavigationContext'
+import { useNavigationContext } from '@/context/NavigationContext'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
@@ -42,6 +42,7 @@ type AuthContextType = {
   handleRegister: (registerInfo: RegisterInfo) => Promise<void>
   handleLoginEmail: (loginInfo: LoginInfo, isReset: boolean) => Promise<void>
   handleLoginTiktok: () => void
+  handleBindTiktok: () => void
   handleGetEmailCode: (email: string) => Promise<void>
   handleForgetPassword: (email: string) => Promise<void>
   handleChangePassword: (password: string) => Promise<void>
@@ -125,6 +126,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const handleLoginTiktok = () => {
     const callbackURL = window.location.origin + from
     loginTiktok(callbackURL)
+  }
+
+  const handleBindTiktok = () => {
+    const callbackURL = window.location.origin + from
+    loginTiktok(callbackURL, token)
   }
 
   const handleRegister = async ({ email, password, code }: RegisterInfo) => {
@@ -230,6 +236,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         handleRegister,
         handleLoginEmail,
         handleLoginTiktok,
+        handleBindTiktok,
         handleLogout,
         handleGetEmailCode,
         handleForgetPassword,
