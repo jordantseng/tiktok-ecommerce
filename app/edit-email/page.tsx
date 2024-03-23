@@ -48,18 +48,19 @@ function EditEmailPage() {
   const isEmailDirty = form.getFieldState('email').isDirty
 
   useEffect(() => {
-    if (!token) {
-      router.push('/login')
-    }
-  }, [token, router])
-
-  useEffect(() => {
     if (isEmailDirty) {
       setCouldEditPassword(false)
     }
   }, [isEmailDirty])
 
   async function handleUpdateUser(values: z.infer<typeof formSchema>) {
+    if (!token) {
+      toast({
+        description: 'token undefined',
+        variant: 'destructive',
+      })
+      return
+    }
     try {
       const { resultcode, resultmessage } = await updateUser({
         email: values.email,

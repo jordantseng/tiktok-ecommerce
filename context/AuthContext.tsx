@@ -89,9 +89,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     (dict: string) => {
       setFromPath()
       localStorage.setItem('dict', dict)
-      router.replace(from || '/')
+      router.replace('/edit-email')
     },
-    [from, router, setFromPath],
+    [router, setFromPath],
   )
 
   useEffect(() => {
