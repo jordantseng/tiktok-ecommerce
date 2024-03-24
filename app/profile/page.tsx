@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, MouseEvent } from 'react'
+import { useEffect, MouseEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronRightIcon, Loader2 } from 'lucide-react'
 import { useImmer } from 'use-immer'
@@ -27,8 +27,8 @@ function ProfilePage() {
   const router = useRouter()
   const { toast } = useToast()
   const { user, isLoadingUser, refreshUser, handleBindTiktok } = useAuthContext()
-
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
+  const [isEditing, setIsEditing] = useState(false)
 
   const noTiktokId = !user?.tiktokid
 
@@ -107,6 +107,16 @@ function ProfilePage() {
     }
   }
 
+  function handleToggleEdit() {
+    setIsEditing((prev) => !prev)
+    if (!isEditing) {
+      setIsEditing(true)
+    } else {
+      form.handleSubmit(handleSubmit)()
+      setIsEditing(false)
+    }
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Title
@@ -114,12 +124,18 @@ function ProfilePage() {
         goBackUrl="/member"
         rightComponent={
           <Button
-            onClick={form.handleSubmit(handleSubmit)}
-            disabled={isLoadingUser || !user || !form.formState.isDirty}
+            onClick={handleToggleEdit}
+            disabled={isLoadingUser || !user || (isEditing && !form.formState.isDirty)}
             className="rounded-lg"
             variant="ghost"
           >
-            {isLoadingUser ? <Loader2 className="h-4 w-4 animate-spin" /> : '確認修改'}
+            {isLoadingUser ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : isEditing ? (
+              '儲存'
+            ) : (
+              '編輯'
+            )}
           </Button>
         }
       />
@@ -160,7 +176,12 @@ function ProfilePage() {
                 name="mobile"
                 control={form.control}
                 render={({ field }) => (
-                  <ProfileFormItem disabled={!user} label="手機號碼" type="number" field={field} />
+                  <ProfileFormItem
+                    disabled={!user || !isEditing}
+                    label="手機號碼"
+                    type="number"
+                    field={field}
+                  />
                 )}
               />
 
