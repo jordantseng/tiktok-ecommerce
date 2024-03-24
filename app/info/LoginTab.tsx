@@ -25,7 +25,7 @@ const LoginTab = () => {
       className="flex cursor-pointer items-center justify-between rounded-lg bg-white p-4"
       onClick={toggleLogin}
     >
-      <span className="font-semibold">{isLogin ? '登出' : '登入/註冊'}</span>
+      <span className="font-semibold">{isLogin ? '登出' : '登錄/註冊'}</span>
       <ChevronRightIcon />
     </div>
   )

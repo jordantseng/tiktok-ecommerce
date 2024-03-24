@@ -195,7 +195,7 @@ function ProfilePage() {
                       router.push('/reset-password')
                     }}
                     type="password"
-                    label="登入密碼"
+                    label="登錄密碼"
                     field={field}
                   />
                 )}
