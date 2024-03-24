@@ -18,8 +18,13 @@ function RecipientCard({ order }: RecipientCardProps) {
         <div className="flex flex-1 flex-col items-start justify-between gap-2 text-foreground">
           {!order ? (
             <Skeleton className="h-6 w-64" />
-          ) : (
+          ) : order.raddress && order.raddress !== '無' ? (
             <span className="font-medium">{order.raddress}</span>
+          ) : (
+            <div className="flex flex-col">
+              <span className="font-medium">{order.CVSStoreName}</span>
+              <span className="font-medium">{order.CVSAddress}</span>
+            </div>
           )}
           {!order ? (
             <Skeleton className="h-5 w-32" />
