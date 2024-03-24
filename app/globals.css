@@ -77,6 +77,11 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
