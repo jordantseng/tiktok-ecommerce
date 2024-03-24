@@ -53,4 +53,5 @@ export type WebSettingsData = {
   jsonbody: string
   created_at: string
   updated_at: string
+  ico: string
 }
