@@ -1,6 +1,6 @@
 'use client'
 
-import { ExternalLink } from 'lucide-react'
+import { SquarePen } from 'lucide-react'
 import { AddressData } from '@/types/common'
 
 type AddressCardProps = {
@@ -24,7 +24,7 @@ function AddressCard({ address, onClick }: AddressCardProps) {
         </span>
         <span className="text-gray-500">{address.CVSAddress || address.address}</span>
       </div>
-      <ExternalLink className="text-gray-500" />
+      <SquarePen className="text-gray-500" />
     </section>
   )
 }

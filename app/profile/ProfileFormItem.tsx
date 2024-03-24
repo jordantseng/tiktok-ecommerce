@@ -3,7 +3,7 @@
 import { HTMLInputTypeAttribute, PropsWithChildren, ReactNode } from 'react'
 import { z } from 'zod'
 import { ControllerRenderProps } from 'react-hook-form'
-import { ExternalLink } from 'lucide-react'
+import { SquarePen } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 import { FormControl, FormMessage } from '@/components/ui/form'
@@ -86,7 +86,7 @@ export default function ProfileFormItem<T extends FormKeys>({
           type={type}
           {...field}
         />
-        {type === 'password' && <ExternalLink className="cursor-pointer text-gray-400" />}
+        {type === 'password' && <SquarePen className="cursor-pointer text-gray-400" />}
       </div>
     </ProfileFormItemLayout>
   )
