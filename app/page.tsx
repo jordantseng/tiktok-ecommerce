@@ -31,7 +31,12 @@ export default async function HomePage() {
         <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
           <h4 className="flex scroll-m-20 items-center gap-2 text-xl font-normal tracking-tight">
             <Link href="/">
-              <Image src="/fake-logo.png" width={30} height={30} alt="logo" />
+              <Image
+                src={webSettingsData.ico ? webSettingsData.ico : '/fake-logo.png'}
+                width={30}
+                height={30}
+                alt="logo"
+              />
             </Link>
             {webSettingsData?.title || '天服能量購物商城'}
           </h4>
