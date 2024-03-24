@@ -13,11 +13,12 @@ import { Separator } from '@radix-ui/react-select'
 import { add } from 'date-fns'
 import { Check, ChevronRight, ChevronsUpDown } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import router from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useCallback, useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
 const ChooseDeliveryPage = () => {
+  const router = useRouter()
   const { selectedAddress, handleSelectDeliveryType, deliveryType, handleSelectAddress } =
     useAddressContext()
   const pathname = usePathname()
@@ -39,7 +40,7 @@ const ChooseDeliveryPage = () => {
   }
 
   const renderItem = (address: AddressData) => (
-    <div className="flex items-center justify-between space-x-2 p-4">
+    <div key={address.id} className="flex items-center justify-between space-x-2 p-4">
       <div className="flex w-full flex-col justify-between">
         {address?.name && (
           <div className="flex w-full items-center p-2">
