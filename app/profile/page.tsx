@@ -30,7 +30,7 @@ function ProfilePage() {
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
   const [isEditing, setIsEditing] = useState(false)
 
-  const noTiktokId = !user?.tiktokid
+  const tiktokId = user?.tiktokid
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -97,7 +97,7 @@ function ProfilePage() {
   function handleBindTiktokAccount(e: MouseEvent) {
     e.preventDefault()
 
-    if (noTiktokId) {
+    if (!tiktokId) {
       handleBindTiktok()
     } else {
       toast({
@@ -215,11 +215,7 @@ function ProfilePage() {
                   </div>
                 }
               >
-                <StatusButton
-                  title="連動"
-                  disabled={noTiktokId}
-                  onClick={handleBindTiktokAccount}
-                />
+                <StatusButton title="連動" disabled={!tiktokId} onClick={handleBindTiktokAccount} />
               </ProfileFormItemLayout>
             </section>
 
