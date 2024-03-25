@@ -2,10 +2,11 @@
 
 import Image from 'next/image'
 import { PropsWithChildren } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { OrderData, OrderDetail } from '@/services/order'
-import Link from 'next/link'
+import { OrderData, OrderDetail, OrderStatus, getOrderStatus } from '@/services/order'
 
 function CardContainer({ children }: PropsWithChildren) {
   return <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">{children}</div>
@@ -13,16 +14,24 @@ function CardContainer({ children }: PropsWithChildren) {
 
 type ShoppingItemCardProps = {
   detail: OrderDetail
+  status: OrderStatus
 }
 
-function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
+function ShoppingItemCard({ detail, status }: ShoppingItemCardProps) {
+  const pathname = usePathname()
   const productImages = detail.product.imgs
   return (
     <div className="flex flex-1 items-end justify-between">
-      <span className="flex items-center gap-4">
-        <div>
-          {Array.isArray(productImages) && productImages[0] ? (
-            <Link href={`/product-detail?id=${detail.product_id}`}>
+      <Link
+        href={
+          pathname.includes(`/member/orders/${detail.ordergroup_id}`)
+            ? `/product-detail?id=${detail.product_id}`
+            : `/member/orders/${detail.ordergroup_id}/${status}`
+        }
+      >
+        <span className="flex items-center gap-4">
+          <div>
+            {Array.isArray(productImages) && productImages[0] ? (
               <Image
                 width={100}
                 height={100}
@@ -30,19 +39,19 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
                 src={productImages[0]}
                 alt={detail.product_title}
               />
-            </Link>
-          ) : (
-            <div className="h-10 w-10" />
-          )}
-        </div>
-        <div className="flex-1 text-sm">
-          <span>{detail.product_title}</span>
-          <div className="flex flex-col text-gray-500">
-            <span>規格：{detail.productitem_title}</span>
-            <span>數量：{detail.qty}份</span>
+            ) : (
+              <div className="h-10 w-10" />
+            )}
           </div>
-        </div>
-      </span>
+          <div className="flex-1 text-sm">
+            <span>{detail.product_title}</span>
+            <div className="flex flex-col text-gray-500">
+              <span>規格：{detail.productitem_title}</span>
+              <span>數量：{detail.qty}份</span>
+            </div>
+          </div>
+        </span>
+      </Link>
 
       <span className="text-lg font-bold">${detail.price.toLocaleString()}</span>
     </div>
@@ -81,10 +90,11 @@ function ShoppingItemCards({ order }: ShoppingItemCardsProps) {
       </CardContainer>
     )
   }
+  const status = getOrderStatus(order)!
 
   return order.orderdetail.map((item) => (
     <CardContainer key={item.id}>
-      <ShoppingItemCard detail={item} />
+      <ShoppingItemCard detail={item} status={status} />
     </CardContainer>
   ))
 }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import { ButtonType, buttonMap } from '@/components/OrderButtons'
 import { useOrderContext } from '@/context/OrderContext'
@@ -160,7 +161,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between border-b border-background pb-4 text-sm font-normal">
-            <span className="text-gray-500">{createDate}</span>
+            <Link href={`/member/orders/${orderID}/${status}`}>
+              <span className="text-gray-500">{createDate}</span>
+            </Link>
             <p className="text-primary">{orderStatus}</p>
           </div>
         </CardTitle>
@@ -173,6 +176,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 ...order.orderdetail[0],
                 price: Number(totalprice),
               }}
+              status={status}
             />
           )}
         </div>
