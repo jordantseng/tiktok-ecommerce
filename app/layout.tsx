@@ -50,7 +50,7 @@ export default function RootLayout({
               <AddressProvider>
                 <body
                   className={cn(
-                    'touch-pan-x touch-pan-y bg-background font-sans antialiased',
+                    'touch-pan-x touch-pan-y bg-black font-sans antialiased max-[600px]:bg-background',
                     inter.variable,
                     inter.className,
                   )}

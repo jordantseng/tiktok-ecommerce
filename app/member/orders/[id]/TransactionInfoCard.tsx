@@ -34,6 +34,24 @@ function TransactionInfoCard({ order }: TransactionInfoCardProps) {
         </span>
         <span>{!order ? <Skeleton className="h-5 w-20" /> : order.AllPayLogisticsID}</span>
       </div>
+      <div className="flex justify-between text-sm">
+        <span className="text-gray-400">
+          {!order ? <Skeleton className="h-5 w-14" /> : `銀行代號`}
+        </span>
+        <span>{!order ? <Skeleton className="h-5 w-20" /> : order?.paybranch}</span>
+      </div>
+      <div className="flex justify-between text-sm">
+        <span className="text-gray-400">
+          {!order ? <Skeleton className="h-5 w-14" /> : `銀行帳號`}
+        </span>
+        <span>{!order ? <Skeleton className="h-5 w-20" /> : order?.payaccount}</span>
+      </div>
+      <div className="flex justify-between text-sm">
+        <span className="text-gray-400">
+          {!order ? <Skeleton className="h-5 w-14" /> : `繳款到期日`}
+        </span>
+        <span>{!order ? <Skeleton className="h-5 w-20" /> : order?.payexpiredate}</span>
+      </div>
     </div>
   )
 }

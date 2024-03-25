@@ -5,6 +5,7 @@ import { PropsWithChildren } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { OrderData, OrderDetail } from '@/services/order'
+import Link from 'next/link'
 
 function CardContainer({ children }: PropsWithChildren) {
   return <div className="relative m-4 flex flex-col gap-2 rounded-xl bg-white p-4">{children}</div>
@@ -21,13 +22,15 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
       <span className="flex items-center gap-4">
         <div>
           {Array.isArray(productImages) && productImages[0] ? (
-            <Image
-              width={100}
-              height={100}
-              className="h-16 w-16 rounded-xl"
-              src={productImages[0]}
-              alt={detail.product_title}
-            />
+            <Link href={`/product-detail?id=${detail.id}`}>
+              <Image
+                width={100}
+                height={100}
+                className="h-16 w-16 rounded-xl"
+                src={productImages[0]}
+                alt={detail.product_title}
+              />
+            </Link>
           ) : (
             <div className="h-10 w-10" />
           )}

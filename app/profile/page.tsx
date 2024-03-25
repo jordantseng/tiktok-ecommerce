@@ -15,7 +15,7 @@ import StatusButton from '@/app/profile/StatusButton'
 import ProfileFormItem, { ProfileFormItemLayout, formSchema } from '@/app/profile/ProfileFormItem'
 import { useAuthContext } from '@/context/AuthContext'
 import { AddressData } from '@/types/common'
-import { getAddress } from '@/services/address'
+import { deleteAddress, getAddress } from '@/services/address'
 import Title from '@/components/Title'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
@@ -237,6 +237,7 @@ function ProfilePage() {
             onClick={() => {
               router.push(`/confirm-order/upsert-receipt?id=${address.id}`)
             }}
+            onDelete={() => deleteAddress(address.id || 0)}
           />
         ))}
       </div>
