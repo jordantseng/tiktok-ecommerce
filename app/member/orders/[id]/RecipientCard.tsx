@@ -2,6 +2,8 @@ import { ChevronRight, MapPin } from 'lucide-react'
 
 import { OrderData } from '@/services/order'
 import { Skeleton } from '@/components/ui/skeleton'
+import { deliveryMap } from '@/lib/payment'
+import { Delivery } from '@/context/AddressContext'
 
 type RecipientCardProps = {
   order: OrderData | null
@@ -22,7 +24,10 @@ function RecipientCard({ order }: RecipientCardProps) {
             <span className="font-medium">{order.raddress}</span>
           ) : (
             <div className="flex flex-col">
-              <span className="font-medium">{order.CVSStoreName}</span>
+              <span className="font-medium">
+                {order.CVSStoreName}({' '}
+                {deliveryMap[(order?.LogisticsSubType || 'HOME_DELIVERY') as Delivery]})
+              </span>
               <span className="font-medium">{order.CVSAddress}</span>
             </div>
           )}

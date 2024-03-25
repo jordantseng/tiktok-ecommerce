@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,10 +8,8 @@ import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
 import { CartItem } from '@/types/common'
-import { Select } from './ui/select'
 import { ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
-import Link from 'next/link'
 
 type Props = CartItem & {
   isChecked?: boolean
@@ -83,7 +82,9 @@ const CartItem = ({
         >
           <CardHeader className={cn('px-0 pb-0', { 'flex-row justify-between pt-2': !editable })}>
             <div className="max-w-[150px] max-[320px]:max-w-[80px]">
-              <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
+              <Link href={`/product-detail?id=${product_id}`}>
+                <CardTitle className="truncate text-base max-[320px]:text-sm">{title}</CardTitle>
+              </Link>
               <div className="mt-2">
                 <div className="flex flex-col">
                   <div className="truncate pb-1 max-[320px]:pl-2">
