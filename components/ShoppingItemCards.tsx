@@ -22,7 +22,7 @@ function ShoppingItemCard({ detail }: ShoppingItemCardProps) {
       <span className="flex items-center gap-4">
         <div>
           {Array.isArray(productImages) && productImages[0] ? (
-            <Link href={`/product-detail?id=${detail.id}`}>
+            <Link href={`/product-detail?id=${detail.product_id}`}>
               <Image
                 width={100}
                 height={100}
