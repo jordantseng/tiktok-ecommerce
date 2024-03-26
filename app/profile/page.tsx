@@ -215,7 +215,11 @@ function ProfilePage() {
                   </div>
                 }
               >
-                <StatusButton title="連動" disabled={!tiktokId} onClick={handleBindTiktokAccount} />
+                <StatusButton
+                  title={!tiktokId ? '連動' : '已綁定'}
+                  disabled={!tiktokId}
+                  onClick={handleBindTiktokAccount}
+                />
               </ProfileFormItemLayout>
             </section>
 
