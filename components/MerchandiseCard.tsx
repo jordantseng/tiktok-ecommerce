@@ -64,8 +64,8 @@ const MerchandiseCard = ({
         )}
       </CardHeader>
       <CardContent className="px-2">
-        <CardTitle className="text-md line-clamp-2">{title}</CardTitle>
-        <CardDescription className="mt-4 truncate py-1">
+        <CardTitle className="text-md line-clamp-2 h-11">{title}</CardTitle>
+        <CardDescription className="mt-2 truncate py-1">
           {tags.length > 0 ? (
             tags.map((opt) => (
               <span
