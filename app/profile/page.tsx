@@ -53,7 +53,7 @@ function ProfilePage() {
       refreshUser()
     } else {
       form.reset({
-        id: user.id.toString() ?? '',
+        id: user.tiktokid ? user.name! : user.id.toString(),
         mobile: user.mobile ?? '',
         email: user.email ?? '',
         password: '********',
@@ -215,11 +215,13 @@ function ProfilePage() {
                   </div>
                 }
               >
-                <StatusButton
-                  title={!tiktokId ? '連動' : '已綁定'}
-                  disabled={!tiktokId}
-                  onClick={handleBindTiktokAccount}
-                />
+                <div className="flex items-center gap-1">
+                  <StatusButton
+                    title={!tiktokId ? '連動' : `已綁定 (${user.name})`}
+                    disabled={!tiktokId}
+                    onClick={handleBindTiktokAccount}
+                  />
+                </div>
               </ProfileFormItemLayout>
             </section>
 
