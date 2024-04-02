@@ -54,7 +54,7 @@ const ProductItem = ({
           </CardHeader>
           <CardContent className="flex justify-between px-0 pb-0">
             <div className="flex flex-col break-normal">
-              <CardDescription className="mt-2 flex flex-col gap-2">
+              <div className="mt-2 flex flex-col gap-2">
                 <div>
                   {tags.map((opt) => (
                     <span
@@ -71,7 +71,7 @@ const ProductItem = ({
                     已售 {sales}
                   </span>
                 </div>
-              </CardDescription>
+              </div>
             </div>
           </CardContent>
           <CardFooter className="flex justify-between pb-1 pl-0 pr-1">
