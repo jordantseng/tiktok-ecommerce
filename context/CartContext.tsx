@@ -50,7 +50,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         productItemTitle: opt.productitem_title,
         productItemId: opt.productitem_id,
         unit: opt.unit,
-        tags: opt.tags.split(','),
+        tags: opt?.tags?.split(','),
         isSelect: opt.online ? true : false,
       }))
       setItems(newItems)
@@ -58,7 +58,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   }, [setItems])
 
   const handleAddToCart = (val: CartItem) => {
-    addToCart(val.productItemId || 0, val.amount || 1).then(() => handleGetMyCart())
+    const targetItem = items.find((opt) => opt.productItemId === val.productItemId)
+    addToCart(val.productItemId || 0, (targetItem?.amount || 0) + (val.amount || 1)).then(() =>
+      handleGetMyCart(),
+    )
   }
 
   const handleAddToCarts = (carts: CartBodyItem[]) => {

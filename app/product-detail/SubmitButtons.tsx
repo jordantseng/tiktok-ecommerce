@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useImmer } from 'use-immer'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
@@ -20,7 +20,7 @@ type SubmitButtonsProps = {
 const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
   const defaultSelectedSize = { id: String(specs[0].id), size: specs[0].title }
 
-  const { handleAddToCart, items } = useCartContext()
+  const { handleGetMyCart, handleAddToCart, items } = useCartContext()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedSize, setSelectedSize] = useState<{ id: string; size: string } | null>(
     specs.length === 1 ? defaultSelectedSize : null,
@@ -52,6 +52,12 @@ const SubmitButtons = ({ product, specs }: SubmitButtonsProps) => {
     originPrice: product.marketprice,
     tags: product.tags?.split(','),
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      handleGetMyCart()
+    }
+  }, [handleGetMyCart])
 
   const handleSpecSelect = ({ id, size }: { id: string; size: string }) => {
     setSelectedSize({ id, size })

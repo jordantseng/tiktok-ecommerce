@@ -1,5 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { OrderData, getFormatDate, PaymentMethodEnum } from '@/services/order'
+import { CopyIcon } from 'lucide-react'
 
 type TransactionInfoCardProps = {
   order: OrderData | null
@@ -44,7 +45,19 @@ function TransactionInfoCard({ order }: TransactionInfoCardProps) {
         <span className="text-gray-400">
           {!order ? <Skeleton className="h-5 w-14" /> : `銀行帳號`}
         </span>
-        <span>{!order ? <Skeleton className="h-5 w-20" /> : order?.payaccount}</span>
+        <span className="flex space-x-1">
+          {!order ? (
+            <Skeleton className="h-5 w-20" />
+          ) : (
+            <>
+              <CopyIcon
+                size="15"
+                onClick={() => navigator.clipboard.writeText(order?.payaccount || '')}
+              />
+              <span>{order?.payaccount}</span>
+            </>
+          )}
+        </span>
       </div>
       <div className="flex justify-between text-sm">
         <span className="text-gray-400">
