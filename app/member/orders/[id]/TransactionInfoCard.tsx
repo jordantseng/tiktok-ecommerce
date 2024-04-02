@@ -49,13 +49,15 @@ function TransactionInfoCard({ order }: TransactionInfoCardProps) {
           {!order ? (
             <Skeleton className="h-5 w-20" />
           ) : (
-            <>
-              <CopyIcon
-                size="15"
-                onClick={() => navigator.clipboard.writeText(order?.payaccount || '')}
-              />
-              <span>{order?.payaccount}</span>
-            </>
+            order?.payaccount && (
+              <>
+                <CopyIcon
+                  size="15"
+                  onClick={() => navigator.clipboard.writeText(order.payaccount || '')}
+                />
+                <span>{order.payaccount}</span>
+              </>
+            )
           )}
         </span>
       </div>
