@@ -19,7 +19,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { handleFee, handleLabel } from '@/lib/payment'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import ChooseDelivery from './ChooseDelivery'
 
 const ConfirmBillPage = () => {

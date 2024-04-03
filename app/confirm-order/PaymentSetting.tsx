@@ -51,8 +51,8 @@ const PaymentSetting = ({ value, onChange }: Props) => {
         defaultValue={value || ''}
         onValueChange={handleChange}
       >
-        <div className="flex items-center justify-between space-x-2  p-4">
-          {creditCount.length > 1 ? (
+        {creditCount.length > 1 ? (
+          <div className="flex items-center justify-between space-x-2  p-4">
             <Collapsible className="w-full">
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
@@ -81,30 +81,49 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                 )}
               </CollapsibleContent>
             </Collapsible>
-          ) : (
-            Object.keys(webSettingsData?.paykind || {}).map(
-              (opt: string) =>
-                opt.indexOf('credit') > -1 && (
-                  <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
-                    <div className="flex items-center space-x-2">
-                      <Label htmlFor={opt}>
-                        <div className="flex items-center space-x-2">
-                          <div className="item-center relative flex h-5 w-5 justify-center">
-                            <Image alt="atm" fill src="/credit.png" />
-                          </div>
-                          <span>信用卡付款</span>
+          </div>
+        ) : (
+          Object.keys(webSettingsData?.paykind || {}).map(
+            (opt: string) =>
+              opt.indexOf('credit') > -1 && (
+                <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor={opt}>
+                      <div className="flex items-center space-x-2">
+                        <div className="item-center relative flex h-5 w-5 justify-center">
+                          <Image alt="atm" fill src="/credit.png" />
                         </div>
-                      </Label>
-                    </div>
-                    <RadioGroupItem value={opt} id={opt} />
+                        <span>信用卡付款</span>
+                      </div>
+                    </Label>
                   </div>
-                ),
-            )
-          )}
-        </div>
+                  <RadioGroupItem value={opt} id={opt} />
+                </div>
+              ),
+          )
+        )}
+
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf('atm') > -1 && (
+            opt === 'atm' && (
+              <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor={opt}>
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="atm" fill src="/group.png" />
+                      </div>
+                      <span>匯款</span>
+                    </div>
+                  </Label>
+                </div>
+                <RadioGroupItem value={opt} id={opt} />
+              </div>
+            ),
+        )}
+        {Object.keys(webSettingsData?.paykind || {}).map(
+          (opt: string) =>
+            opt.indexOf('-atm') > -1 && (
               <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor={opt}>
@@ -131,6 +150,24 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                         <Image alt="atm" fill src="/cash.png" />
                       </div>
                       <span>貨到付款</span>
+                    </div>
+                  </Label>
+                </div>
+                <RadioGroupItem value={opt} id={opt} />
+              </div>
+            ),
+        )}
+        {Object.keys(webSettingsData?.paykind || {}).map(
+          (opt: string) =>
+            opt.indexOf('cvs') > -1 && (
+              <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                <div className="flex items-center space-x-2">
+                  <Label htmlFor={opt}>
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="atm" fill src="/cash.png" />
+                      </div>
+                      <span>超商取貨付款</span>
                     </div>
                   </Label>
                 </div>
