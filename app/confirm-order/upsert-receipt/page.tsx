@@ -63,7 +63,7 @@ const UpsertReceiptPage = () => {
     const addressToSubmit =
       val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
     upsertAddress(addressToSubmit).then(() => {
-      router.push(from || id ? '/profile' : '/confirm-order/choose-receipt')
+      router.push(from || id ? '/profile' : '/confirm-order/choose-delivery')
     })
   }
 

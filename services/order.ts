@@ -172,7 +172,7 @@ export const addOrder = async (order: OrderData): Promise<void> => {
     discount_code: order.discount_code || '',
     gobackurl: order.paystatus?.includes('atm')
       ? `https://${location.host}/atm-detail/checkout`
-      : order.paystatus?.includes('cvs')
+      : order.paystatus?.includes('barcode')
         ? `https://${location.host}/qrcode-detail/checkout`
         : `https://${location.host}/confirm-order/result`,
     CVSAddress: order.CVSAddress || '',
@@ -234,7 +234,7 @@ export const previewDiscont = async (code: string): Promise<OrderRes> => {
 }
 
 export const getPayBarcode = async (number: number) => {
-  const { data } = await axiosInstance.get(`/barcode?number=${number}`)
+  const { data } = await axiosInstance.get(`/api/barcode?number=${number}`)
 
   return data
 }

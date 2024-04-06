@@ -5,17 +5,22 @@ import { useOrderDetailContext } from '@/context/OrderDetailContext'
 import { getPayBarcode } from '@/services/order'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { useImmer } from 'use-immer'
 
 const QrcodeDetail = () => {
+  const [code, setCode] = useImmer<string[]>([])
   const { order } = useOrderDetailContext()
-  console.log(order)
   useEffect(() => {
-    const test = async () => {
-      const data = await getPayBarcode(100)
-      console.log(data)
+    const getCode = async () => {
+      const data = await getPayBarcode(Number(order?.barcode1))
+      const data2 = await getPayBarcode(Number(order?.barcode2))
+      const data3 = await getPayBarcode(Number(order?.barcode3))
+      setCode([data, data2, data3])
     }
-    test()
-  }, [])
+    if (order?.id) {
+      getCode()
+    }
+  }, [order, setCode])
 
   return (
     <>
@@ -55,20 +60,33 @@ const QrcodeDetail = () => {
                   )}
                 </div>
               </div>
-              <div className="mt-2 flex flex-col items-center space-y-5 rounded-lg bg-background p-3">
-                {/* <div
-                  className="flex h-10 items-center justify-center"
-                  dangerouslySetInnerHTML={{ __html: qrcode }}
+              <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
+                <Image
+                  className="object-cover"
+                  fill
+                  src={`data:image/jpeg;base64,${code[0]}`}
+                  alt={'barcode1'}
                 />
-                <div
-                  className="flex h-10 items-center justify-center "
-                  dangerouslySetInnerHTML={{ __html: qrcode }}
-                />
-                <div
-                  className="flex h-10 items-center justify-center "
-                  dangerouslySetInnerHTML={{ __html: qrcode }}
-                /> */}
               </div>
+              <span className="flex items-center justify-center text-sm">{order?.barcode1}</span>
+              <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
+                <Image
+                  className="object-cover"
+                  fill
+                  src={`data:image/jpeg;base64,${code[1]}`}
+                  alt={'barcode2'}
+                />
+              </div>
+              <span className="flex items-center justify-center text-sm">{order?.barcode2}</span>
+              <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
+                <Image
+                  className="object-cover"
+                  fill
+                  src={`data:image/jpeg;base64,${code[2]}`}
+                  alt={'barcode3'}
+                />
+              </div>
+              <span className="flex items-center justify-center text-sm">{order?.barcode3}</span>
             </div>
           </div>
         </div>

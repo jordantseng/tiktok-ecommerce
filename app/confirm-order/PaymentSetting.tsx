@@ -159,7 +159,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
         )}
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf('cvs') > -1 && (
+            opt.indexOf('barcode') > -1 && (
               <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor={opt}>
