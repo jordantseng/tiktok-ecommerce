@@ -35,6 +35,7 @@ export type User = {
   adminuser_account: string | null
   created_at: string
   updated_at: string
+  username: string
 }
 
 type UserRes = ApiRes<User>
