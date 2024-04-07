@@ -217,7 +217,7 @@ function ProfilePage() {
               >
                 <div className="flex items-center gap-1">
                   <StatusButton
-                    title={!tiktokId ? '連動' : `已綁定 (${user.name})`}
+                    title={!tiktokId ? '連動' : `已綁定 (${user.username})`}
                     disabled={!tiktokId}
                     onClick={handleBindTiktokAccount}
                   />
