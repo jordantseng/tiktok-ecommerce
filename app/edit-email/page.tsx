@@ -15,11 +15,10 @@ import { useNavigationContext } from '@/context/NavigationContext'
 import { useAuthContext } from '@/context/AuthContext'
 import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
+import { emailSchema } from '@/lib/schema'
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: '請輸入正確的 Email 格式',
-  }),
+  email: emailSchema,
   password: z.string(),
 })
 
