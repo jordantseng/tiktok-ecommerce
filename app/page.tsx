@@ -56,7 +56,7 @@ export default async function HomePage() {
         </header>
         <div className="p-4">
           <div className="mb-2">
-            <Searchbar enableDialog showSearchButton domain={domain} />
+            <Searchbar enableDialog showSearchButton />
           </div>
           <div className="mb-2">
             <HeroCarousel items={banners.data} />

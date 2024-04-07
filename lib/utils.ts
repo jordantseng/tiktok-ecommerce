@@ -10,10 +10,14 @@ export function getToken() {
 }
 
 const DEV_ENV_DOMAIN = 'localhost:3000'
-const TEST_ENV_DOMAIN = 'https://front.tkshop.live'
+const TEST_ENV_DOMAIN = 'front.tkshop.live'
 
 export function getCurrentDomain(host: string) {
-  const domain = host === DEV_ENV_DOMAIN || host === TEST_ENV_DOMAIN ? 'test.tkshop.live' : host
+  const prefix = host.split('.')[0]
+  const domain =
+    host === DEV_ENV_DOMAIN || host === TEST_ENV_DOMAIN
+      ? 'test.tkshop.live'
+      : `${prefix}.tkback.app`
 
   return domain
 }

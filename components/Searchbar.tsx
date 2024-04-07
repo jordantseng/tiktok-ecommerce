@@ -9,10 +9,9 @@ import { cn } from '@/lib/utils'
 type SearchbarProps = {
   enableDialog?: boolean
   showSearchButton?: boolean
-  domain?: string
 }
 
-const Searchbar = ({ domain, enableDialog = false, showSearchButton = false }: SearchbarProps) => {
+const Searchbar = ({ enableDialog = false, showSearchButton = false }: SearchbarProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -22,8 +21,6 @@ const Searchbar = ({ domain, enableDialog = false, showSearchButton = false }: S
   const handleFormClick = () => {
     router.push('/search')
   }
-
-  console.log('domain', domain)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -14,7 +14,7 @@ type GetBannersRes = ApiRes<{
 export const getBanners = async (baseURL: string): Promise<GetBannersRes> => {
   const { data } = await axiosInstance({
     method: 'POST',
-    // baseURL,
+    baseURL,
     url: '/api/banner',
     data: {
       page: 1,
