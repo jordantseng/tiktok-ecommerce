@@ -11,15 +11,12 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useAuthContext } from '@/context/AuthContext'
+import { passwordSchema } from '@/lib/schema'
 
 const formSchema = z
   .object({
-    password: z.string().min(8, {
-      message: '密碼長度至少 8 個字元',
-    }),
-    passwordAgain: z.string().min(8, {
-      message: '密碼長度至少 8 個字元',
-    }),
+    password: passwordSchema,
+    passwordAgain: passwordSchema,
   })
   .refine((data) => data.password === data.passwordAgain, {
     message: '兩次密碼輸入不一致',

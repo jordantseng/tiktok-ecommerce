@@ -11,11 +11,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { useAuthContext } from '@/context/AuthContext'
+import { emailSchema } from '@/lib/schema'
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: '請輸入正確的 Email 格式',
-  }),
+  email: emailSchema,
 })
 
 const ForgetPasswordPage = () => {

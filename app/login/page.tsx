@@ -13,14 +13,11 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
+import { emailSchema, passwordSchema } from '@/lib/schema'
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: '請輸入正確的 Email 格式',
-  }),
-  password: z.string().min(8, {
-    message: '密碼長度至少 8 個字元',
-  }),
+  email: emailSchema,
+  password: passwordSchema,
 })
 
 const LoginPage = () => {
