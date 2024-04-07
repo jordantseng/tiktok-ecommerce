@@ -16,8 +16,8 @@ export function getCurrentDomain(host: string) {
   const prefix = host.split('.')[0]
   const domain =
     host === DEV_ENV_DOMAIN || host === TEST_ENV_DOMAIN
-      ? 'test.tkshop.live'
-      : `${prefix}.tkback.app`
+      ? 'https://test.tkshop.live'
+      : `https://${prefix}.tkback.app`
 
   return domain
 }
