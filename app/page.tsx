@@ -1,6 +1,7 @@
 import { MessageSquareMoreIcon, MenuIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { headers } from 'next/headers'
 
 import HeroCarousel from '@/app/HeroCarousel'
 import Searchbar from '@/components/Searchbar'
@@ -11,15 +12,19 @@ import { getBanners } from '@/services/banner'
 import { getCategories } from '@/services/category'
 import { getProducts } from '@/services/product'
 import { getWebSettings } from '@/services/webSettings'
+import { getCurrentDomain } from '@/lib/utils'
 
 export default async function HomePage() {
+  const headerList = headers()
+  const domain = getCurrentDomain(headerList.get('host')!)
+
   const [
     { data: banners },
     { data: categoryTypes },
     { data: products },
     { data: webSettingsData },
   ] = await Promise.all([
-    getBanners(),
+    getBanners(domain),
     getCategories(),
     getProducts({ page: 1, pageSize: 10000 }),
     getWebSettings(),

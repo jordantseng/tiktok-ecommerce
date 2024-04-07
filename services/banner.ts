@@ -11,10 +11,15 @@ type GetBannersRes = ApiRes<{
   total: number
 }>
 
-export const getBanners = async (): Promise<GetBannersRes> => {
-  const { data } = await axiosInstance.post('/api/banner', {
-    page: 1,
-    pagesize: 10000,
+export const getBanners = async (baseURL: string): Promise<GetBannersRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/banner',
+    data: {
+      page: 1,
+      pagesize: 10000,
+    },
   })
 
   return data
