@@ -15,7 +15,7 @@ import { useNavigationContext } from '@/context/NavigationContext'
 import { useAuthContext } from '@/context/AuthContext'
 import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
-import { emailSchema } from '@/lib/schema'
+import { emailSchema, passwordSchema } from '@/lib/schema'
 
 const formSchema = z.object({
   email: emailSchema,
@@ -163,7 +163,14 @@ function EditEmailPage() {
       if (!couldEditPassword) {
         await handleCheckEmailExist(values, dict)
       } else {
-        await handleRegisterTiktok(values, dict)
+        const valid = passwordSchema.safeParse(values.password)
+        if (valid.success) {
+          await handleRegisterTiktok(values, dict)
+        } else {
+          form.setError('password', {
+            message: valid.error.errors[0].message,
+          })
+        }
       }
     } else {
       await handleUpdateUser(values)
