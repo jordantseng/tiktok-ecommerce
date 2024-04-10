@@ -76,7 +76,7 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
       await createMemberFeedback({
         id: selectedOrder.id!,
         domain_id: selectedOrder.domain_id!,
-        ordergroup_id: Number(selectedOrder.ordergroupnumber),
+        ordergroup_id: selectedOrder.id!,
         name: user?.name || '',
         email: user?.email || '',
         tel: user?.tel || '',
