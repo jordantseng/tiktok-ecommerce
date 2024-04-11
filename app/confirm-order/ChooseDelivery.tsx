@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
+import { getBaseURL } from '@/lib/utils'
 import { getLogistic } from '@/services/address'
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -20,7 +21,10 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
   const { handleSelectDeliveryType, deliveryType, resetSelectAddress, selectedAddress } =
     useAddressContext()
   const handleClick = (type: string) => {
-    type !== 'HOME_DELIVERY' ? getLogistic(type) : router.push('/confirm-order/upsert-receipt')
+    const baseURL = getBaseURL(window.location.host)
+    type !== 'HOME_DELIVERY'
+      ? getLogistic(baseURL, type)
+      : router.push('/confirm-order/upsert-receipt')
   }
   const renderReceipt = () => (
     <div className="flex w-full flex-col justify-between">

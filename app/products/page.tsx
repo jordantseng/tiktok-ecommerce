@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { headers } from 'next/headers'
 
 import Sidebar from '@/app/products/Sidebar'
 import ProductList from '@/app/products/ProductList'
@@ -11,6 +12,7 @@ import { getCategories, getSubCategories } from '@/services/category'
 import { paginationGuard } from '@/lib/guard'
 import ProductItem from '@/components/ProductItem'
 import ProductNotFound from '@/components/ProductNotFound'
+import { getBaseURL } from '@/lib/utils'
 
 const PAGE_SIZE = 15
 
@@ -20,23 +22,26 @@ type ProductsPageProps = {
 
 const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   const { page, type, subType, q } = searchParams
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
 
   const [{ data: products }, { data: categories }] = await Promise.all([
     getProducts({
+      baseURL,
       page: Number(page),
       pageSize: PAGE_SIZE,
       kindheadId: type,
       kindmainId: subType,
       search: q,
     }),
-    getCategories(),
+    getCategories(baseURL),
   ])
 
   const category = categories.data.find(({ id }) => id === Number(type)) || categories.data[0] || []
 
   paginationGuard(Number(page), products.last_page, type, subType)
 
-  const { data: subCategories } = await getSubCategories(category.id)
+  const { data: subCategories } = await getSubCategories(baseURL, category.id)
 
   return (
     <main className="mb-16 min-h-screen bg-background">

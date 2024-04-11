@@ -1,8 +1,12 @@
 import Title from '@/components/Title'
+import { getBaseURL } from '@/lib/utils'
 import { getWebSettings } from '@/services/webSettings'
+import { headers } from 'next/headers'
 
 const PrivacyPage = async () => {
-  const { data: settings } = await getWebSettings()
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
+  const { data: settings } = await getWebSettings(baseURL)
 
   return (
     <main className="flex min-h-screen flex-col bg-background">

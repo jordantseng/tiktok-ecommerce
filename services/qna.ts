@@ -8,10 +8,15 @@ type getQNAsRes = ApiRes<{
 
 export type QNAData = { id: number; title: string; body: string }
 
-export const getQNAs = async (page = 1, pageSize = 10) => {
-  const { data: res } = await axiosInstance.post<getQNAsRes>('/api/qa', {
-    page,
-    pagesize: pageSize,
+export const getQNAs = async (baseURL: string, page = 1, pageSize = 10) => {
+  const { data: res } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/qa',
+    data: {
+      page,
+      pagesize: pageSize,
+    },
   })
 
   return res.data

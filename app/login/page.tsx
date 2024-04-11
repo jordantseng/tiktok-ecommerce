@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { emailSchema } from '@/lib/schema'
+import { getBaseURL } from '@/lib/utils'
 
 const formSchema = z.object({
   email: emailSchema,

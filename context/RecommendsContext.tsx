@@ -4,6 +4,7 @@ import { PropsWithChildren, createContext, useContext, useEffect, useState } fro
 import { useImmer } from 'use-immer'
 
 import { ProductData, getProducts } from '@/services/product'
+import { getBaseURL } from '@/lib/utils'
 
 type RecommendsContextType = {
   recommends: ProductData[]
@@ -17,7 +18,9 @@ export const RecommendsProvider = ({ children }: PropsWithChildren) => {
   const [isLoadingRecommends, setIsLoadingRecommends] = useState(true)
 
   useEffect(() => {
-    getProducts({ page: 1, pageSize: 10000 })
+    const baseURL = getBaseURL(window.location.host)
+
+    getProducts({ baseURL, page: 1, pageSize: 10000 })
       .then(({ data }) => {
         setRecommends(data.data)
       })

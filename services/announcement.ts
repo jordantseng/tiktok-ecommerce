@@ -16,18 +16,28 @@ export type AnnouncementData = {
   body: string
 }
 
-export const getAnnouncements = async (page = 1, pageSize = 10000) => {
-  const { data: res } = await axiosInstance.post<getAnnouncementsRes>('/api/news', {
-    page,
-    pagesize: pageSize,
+export const getAnnouncements = async (baseURL: string, page = 1, pageSize = 10000) => {
+  const { data: res } = await axiosInstance<getAnnouncementsRes>({
+    method: 'POST',
+    baseURL,
+    url: '/api/news',
+    data: {
+      page,
+      pagesize: pageSize,
+    },
   })
 
   return res.data
 }
 
-export const getAnnouncement = async (id: number) => {
-  const { data: res } = await axiosInstance.post<getAnnouncementRes>('/api/news/show', {
-    id,
+export const getAnnouncement = async (baseURL: string, id: number) => {
+  const { data: res } = await axiosInstance<getAnnouncementRes>({
+    method: 'POST',
+    baseURL,
+    url: '/api/news/show',
+    data: {
+      id,
+    },
   })
 
   return res.data

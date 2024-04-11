@@ -14,7 +14,7 @@ import { checkEmailExist, registerTiktok, updateUser } from '@/services/auth'
 import { useNavigationContext } from '@/context/NavigationContext'
 import { useAuthContext } from '@/context/AuthContext'
 import { useToast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils'
+import { cn, getBaseURL } from '@/lib/utils'
 import { emailSchema, passwordSchema } from '@/lib/schema'
 
 const formSchema = z.object({
@@ -53,6 +53,8 @@ function EditEmailPage() {
   }, [isEmailDirty])
 
   async function handleUpdateUser(values: z.infer<typeof formSchema>) {
+    const baseURL = getBaseURL(window.location.host)
+
     if (!token) {
       toast({
         description: 'token undefined',
@@ -61,7 +63,7 @@ function EditEmailPage() {
       return
     }
     try {
-      const { resultcode, resultmessage } = await updateUser({
+      const { resultcode, resultmessage } = await updateUser(baseURL, {
         email: values.email,
         name: user?.name,
       })
@@ -85,8 +87,10 @@ function EditEmailPage() {
   }
 
   async function handleCheckEmailExist(values: z.infer<typeof formSchema>, dict: string) {
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      const { resultcode, resultmessage } = await checkEmailExist(values.email, dict)
+      const { resultcode, resultmessage } = await checkEmailExist(baseURL, values.email, dict)
 
       if (resultcode === 0) {
         // reset isDirty to monitor email change toggle couldEditPassword state
@@ -117,6 +121,8 @@ function EditEmailPage() {
   }
 
   async function handleRegisterTiktok(values: z.infer<typeof formSchema>, dict: string) {
+    const baseURL = getBaseURL(window.location.host)
+
     if (!values.password) {
       toast({
         variant: 'destructive',
@@ -127,7 +133,7 @@ function EditEmailPage() {
     }
 
     try {
-      const { resultcode, resultmessage, data } = await registerTiktok({
+      const { resultcode, resultmessage, data } = await registerTiktok(baseURL, {
         dict,
         name: user?.name || '',
         email: values.email,

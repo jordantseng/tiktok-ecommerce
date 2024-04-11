@@ -11,6 +11,7 @@ import {
   getOrderStatusTitle,
 } from '@/services/order'
 import { toast } from '@/components/ui/use-toast'
+import { getBaseURL } from '@/lib/utils'
 
 type OrderDetailProviderProps = PropsWithChildren<{
   id: string
@@ -39,11 +40,13 @@ export const OrderDetailProvider = ({ id, children }: OrderDetailProviderProps) 
   const orderType = pathname.split('/').pop()
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (!id) {
       redirect('/member/orders?type=all')
     }
 
-    getOrder(Number(id))
+    getOrder(baseURL, Number(id))
       .then((res) => {
         const order = res.data
         const orderStatus = getOrderStatus(order)

@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 
-import { cn } from '@/lib/utils'
+import { cn, getBaseURL } from '@/lib/utils'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
 import { AddressProvider } from '@/context/AddressContext'
@@ -11,6 +11,7 @@ import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
 import { getWebSettings } from '@/services/webSettings'
 import { NavigationProvider } from '@/context/NavigationContext'
+import { headers } from 'next/headers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,7 +19,10 @@ const inter = Inter({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data } = await getWebSettings()
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
+
+  const { data } = await getWebSettings(baseURL)
 
   return {
     title: data.title,

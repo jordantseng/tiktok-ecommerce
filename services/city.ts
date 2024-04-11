@@ -15,15 +15,22 @@ type CityData = {
   postal?: string
 }
 
-export const getCities = async (): Promise<CityRes> => {
-  const { data } = await axiosInstance.get('/api/city1')
+export const getCities = async (baseURL: string): Promise<CityRes> => {
+  const { data } = await axiosInstance({
+    method: 'GET',
+    baseURL,
+    url: '/api/city1',
+  })
 
   return data
 }
 
-export const getDistrict = async (city: string): Promise<DistrictRes> => {
-  const { data } = await axiosInstance.post('/api/city2', {
-    city1title: city,
+export const getDistrict = async (baseURL: string, city: string): Promise<DistrictRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/city2',
+    data: { city1title: city },
   })
 
   return data

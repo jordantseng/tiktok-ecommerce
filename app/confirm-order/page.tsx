@@ -21,6 +21,7 @@ import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import ChooseDelivery from './ChooseDelivery'
+import { getBaseURL } from '@/lib/utils'
 
 const ConfirmBillPage = () => {
   const { user } = useAuthContext()
@@ -52,7 +53,9 @@ const ConfirmBillPage = () => {
   }
 
   const handleAddOrder = () => {
-    addOrder({
+    const baseURL = getBaseURL(window.location.host)
+
+    addOrder(baseURL, {
       domain_title: webSettingsData?.domain,
       member_id: user?.id || 0,
       member_name: user?.name || '',

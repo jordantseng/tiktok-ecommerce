@@ -23,21 +23,34 @@ type getSubCategories = ApiRes<
   }[]
 >
 
-export const getCategories = async (): Promise<getCategoriesRes> => {
-  const { data } = await axiosInstance.post('/api/kindhead', {
-    page: 1,
-    pagesize: 10000,
+export const getCategories = async (baseURL: string): Promise<getCategoriesRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    url: '/api/kindhead',
+    baseURL,
+    data: {
+      page: 1,
+      pagesize: 10000,
+    },
   })
 
   return data
 }
 
-export const getSubCategories = async (categoryId: number): Promise<getSubCategories> => {
-  const { data } = await axiosInstance.post('/api/kindmain', {
-    kindhead_id: categoryId,
-    page: 1,
-    pagesize: 10,
-    search: '',
+export const getSubCategories = async (
+  baseURL: string,
+  categoryId: number,
+): Promise<getSubCategories> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/kindmain',
+    data: {
+      kindhead_id: categoryId,
+      page: 1,
+      pagesize: 10,
+      search: '',
+    },
   })
 
   return data

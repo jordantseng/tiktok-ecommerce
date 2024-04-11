@@ -13,7 +13,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { ShoppingItemCard } from '@/components/ShoppingItemCards'
 import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
 import { OrderData } from '@/services/order'
-import { cn } from '@/lib/utils'
+import { cn, getBaseURL } from '@/lib/utils'
 
 export const OrderCardSkeleton = () => (
   <Card className="w-full border-none">
@@ -81,6 +81,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
   }
 
   const handleBuyMore = async () => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (!orderID) {
       toast({
         variant: 'destructive',
@@ -92,7 +94,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
     setIsBuying(true)
 
     try {
-      const { data } = await getOrder(orderID)
+      const { data } = await getOrder(baseURL, orderID)
       const orderDetail = data.orderdetail
       handleBuyAgain(orderDetail)()
     } catch (error) {

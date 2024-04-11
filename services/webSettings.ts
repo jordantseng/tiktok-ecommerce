@@ -3,8 +3,12 @@ import { ApiRes, WebSettingsData } from '@/types/common'
 
 type WebSettingsRes = ApiRes<WebSettingsData>
 
-export const getWebSettings = async () => {
-  const { data } = await axiosInstance.get<WebSettingsRes>('/api/web/show')
+export const getWebSettings = async (baseURL: string) => {
+  const { data } = await axiosInstance<WebSettingsRes>({
+    method: 'GET',
+    baseURL,
+    url: '/api/web/show',
+  })
 
   return data
 }

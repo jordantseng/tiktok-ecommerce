@@ -1,7 +1,6 @@
 import { addHours, format } from 'date-fns'
 
 import axiosInstance from '@/lib/axios'
-import config from '@/lib/configs'
 import { getToken } from '@/lib/utils'
 import { ApiRes } from '@/types/common'
 
@@ -132,25 +131,35 @@ export type OrderData = {
   barcode3?: string
 }
 
-export const getOrder = async (id: number): Promise<OrderRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/ordergroup/show', { id })
-
-  return data
-}
-
-export const getOrders = async (): Promise<OrdersRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/ordergroup', {
-    page: 1,
-    pagesize: 10000,
+export const getOrder = async (baseURL: string, id: number): Promise<OrderRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/ordergroup/show',
+    data: { id },
   })
 
   return data
 }
 
-export const addOrder = async (order: OrderData): Promise<void> => {
+export const getOrders = async (baseURL: string): Promise<OrdersRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/ordergroup',
+    data: {
+      page: 1,
+      pagesize: 10000,
+    },
+  })
+
+  return data
+}
+
+export const addOrder = async (baseURL: string, order: OrderData): Promise<void> => {
   const form = document.createElement('form')
   form.method = 'post'
-  form.action = `${config.api}/membercenter/ordergroup/store`
+  form.action = `${baseURL}/membercenter/ordergroup/store`
 
   const fields = {
     id: Date.now(),
@@ -200,11 +209,11 @@ export const addOrder = async (order: OrderData): Promise<void> => {
   document.body.removeChild(form)
 }
 
-export const payOrder = async (id: number): Promise<void> => {
+export const payOrder = async (baseURL: string, id: number): Promise<void> => {
   const form = document.createElement('form')
 
   form.method = 'post'
-  form.action = `${config.api}/membercenter/ordergroup/repay`
+  form.action = `${baseURL}/membercenter/ordergroup/repay`
 
   const fields = {
     id,
@@ -225,16 +234,25 @@ export const payOrder = async (id: number): Promise<void> => {
   document.body.removeChild(form)
 }
 
-export const previewDiscont = async (code: string): Promise<OrderRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/ordergroup/review', {
-    discount_code: code || '',
+export const previewDiscont = async (baseURL: string, code: string): Promise<OrderRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/ordergroup/review',
+    data: {
+      discount_code: code || '',
+    },
   })
 
   return data
 }
 
-export const getPayBarcode = async (number: number) => {
-  const { data } = await axiosInstance.get(`/api/barcode?number=${number}`)
+export const getPayBarcode = async (baseURL: string, number: number) => {
+  const { data } = await axiosInstance({
+    method: 'GET',
+    baseURL,
+    url: `/api/barcode?number=${number}`,
+  })
 
   return data
 }

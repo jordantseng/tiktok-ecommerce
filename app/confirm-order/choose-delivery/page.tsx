@@ -6,15 +6,15 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
+import { getBaseURL } from '@/lib/utils'
 import { getAddress, getLogistic } from '@/services/address'
 import { AddressData } from '@/types/common'
 import { CollapsibleTrigger } from '@radix-ui/react-collapsible'
 import { Separator } from '@radix-ui/react-select'
-import { add } from 'date-fns'
 import { Check, ChevronRight, ChevronsUpDown } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 
 const ChooseDeliveryPage = () => {
@@ -25,8 +25,10 @@ const ChooseDeliveryPage = () => {
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (pathname === '/confirm-order/choose-delivery') {
-      getAddress().then(({ data }) => {
+      getAddress(baseURL).then(({ data }) => {
         if (data.data && data.data.length > 0 && !selectedAddress) {
           handleSelectAddress(data.data[0])
         }
@@ -36,7 +38,10 @@ const ChooseDeliveryPage = () => {
   }, [handleSelectAddress, pathname, selectedAddress, setAddresses])
 
   const handleClick = (type: string) => {
-    type !== 'HOME_DELIVERY' ? getLogistic(type) : router.push('/confirm-order/upsert-receipt')
+    const baseURL = getBaseURL(window.location.host)
+    type !== 'HOME_DELIVERY'
+      ? getLogistic(baseURL, type)
+      : router.push('/confirm-order/upsert-receipt')
   }
 
   const renderItem = (address: AddressData) => (

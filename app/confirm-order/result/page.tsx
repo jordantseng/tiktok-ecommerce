@@ -5,6 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Delivery } from '@/context/AddressContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { deliveryMap, handleLabel } from '@/lib/payment'
+import { getBaseURL } from '@/lib/utils'
 import { OrderData, getOrder } from '@/services/order'
 import { CheckIcon, XCircleIcon } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
@@ -18,8 +19,10 @@ const SuccessPage = () => {
   const [data, setData] = useImmer<OrderData | null>(null)
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (id) {
-      getOrder(Number(id)).then(({ data }) => setData(data))
+      getOrder(baseURL, Number(id)).then(({ data }) => setData(data))
     }
   }, [id, setData])
 

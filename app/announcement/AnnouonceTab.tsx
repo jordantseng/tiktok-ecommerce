@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react'
 import { AnnouncementData, getAnnouncement } from '@/services/announcement'
 import { useImmer } from 'use-immer'
+import { getBaseURL } from '@/lib/utils'
 
 type AnnounceTabProps = {
   title: string
@@ -14,7 +15,8 @@ const AnnounceTab = ({ title, id }: AnnounceTabProps) => {
   const [data, setData] = useImmer<AnnouncementData | null>(null)
   useEffect(() => {
     const getAnnounce = async () => {
-      const data = await getAnnouncement(id)
+      const baseURL = getBaseURL(window.location.host)
+      const data = await getAnnouncement(baseURL, id)
       setData(data)
     }
     getAnnounce()

@@ -16,6 +16,7 @@ import { OrderData } from '@/services/order'
 import { FeedbackData, createMemberFeedback, getMemberFeedbacks } from '@/services/feedback'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from '@/components/ui/use-toast'
+import { getBaseURL } from '@/lib/utils'
 
 type ContactContextType = {
   selectedOrder: OrderData | null
@@ -72,8 +73,10 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
       return
     }
 
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      await createMemberFeedback({
+      await createMemberFeedback(baseURL, {
         id: selectedOrder.id!,
         domain_id: selectedOrder.domain_id!,
         ordergroup_id: selectedOrder.id!,
@@ -106,8 +109,10 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
   }
 
   const handleGetContactById = async (id: number) => {
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      const data = await getMemberFeedbacks(id)
+      const data = await getMemberFeedbacks(baseURL, id)
       return data.data
     } catch (error) {
       console.error(error)

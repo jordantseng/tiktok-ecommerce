@@ -1,5 +1,4 @@
 import axiosInstance from '@/lib/axios'
-import config from '@/lib/configs'
 import { getToken } from '@/lib/utils'
 import { AddressData, ApiRes } from '@/types/common'
 
@@ -9,35 +8,50 @@ type AddressRes = ApiRes<{
   total: number
 }>
 
-export const getAddress = async (): Promise<AddressRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/myaddress', {
-    page: 1,
-    pagesize: 10000,
+export const getAddress = async (baseURL: string): Promise<AddressRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/myaddress',
+    data: {
+      page: 1,
+      pagesize: 10000,
+    },
   })
 
   return data
 }
 
-export const upsertAddress = async (value: AddressData): Promise<void> => {
-  const { data } = await axiosInstance.post('/api/membercenter/myaddress/store', {
-    ...value,
+export const upsertAddress = async (baseURL: string, value: AddressData): Promise<void> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/myaddress/store',
+    data: {
+      ...value,
+    },
   })
 
   return data
 }
 
-export const deleteAddress = async (id: number): Promise<void> => {
-  const { data } = await axiosInstance.post('/api/membercenter/myaddress/destroy', {
-    del: id,
+export const deleteAddress = async (baseURL: string, id: number): Promise<void> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/myaddress/destroy',
+    data: {
+      del: id,
+    },
   })
 
   return data
 }
 
-export const getLogistic = (type: string) => {
+export const getLogistic = (baseURL: string, type: string) => {
   const form = document.createElement('form')
   form.method = 'post'
-  form.action = `${config.api}/ecpaylogisticmap`
+  form.action = `${baseURL}/ecpaylogisticmap`
 
   const fields = {
     logisticssubtype: type,

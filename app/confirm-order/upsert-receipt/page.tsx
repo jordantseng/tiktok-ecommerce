@@ -11,6 +11,7 @@ import React, { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import { format } from 'date-fns'
 import Title from '@/components/Title'
+import { getBaseURL } from '@/lib/utils'
 
 const UpsertReceiptPage = () => {
   const { cities, districts, handleGetDistrict } = useCity()
@@ -36,8 +37,10 @@ const UpsertReceiptPage = () => {
   const LogisticsSubType = searchParams.get('LogisticsSubType') as Delivery
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (id) {
-      getAddress().then(({ data }) => {
+      getAddress(baseURL).then(({ data }) => {
         const target = data.data?.find((opt) => opt?.id?.toString() === id)
         if (target) {
           console.log(target)
@@ -60,9 +63,11 @@ const UpsertReceiptPage = () => {
   }, [CVSStoreID, CVSStoreName, CVSAddress, LogisticsSubType, handleSelectDeliveryType, setValue])
 
   const handleSubmit = (val: AddressData) => {
+    const baseURL = getBaseURL(window.location.host)
+
     const addressToSubmit =
       val.LogisticsSubType === 'HOME_DELIVERY' ? { ...val, LogisticsSubType: '' } : val
-    upsertAddress(addressToSubmit).then(() => {
+    upsertAddress(baseURL, addressToSubmit).then(() => {
       router.push(from || id ? '/profile' : '/confirm-order/choose-delivery')
     })
   }

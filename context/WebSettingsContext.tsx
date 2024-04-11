@@ -5,6 +5,7 @@ import { useImmer } from 'use-immer'
 
 import { getWebSettings } from '@/services/webSettings'
 import { WebSettingsData } from '@/types/common'
+import { getBaseURL } from '@/lib/utils'
 
 type WebSettingsContextType = {
   webSettingsData: WebSettingsData | null
@@ -16,7 +17,8 @@ export const WebSettingsProvider = ({ children }: PropsWithChildren) => {
   const [data, setData] = useImmer<WebSettingsData | null>(null)
 
   useEffect(() => {
-    getWebSettings().then((res) => setData(res.data))
+    const baseURL = getBaseURL(window.location.host)
+    getWebSettings(baseURL).then((res) => setData(res.data))
   }, [setData])
 
   return (

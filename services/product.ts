@@ -37,6 +37,7 @@ type GetProductsRes = ApiRes<{
 type GetProductRes = ApiRes<ProductData>
 
 type getProductsArgs = {
+  baseURL: string
   page: number
   pageSize: number
   search?: string
@@ -49,6 +50,7 @@ type getProductsArgs = {
 }
 
 export const getProducts = async ({
+  baseURL,
   page,
   pageSize,
   search = '',
@@ -59,26 +61,36 @@ export const getProducts = async ({
   price1,
   price2,
 }: getProductsArgs): Promise<GetProductsRes> => {
-  const { data } = await axiosInstance.post('/api/product', {
-    page,
-    pagesize: pageSize,
-    search,
-    sortname: sortName,
-    sorttype: sortType,
-    searchstartdate: '2021-01-01',
-    searchenddate: '2099-12-31',
-    ...(kindheadId && { kindhead_id: kindheadId }),
-    ...(kindmainId && { kindmain_id: kindmainId }),
-    price1,
-    price2,
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/product',
+    data: {
+      page,
+      pagesize: pageSize,
+      search,
+      sortname: sortName,
+      sorttype: sortType,
+      searchstartdate: '2021-01-01',
+      searchenddate: '2099-12-31',
+      ...(kindheadId && { kindhead_id: kindheadId }),
+      ...(kindmainId && { kindmain_id: kindmainId }),
+      price1,
+      price2,
+    },
   })
 
   return data
 }
 
-export const getProduct = async (id: number): Promise<GetProductRes> => {
-  const { data } = await axiosInstance.post('/api/product/show', {
-    id,
+export const getProduct = async (baseURL: string, id: number): Promise<GetProductRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/product/show',
+    data: {
+      id,
+    },
   })
 
   return data

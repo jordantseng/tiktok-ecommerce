@@ -9,6 +9,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { useCartContext } from '@/context/CartContext'
 import { useNavigationContext } from '@/context/NavigationContext'
 import { toast } from '@/components/ui/use-toast'
+import { getBaseURL } from '@/lib/utils'
 
 type OrderContextType = {
   orders: OrderData[]
@@ -38,11 +39,13 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }, [token, router, user, refreshUser, setFromPath])
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (isPreparingAuthData) return
 
     setIsLoadingOrders(true)
 
-    getOrders()
+    getOrders(baseURL)
       .then((res) => {
         if (res.resultcode !== 0) {
           throw new Error(res.resultmessage)

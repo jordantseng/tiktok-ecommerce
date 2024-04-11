@@ -15,6 +15,7 @@ import ShoppingItemCards from '@/components/ShoppingItemCards'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
 import { payOrder } from '@/services/order'
 import { useToast } from '@/components/ui/use-toast'
+import { getBaseURL } from '@/lib/utils'
 
 const NINE_MINUTES = 9 * 60 * 1000
 
@@ -48,6 +49,8 @@ const CheckoutPage = () => {
   }, [countdown])
 
   const handlePay = () => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (!order?.id) {
       return toast({
         variant: 'destructive',
@@ -60,7 +63,7 @@ const CheckoutPage = () => {
     } else if (order?.paystatus?.includes('barcode')) {
       router.push(`/qrcode-detail/checkout?id=${order.id}`)
     } else {
-      payOrder(order?.id)
+      payOrder(baseURL, order?.id)
     }
   }
 

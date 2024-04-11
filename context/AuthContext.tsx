@@ -24,6 +24,7 @@ import {
 } from '@/services/auth'
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigationContext } from '@/context/NavigationContext'
+import { getBaseURL } from '@/lib/utils'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
@@ -109,9 +110,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, [user, router, pathname])
 
   const refreshUser = useCallback(async () => {
+    const baseURL = getBaseURL(window.location.host)
     setIsLoadingUser(true)
     try {
-      const res = await getUser()
+      const res = await getUser(baseURL)
       setUser(res.data)
     } catch (error) {
       console.error('refreshUser error: ', error)
@@ -122,7 +124,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const handleLoginEmail = async ({ email, password }: LoginInfo, isReset: boolean) => {
     try {
-      const response = await loginEmail({ email, password })
+      const baseURL = getBaseURL(window.location.host)
+      const response = await loginEmail(baseURL, { email, password })
       const data = response.data
       const apiToken = data?.api_token
 
@@ -143,17 +146,20 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const handleLoginTiktok = () => {
     const callbackURL = window.location.origin + from
-    loginTiktok(callbackURL)
+    const baseURL = getBaseURL(window.location.host)
+    loginTiktok(baseURL, callbackURL)
   }
 
   const handleBindTiktok = () => {
     const callbackURL = window.location.origin + from
-    loginTiktok(callbackURL, token)
+    const baseURL = getBaseURL(window.location.host)
+    loginTiktok(baseURL, callbackURL, token)
   }
 
   const handleRegister = async ({ email, password, code }: RegisterInfo) => {
     try {
-      const response = await register({ email, password, code })
+      const baseURL = getBaseURL(window.location.host)
+      const response = await register(baseURL, { email, password, code })
       const data = response.data
       const apiToken = data?.api_token
 
@@ -182,7 +188,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const handleGetEmailCode = async (email: string) => {
     try {
-      const response = await getEmailCode(email)
+      const baseURL = getBaseURL(window.location.host)
+      const response = await getEmailCode(baseURL, email)
       toast({
         className: 'bg-cyan-500 text-white',
         description: response.resultmessage,
@@ -198,8 +205,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   const handleForgetPassword = async (email: string) => {
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      const { resultcode, resultmessage } = await forgetPassword(email)
+      const { resultcode, resultmessage } = await forgetPassword(baseURL, email)
 
       if (resultcode === 0) {
         toast({
@@ -220,8 +229,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   const handleChangePassword = async (password: string) => {
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      const { resultcode, resultmessage } = await changePassword(password)
+      const { resultcode, resultmessage } = await changePassword(baseURL, password)
 
       if (resultcode === 0) {
         toast({

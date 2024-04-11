@@ -4,6 +4,7 @@ import ReceiptInfo from '@/app/confirm-order/choose-receipt/ReceiptInfo'
 import Title from '@/components/Title'
 import { Button } from '@/components/ui/button'
 import { useAddressContext } from '@/context/AddressContext'
+import { getBaseURL } from '@/lib/utils'
 import { getAddress, getLogistic } from '@/services/address'
 import { AddressData } from '@/types/common'
 import { usePathname, useRouter } from 'next/navigation'
@@ -16,8 +17,10 @@ const ChooseReceiptPage = () => {
   const [addresses, setAddresses] = useState<AddressData[]>([])
 
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (pathname === '/confirm-order/choose-receipt') {
-      getAddress().then(({ data }) => {
+      getAddress(baseURL).then(({ data }) => {
         setAddresses(data?.data || [])
       })
     }
@@ -47,8 +50,10 @@ const ChooseReceiptPage = () => {
         <Button
           className="m-4 w-[90%] rounded-3xl bg-primary p-4"
           onClick={() => {
+            const baseURL = getBaseURL(window.location.host)
+
             deliveryType && deliveryType !== 'HOME_DELIVERY'
-              ? getLogistic(deliveryType)
+              ? getLogistic(baseURL, deliveryType)
               : router.push('/confirm-order/upsert-receipt')
           }}
         >

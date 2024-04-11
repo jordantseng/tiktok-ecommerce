@@ -1,5 +1,4 @@
 import axiosInstance from '@/lib/axios'
-import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 
 export type LoginRes = ApiRes<{
@@ -44,20 +43,32 @@ type SuccessRes = ApiRes<{
   id: string
 }>
 
-export const loginEmail = async ({ email, password }: LoginInfo): Promise<LoginRes> => {
-  const { data } = await axiosInstance.post('/api/member/login/store', {
-    email,
-    password,
+export const loginEmail = async (
+  baseURL: string,
+  { email, password }: LoginInfo,
+): Promise<LoginRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/login/store',
+    data: {
+      email,
+      password,
+    },
   })
 
   return data
 }
 
-export const loginTiktok = async (callbackURL: string, token?: string): Promise<void> => {
+export const loginTiktok = async (
+  baseURL: string,
+  callbackURL: string,
+  token?: string,
+): Promise<void> => {
   const form = document.createElement('form')
 
   form.method = 'post'
-  form.action = `${config.api}/sso/tiktok`
+  form.action = `${baseURL}/sso/tiktok`
 
   const fields = {
     client_gobackurl: callbackURL,
@@ -80,31 +91,51 @@ export const loginTiktok = async (callbackURL: string, token?: string): Promise<
   document.body.removeChild(form)
 }
 
-export const register = async ({ email, password, code }: RegisterInfo): Promise<LoginRes> => {
-  const { data } = await axiosInstance.post('/api/member/create/store', {
-    email,
-    password,
-    code,
+export const register = async (
+  baseURL: string,
+  { email, password, code }: RegisterInfo,
+): Promise<LoginRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/create/store',
+    data: {
+      email,
+      password,
+      code,
+    },
   })
 
   return data
 }
 
-export const getEmailCode = async (email: string): Promise<ApiRes<{}>> => {
-  const { data } = await axiosInstance.post('/api/member/emailcode/send', {
-    email,
+export const getEmailCode = async (baseURL: string, email: string): Promise<ApiRes<{}>> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/emailcode/send',
+    data: {
+      email,
+    },
   })
 
   return data
 }
 
-export const getUser = async (): Promise<UserRes> => {
-  const { data } = await axiosInstance.get('/api/membercenter/show')
+export const getUser = async (baseURL: string): Promise<UserRes> => {
+  const { data } = await axiosInstance({
+    method: 'GET',
+    baseURL,
+    url: '/api/membercenter/show',
+  })
 
   return data
 }
 
-export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserRes> => {
+export const updateUser = async (
+  baseURL: string,
+  user: Partial<Omit<User, 'id'>>,
+): Promise<UserRes> => {
   const { mobile, email, name } = user
 
   const body: typeof user = {
@@ -114,31 +145,55 @@ export const updateUser = async (user: Partial<Omit<User, 'id'>>): Promise<UserR
   if (mobile) body.mobile = mobile
   if (name) body.name = name
 
-  const { data } = await axiosInstance.post('/api/membercenter/edit/store', body)
-
-  return data
-}
-
-export const forgetPassword = async (email: string): Promise<ApiRes<{}>> => {
-  const { data } = await axiosInstance.post('/api/member/forgetpwd/store', {
-    email,
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/edit/store',
+    data: body,
   })
 
   return data
 }
 
-export const changePassword = async (password: string): Promise<SuccessRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/changepassword/store', {
-    password,
+export const forgetPassword = async (baseURL: string, email: string): Promise<ApiRes<{}>> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/forgetpwd/store',
+    data: {
+      email,
+    },
   })
 
   return data
 }
 
-export const checkEmailExist = async (email: string, dict: string): Promise<SuccessRes> => {
-  const { data } = await axiosInstance.post('/api/member/emailcheck', {
-    email,
-    dict,
+export const changePassword = async (baseURL: string, password: string): Promise<SuccessRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/changepassword/store',
+    data: {
+      password,
+    },
+  })
+
+  return data
+}
+
+export const checkEmailExist = async (
+  baseURL: string,
+  email: string,
+  dict: string,
+): Promise<SuccessRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/emailcheck',
+    data: {
+      email,
+      dict,
+    },
   })
 
   return data
@@ -156,9 +211,15 @@ type RegisterTiktokRes = ApiRes<{
 }>
 
 export const registerTiktok = async (
+  baseURL: string,
   tiktokInfo: RegisterTiktokInfo,
 ): Promise<RegisterTiktokRes> => {
-  const { data } = await axiosInstance.post('/api/member/tiktok/store', tiktokInfo)
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/member/tiktok/store',
+    data: tiktokInfo,
+  })
 
   return data
 }

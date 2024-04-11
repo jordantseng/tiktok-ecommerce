@@ -12,11 +12,11 @@ import { getBanners } from '@/services/banner'
 import { getCategories } from '@/services/category'
 import { getProducts } from '@/services/product'
 import { getWebSettings } from '@/services/webSettings'
-import { getCurrentDomain } from '@/lib/utils'
+import { getBaseURL } from '@/lib/utils'
 
 export default async function HomePage() {
   const headerList = headers()
-  const domain = getCurrentDomain(headerList.get('host')!)
+  const baseURL = getBaseURL(headerList.get('host')!)
 
   const [
     { data: banners },
@@ -24,10 +24,10 @@ export default async function HomePage() {
     { data: products },
     { data: webSettingsData },
   ] = await Promise.all([
-    getBanners(domain),
-    getCategories(),
-    getProducts({ page: 1, pageSize: 10000 }),
-    getWebSettings(),
+    getBanners(baseURL),
+    getCategories(baseURL),
+    getProducts({ baseURL, page: 1, pageSize: 10000 }),
+    getWebSettings(baseURL),
   ])
 
   return (

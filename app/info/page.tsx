@@ -4,6 +4,8 @@ import { getPage } from '@/services/page'
 import CollapsibleTab from '@/app/info/CollapsibleTab'
 import InfoList from '@/app/info/InfoList'
 import { getWebSettings } from '@/services/webSettings'
+import { headers } from 'next/headers'
+import { getBaseURL } from '@/lib/utils'
 
 type InfoPageProps = {
   searchParams: {
@@ -13,9 +15,12 @@ type InfoPageProps = {
 }
 
 const InfoPage = async ({ searchParams }: InfoPageProps) => {
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
   const { type, typeId } = searchParams
-  const { data: details } = type === '常見問題' ? await getQNAs() : await getPage(Number(typeId))
-  const { data: settings } = await getWebSettings()
+  const { data: details } =
+    type === '常見問題' ? await getQNAs(baseURL) : await getPage(baseURL, Number(typeId))
+  const { data: settings } = await getWebSettings(baseURL)
 
   return (
     <main className="flex min-h-screen flex-col bg-background">

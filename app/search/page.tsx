@@ -6,9 +6,10 @@ import PrevButton from '@/components/PrevButton'
 import Pagination from '@/components/Pagination'
 import { getProducts } from '@/services/product'
 import { getCategories } from '@/services/category'
-import { cn } from '@/lib/utils'
+import { cn, getBaseURL } from '@/lib/utils'
 import { paginationGuard } from '@/lib/guard'
 import ProductList from '@/app/search/ProductList'
+import { headers } from 'next/headers'
 
 const PAGE_SIZE = 15
 
@@ -27,8 +28,11 @@ type SearchPageProps = {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { q, filter, page, type, order, sortBy, minPrice, maxPrice } = searchParams
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
 
   const { data: products } = await getProducts({
+    baseURL,
     page: Number(page),
     pageSize: PAGE_SIZE,
     search: q,
@@ -39,7 +43,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     price2: Number(maxPrice) || undefined,
   })
 
-  const { data: categories } = await getCategories()
+  const { data: categories } = await getCategories(baseURL)
 
   paginationGuard(Number(page), products.last_page, type)
 

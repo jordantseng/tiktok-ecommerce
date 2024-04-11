@@ -14,6 +14,7 @@ import CartSpecDialog from '@/app/shopping-cart/CartSpecDialog'
 import { Item, useCartContext } from '@/context/CartContext'
 import { useRecommendsContext } from '@/context/RecommendsContext'
 import { getProductItems } from '@/services/productItem'
+import { getBaseURL } from '@/lib/utils'
 
 const ShoppingCartPage = () => {
   const [total, setTotal] = useImmer(0)
@@ -79,7 +80,9 @@ const ShoppingCartPage = () => {
   }
 
   const handleChangeProductItem = (item: Item) => {
-    getProductItems({ productId: item.product_id }).then(({ data }) => {
+    const baseURL = getBaseURL(window.location.host)
+
+    getProductItems(baseURL, { productId: item.product_id }).then(({ data }) => {
       setSpecs(data.data)
       setSelectProductItem(item)
       setIsDialogOpen(true)

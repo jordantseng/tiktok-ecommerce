@@ -32,17 +32,25 @@ export type CartReq = {
   online: number
 }
 
-export const getMyCart = async (): Promise<CartsRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/mycart', {
-    page: 1,
-    pagesize: 10000,
+export const getMyCart = async (baseURL: string): Promise<CartsRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/mycart',
+    data: {
+      page: 1,
+      pagesize: 10000,
+    },
   })
 
   return data
 }
 
-export const addToCart = async (id: number, count: number): Promise<CartsRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
+export const addToCart = async (baseURL: string, id: number, count: number): Promise<CartsRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/mycart/store',
     data: [
       {
         productitem_id: id,
@@ -61,25 +69,36 @@ export type CartBodyItem = {
   online: number
 }
 
-export const addToCarts = async (carts: CartBodyItem[]): Promise<CartsRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
+export const addToCarts = async (baseURL: string, carts: CartBodyItem[]): Promise<CartsRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/mycart/store',
     data: carts,
   })
 
   return data
 }
 
-export const updatePurchase = async (req: CartReq[]): Promise<CartsRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/mycart/store', {
+export const updatePurchase = async (baseURL: string, req: CartReq[]): Promise<CartsRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/mycart/store',
     data: req.map((opt) => opt),
   })
 
   return data
 }
 
-export const deleteFromCart = async (id: number): Promise<CartsRes> => {
-  const { data } = await axiosInstance.post('/api/membercenter/mycart/destroy', {
-    del: id,
+export const deleteFromCart = async (baseURL: string, id: number): Promise<CartsRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/mycart/destroy',
+    data: {
+      del: id,
+    },
   })
 
   return data

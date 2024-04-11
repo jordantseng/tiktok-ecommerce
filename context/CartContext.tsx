@@ -1,4 +1,5 @@
 'use client'
+import { getBaseURL } from '@/lib/utils'
 import {
   CartBodyItem,
   CartReq,
@@ -38,7 +39,9 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useImmer<Item[]>([])
 
   const handleGetMyCart = useCallback(() => {
-    getMyCart().then((res) => {
+    const baseURL = getBaseURL(window.location.host)
+
+    getMyCart(baseURL).then((res) => {
       const newItems = (res?.data?.data || []).map((opt) => ({
         id: opt.id,
         amount: opt.qty,
@@ -58,18 +61,24 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   }, [setItems])
 
   const handleAddToCart = (val: CartItem) => {
+    const baseURL = getBaseURL(window.location.host)
+
     const targetItem = items.find((opt) => opt.productItemId === val.productItemId)
-    addToCart(val.productItemId || 0, (targetItem?.amount || 0) + (val.amount || 1)).then(() =>
-      handleGetMyCart(),
+    addToCart(baseURL, val.productItemId || 0, (targetItem?.amount || 0) + (val.amount || 1)).then(
+      () => handleGetMyCart(),
     )
   }
 
   const handleAddToCarts = (carts: CartBodyItem[]) => {
-    addToCarts(carts).then(() => handleGetMyCart())
+    const baseURL = getBaseURL(window.location.host)
+
+    addToCarts(baseURL, carts).then(() => handleGetMyCart())
   }
 
   const handleRemoveFromCart = (id: number) => {
-    deleteFromCart(id)
+    const baseURL = getBaseURL(window.location.host)
+
+    deleteFromCart(baseURL, id)
     setItems((draft) => draft.filter((opt) => opt.id !== id))
   }
 
@@ -78,6 +87,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   }
 
   const confirmPurchase = () => {
+    const baseURL = getBaseURL(window.location.host)
     const request: CartReq[] = []
     items.forEach((opt) => {
       request.push({
@@ -86,7 +96,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         online: opt.isSelect ? 1 : 0,
       })
     })
-    updatePurchase(request)
+    updatePurchase(baseURL, request)
   }
 
   const updateItemAmount = (id: number, amount: number) =>

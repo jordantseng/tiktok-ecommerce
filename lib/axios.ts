@@ -1,11 +1,8 @@
 import axios from 'axios'
-import config from '@/lib/configs'
 import { ApiRes } from '@/types/common'
 import { getToken } from '@/lib/utils'
 
-const axiosInstance = axios.create({
-  baseURL: config.api,
-})
+const axiosInstance = axios.create({})
 
 axiosInstance.interceptors.request.use((config) => {
   const token = getToken()

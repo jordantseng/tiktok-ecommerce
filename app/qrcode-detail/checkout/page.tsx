@@ -2,6 +2,7 @@
 import Title from '@/components/Title'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import { getBaseURL } from '@/lib/utils'
 import { getPayBarcode } from '@/services/order'
 import Image from 'next/image'
 import { useEffect } from 'react'
@@ -11,10 +12,12 @@ const QrcodeDetail = () => {
   const [code, setCode] = useImmer<string[]>([])
   const { order } = useOrderDetailContext()
   useEffect(() => {
+    const baseURL = getBaseURL(window.location.host)
+
     const getCode = async () => {
-      const data = await getPayBarcode(Number(order?.barcode1))
-      const data2 = await getPayBarcode(Number(order?.barcode2))
-      const data3 = await getPayBarcode(Number(order?.barcode3))
+      const data = await getPayBarcode(baseURL, Number(order?.barcode1))
+      const data2 = await getPayBarcode(baseURL, Number(order?.barcode2))
+      const data3 = await getPayBarcode(baseURL, Number(order?.barcode3))
       setCode([data, data2, data3])
     }
     if (order?.id) {

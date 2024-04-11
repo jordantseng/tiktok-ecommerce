@@ -13,6 +13,8 @@ import { getProduct } from '@/services/product'
 import { getProductItems } from '@/services/productItem'
 import { getWebSettings } from '@/services/webSettings'
 import { deliveryMap } from '@/lib/payment'
+import { headers } from 'next/headers'
+import { getBaseURL } from '@/lib/utils'
 
 type ProductPageProps = {
   searchParams: {
@@ -21,10 +23,12 @@ type ProductPageProps = {
 }
 
 const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
   const { id } = searchParams
-  const { data: product } = await getProduct(Number(id))
-  const { data: productItems } = await getProductItems({ productId: id })
-  const { data: webSettings } = await getWebSettings()
+  const { data: product } = await getProduct(baseURL, Number(id))
+  const { data: productItems } = await getProductItems(baseURL, { productId: id })
+  const { data: webSettings } = await getWebSettings(baseURL)
 
   if (!product) {
     notFound()

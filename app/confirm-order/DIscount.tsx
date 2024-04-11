@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { getBaseURL } from '@/lib/utils'
 import { previewDiscont } from '@/services/order'
 import Image from 'next/image'
 import React from 'react'
@@ -17,8 +18,10 @@ const Discount = ({ onDiscount }: Props) => {
   const [isActived, setIsActived] = useImmer(false)
   const { toast } = useToast()
   const handleDiscount = (checked: boolean) => {
+    const baseURL = getBaseURL(window.location.host)
+
     if (checked) {
-      previewDiscont(code)
+      previewDiscont(baseURL, code)
         .then(({ data }) => {
           toast({
             className: 'bg-primary text-white',

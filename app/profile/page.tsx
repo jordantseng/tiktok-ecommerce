@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { updateUser } from '@/services/auth'
 import { Form, FormField } from '@/components/ui/form'
+import { getBaseURL } from '@/lib/utils'
 
 function ProfilePage() {
   const router = useRouter()
@@ -43,7 +44,9 @@ function ProfilePage() {
   })
 
   useEffect(() => {
-    getAddress().then(({ data }) => {
+    const baseURL = getBaseURL(window.location.host)
+
+    getAddress(baseURL).then(({ data }) => {
       setAddresses(data?.data || [])
     })
   }, [setAddresses])
@@ -62,8 +65,10 @@ function ProfilePage() {
   }, [user, form, router, refreshUser])
 
   async function handleSubmit(result: z.infer<typeof formSchema>) {
+    const baseURL = getBaseURL(window.location.host)
+
     try {
-      const { resultcode, resultmessage } = await updateUser({
+      const { resultcode, resultmessage } = await updateUser(baseURL, {
         ...result,
         name: user?.name,
       })
@@ -243,7 +248,10 @@ function ProfilePage() {
             onClick={() => {
               router.push(`/confirm-order/upsert-receipt?id=${address.id}`)
             }}
-            onDelete={() => deleteAddress(address.id || 0)}
+            onDelete={() => {
+              const baseURL = getBaseURL(window.location.host)
+              deleteAddress(baseURL, address.id || 0)
+            }}
           />
         ))}
       </div>
