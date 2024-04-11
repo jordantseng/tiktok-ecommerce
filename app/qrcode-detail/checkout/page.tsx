@@ -33,7 +33,7 @@ const QrcodeDetail = () => {
                 <div className="relative flex h-[18px] min-w-[18px]">
                   <Image alt="info" fill src="/cash.png" />
                 </div>
-                <div className="text-lg font-bold">超商付款</div>
+                <div className="text-lg font-bold">超商代碼</div>
               </div>
               <span className="py-2 text-xs font-light">＊請使用下方付款條碼完成繳款。</span>
               <div className="flex items-center rounded-lg">

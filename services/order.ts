@@ -40,7 +40,7 @@ export enum PaymentMethodEnum {
   'ecpay-credit3' = '信用卡分3期(綠界)',
   'ecpay-credit6' = '信用卡分6期(綠界)',
   'ecpay-credit12' = '信用卡分12期(綠界)',
-  'ecpay-cvs' = '超商代碼(綠界)',
+  'ecpay-barcode' = '超商代碼(綠界)',
   'newbpay-atm' = '轉帳(藍新)',
   'newbpay-credit' = '信用卡(藍新)',
   'newbpay-credit3' = '信用卡分3期(藍新)',

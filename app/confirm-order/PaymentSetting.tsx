@@ -167,7 +167,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                       <div className="item-center relative flex h-5 w-5 justify-center">
                         <Image alt="atm" fill src="/cash.png" />
                       </div>
-                      <span>超商取貨付款</span>
+                      <span>超商代碼</span>
                     </div>
                   </Label>
                 </div>
@@ -265,7 +265,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
     //             <SelectItem value={opt}>
     //               <div className="flex items-center space-x-2">
     //                 <StoreIcon />
-    //                 <span>超商取貨付款</span>
+    //                 <span>超商代碼</span>
     //               </div>
     //             </SelectItem>
     //           </SelectGroup>
