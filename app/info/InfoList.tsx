@@ -14,7 +14,7 @@ const InfoList = async () => {
   const { data: pages } = await getPages(baseURL)
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex w-full flex-col gap-4 p-4 text-sm">
       <Link
         href="/info?type=常見問題"
         className="flex cursor-pointer items-center justify-between rounded-lg bg-white p-4"
