@@ -6,6 +6,7 @@ import InfoList from '@/app/info/InfoList'
 import { getWebSettings } from '@/services/webSettings'
 import { headers } from 'next/headers'
 import { getBaseURL } from '@/lib/utils'
+import PrevButton from '@/components/PrevButton'
 
 type InfoPageProps = {
   searchParams: {
@@ -23,9 +24,9 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
   const { data: settings } = await getWebSettings(baseURL)
 
   return (
-    <main className="flex min-h-screen flex-col bg-background">
+    <main className="h-full min-h-screen">
       <Title title={type || '服務中心'} />
-      <div className="flex flex-col justify-between gap-4 p-4 text-sm">
+      <div className={'flex min-h-screen w-full flex-col items-center bg-background'}>
         {!type ? (
           <InfoList />
         ) : (
