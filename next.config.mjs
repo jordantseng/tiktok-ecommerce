@@ -11,8 +11,13 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        // hostname: 'backend.tkshop.live',
-        hostname: 'test.tkshop.live',
+        hostname: '**.tkshop.live',
+        port: '',
+        pathname: '/**/*',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.tkback.app',
         port: '',
         pathname: '/**/*',
       },
