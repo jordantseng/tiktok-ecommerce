@@ -24,7 +24,7 @@ const AnnounceTab = ({ title, id }: AnnounceTabProps) => {
 
   return (
     <div
-      className="flex cursor-pointer flex-col justify-between rounded-lg bg-white p-4"
+      className="flex w-full cursor-pointer flex-col justify-between rounded-lg bg-white p-4"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex flex-1 items-center justify-between">
