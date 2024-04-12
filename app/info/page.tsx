@@ -30,7 +30,7 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
         {!type ? (
           <InfoList />
         ) : (
-          <>
+          <div className="w-full space-y-4 p-4">
             {Array.isArray(details) && type === '常見問題' ? (
               details.map(({ id, title, body }) => (
                 <CollapsibleTab key={id} title={title} body={body} />
@@ -42,7 +42,7 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
                 }}
               />
             )}
-          </>
+          </div>
         )}
         <div className="flex flex-col gap-2 p-4 text-gray-700">
           <span>公司名稱：{settings.title}</span>

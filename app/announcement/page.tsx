@@ -10,9 +10,9 @@ const AnnouncementPage = async () => {
   const { data } = await getAnnouncements(baseURL)
 
   return (
-    <main className="flex min-h-screen flex-col bg-background">
+    <main className="h-full min-h-screen">
       <Title title="最新消息" />
-      <div className="flex flex-col justify-between gap-4 p-4 text-sm">
+      <div className={'flex min-h-screen w-full flex-col items-center space-y-4 bg-background p-4'}>
         {data.map((opt) => (
           <AnnounceTab key={opt.id} title={opt.title} id={opt.id} />
         ))}
