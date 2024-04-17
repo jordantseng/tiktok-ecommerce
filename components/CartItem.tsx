@@ -7,11 +7,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils'
 import Counter from '@/components/Counter'
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog'
-import { CartItem } from '@/types/common'
+import { CartItem as CartItemTypes } from '@/types/common'
 import { ChevronDown } from 'lucide-react'
 import { Button } from './ui/button'
 
-type Props = CartItem & {
+type Props = CartItemTypes & {
   isChecked?: boolean
   editable?: boolean
   className?: string

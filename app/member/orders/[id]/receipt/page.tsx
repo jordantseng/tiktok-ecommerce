@@ -8,6 +8,7 @@ import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import ShippingStatusCard from '@/app/member/orders/[id]/ShippingStatusCard'
 import ShoppingSummaryCards from '@/app/member/orders/[id]/ShoppingSummaryCards'
+import OrderContactCard from '@/app/member/orders/[id]/OrderContactCard'
 import { CommonButton } from '@/components/OrderButtons'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
@@ -41,6 +42,7 @@ const ReceiptPage = () => {
           <ShoppingSummaryCards order={order} />
           <OrderSummaryCard order={order} />
           <TransactionInfoCard order={order} />
+          <OrderContactCard order={order} />
         </div>
 
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">

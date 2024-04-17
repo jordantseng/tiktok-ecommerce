@@ -9,6 +9,7 @@ import OrderSummaryCard from '@/app/member/orders/[id]/OrderSummaryCard'
 import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import TransactionInfoCard from '@/app/member/orders/[id]/TransactionInfoCard'
 import OrderMemoCard from '@/app/member/orders/[id]/OrderMemoCard'
+import OrderContactCard from '@/app/member/orders/[id]/OrderContactCard'
 import { PrimaryButton } from '@/components/OrderButtons'
 import { Skeleton } from '@/components/ui/skeleton'
 import ShoppingItemCards from '@/components/ShoppingItemCards'
@@ -99,6 +100,7 @@ const CheckoutPage = () => {
           <OrderSummaryCard order={order} />
           <TransactionInfoCard order={order} />
           <OrderMemoCard order={order} />
+          <OrderContactCard order={order} />
         </div>
 
         <div className="sticky bottom-0 flex min-h-16 justify-end bg-white shadow-2xl">
