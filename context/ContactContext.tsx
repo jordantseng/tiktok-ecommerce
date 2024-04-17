@@ -27,6 +27,7 @@ type ContactContextType = {
   handleSelectOrder: (order: OrderData) => void
   handleContactDialogOpen: () => void
   handleContactDialogClose: () => void
+  handleResetMessage: () => void
   handleContactMessageChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
   handleContactSubmit: () => void
 }
@@ -124,6 +125,10 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const handleResetMessage = () => {
+    setContactMessage('')
+  }
+
   return (
     <ContactContext.Provider
       value={{
@@ -133,6 +138,7 @@ export const ContactProvider = ({ children }: PropsWithChildren) => {
         handleContactDialogClose,
         handleContactDialogOpen,
         handleContactMessageChange,
+        handleResetMessage,
         handleContactSubmit,
         handleGetContactById,
         handleSelectOrder,
