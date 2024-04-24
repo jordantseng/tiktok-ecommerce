@@ -51,13 +51,15 @@ export const addToCart = async (baseURL: string, id: number, count: number): Pro
     method: 'POST',
     baseURL,
     url: '/api/membercenter/mycart/store',
-    data: [
-      {
-        productitem_id: id,
-        qty: count || 1,
-        online: 0,
-      },
-    ],
+    data: {
+      data: [
+        {
+          productitem_id: id,
+          qty: count || 1,
+          online: 0,
+        },
+      ],
+    },
   })
 
   return data
@@ -74,7 +76,9 @@ export const addToCarts = async (baseURL: string, carts: CartBodyItem[]): Promis
     method: 'POST',
     baseURL,
     url: '/api/membercenter/mycart/store',
-    data: carts,
+    data: {
+      data: carts,
+    },
   })
 
   return data
@@ -85,7 +89,9 @@ export const updatePurchase = async (baseURL: string, req: CartReq[]): Promise<C
     method: 'POST',
     baseURL,
     url: '/api/membercenter/mycart/store',
-    data: req.map((opt) => opt),
+    data: {
+      data: req.map((opt) => opt),
+    },
   })
 
   return data
