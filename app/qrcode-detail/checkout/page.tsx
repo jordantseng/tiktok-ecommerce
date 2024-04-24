@@ -64,30 +64,42 @@ const QrcodeDetail = () => {
                 </div>
               </div>
               <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
-                <Image
-                  className="object-cover"
-                  fill
-                  src={`data:image/jpeg;base64,${code[0]}`}
-                  alt={'barcode1'}
-                />
+                {!code[0] ? (
+                  <Skeleton className="h-10 w-full" />
+                ) : (
+                  <Image
+                    className="object-cover"
+                    fill
+                    src={`data:image/jpeg;base64,${code[0]}`}
+                    alt={'barcode1'}
+                  />
+                )}
               </div>
               <span className="flex items-center justify-center text-sm">{order?.barcode1}</span>
               <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
-                <Image
-                  className="object-cover"
-                  fill
-                  src={`data:image/jpeg;base64,${code[1]}`}
-                  alt={'barcode2'}
-                />
+                {!code[1] ? (
+                  <Skeleton className="h-10 w-full" />
+                ) : (
+                  <Image
+                    className="object-cover"
+                    fill
+                    src={`data:image/jpeg;base64,${code[1]}`}
+                    alt={'barcode2'}
+                  />
+                )}
               </div>
               <span className="flex items-center justify-center text-sm">{order?.barcode2}</span>
               <div className="relative mx-auto mt-4 flex h-14 w-[300px]">
-                <Image
-                  className="object-cover"
-                  fill
-                  src={`data:image/jpeg;base64,${code[2]}`}
-                  alt={'barcode3'}
-                />
+                {!code[2] ? (
+                  <Skeleton className="h-10 w-full" />
+                ) : (
+                  <Image
+                    className="object-cover"
+                    fill
+                    src={`data:image/jpeg;base64,${code[2]}`}
+                    alt={'barcode3'}
+                  />
+                )}
               </div>
               <span className="flex items-center justify-center text-sm">{order?.barcode3}</span>
             </div>
