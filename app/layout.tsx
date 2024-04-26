@@ -23,11 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const baseURL = getBaseURL(headerList.get('host')!)
 
   const { data } = await getWebSettings(baseURL)
-
   return {
-    title: data.title,
-    description: data.description,
-    icons: [{ url: data.ico || '/fake-logo.png' }],
+    title: data?.title,
+    description: data?.description,
+    icons: [{ url: data?.ico || '/fake-logo.png' }],
   }
 }
 
