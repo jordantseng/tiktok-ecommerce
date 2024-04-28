@@ -32,7 +32,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <main className="mb-16 bg-background">
+      <main className="mb-16 min-h-screen bg-background">
         {resultmessage === '網域已過期' ? (
           <div className="flex h-full min-h-screen items-center justify-center">
             會員資格已過期,請進行續約或聯繫客服
