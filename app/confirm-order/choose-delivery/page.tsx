@@ -23,6 +23,7 @@ const ChooseDeliveryPage = () => {
     useAddressContext()
   const pathname = usePathname()
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
+  const [storeName, setStoreName] = useImmer<AddressData | null>(null)
 
   useEffect(() => {
     const baseURL = getBaseURL(window.location.host)
@@ -77,8 +78,7 @@ const ChooseDeliveryPage = () => {
             // handleSelectDeliveryType(val as Delivery)
             const tar = addresses.find((opt) => opt.id?.toString() === val)
             if (tar) {
-              handleSelectAddress(tar)
-              handleSelectDeliveryType((tar.LogisticsSubType || 'HOME_DELIVERY') as Delivery)
+              setStoreName(tar)
             }
           }}
         >
@@ -241,6 +241,20 @@ const ChooseDeliveryPage = () => {
             <RadioGroupItem value="HOME_DELIVERY" id="HOME_DELIVERY" />
           </div> */}
         </RadioGroup>
+        <Button
+          className="w-full rounded-full"
+          variant="primary"
+          disabled={!storeName}
+          onClick={() => {
+            if (storeName) {
+              handleSelectAddress(storeName)
+              handleSelectDeliveryType((storeName.LogisticsSubType || 'HOME_DELIVERY') as Delivery)
+              router.push('/confirm-order')
+            }
+          }}
+        >
+          確認
+        </Button>
       </div>
     </main>
   )
