@@ -189,7 +189,7 @@ export const checkEmailExist = async (
   const { data } = await axiosInstance({
     method: 'POST',
     baseURL,
-    url: '/api/member/emailcheck',
+    url: '/api/member/tiktok/emailcheck',
     data: {
       email,
       dict,
