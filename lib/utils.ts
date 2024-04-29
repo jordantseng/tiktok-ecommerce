@@ -14,9 +14,12 @@ const TEST_ENV_DOMAIN = 'front.tkshop.live'
 
 export function getBaseURL(host: string) {
   const prefix = host.split('.')[0]
-  if (host.includes('shop.exforex.net')) {
-    return `https://exforex.tkback.app`
-  } 
+  if (process.env.NEXT_PUBLIC_CUSTOM_URL) {
+    const map = JSON.parse(process.env.NEXT_PUBLIC_CUSTOM_URL || '{}')
+    if (map[host]) {
+      return map[host]
+    }
+  }
   const domain =
     host.includes(DEV_ENV_DOMAIN) || host === TEST_ENV_DOMAIN
       ? 'https://test.tkshop.live'
