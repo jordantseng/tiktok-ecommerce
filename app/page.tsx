@@ -92,14 +92,14 @@ export default async function HomePage() {
                   </Link>
                 ))}
               </div>
-              <div className="mt-2 flex items-center justify-center space-x-2">
+              {/* <div className="mt-2 flex items-center justify-center space-x-2">
                 <Link href={`/privacy`}>
                   <div className="pointer text-sm font-light"> 隱私權政策 </div>
                 </Link>
                 <Link href={`/tos`}>
                   <div className="pointer text-sm font-light"> 服務條款 </div>
                 </Link>
-              </div>
+              </div> */}
             </div>
             <NavBar />
           </>
