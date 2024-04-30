@@ -5,6 +5,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { useAddressContext } from '@/context/AddressContext'
+import { useCartContext } from '@/context/CartContext'
 import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { PayStatus } from '@/services/order'
 import { ChevronsUpDown } from 'lucide-react'
@@ -19,11 +20,19 @@ type Props = {
 
 const PaymentSetting = ({ value, onChange }: Props) => {
   const { webSettingsData } = useWebSettingsContext()
+  const { getSelectedCartItems } = useCartContext()
   const handleChange = (val: PayStatus) => setSelected(val)
   const { deliveryType } = useAddressContext()
   const [selected, setSelected] = useImmer<PayStatus | null>(null)
   const creditCount = Object.keys(webSettingsData?.paykind || {}).filter((opt) =>
     opt.includes('credit'),
+  )
+
+  const items = getSelectedCartItems()
+  const total = items.reduce(
+    (accumulator, currentValue) =>
+      accumulator + (currentValue.amount || 0) * (currentValue.price || currentValue.originPrice),
+    0,
   )
 
   return (
@@ -57,12 +66,18 @@ const PaymentSetting = ({ value, onChange }: Props) => {
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="credit">
-                    <div className="flex items-center space-x-2">
-                      <div className="item-center relative flex h-5 w-5 justify-center">
-                        <Image alt="credit" fill src="/credit.png" />
+                    {total > 200000 ? (
+                      <div className="font-lg flex items-center justify-center font-bold text-red-400">
+                        ⚠️20萬以上無法使用信用卡付款⚠️
                       </div>
-                      <span>信用卡付款</span>
-                    </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <div className="item-center relative flex h-5 w-5 justify-center">
+                          <Image alt="credit" fill src="/credit.png" />
+                        </div>
+                        <span>信用卡付款</span>
+                      </div>
+                    )}
                   </Label>
                   <ChevronsUpDown className="h-4 w-4" />
                 </div>
@@ -72,7 +87,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                   (opt: string) =>
                     opt.indexOf('credit') > -1 && (
                       <div key={opt} className="ml-4 flex space-x-2 p-4">
-                        <RadioGroupItem value={opt} id={opt} />
+                        <RadioGroupItem value={opt} id={opt} disabled={total > 200000} />
                         <div className="flex items-center space-x-2">
                           <Label htmlFor={opt}>{webSettingsData?.paykind[opt]}</Label>
                         </div>
@@ -89,15 +104,21 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                 <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                   <div className="flex items-center space-x-2">
                     <Label htmlFor={opt}>
-                      <div className="flex items-center space-x-2">
-                        <div className="item-center relative flex h-5 w-5 justify-center">
-                          <Image alt="atm" fill src="/credit.png" />
+                      {total > 200000 ? (
+                        <div className="font-lg flex items-center justify-center font-bold text-red-400">
+                          ⚠️20萬以上無法使用信用卡付款⚠️
                         </div>
-                        <span>信用卡付款</span>
-                      </div>
+                      ) : (
+                        <div className="flex items-center space-x-2">
+                          <div className="item-center relative flex h-5 w-5 justify-center">
+                            <Image alt="credit" fill src="/credit.png" />
+                          </div>
+                          <span>信用卡付款</span>
+                        </div>
+                      )}
                     </Label>
                   </div>
-                  <RadioGroupItem value={opt} id={opt} />
+                  <RadioGroupItem value={opt} id={opt} disabled={total > 200000} />
                 </div>
               ),
           )
@@ -109,15 +130,21 @@ const PaymentSetting = ({ value, onChange }: Props) => {
               <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor={opt}>
-                    <div className="flex items-center space-x-2">
-                      <div className="item-center relative flex h-5 w-5 justify-center">
-                        <Image alt="atm" fill src="/group.png" />
+                    {total > 50000 ? (
+                      <div className="font-lg flex items-center justify-center font-bold text-red-400">
+                        ⚠️5萬以上無法使用匯款⚠️
                       </div>
-                      <span>匯款</span>
-                    </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <div className="item-center relative flex h-5 w-5 justify-center">
+                          <Image alt="atm" fill src="/group.png" />
+                        </div>
+                        <span>匯款</span>
+                      </div>
+                    )}
                   </Label>
                 </div>
-                <RadioGroupItem value={opt} id={opt} />
+                <RadioGroupItem value={opt} id={opt} disabled={total > 50000} />
               </div>
             ),
         )}
@@ -163,15 +190,21 @@ const PaymentSetting = ({ value, onChange }: Props) => {
               <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor={opt}>
-                    <div className="flex items-center space-x-2">
-                      <div className="item-center relative flex h-5 w-5 justify-center">
-                        <Image alt="atm" fill src="/cash.png" />
+                    {total > 20000 ? (
+                      <div className="font-lg flex items-center justify-center font-bold text-red-400">
+                        ⚠️2萬以上無法使用超商代碼⚠️
                       </div>
-                      <span>超商代碼</span>
-                    </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <div className="item-center relative flex h-5 w-5 justify-center">
+                          <Image alt="atm" fill src="/cash.png" />
+                        </div>
+                        <span>超商代碼</span>
+                      </div>
+                    )}
                   </Label>
                 </div>
-                <RadioGroupItem value={opt} id={opt} />
+                <RadioGroupItem value={opt} id={opt} disabled={total > 20000} />
               </div>
             ),
         )}
