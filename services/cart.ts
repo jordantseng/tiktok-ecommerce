@@ -46,7 +46,12 @@ export const getMyCart = async (baseURL: string): Promise<CartsRes> => {
   return data
 }
 
-export const addToCart = async (baseURL: string, id: number, count: number): Promise<CartsRes> => {
+export const addToCart = async (
+  baseURL: string,
+  id: number,
+  count: number,
+  isSelect?: boolean,
+): Promise<CartsRes> => {
   const { data } = await axiosInstance({
     method: 'POST',
     baseURL,
@@ -56,7 +61,7 @@ export const addToCart = async (baseURL: string, id: number, count: number): Pro
         {
           productitem_id: id,
           qty: count || 1,
-          online: 0,
+          online: isSelect ? 1 : 0,
         },
       ],
     },

@@ -12,6 +12,7 @@ export type CartItem = {
   product_id?: string
   stars?: number
   sales?: string
+  isSelect?: boolean
 }
 
 export type ApiRes<Data> = {
