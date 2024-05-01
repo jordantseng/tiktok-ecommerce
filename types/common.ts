@@ -36,6 +36,7 @@ export type AddressData = {
 }
 
 export type WebSettingsData = {
+  tel: string
   paykind: Record<string, string>
   paystatus: string
   id: number
@@ -54,4 +55,5 @@ export type WebSettingsData = {
   created_at: string
   updated_at: string
   ico: string
+  invoice: string
 }

@@ -1,3 +1,4 @@
+import CompanyInfo from '@/components/CompanyInfo'
 import Title from '@/components/Title'
 import { getBaseURL } from '@/lib/utils'
 import { getWebSettings } from '@/services/webSettings'
@@ -187,12 +188,7 @@ const TosPage = async () => {
           </div>
         </div>
       </div>
-      <footer className="flex flex-col gap-2 p-4 text-gray-700">
-        {settings.title && <span>公司名稱：{settings.title}</span>}
-        {settings.address && <span>公司地址：{settings.address}</span>}
-        {settings.mobile && <span>聯繫方式：{settings.mobile}</span>}
-        {settings.email && <span>信箱：{settings.email}</span>}
-      </footer>
+      <CompanyInfo settings={settings} />
     </main>
   )
 }
