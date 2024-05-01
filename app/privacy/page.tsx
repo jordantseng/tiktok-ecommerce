@@ -15,7 +15,7 @@ const PrivacyPage = async () => {
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         <div>
           <div>
-            歡迎您使用{settings.title}
+            歡迎您使用{settings.name}
             的服務！我們重視您的隱私，致力於保護您的個人信息安全。本隱私政策旨在透明化地解釋我們如何收集、使用、存儲、保護以及分享您的信息。
           </div>
           <div className="py-2 font-bold">信息收集</div>
@@ -62,11 +62,14 @@ const PrivacyPage = async () => {
             我們可能會不時更新我們的隱私政策。我們將通過適當的方式（例如，通過我們的網站）通知您任何重大變更。
           </div>
           <div className="py-2 font-bold">聯繫我們</div>
-          <div>如果您對我們的隱私政策有任何疑問或擔憂，請通過02-66043975與我們聯繫。</div>
+          <div>
+            如果您對我們的隱私政策有任何疑問或擔憂，請通過{settings.tel || settings.mobile}
+            與我們聯繫。
+          </div>
         </div>
         <div>
           <div>
-            Welcome to using {settings.title}.&apos;s services! We value your privacy and are
+            Welcome to using {settings.name}.&apos;s services! We value your privacy and are
             committed to protecting the security of your personal information. This Privacy Policy
             aims to explain transparently how we collect, use, store, protect, and share your
             information.
@@ -134,7 +137,7 @@ const PrivacyPage = async () => {
           <div className="py-2 font-bold">Contact Us</div>
           <div>
             If you have any questions or concerns about our Privacy Policy, please contact us at
-            02-66043975.
+            {settings.tel || settings.mobile}.
           </div>
         </div>
       </div>

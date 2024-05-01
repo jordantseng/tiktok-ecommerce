@@ -15,7 +15,7 @@ const TosPage = async () => {
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         <div>
           <div>
-            歡迎您使用{settings.title}
+            歡迎您使用{settings.name}
             的服務！我們提供的服務旨在提供高品質的線上購物體驗。使用我們的服務即表示您同意遵守本服務條款，請仔細閱讀。
           </div>
           <div className="py-2 font-bold">使用條件</div>
@@ -34,11 +34,13 @@ const TosPage = async () => {
           <div>我們的服務是以「現況」提供，不提供任何形式的明示或暗示保證。</div>
           <div className="py-2 font-bold">限制責任</div>
           <div>
-            潮數位科技有限公司對於因使用或無法使用服務所導致的任何間接、特殊、偶然或衍生性損害不承擔責任。
+            {settings.name}
+            對於因使用或無法使用服務所導致的任何間接、特殊、偶然或衍生性損害不承擔責任。
           </div>
           <div className="py-2 font-bold">智慧財產</div>
           <div>
-            服務及其中的內容（包括但不限於軟體、圖像、文字和設計）是潮數位科技有限公司的財產，受到著作權、商標和其他智慧財產權法律的保護。
+            服務及其中的內容（包括但不限於軟體、圖像、文字和設計）是{settings.name}
+            的財產，受到著作權、商標和其他智慧財產權法律的保護。
           </div>
           <div className="py-2 font-bold">法律適用與爭議解決</div>
           <div>
@@ -47,7 +49,7 @@ const TosPage = async () => {
           <div className="py-2 font-bold">修改與更新</div>
           <div>我們保留隨時修改這些條款的權利，並將盡量透過適當管道通知您。</div>
           <div className="py-2 font-bold">聯絡方式</div>
-          <div>如有任何問題或建議，請透過02-66043975與我們聯繫。</div>
+          <div>如有任何問題或建議，請透過{settings.tel || settings.mobile}與我們聯繫。</div>
           <div className="py-2 font-bold">隱私權政策</div>
           <div>
             我們重視您的隱私權。請參閱我們的隱私權政策，以了解有關我們如何收集、使用和保護您的個人資訊的詳細資訊。
@@ -60,7 +62,7 @@ const TosPage = async () => {
           <div>用戶有責任保持其帳號的安全性，並對所有透過其帳號進行的活動負責。</div>
           <div className="py-2 font-bold">第三方連結</div>
           <div>
-            本服務可能包含第三方網站或服務的連結。潮數位科技有限公司對這些外部資源的內容不負任何責任。
+            本服務可能包含第三方網站或服務的連結。{settings.name}對這些外部資源的內容不負任何責任。
           </div>
           <div className="py-2 font-bold">年齡限制</div>
           <div>
@@ -82,7 +84,7 @@ const TosPage = async () => {
         </div>
         <div>
           <div>
-            Welcome to using the services provided by {settings.title}.! Our services aim to offer a
+            Welcome to using the services provided by {settings.name}! Our services aim to offer a
             high-quality online shopping experience. By using our services, you agree to comply with
             these Terms of Service, so please read them carefully.
           </div>
@@ -114,14 +116,14 @@ const TosPage = async () => {
           </div>
           <div className="py-2 font-bold">Limitation of Liability</div>
           <div>
-            HyperDigital Technology Co., Ltd. is not liable for any indirect, special, incidental,
-            or consequential damages arising from the use or the inability to use the services.
+            {settings.name} is not liable for any indirect, special, incidental, or consequential
+            damages arising from the use or the inability to use the services.
           </div>
           <div className="py-2 font-bold">Intellectual Property</div>
           <div>
             The service and its content (including but not limited to software, images, text, and
-            designs) are the property of HyperDigital Technology Co., Ltd., protected by copyright,
-            trademark, and other intellectual property laws.
+            designs) are the property of {settings.name}, protected by copyright, trademark, and
+            other intellectual property laws.
           </div>
           <div className="py-2 font-bold">Governing Law and Dispute Resolution</div>
           <div>
@@ -135,7 +137,10 @@ const TosPage = async () => {
             notify you through appropriate channels.
           </div>
           <div className="py-2 font-bold">Contact Information</div>
-          <div>If you have any questions or suggestions, please contact us at 02-66043975.</div>
+          <div>
+            If you have any questions or suggestions, please contact us at{' '}
+            {settings.tel || settings.mobile}.
+          </div>
           <div className="py-2 font-bold">Privacy Policy</div>
           <div>
             We value your privacy. Please refer to our Privacy Policy for detailed information on
@@ -154,8 +159,8 @@ const TosPage = async () => {
           </div>
           <div className="py-2 font-bold">Third-Party Links</div>
           <div>
-            The service may contain links to third-party websites or services. HyperDigital
-            Technology Co., Ltd. is not responsible for the content of these external resources.
+            The service may contain links to third-party websites or services. {settings.name}
+            is not responsible for the content of these external resources.
           </div>
           <div className="py-2 font-bold">Age Restrictions</div>
           <div>
