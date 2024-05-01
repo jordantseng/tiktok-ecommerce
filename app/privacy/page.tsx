@@ -136,7 +136,7 @@ const PrivacyPage = async () => {
           </div>
           <div className="py-2 font-bold">Contact Us</div>
           <div>
-            If you have any questions or concerns about our Privacy Policy, please contact us at
+            If you have any questions or concerns about our Privacy Policy, please contact us at{' '}
             {settings.tel || settings.mobile}.
           </div>
         </div>

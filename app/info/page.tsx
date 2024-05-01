@@ -27,7 +27,7 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
   return (
     <main className="h-full min-h-screen bg-background">
       <Title title={type || '服務中心'} />
-      <div className={'flex h-[calc(100vh-250px)] w-full flex-col items-center'}>
+      <div className={'flex min-h-[calc(100vh-250px)] w-full flex-col items-center'}>
         {!type ? (
           <InfoList />
         ) : (
