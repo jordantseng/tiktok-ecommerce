@@ -120,7 +120,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                           <div className="item-center relative flex h-5 w-5 justify-center">
                             <Image alt="credit" fill src="/credit.png" />
                           </div>
-                          <span>信用卡付款</span>
+                          <span>{webSettingsData?.paykind[opt]}</span>
                         </div>
                       )}
                     </Label>
@@ -173,7 +173,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                         <div className="item-center relative flex h-5 w-5 justify-center">
                           <Image alt="credit" fill src="/credit.png" />
                         </div>
-                        <span>零卡付款</span>
+                        <span>{webSettingsData?.paykind[opt]}</span>
                       </div>
                     </Label>
                   </div>
