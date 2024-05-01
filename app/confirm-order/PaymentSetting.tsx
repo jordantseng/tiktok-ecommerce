@@ -27,6 +27,9 @@ const PaymentSetting = ({ value, onChange }: Props) => {
   const creditCount = Object.keys(webSettingsData?.paykind || {}).filter((opt) =>
     opt.includes('credit'),
   )
+  const zeroCount = Object.keys(webSettingsData?.paykind || {}).filter((opt) =>
+    opt.includes('zero'),
+  )
 
   const items = getSelectedCartItems()
   const total = items.reduce(
@@ -54,6 +57,10 @@ const PaymentSetting = ({ value, onChange }: Props) => {
     // 信用卡分6期(快點付)[wanpay-credit6],
     // 信用卡分12期(快點付)[wanpay-credit12],
     // 信用卡分24期(快點付)[wanpay-credit24],
+    // 零卡分3期(快點付) [wanpay-zero3],
+    // 零卡分6期(快點付) [wanpay-zero6],
+    // 零卡分12期(快點付) [wanpay-zero12],
+
     <>
       <RadioGroup
         className="w-full bg-white"
@@ -119,6 +126,58 @@ const PaymentSetting = ({ value, onChange }: Props) => {
                     </Label>
                   </div>
                   <RadioGroupItem value={opt} id={opt} disabled={total > 200000} />
+                </div>
+              ),
+          )
+        )}
+
+        {zeroCount.length > 1 ? (
+          <div className="flex items-center justify-between space-x-2  p-4">
+            <Collapsible className="w-full">
+              <CollapsibleTrigger className="w-full">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="zero">
+                    <div className="flex items-center space-x-2">
+                      <div className="item-center relative flex h-5 w-5 justify-center">
+                        <Image alt="credit" fill src="/credit.png" />
+                      </div>
+                      <span>零卡付款</span>
+                    </div>
+                  </Label>
+                  <ChevronsUpDown className="h-4 w-4" />
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                {Object.keys(webSettingsData?.paykind || {}).map(
+                  (opt: string) =>
+                    opt.indexOf('zero') > -1 && (
+                      <div key={opt} className="ml-4 flex space-x-2 p-4">
+                        <RadioGroupItem value={opt} id={opt} />
+                        <div className="flex items-center space-x-2">
+                          <Label htmlFor={opt}>{webSettingsData?.paykind[opt]}</Label>
+                        </div>
+                      </div>
+                    ),
+                )}
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+        ) : (
+          Object.keys(webSettingsData?.paykind || {}).map(
+            (opt: string) =>
+              opt.indexOf('zero') > -1 && (
+                <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor={opt}>
+                      <div className="flex items-center space-x-2">
+                        <div className="item-center relative flex h-5 w-5 justify-center">
+                          <Image alt="credit" fill src="/credit.png" />
+                        </div>
+                        <span>零卡付款</span>
+                      </div>
+                    </Label>
+                  </div>
+                  <RadioGroupItem value={opt} id={opt} />
                 </div>
               ),
           )
