@@ -25,9 +25,7 @@ type CartContextType = {
   confirmPurchase: () => void
 }
 
-export type Item = CartItem & {
-  isSelect: boolean
-}
+export type Item = CartItem
 
 const CartContext = createContext<CartContextType | null>(null)
 
@@ -64,9 +62,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const baseURL = getBaseURL(window.location.host)
 
     const targetItem = items.find((opt) => opt.productItemId === val.productItemId)
-    addToCart(baseURL, val.productItemId || 0, (targetItem?.amount || 0) + (val.amount || 1)).then(
-      () => handleGetMyCart(),
-    )
+    addToCart(
+      baseURL,
+      val.productItemId || 0,
+      (targetItem?.amount || 0) + (val.amount || 1),
+      val.isSelect,
+    ).then(() => handleGetMyCart())
   }
 
   const handleAddToCarts = (carts: CartBodyItem[]) => {
