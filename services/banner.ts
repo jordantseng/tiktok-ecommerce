@@ -7,6 +7,8 @@ type GetBannersRes = ApiRes<{
     id: number
     img: string
     title: string
+    url: string
+    target: string
   }[]
   total: number
 }>

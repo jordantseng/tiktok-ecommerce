@@ -185,13 +185,13 @@ const TosPage = async () => {
             bound by all of the above terms.
           </div>
         </div>
-        <div className="flex flex-col gap-2 p-4 text-gray-700">
-          <span>公司名稱：{settings.title}</span>
-          <span>公司地址：{settings.address}</span>
-          <span>聯繫方式：{settings.mobile}</span>
-          <span>信箱：{settings.email}</span>
-        </div>
       </div>
+      <footer className="flex flex-col gap-2 p-4 text-gray-700">
+        {settings.title && <span>公司名稱：{settings.title}</span>}
+        {settings.address && <span>公司地址：{settings.address}</span>}
+        {settings.mobile && <span>聯繫方式：{settings.mobile}</span>}
+        {settings.email && <span>信箱：{settings.email}</span>}
+      </footer>
     </main>
   )
 }
