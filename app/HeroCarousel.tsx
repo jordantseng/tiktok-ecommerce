@@ -45,7 +45,7 @@ const HeroCarousel = ({ items }: HeroCarouselProps) => {
         {items.map((item) => (
           <CarouselItem key={item.id}>
             {item.target === '_blank' ? (
-              <a target="_blank" href={item.url}>
+              <a target="_blank" href={item?.url || '/'}>
                 <Card>
                   <CardContent className="relative flex aspect-video items-center justify-center p-6">
                     <Image className="rounded-lg" alt={item.title} src={item.img} fill />
@@ -53,7 +53,7 @@ const HeroCarousel = ({ items }: HeroCarouselProps) => {
                 </Card>
               </a>
             ) : (
-              <Link href={item.url}>
+              <Link href={item?.url || '/'}>
                 <Card>
                   <CardContent className="relative flex aspect-video items-center justify-center p-6">
                     <Image className="rounded-lg" alt={item.title} src={item.img} fill />
