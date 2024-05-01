@@ -14,7 +14,8 @@ const TosPage = async () => {
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         <div>
           <div>
-            歡迎您使用潮數位科技有限公司的服務！我們提供的服務旨在提供高品質的線上購物體驗。使用我們的服務即表示您同意遵守本服務條款，請仔細閱讀。
+            歡迎您使用{settings.title}
+            的服務！我們提供的服務旨在提供高品質的線上購物體驗。使用我們的服務即表示您同意遵守本服務條款，請仔細閱讀。
           </div>
           <div className="py-2 font-bold">使用條件</div>
           <div>您必須同意不會使用本服務進行任何非法活動，也不會違反任何適用的法律或規章政策。</div>
@@ -80,9 +81,9 @@ const TosPage = async () => {
         </div>
         <div>
           <div>
-            Welcome to using the services provided by HyperDigital Technology Co., Ltd.! Our
-            services aim to offer a high-quality online shopping experience. By using our services,
-            you agree to comply with these Terms of Service, so please read them carefully.
+            Welcome to using the services provided by {settings.title}.! Our services aim to offer a
+            high-quality online shopping experience. By using our services, you agree to comply with
+            these Terms of Service, so please read them carefully.
           </div>
           <div className="py-2 font-bold">Terms of Use</div>
           <div>

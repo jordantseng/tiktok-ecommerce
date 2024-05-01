@@ -14,7 +14,8 @@ const PrivacyPage = async () => {
       <div className="flex flex-col justify-between gap-4 p-4 text-sm">
         <div>
           <div>
-            歡迎您使用潮數位科技有限公司的服務！我們重視您的隱私，致力於保護您的個人信息安全。本隱私政策旨在透明化地解釋我們如何收集、使用、存儲、保護以及分享您的信息。
+            歡迎您使用{settings.title}
+            的服務！我們重視您的隱私，致力於保護您的個人信息安全。本隱私政策旨在透明化地解釋我們如何收集、使用、存儲、保護以及分享您的信息。
           </div>
           <div className="py-2 font-bold">信息收集</div>
           <div>我們可能會收集以下類型的個人信息：</div>
@@ -64,10 +65,10 @@ const PrivacyPage = async () => {
         </div>
         <div>
           <div>
-            Welcome to using HyperDigital Technologies Co., Ltd.&apos;s services! We value your
-            privacy and are committed to protecting the security of your personal information. This
-            Privacy Policy aims to explain transparently how we collect, use, store, protect, and
-            share your information.
+            Welcome to using {settings.title}.&apos;s services! We value your privacy and are
+            committed to protecting the security of your personal information. This Privacy Policy
+            aims to explain transparently how we collect, use, store, protect, and share your
+            information.
           </div>
           <div className="py-2 font-bold">Information Collection</div>
           <div>We may collect the following types of personal information:</div>
