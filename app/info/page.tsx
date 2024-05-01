@@ -24,9 +24,9 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
   const { data: settings } = await getWebSettings(baseURL)
 
   return (
-    <main className="h-full min-h-screen">
+    <main className="h-full min-h-screen bg-background">
       <Title title={type || '服務中心'} />
-      <div className={'flex min-h-screen w-full flex-col items-center bg-background'}>
+      <div className={'flex h-[calc(100vh-250px)] w-full flex-col items-center'}>
         {!type ? (
           <InfoList />
         ) : (
@@ -44,13 +44,13 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
             )}
           </div>
         )}
-        <div className="flex flex-col gap-2 p-4 text-gray-700">
-          <span>公司名稱：{settings.title}</span>
-          <span>公司地址：{settings.address}</span>
-          <span>聯繫方式：{settings.mobile}</span>
-          <span>信箱：{settings.email}</span>
-        </div>
       </div>
+      <footer className="flex flex-col gap-2 p-4 text-gray-700">
+        {settings.title && <span>公司名稱：{settings.title}</span>}
+        {settings.address && <span>公司地址：{settings.address}</span>}
+        {settings.mobile && <span>聯繫方式：{settings.mobile}</span>}
+        {settings.email && <span>信箱：{settings.email}</span>}
+      </footer>
     </main>
   )
 }

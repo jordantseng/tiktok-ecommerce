@@ -7,9 +7,10 @@ import Autoplay from 'embla-carousel-autoplay'
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 type HeroCarouselProps = {
-  items: { id: number; img: string; title: string }[]
+  items: { id: number; img: string; title: string; url: string; target: string }[]
 }
 
 const HeroCarousel = ({ items }: HeroCarouselProps) => {
@@ -43,11 +44,23 @@ const HeroCarousel = ({ items }: HeroCarouselProps) => {
       <CarouselContent>
         {items.map((item) => (
           <CarouselItem key={item.id}>
-            <Card>
-              <CardContent className="relative flex aspect-video items-center justify-center p-6">
-                <Image className="rounded-lg" alt={item.title} src={item.img} fill />
-              </CardContent>
-            </Card>
+            {item.target === '_blank' ? (
+              <a target="_blank" href={item.url}>
+                <Card>
+                  <CardContent className="relative flex aspect-video items-center justify-center p-6">
+                    <Image className="rounded-lg" alt={item.title} src={item.img} fill />
+                  </CardContent>
+                </Card>
+              </a>
+            ) : (
+              <Link href={item.url}>
+                <Card>
+                  <CardContent className="relative flex aspect-video items-center justify-center p-6">
+                    <Image className="rounded-lg" alt={item.title} src={item.img} fill />
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
           </CarouselItem>
         ))}
       </CarouselContent>
