@@ -7,6 +7,7 @@ import { getWebSettings } from '@/services/webSettings'
 import { headers } from 'next/headers'
 import { getBaseURL } from '@/lib/utils'
 import PrevButton from '@/components/PrevButton'
+import CompanyInfo from '@/components/CompanyInfo'
 
 type InfoPageProps = {
   searchParams: {
@@ -45,12 +46,7 @@ const InfoPage = async ({ searchParams }: InfoPageProps) => {
           </div>
         )}
       </div>
-      <footer className="flex flex-col gap-2 p-4 text-gray-700">
-        {settings.title && <span>公司名稱：{settings.title}</span>}
-        {settings.address && <span>公司地址：{settings.address}</span>}
-        {settings.mobile && <span>聯繫方式：{settings.mobile}</span>}
-        {settings.email && <span>信箱：{settings.email}</span>}
-      </footer>
+      <CompanyInfo settings={settings} />
     </main>
   )
 }

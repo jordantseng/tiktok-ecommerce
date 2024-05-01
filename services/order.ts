@@ -108,7 +108,7 @@ export type OrderData = {
 
   // 付款方式 //貨到付款[homepay],匯款[atm],轉帳(綠界)[ecpay-atm],信用卡付款(綠界)[ecpay-credit],信用卡分3期(綠界)[ecpay-credit3],信用卡分6期(綠界)[ecpay-credit6],信用卡分12期(綠界)[ecpay-credit12],超商代碼(綠界)[ecpay-cvs],轉帳(藍新)[newbpay-atm],信用卡(藍新)[newbpay-credit],信用卡分3期(藍新)[newbpay-credit3],信用卡分6期(藍新)[newbpay-credit6],信用卡分12期(藍新)[newbpay-credit12],信用卡(快點付)[wanpay-credit],信用卡分3期(快點付)[wanpay-credit3],信用卡分6期(快點付)[wanpay-credit6],信用卡分12期(快點付)[wanpay-credit12],信用卡分24期(快點付)[wanpay-credit24],
   paystatus?: PayStatus
-
+  paytitle?: string
   paynumber?: string
   paynotifynumber?: string
 
