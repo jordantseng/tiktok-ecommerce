@@ -70,7 +70,7 @@ const Searchbar = ({ enableDialog = false, showSearchButton = false }: Searchbar
         className={cn(`w-full rounded-full bg-white px-3 py-2 pl-10 text-sm outline-none`, {
           'cursor-pointer': enableDialog,
         })}
-        placeholder="耳機"
+        placeholder="找你喜歡"
         ref={searchInputRef}
         type="search"
         defaultValue={searchTerm}

@@ -8,7 +8,7 @@ export enum Delivery {
   'HOME_DELIVERY' = 'HOME_DELIVERY',
   'FAMIC2C' = 'FAMIC2C',
   'UNIMARTC2C' = 'UNIMARTC2C',
-  'HILIFEC2C' = 'HILIFEC2C',
+  // 'HILIFEC2C' = 'HILIFEC2C',
 }
 
 type AddressContextType = {

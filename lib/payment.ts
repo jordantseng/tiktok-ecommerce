@@ -4,7 +4,7 @@ export const deliveryMap = {
   HOME_DELIVERY: '宅配到府',
   FAMIC2C: '超商取貨-全家',
   UNIMARTC2C: '超商取貨-7-11',
-  HILIFEC2C: '超商取貨-萊爾富',
+  // HILIFEC2C: '超商取貨-萊爾富',
 }
 
 export const handleLabel = (val: string | null, webSettingsData: WebSettingsData | null) => {

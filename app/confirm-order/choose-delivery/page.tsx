@@ -174,7 +174,7 @@ const ChooseDeliveryPage = () => {
               </CollapsibleContent>
             </Collapsible>
           </div>
-          <div className="flex items-center justify-between space-x-2  p-4">
+          {/* <div className="flex items-center justify-between space-x-2  p-4">
             <Collapsible className="w-full" defaultOpen={deliveryType === 'HILIFEC2C'}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between">
@@ -203,7 +203,7 @@ const ChooseDeliveryPage = () => {
                 </Button>
               </CollapsibleContent>
             </Collapsible>
-          </div>
+          </div> */}
           {/* <div className="flex items-center justify-between space-x-2  p-4">
             <Collapsible className="w-full" defaultOpen>
               <CollapsibleTrigger className="w-full">
