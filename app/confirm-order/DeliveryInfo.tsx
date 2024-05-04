@@ -23,8 +23,8 @@ const DeliveryInfo = ({ onClick }: Props) => {
     switch (deliveryType) {
       case 'FAMIC2C':
         return <Image className="object-cover" alt="FAMIC2C" fill src="/family.png" />
-      case 'HILIFEC2C':
-        return <Image className="object-cover" alt="HILIFEC2C" fill src="/hilife.png" />
+      // case 'HILIFEC2C':
+      //   return <Image className="object-cover" alt="HILIFEC2C" fill src="/hilife.png" />
       case 'UNIMARTC2C':
         return <Image className="object-cover" alt="FAMIC2C" fill src="/seven.png" />
       default:

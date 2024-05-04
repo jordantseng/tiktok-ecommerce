@@ -120,7 +120,7 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           </Button>
           {deliveryType === 'UNIMARTC2C' && renderReceipt()}
         </div>
-        <div className="space-y-2 p-1">
+        {/* <div className="space-y-2 p-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="w-20">萊爾富</div>
@@ -140,7 +140,7 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
             <ChevronRight className="h-4 w-4" />
           </Button>
           {deliveryType === 'HILIFEC2C' && renderReceipt()}
-        </div>
+        </div> */}
       </RadioGroup>
       <Button
         className="w-full rounded-full"
