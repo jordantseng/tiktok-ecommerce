@@ -179,7 +179,7 @@ export const addOrder = async (baseURL: string, order: OrderData): Promise<void>
     discount: order.discount || '',
     discount_title: order.discount_title || '',
     discount_code: order.discount_code || '',
-    gobackurl: order.paystatus?.includes('atm')
+    client_gobackurl: order.paystatus?.includes('atm')
       ? `https://${location.host}/atm-detail/checkout`
       : order.paystatus?.includes('barcode')
         ? `https://${location.host}/qrcode-detail/checkout`
