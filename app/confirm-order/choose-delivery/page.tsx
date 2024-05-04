@@ -32,11 +32,12 @@ const ChooseDeliveryPage = () => {
       getAddress(baseURL).then(({ data }) => {
         if (data.data && data.data.length > 0 && !selectedAddress) {
           handleSelectAddress(data.data[0])
+          handleSelectDeliveryType((data.data[0].LogisticsSubType || 'HOME_DELIVERY') as Delivery)
         }
         setAddresses(data?.data || [])
       })
     }
-  }, [handleSelectAddress, pathname, selectedAddress, setAddresses])
+  }, [handleSelectAddress, handleSelectDeliveryType, pathname, selectedAddress, setAddresses])
 
   const handleClick = (type: string) => {
     const baseURL = getBaseURL(window.location.host)
