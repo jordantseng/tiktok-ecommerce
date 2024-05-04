@@ -28,7 +28,7 @@ type Product = {
 
 export type OrderStatus = 'checkout' | 'shipping' | 'receipt' | 'receipted' | 'refunded'
 
-export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '取消/退款'
+export type OrderStatusTitle = '待付款' | '待發貨' | '待收貨' | '已收貨' | '取消/退款' | '付款失敗'
 
 export enum PaymentMethodEnum {
   homepay = '貨到付款',
@@ -260,7 +260,7 @@ export const getPayBarcode = async (baseURL: string, number: number) => {
 export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
   switch (key) {
     case 'checkout':
-      return orders.filter((order) => order.moneystatus === 0)
+      return orders.filter((order) => order.moneystatus === 0 || order.moneystatus === 2)
     case 'shipping':
       return orders.filter(
         (order) => order.orderstatus === 1 || (order.moneystatus === 1 && order.orderstatus === 0),
@@ -276,7 +276,9 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
 
 export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.moneystatus === 0) return '待付款'
-  if (order.orderstatus === 1 || order.moneystatus === 1 || order.orderstatus === 0) return '待發貨'
+  if (order.moneystatus === 2) return '付款失敗'
+  if (order.orderstatus === 1 || (order.moneystatus === 1 && order.orderstatus === 0))
+    return '待發貨'
   if (order.orderstatus === 3) return '待收貨'
   if (order.orderstatus === 4 && order.moneystatus !== 4) return '已收貨'
   if (order.moneystatus === 4) return '取消/退款'
@@ -284,8 +286,8 @@ export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
 }
 
 export function getOrderStatus(order: OrderData): OrderStatus | null {
-  if (order.moneystatus === 0) return 'checkout'
-  if (order.orderstatus === 1 || order.moneystatus === 1 || order.orderstatus === 0)
+  if (order.moneystatus === 0 || order.moneystatus === 2) return 'checkout'
+  if (order.orderstatus === 1 || (order.moneystatus === 1 && order.orderstatus === 0))
     return 'shipping'
   if (order.orderstatus === 3) return 'receipt'
   if (order.orderstatus === 4 && order.moneystatus !== 4) return 'receipted'
