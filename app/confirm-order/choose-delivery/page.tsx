@@ -22,6 +22,7 @@ const ChooseDeliveryPage = () => {
   const { selectedAddress, handleSelectDeliveryType, deliveryType, handleSelectAddress } =
     useAddressContext()
   const pathname = usePathname()
+  const [uuid, setUuid] = useImmer<number>(Math.random())
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
   const [storeName, setStoreName] = useImmer<AddressData | null>(null)
 
@@ -33,11 +34,21 @@ const ChooseDeliveryPage = () => {
         if (data.data && data.data.length > 0 && !selectedAddress) {
           handleSelectAddress(data.data[0])
           handleSelectDeliveryType((data.data[0].LogisticsSubType || 'HOME_DELIVERY') as Delivery)
+          setStoreName(data.data[0])
+          setUuid(Math.random())
         }
         setAddresses(data?.data || [])
       })
     }
-  }, [handleSelectAddress, handleSelectDeliveryType, pathname, selectedAddress, setAddresses])
+  }, [
+    handleSelectAddress,
+    handleSelectDeliveryType,
+    pathname,
+    selectedAddress,
+    setAddresses,
+    setStoreName,
+    setUuid,
+  ])
 
   const handleClick = (type: string) => {
     const baseURL = getBaseURL(window.location.host)
@@ -72,6 +83,7 @@ const ChooseDeliveryPage = () => {
       <Title title="選擇收件方式" goBackUrl="/confirm-order" />
       <div className="flex min-h-screen w-full flex-col items-center bg-background">
         <RadioGroup
+          key={uuid}
           className="w-full bg-white"
           defaultValue={selectedAddress?.id?.toString() || ''}
           onValueChange={(val) => {
