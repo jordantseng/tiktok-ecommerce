@@ -262,7 +262,9 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
     case 'checkout':
       return orders.filter((order) => order.moneystatus === 0)
     case 'shipping':
-      return orders.filter((order) => order.orderstatus === 1 || order.orderstatus === 0)
+      return orders.filter(
+        (order) => order.orderstatus === 1 || (order.moneystatus === 1 && order.orderstatus === 0),
+      )
     case 'receipt':
       return orders.filter((order) => order.orderstatus === 3)
     case 'receipted':
@@ -274,7 +276,7 @@ export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
 
 export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
   if (order.moneystatus === 0) return '待付款'
-  if (order.orderstatus === 1 || order.orderstatus === 0) return '待發貨'
+  if (order.orderstatus === 1 || order.moneystatus === 1 || order.orderstatus === 0) return '待發貨'
   if (order.orderstatus === 3) return '待收貨'
   if (order.orderstatus === 4 && order.moneystatus !== 4) return '已收貨'
   if (order.moneystatus === 4) return '取消/退款'
@@ -283,7 +285,8 @@ export function getOrderStatusTitle(order: OrderData): OrderStatusTitle | null {
 
 export function getOrderStatus(order: OrderData): OrderStatus | null {
   if (order.moneystatus === 0) return 'checkout'
-  if (order.orderstatus === 1 || order.orderstatus === 0) return 'shipping'
+  if (order.orderstatus === 1 || order.moneystatus === 1 || order.orderstatus === 0)
+    return 'shipping'
   if (order.orderstatus === 3) return 'receipt'
   if (order.orderstatus === 4 && order.moneystatus !== 4) return 'receipted'
   if (order.moneystatus === 4) return 'refunded'
