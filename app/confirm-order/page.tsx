@@ -65,6 +65,7 @@ const ConfirmBillPage = () => {
       CVSAddress: selectedAddress?.CVSAddress || '',
       CVSStoreID: selectedAddress?.CVSStoreID || '',
       paystatus: payStatus!,
+      remail: user?.email,
       rname: selectedAddress?.name || '',
       rtel: selectedAddress?.tel || '',
       rcity1: selectedAddress?.city1 || '',
