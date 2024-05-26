@@ -17,7 +17,7 @@ const ProductList = ({ subSidebarItems = [], children }: ProductListProps) => {
 
     params.set('subType', String(title))
 
-    router.push(`/products/?page=1&${params.toString()}`)
+    router.push(`/products/?${params.toString()}`)
   }
 
   return (
