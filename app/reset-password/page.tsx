@@ -5,6 +5,7 @@ import { CheckCircle2, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { redirect } from 'next/navigation'
 
 import PrevButton from '@/components/PrevButton'
 import { Input } from '@/components/ui/input'
@@ -24,7 +25,7 @@ const formSchema = z
   })
 
 function ResetPasswordContent({ callback }: { callback: () => void }) {
-  const { handleChangePassword } = useAuthContext()
+  const { token, handleChangePassword } = useAuthContext()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,6 +33,10 @@ function ResetPasswordContent({ callback }: { callback: () => void }) {
       passwordAgain: '',
     },
   })
+
+  if (!token) {
+    redirect('/')
+  }
 
   const password = form.watch('password')
   const passwordAgain = form.watch('passwordAgain')

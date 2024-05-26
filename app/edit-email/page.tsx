@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Eye, EyeOff, Loader2, XCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -31,6 +31,10 @@ function EditEmailPage() {
   const { token, user, refreshUser, handleSetToken } = useAuthContext()
   const { toast } = useToast()
   const router = useRouter()
+
+  if (!token) {
+    redirect('/')
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
