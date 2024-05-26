@@ -15,6 +15,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { emailSchema } from '@/lib/schema'
 import { getBaseURL } from '@/lib/utils'
+import Link from 'next/link'
 
 const formSchema = z.object({
   email: emailSchema,
@@ -163,6 +164,14 @@ const LoginPage = () => {
         <div className="mb-28 flex w-full flex-col items-center gap-2">
           <span className="text-sm text-gray-500">其他登錄方式</span>
           <TiktokLoginButton />
+        </div>
+        <div className="mt-2 flex items-center justify-center space-x-2">
+          <Link href={`/privacy`}>
+            <div className="pointer text-sm font-light"> 隱私權政策 </div>
+          </Link>
+          <Link href={`/tos`}>
+            <div className="pointer text-sm font-light"> 服務條款 </div>
+          </Link>
         </div>
       </div>
     </main>
