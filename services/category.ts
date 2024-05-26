@@ -11,16 +11,19 @@ type getCategoriesRes = ApiRes<{
   total: number
 }>
 
+
+export type subCategory = {
+  id: number
+  kindhead_id: number
+  title: string
+  sortnum: number
+  created_at: string
+  updated_at: string
+  kindhead_title: string
+}
+
 type getSubCategories = ApiRes<
-  {
-    id: number
-    kindhead_id: number
-    title: string
-    sortnum: number
-    created_at: string
-    updated_at: string
-    kindhead_title: string
-  }[]
+  subCategory[]
 >
 
 export const getCategories = async (baseURL: string): Promise<getCategoriesRes> => {

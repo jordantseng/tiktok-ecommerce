@@ -13,8 +13,7 @@ import { paginationGuard } from '@/lib/guard'
 import ProductItem from '@/components/ProductItem'
 import ProductNotFound from '@/components/ProductNotFound'
 import { getBaseURL } from '@/lib/utils'
-
-const PAGE_SIZE = 15
+import { PAGE_SIZE } from '@/constant'
 
 type ProductsPageProps = {
   searchParams: { page: string; type: string; subType: string; q: string }
