@@ -56,13 +56,17 @@ async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return acc
   }, {})
 
-  const productsPromises = Object.entries(categoryMap).map(([key, values]) => values.map((value) => getProducts({
-    baseURL,
-    page: 1,
-    pageSize: PAGE_SIZE,
-    kindheadId: key,
-    kindmainId: String(value.id),
-  }))).flat()
+  const productsPromises = Object.entries(categoryMap).flatMap(([key, values]) =>
+    values.map((value) =>
+      getProducts({
+        baseURL,
+        page: 1,
+        pageSize: PAGE_SIZE,
+        kindheadId: key,
+        kindmainId: String(value.id),
+      })
+    )
+  );
   const productsResponses = await Promise.all(productsPromises)
   const productsEntries = Object.entries(categoryMap).flatMap(([key, values], index) => {
     const { current_page: currentPage, last_page: lastPage } = productsResponses[index].data;
