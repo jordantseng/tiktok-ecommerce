@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 
 import { cn, getBaseURL } from '@/lib/utils'
@@ -30,22 +29,19 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const headerList = headers()
+  const baseURL = getBaseURL(headerList.get('host')!)
+
+  const { data } = await getWebSettings(baseURL)
+
   return (
     <html lang="en">
-      <head>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-941025194"></Script>
-        <Script id="google-analytics">
-          {`window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-941025194');`}
-        </Script>
-      </head>
+      <head dangerouslySetInnerHTML={{ __html: data.html }} />
       <WebSettingsProvider>
         <NavigationProvider>
           <AuthProvider>
