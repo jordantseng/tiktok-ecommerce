@@ -11,6 +11,7 @@ export function getToken() {
 
 const DEV_ENV_DOMAIN = 'localhost:'
 const TEST_ENV_DOMAIN = 'front.tkshop.live'
+const VERCEL_ENV_DOMAIN = 'vercel.app'
 
 export function getBaseURL(host: string) {
   const prefix = host.split('.')[0]
@@ -21,7 +22,7 @@ export function getBaseURL(host: string) {
     }
   }
   const domain =
-    host.includes(DEV_ENV_DOMAIN) || host === TEST_ENV_DOMAIN
+    host.includes(DEV_ENV_DOMAIN) || host.includes(VERCEL_ENV_DOMAIN) || host === TEST_ENV_DOMAIN
       ? 'https://test.tkshop.live'
       : `https://${prefix}.tkback.app`
 
