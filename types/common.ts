@@ -57,4 +57,5 @@ export type WebSettingsData = {
   updated_at: string
   ico: string
   invoice: string
+  html: string
 }
