@@ -41,7 +41,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <head dangerouslySetInnerHTML={{ __html: data.html }} />
+      {data.html ? <head dangerouslySetInnerHTML={{ __html: data.html }} /> : null}
       <WebSettingsProvider>
         <NavigationProvider>
           <AuthProvider>
