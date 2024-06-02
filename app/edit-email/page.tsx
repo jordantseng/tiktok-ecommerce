@@ -32,10 +32,6 @@ function EditEmailPage() {
   const { toast } = useToast()
   const router = useRouter()
 
-  if (!token) {
-    redirect('/')
-  }
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
