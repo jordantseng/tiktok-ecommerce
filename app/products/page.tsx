@@ -54,21 +54,23 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
           {products.data.length === 0 ? (
             <ProductNotFound />
           ) : (
-            products.data.map((product) => (
-              <Link key={product.id} href={`/product-detail?id=${product.id}`}>
-                <ProductItem
-                  id={product.id}
-                  className="w-full border-none shadow-none"
-                  imgUrl={product.imgs[0]}
-                  title={product.title}
-                  tags={product.tags?.split(',')}
-                  price={product.price}
-                  originPrice={product.marketprice}
-                  stars={product.star}
-                  sales={String(product.buycount)}
-                />
-              </Link>
-            ))
+            products.data
+              .toSorted((a, b) => Number(b.sortnum) - Number(a.sortnum))
+              .map((product) => (
+                <Link key={product.id} href={`/product-detail?id=${product.id}`}>
+                  <ProductItem
+                    id={product.id}
+                    className="w-full border-none shadow-none"
+                    imgUrl={product.imgs[0]}
+                    title={product.title}
+                    tags={product.tags?.split(',')}
+                    price={product.price}
+                    originPrice={product.marketprice}
+                    stars={product.star}
+                    sales={String(product.buycount)}
+                  />
+                </Link>
+              ))
           )}
           <div className="sticky bottom-16 flex items-center justify-center bg-white p-4">
             <Pagination page={Number(page)} totalItems={products.total} itemsPerPage={PAGE_SIZE} />
