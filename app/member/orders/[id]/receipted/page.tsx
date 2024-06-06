@@ -7,6 +7,8 @@ import OrderHeaderInfoCard from '@/app/member/orders/[id]/OrderHeaderInfoCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { OrderDetail } from '@/services/order'
 import { useOrderDetailContext } from '@/context/OrderDetailContext'
+import OrderSummaryCard from '../OrderSummaryCard'
+import OrderMemoCard from '../OrderMemoCard'
 
 const ReceiptedPage = () => {
   const { order, orderStatusTitle } = useOrderDetailContext()
@@ -34,6 +36,8 @@ const ReceiptedPage = () => {
             order={order}
             onClick={handleBuyAgain}
           />
+          <OrderSummaryCard order={order} />
+          <OrderMemoCard order={order} />
         </div>
       </section>
     </>

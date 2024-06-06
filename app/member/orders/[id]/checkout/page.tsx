@@ -69,6 +69,18 @@ const CheckoutPage = () => {
     payOrder(baseURL, order?.id)
   }
 
+  const handleButtonText = () => {
+    switch (order?.paytitle) {
+      case '超商代碼':
+        return '重新產生超商代碼'
+      case '轉帳':
+        return '重新產生代碼'
+      case '超商代碼':
+      default:
+        return '去結帳'
+    }
+  }
+
   return (
     <>
       <OrderHeaderInfoCard
@@ -109,7 +121,7 @@ const CheckoutPage = () => {
             {!order ? (
               <Skeleton className="h-10 w-20 rounded-full" />
             ) : (
-              <PrimaryButton onClick={handlePay}>去結帳</PrimaryButton>
+              <PrimaryButton onClick={handlePay}>{handleButtonText()}</PrimaryButton>
             )}
           </div>
         </div>

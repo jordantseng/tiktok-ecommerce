@@ -162,7 +162,7 @@ const ReceiptForm = ({ value, cities = [], districts = [], onGetDistrict, onSubm
                           <SelectValue placeholder="請選擇..." />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="w-full bg-white">
+                      <SelectContent className="max-h-[275px] w-full bg-white">
                         {districts.map((opt) => (
                           <SelectItem key={opt} value={opt}>
                             {opt}
