@@ -1,3 +1,4 @@
+import BarcodeDisplay from '@/components/BarcodeDisplay'
 import { Skeleton } from '@/components/ui/skeleton'
 import { OrderData, getFormatDate, PaymentMethodEnum } from '@/services/order'
 import { CopyIcon } from 'lucide-react'
@@ -75,6 +76,7 @@ function TransactionInfoCard({ order }: TransactionInfoCardProps) {
           </div>
         )
       )}
+      {order?.barcode1 && <BarcodeDisplay order={order} />}
     </div>
   )
 }
