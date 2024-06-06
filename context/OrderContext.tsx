@@ -14,6 +14,7 @@ import { getBaseURL } from '@/lib/utils'
 type OrderContextType = {
   orders: OrderData[]
   isLoadingOrders: boolean
+  refreshOrders: () => void
   handleBuyAgain: (orderDetail: OrderDetail[] | undefined) => () => void
 }
 
@@ -60,6 +61,23 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       })
   }, [setOrders, user, isPreparingAuthData])
 
+  const refreshOrders = () => {
+    const baseURL = getBaseURL(window.location.host)
+    getOrders(baseURL)
+      .then((res) => {
+        if (res.resultcode !== 0) {
+          throw new Error(res.resultmessage)
+        }
+        setOrders(res.data.data || [])
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+      .finally(() => {
+        setIsLoadingOrders(false)
+      })
+  }
+
   const handleBuyAgain = (orderDetail: OrderDetail[] | undefined) => async () => {
     if (!orderDetail) {
       throw new Error('orderDetail is undefined')
@@ -93,6 +111,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         orders,
         isLoadingOrders,
         handleBuyAgain,
+        refreshOrders,
       }}
     >
       {children}

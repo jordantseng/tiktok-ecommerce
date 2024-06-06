@@ -11,7 +11,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/use-toast'
 import { ShoppingItemCard } from '@/components/ShoppingItemCards'
-import { getFormatDate, getOrder, getOrderStatus, getOrderStatusTitle } from '@/services/order'
+import {
+  getFormatDate,
+  getOrder,
+  getOrderStatus,
+  getOrderStatusTitle,
+  updatePayStatus,
+} from '@/services/order'
 import { OrderData } from '@/services/order'
 import { cn, getBaseURL } from '@/lib/utils'
 
@@ -66,7 +72,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
 
   const { toast } = useToast()
   const { handleContactDialogOpen, handleSelectOrder } = useContactContext()
-  const { handleBuyAgain } = useOrderContext()
+  const { handleBuyAgain, refreshOrders } = useOrderContext()
 
   const [isBuying, setIsBuying] = useState(false)
 
@@ -116,8 +122,23 @@ const OrderCard = ({ order }: OrderCardProps) => {
     handleSelectOrder(order)
   }
 
-  const handleConfirmReceipt = () => {
-    router.push(`/member/orders/${orderID}/receipt`)
+  const handleConfirmReceipt = async () => {
+    const baseURL = getBaseURL(window.location.host)
+    try {
+      orderID && (await updatePayStatus(baseURL, orderID))
+      await refreshOrders()
+    } catch (error) {
+      console.error('update status error: ', error)
+
+      if (error instanceof Error) {
+        toast({
+          variant: 'destructive',
+          description: error.message,
+        })
+      }
+    } finally {
+      router.push(`/member/orders/${orderID}/receipted`)
+    }
   }
 
   const handleCheckLogistics = () => {

@@ -257,6 +257,19 @@ export const getPayBarcode = async (baseURL: string, number: number) => {
   return data
 }
 
+export const updatePayStatus = async (baseURL: string, id: number) => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: `/api/membercenter/ordergroup/updateorderstatus`,
+    data: {
+      id,
+    },
+  })
+
+  return data
+}
+
 export function filterOrderByStatus(key: OrderStatus, orders: OrderData[]) {
   switch (key) {
     case 'checkout':
