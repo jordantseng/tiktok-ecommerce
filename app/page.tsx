@@ -61,7 +61,7 @@ export default async function HomePage() {
               </div>
             </header>
             <div className="p-4">
-              <div className="mb-2">
+              <div className="sticky top-20 z-10 mb-2 shadow-2xl">
                 <Searchbar enableDialog showSearchButton />
               </div>
               <div className="mb-2">
