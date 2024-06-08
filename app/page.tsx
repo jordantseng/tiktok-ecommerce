@@ -39,31 +39,33 @@ export default async function HomePage() {
           </div>
         ) : (
           <>
-            <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-4">
-              <h4 className="flex scroll-m-20 items-center gap-2 text-xl font-normal tracking-tight">
-                <Link href="/">
-                  <Image
-                    src={webSettingsData.ico ? webSettingsData.ico : '/fake-logo.png'}
-                    width={30}
-                    height={30}
-                    alt="logo"
-                  />
-                </Link>
-                {webSettingsData?.title || '天服能量購物商城'}
-              </h4>
-              <div className="flex items-center gap-4">
-                <Link href="/announcement">
-                  <MessageSquareMoreIcon className="cursor-pointer" />
-                </Link>
-                <Link href="/info">
-                  <MenuIcon />
-                </Link>
+            <header className="sticky top-0 z-10 flex flex-col bg-white ">
+              <div className="flex items-center justify-between px-4 pb-2 pt-4">
+                <h4 className="flex scroll-m-20 items-center gap-2 text-xl font-normal tracking-tight">
+                  <Link href="/">
+                    <Image
+                      src={webSettingsData.ico ? webSettingsData.ico : '/fake-logo.png'}
+                      width={30}
+                      height={30}
+                      alt="logo"
+                    />
+                  </Link>
+                  {webSettingsData?.title || '天服能量購物商城'}
+                </h4>
+                <div className="flex items-center gap-4">
+                  <Link href="/announcement">
+                    <MessageSquareMoreIcon className="cursor-pointer" />
+                  </Link>
+                  <Link href="/info">
+                    <MenuIcon />
+                  </Link>
+                </div>
               </div>
+              {/* <div className=""> */}
+              <Searchbar enableDialog showSearchButton />
+              {/* </div> */}
             </header>
             <div className="p-4">
-              <div className="sticky top-20 z-10 mb-2 shadow-2xl">
-                <Searchbar enableDialog showSearchButton />
-              </div>
               <div className="mb-2">
                 <HeroCarousel items={banners.data} />
               </div>
