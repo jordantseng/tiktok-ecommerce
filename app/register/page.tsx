@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { ChevronRight, Loader2 } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -19,10 +19,10 @@ const formSchema = z.object({
   verificationCode: z.string().min(6, '驗證碼長度至少 6 個字元'),
 })
 
-let countdownInterval: NodeJS.Timeout
-
 const RegisterPage = () => {
   const { handleRegister, handleLogout, handleGetEmailCode } = useAuthContext()
+
+  const countdownInterval = useRef<NodeJS.Timeout | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     mode: 'onChange',
@@ -40,6 +40,14 @@ const RegisterPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [countdown, setCountdown] = useState(0)
 
+  useEffect(() => {
+    return () => {
+      if (countdownInterval.current) {
+        clearInterval(countdownInterval.current)
+      }
+    }
+  }, [])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
     await handleRegister({
@@ -50,17 +58,17 @@ const RegisterPage = () => {
   }
 
   const handleCountDown = () => {
-    if (countdownInterval) {
-      clearInterval(countdownInterval)
+    if (countdownInterval.current) {
+      clearInterval(countdownInterval.current)
     }
 
     const ONE_MINUTE = 60
     setCountdown(ONE_MINUTE)
 
-    countdownInterval = setInterval(() => {
+    countdownInterval.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 0) {
-          clearInterval(countdownInterval)
+          clearInterval(countdownInterval.current!)
           return 0
         }
         return prev - 1
