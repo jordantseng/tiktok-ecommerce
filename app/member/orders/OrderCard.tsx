@@ -168,7 +168,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     receipted: [
-      { label: '查看物流', onClick: handleCheckLogistics, type: 'primary' },
+      { label: '查看訂單', onClick: handleCheckLogistics, type: 'primary' },
       { label: '與我聯絡', onClick: handleContact, type: 'secondary' },
     ],
     refunded: [

@@ -32,7 +32,7 @@ const MessageItem = ({ editable, self, msg, onChange, onSubmit }: Props) => {
           className={cn('relative mb-2 w-full rounded-lg after:absolute after:content-[""]', {
             'after:border-b-none after:border-l-none bg-primary opacity-50 after:bottom-[-29px] after:left-[20px] after:border-r-[30px] after:border-t-[30px] after:border-r-transparent after:border-t-primary':
               !self,
-            'border border-primary bg-white after:bottom-[-16px] after:left-[250px] after:h-[30px] after:w-[30px] after:rotate-[90deg] after:skew-x-[-45deg] after:border-r-[1px] after:border-t-[1px] after:border-r-primary after:border-t-primary after:bg-white':
+            'border border-primary bg-white after:bottom-[-16px] after:left-[250px] after:h-[30px] after:w-[30px] after:rotate-[90deg] after:skew-x-[-45deg] after:border-r-[1px] after:border-t-[1px] after:border-r-primary after:border-t-primary after:bg-white max-[390px]:after:left-[200px] max-[320px]:after:left-[150px]':
               self && !editable,
             'w-[80%]': !editable,
           })}
