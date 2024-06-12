@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import ForgetPasswordButton from '@/app/login/ForgetPasswordButton'
-import EmailLoginButton from '@/app/login/EmailLoginButton'
+import LoginButton from '@/app/login/LoginButton'
 import { Input } from '@/components/ui/input'
 import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
@@ -111,7 +111,7 @@ function EmailLoginForm() {
           />
         </div>
         <ForgetPasswordButton />
-        <EmailLoginButton disabled={!email || !password || isSubmitting} isLoading={isSubmitting} />
+        <LoginButton disabled={!email || !password || isSubmitting} isLoading={isSubmitting} />
       </form>
     </Form>
   )
