@@ -30,7 +30,7 @@ const ProductCarousel = ({ imgs }: ProductCarouselProps) => {
       <CarouselContent>
         {imgs.map((img, index) => (
           <CarouselItem className="flex h-full w-full items-center justify-center" key={index}>
-            <div className="relative min-h-72 w-full min-w-72">
+            <div className="relative aspect-square min-h-72 w-full min-w-72">
               <Image className="object-cover" src={img} alt="" fill />
             </div>
           </CarouselItem>

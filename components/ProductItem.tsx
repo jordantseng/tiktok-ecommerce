@@ -40,7 +40,7 @@ const ProductItem = ({
   return (
     <div className="flex w-auto flex-col border-b p-2">
       <div className={cn('flex items-center justify-center max-[320px]:block', className)}>
-        <div className="relative mx-2 flex h-24 w-[35%] items-center max-[320px]:m-0 max-[320px]:w-full">
+        <div className="relative mx-2 flex aspect-square h-28 items-center max-[320px]:m-0 max-[320px]:mb-2 max-[320px]:h-full max-[320px]:w-full">
           <Image
             className="rounded-lg object-cover"
             fill
