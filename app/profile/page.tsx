@@ -105,6 +105,14 @@ function ProfilePage() {
   function handleBindTiktokAccount(e: MouseEvent) {
     e.preventDefault()
 
+    if (lineid) {
+      toast({
+        variant: 'destructive',
+        description: '只能綁定一個社群帳號',
+      })
+      return
+    }
+
     if (!tiktokId) {
       handleBindTiktok()
     } else {
@@ -117,6 +125,14 @@ function ProfilePage() {
 
   function handleBindLineAccount(e: MouseEvent) {
     e.preventDefault()
+
+    if (tiktokId) {
+      toast({
+        variant: 'destructive',
+        description: '只能綁定一個社群帳號',
+      })
+      return
+    }
 
     if (!lineid) {
       localStorage.setItem('line-bind', 'true')
