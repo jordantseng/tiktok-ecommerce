@@ -11,6 +11,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { emailSchema, passwordSchema } from '@/lib/schema'
 import RegisterButton from '@/app/register/RegisterButton'
+import { useLineAuthContext } from '@/context/LineAuthContext'
 
 const formSchema = z.object({
   email: emailSchema,
@@ -20,6 +21,7 @@ const formSchema = z.object({
 
 function EmailRegisterForm() {
   const { handleRegister, handleGetEmailCode } = useAuthContext()
+  const { lineEmail, liffObject, handleRegisterWithLine } = useLineAuthContext()
 
   const countdownInterval = useRef<NodeJS.Timeout | null>(null)
 
@@ -47,12 +49,27 @@ function EmailRegisterForm() {
     }
   }, [])
 
+  useEffect(() => {
+    if (lineEmail) {
+      form.setValue('email', lineEmail)
+    }
+  }, [lineEmail, form])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
-    await handleRegister({
-      ...values,
-      code: verificationCode,
-    })
+
+    if (liffObject?.isLoggedIn()) {
+      await handleRegisterWithLine({
+        ...values,
+        code: verificationCode,
+      })
+    } else {
+      await handleRegister({
+        ...values,
+        code: verificationCode,
+      })
+    }
+
     setIsSubmitting(false)
   }
 

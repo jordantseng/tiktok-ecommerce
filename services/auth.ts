@@ -12,6 +12,7 @@ export type LoginInfo = {
 
 export type RegisterInfo = LoginInfo & {
   code: string
+  idToken?: string
 }
 
 export type User = {
@@ -93,7 +94,7 @@ export const loginTiktok = async (
 
 export const register = async (
   baseURL: string,
-  { email, password, code }: RegisterInfo,
+  { email, password, code, idToken }: RegisterInfo,
 ): Promise<LoginRes> => {
   const { data } = await axiosInstance({
     method: 'POST',
@@ -103,6 +104,7 @@ export const register = async (
       email,
       password,
       code,
+      ...(idToken && { idtoken: idToken }),
     },
   })
 
@@ -219,6 +221,19 @@ export const registerTiktok = async (
     baseURL,
     url: '/api/member/tiktok/store',
     data: tiktokInfo,
+  })
+
+  return data
+}
+
+export const getTokenByLineIdToken = async (baseURL: string, token: string): Promise<LoginRes> => {
+  const { data } = await axiosInstance<LoginRes>({
+    method: 'POST',
+    baseURL,
+    url: '/api/line/login',
+    data: {
+      idtoken: token,
+    },
   })
 
   return data
