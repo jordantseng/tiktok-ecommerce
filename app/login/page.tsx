@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import TiktokLoginButton from '@/app/login/TiktokLoginButton'
+import LineLoginButton from '@/app/login/LineLoginButton'
 import EmailLoginForm from '@/app/login/EmailLoginForm'
 import RegisterLink from '@/app/login/RegisterLink'
 import PrevButton from '@/components/PrevButton'
@@ -26,7 +27,10 @@ const LoginPage = () => {
 
         <div className="mb-28 flex w-full flex-col items-center gap-2">
           <span className="text-sm text-gray-500">其他登錄方式</span>
-          <TiktokLoginButton />
+          <span className="flex gap-2">
+            <TiktokLoginButton />
+            <LineLoginButton />
+          </span>
         </div>
         <div className="mt-2 flex items-center justify-center space-x-2">
           <Link href={`/privacy`}>
