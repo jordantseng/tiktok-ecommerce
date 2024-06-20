@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import { Liff } from '@line/liff'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useAuthContext } from './AuthContext'
 import { bindLine, getTokenByLineIdToken, register, RegisterInfo } from '@/services/auth'
 import { getBaseURL } from '@/lib/utils'
@@ -39,6 +39,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const { from } = useNavigationContext()
   const { handleSetToken } = useAuthContext()
   const router = useRouter()
+  const pathName = usePathname()
   const { toast } = useToast()
 
   const isLiffInit = !!liffObject && !liffError
@@ -83,7 +84,10 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
           getTokenByLineIdToken(baseURL, idToken)
             .then(({ data }) => {
               handleSetToken(data.api_token)
-              router.push('/')
+
+              if (pathName === '/register') {
+                router.push('/')
+              }
             })
             .catch((error) => {
               if (error instanceof AxiosError) {
@@ -114,7 +118,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
         }
       }
     }
-  }, [handleSetToken, toast, router, liffObject])
+  }, [handleSetToken, toast, pathName, router, liffObject])
 
   const handleRegisterWithLine = async ({ email, password, code }: RegisterInfo) => {
     try {
