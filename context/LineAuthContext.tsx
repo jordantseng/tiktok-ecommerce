@@ -69,7 +69,13 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (code || state || liffClientId || liffRedirectUri) {
-      router.push('/')
+      const lineBind = localStorage.getItem('line-bind')
+
+      if (lineBind) {
+        router.push('/profile')
+      } else {
+        router.push('/')
+      }
     }
   }, [code, state, liffClientId, liffRedirectUri, router])
 
