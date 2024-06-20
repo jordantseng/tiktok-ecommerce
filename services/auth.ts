@@ -238,3 +238,16 @@ export const getTokenByLineIdToken = async (baseURL: string, token: string): Pro
 
   return data
 }
+
+export const bindLine = async (baseURL: string, token: string): Promise<SuccessRes> => {
+  const { data } = await axiosInstance({
+    method: 'POST',
+    baseURL,
+    url: '/api/membercenter/line/binding',
+    data: {
+      idtoken: token,
+    },
+  })
+
+  return data
+}
