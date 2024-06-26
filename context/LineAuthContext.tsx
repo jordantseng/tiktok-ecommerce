@@ -29,7 +29,8 @@ type LineAuthContextType = {
 
 const LingAuthContext = createContext<LineAuthContextType | null>(null)
 
-const liffId = '2005664248-jXBbmKwy'
+const liffId =
+  process.env.NODE_ENV === 'development' ? '2005664248-jXBbmKwy' : '2005483486-KrPb8qrj'
 
 export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const [liffObject, setLiffObject] = useState<Liff>()
