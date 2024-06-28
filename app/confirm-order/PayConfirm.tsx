@@ -29,7 +29,8 @@ const PayConfirm = ({ payStatus, discount, onConfirm }: Props) => {
     ? handleFee(
         webSettingsData || null,
         total,
-        selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
+        Boolean(selectedAddress?.LogisticsSubType) &&
+          selectedAddress?.LogisticsSubType !== 'HOME_DELIVERY',
       )
     : 0
 
