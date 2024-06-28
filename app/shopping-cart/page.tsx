@@ -17,6 +17,7 @@ import { getProductItems } from '@/services/productItem'
 import { getBaseURL } from '@/lib/utils'
 
 const ShoppingCartPage = () => {
+  const [initial, setInitial] = useImmer(true)
   const [total, setTotal] = useImmer(0)
   const [editMode, setEditMode] = useImmer(false)
   const [isDialogOpen, setIsDialogOpen] = useImmer(false)
@@ -57,6 +58,14 @@ const ShoppingCartPage = () => {
     })
     setTotal(sum)
   }
+
+  useEffect(() => {
+    if (items.length > 0 && initial) {
+      handleCheckAll(true)
+      setInitial(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial, items, setInitial])
 
   const handlePriceChange = (item: Item, val: number) => {
     const isMinus = val < (item.amount || 0)
