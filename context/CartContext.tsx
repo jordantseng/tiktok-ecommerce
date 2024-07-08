@@ -36,27 +36,30 @@ type CartProviderProps = {
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useImmer<Item[]>([])
 
-  const handleGetMyCart = useCallback(() => {
-    const baseURL = getBaseURL(window.location.host)
+  const handleGetMyCart = useCallback(
+    (forceSelected?: boolean) => {
+      const baseURL = getBaseURL(window.location.host)
 
-    getMyCart(baseURL).then((res) => {
-      const newItems = (res?.data?.data || []).map((opt) => ({
-        id: opt.id,
-        amount: opt.qty,
-        imgUrl: opt.imgs[0],
-        title: opt.title,
-        price: opt.price,
-        originPrice: opt.marketprice,
-        product_id: opt.product_id,
-        productItemTitle: opt.productitem_title,
-        productItemId: opt.productitem_id,
-        unit: opt.unit,
-        tags: opt?.tags?.split(','),
-        isSelect: opt.online ? true : false,
-      }))
-      setItems(newItems)
-    })
-  }, [setItems])
+      getMyCart(baseURL).then((res) => {
+        const newItems = (res?.data?.data || []).map((opt) => ({
+          id: opt.id,
+          amount: opt.qty,
+          imgUrl: opt.imgs[0],
+          title: opt.title,
+          price: opt.price,
+          originPrice: opt.marketprice,
+          product_id: opt.product_id,
+          productItemTitle: opt.productitem_title,
+          productItemId: opt.productitem_id,
+          unit: opt.unit,
+          tags: opt?.tags?.split(','),
+          isSelect: forceSelected ?? (opt.online ? true : false),
+        }))
+        setItems(newItems)
+      })
+    },
+    [setItems],
+  )
 
   const handleAddToCart = (val: CartItem) => {
     const baseURL = getBaseURL(window.location.host)
