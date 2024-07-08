@@ -26,7 +26,5 @@ export function getBaseURL(host: string) {
       ? 'https://test.tkshop.live'
       : `https://${prefix}.tkback.app`
 
-  console.log('test')
-
   return domain
 }
