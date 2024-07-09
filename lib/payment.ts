@@ -23,7 +23,9 @@ export const handleFee = (
   total: number,
   isCsv: boolean,
 ) => {
-  const logisticPrice = isCsv ? webSettingsData?.logisticprice_csv : webSettingsData?.logisticprice
+  const logisticPrice = isCsv
+    ? webSettingsData?.logisticprice_csv
+    : webSettingsData?.logisticprice_home
 
   return webSettingsData?.freelogisticprice && total > webSettingsData.freelogisticprice
     ? 0

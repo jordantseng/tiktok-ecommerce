@@ -50,7 +50,7 @@ const DeliveryInfo = ({ onClick }: Props) => {
               <span className="ml-2 text-red-400">
                 $
                 {deliveryType === 'HOME_DELIVERY'
-                  ? webSettingsData?.logisticprice
+                  ? webSettingsData?.logisticprice_home
                   : webSettingsData?.logisticprice_csv}
               </span>
             </div>

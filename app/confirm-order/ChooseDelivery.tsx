@@ -61,8 +61,8 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="w-20">宅配到府</div>
-              {webSettingsData?.logisticprice && (
-                <div className="text-red-400">${webSettingsData?.logisticprice}</div>
+              {webSettingsData?.logisticprice_home && (
+                <div className="text-red-400">${webSettingsData?.logisticprice_home}</div>
               )}
             </div>
             <RadioGroupItem value="HOME_DELIVERY" id="HOME_DELIVERY" />

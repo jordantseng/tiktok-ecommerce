@@ -48,7 +48,7 @@ export type WebSettingsData = {
   description: string
   email: string
   mobile: string
-  logisticprice: number
+  logisticprice_home?: number
   address: string
   freelogisticprice?: number
   logisticprice_csv?: number
