@@ -57,69 +57,75 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           handleSelectDeliveryType(val as Delivery)
         }}
       >
-        <div className="space-y-2 p-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div className="w-20">宅配到府</div>
-              {webSettingsData?.logisticprice_home && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_home}</div>
-              )}
+        {webSettingsData?.deliverykind?.['HOME'] && (
+          <div className="space-y-2 p-1">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-6">
+                <div className="w-20">宅配到府</div>
+                {webSettingsData?.logisticprice_home && (
+                  <div className="text-red-400">${webSettingsData?.logisticprice_home}</div>
+                )}
+              </div>
+              <RadioGroupItem value="HOME_DELIVERY" id="HOME_DELIVERY" />
             </div>
-            <RadioGroupItem value="HOME_DELIVERY" id="HOME_DELIVERY" />
+            <Separator />
+            <Button
+              className="mx-auto flex items-center justify-center text-red-400"
+              variant="ghost"
+              onClick={() => handleClick('HOME_DELIVERY')}
+            >
+              ＋新增 宅配地址
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+            {deliveryType === 'HOME_DELIVERY' && renderReceipt()}
           </div>
-          <Separator />
-          <Button
-            className="mx-auto flex items-center justify-center text-red-400"
-            variant="ghost"
-            onClick={() => handleClick('HOME_DELIVERY')}
-          >
-            ＋新增 宅配地址
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          {deliveryType === 'HOME_DELIVERY' && renderReceipt()}
-        </div>
-        <div className="space-y-2 p-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div className="w-20">全家</div>
-              {webSettingsData?.logisticprice_cvs && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
-              )}
+        )}
+        {webSettingsData?.deliverykind?.['CVS'] && (
+          <>
+            <div className="space-y-2 p-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-6">
+                  <div className="w-20">全家</div>
+                  {webSettingsData?.logisticprice_cvs && (
+                    <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
+                  )}
+                </div>
+                <RadioGroupItem value="FAMIC2C" id="FAMIC2C" />
+              </div>
+              <Separator />
+              <Button
+                className="mx-auto flex items-center justify-center text-red-400"
+                variant="ghost"
+                onClick={() => handleClick('FAMIC2C')}
+              >
+                ＋新增 全家門市
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+              {deliveryType === 'FAMIC2C' && renderReceipt()}
             </div>
-            <RadioGroupItem value="FAMIC2C" id="FAMIC2C" />
-          </div>
-          <Separator />
-          <Button
-            className="mx-auto flex items-center justify-center text-red-400"
-            variant="ghost"
-            onClick={() => handleClick('FAMIC2C')}
-          >
-            ＋新增 全家門市
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          {deliveryType === 'FAMIC2C' && renderReceipt()}
-        </div>
-        <div className="space-y-2 p-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div className="w-20">7-11</div>
-              {webSettingsData?.logisticprice_cvs && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
-              )}
+            <div className="space-y-2 p-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-6">
+                  <div className="w-20">7-11</div>
+                  {webSettingsData?.logisticprice_cvs && (
+                    <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
+                  )}
+                </div>
+                <RadioGroupItem value="UNIMARTC2C" id="UNIMARTC2C" />
+              </div>
+              <Separator />
+              <Button
+                className="mx-auto flex items-center justify-center text-red-400"
+                variant="ghost"
+                onClick={() => handleClick('UNIMARTC2C')}
+              >
+                ＋新增 7-11門市
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+              {deliveryType === 'UNIMARTC2C' && renderReceipt()}
             </div>
-            <RadioGroupItem value="UNIMARTC2C" id="UNIMARTC2C" />
-          </div>
-          <Separator />
-          <Button
-            className="mx-auto flex items-center justify-center text-red-400"
-            variant="ghost"
-            onClick={() => handleClick('UNIMARTC2C')}
-          >
-            ＋新增 7-11門市
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          {deliveryType === 'UNIMARTC2C' && renderReceipt()}
-        </div>
+          </>
+        )}
         {/* <div className="space-y-2 p-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">

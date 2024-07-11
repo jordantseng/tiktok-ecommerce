@@ -60,4 +60,5 @@ export type WebSettingsData = {
   ico: string
   invoice: string
   html: string
+  deliverykind?: Record<string, string>
 }

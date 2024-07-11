@@ -6,6 +6,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Delivery, useAddressContext } from '@/context/AddressContext'
+import { useWebSettingsContext } from '@/context/WebSettingsContext'
 import { getBaseURL } from '@/lib/utils'
 import { getAddress, getLogistic } from '@/services/address'
 import { AddressData } from '@/types/common'
@@ -21,6 +22,7 @@ const ChooseDeliveryPage = () => {
   const router = useRouter()
   const { selectedAddress, handleSelectDeliveryType, deliveryType, handleSelectAddress } =
     useAddressContext()
+  const { webSettingsData } = useWebSettingsContext()
   const pathname = usePathname()
   const [uuid, setUuid] = useImmer<number>(Math.random())
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
@@ -95,98 +97,105 @@ const ChooseDeliveryPage = () => {
             }
           }}
         >
-          <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full" defaultOpen={true}>
-              <CollapsibleTrigger className="w-full">
-                <div className="flex items-center justify-between">
-                  <Label className="text-md" htmlFor="HOME_DELIVERY">
-                    宅配到府
-                  </Label>
-                  {deliveryType === 'HOME_DELIVERY' ? (
-                    <Check className="text-primary" />
-                  ) : (
-                    <ChevronsUpDown className="h-4 w-4" />
-                  )}
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                {addresses
-                  .filter(
-                    (opt) => !opt.LogisticsSubType || opt.LogisticsSubType === 'HOME_DELIVERY',
-                  )
-                  .map((el) => renderItem(el))}
-                <Separator />
-                <Button
-                  className="mx-auto flex items-center justify-center text-red-400"
-                  variant="ghost"
-                  onClick={() => handleClick('HOME_DELIVERY')}
-                >
-                  ＋新增 宅配地址
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-          <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full" defaultOpen={deliveryType === 'FAMIC2C'}>
-              <CollapsibleTrigger className="w-full">
-                <div className="flex items-center justify-between">
-                  <Label className="text-md" htmlFor="FAMIC2C">
-                    全家
-                  </Label>
-                  {deliveryType === 'FAMIC2C' ? (
-                    <Check className="text-primary" />
-                  ) : (
-                    <ChevronsUpDown className="h-4 w-4" />
-                  )}
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                {addresses
-                  .filter((opt) => opt.LogisticsSubType === 'FAMIC2C')
-                  .map((el) => renderItem(el))}
-                <Separator />
-                <Button
-                  className="mx-auto flex items-center justify-center text-red-400"
-                  variant="ghost"
-                  onClick={() => handleClick('FAMIC2C')}
-                >
-                  ＋新增 全家門市
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-          <div className="flex items-center justify-between space-x-2  p-4">
-            <Collapsible className="w-full" defaultOpen={deliveryType === 'UNIMARTC2C'}>
-              <CollapsibleTrigger className="w-full">
-                <div className="flex items-center justify-between">
-                  <Label className="text-md" htmlFor="UNIMARTC2C">
-                    7-11
-                  </Label>
-                  {deliveryType === 'UNIMARTC2C' ? (
-                    <Check className="text-primary" />
-                  ) : (
-                    <ChevronsUpDown className="h-4 w-4" />
-                  )}
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                {addresses
-                  .filter((opt) => opt.LogisticsSubType === 'UNIMARTC2C')
-                  .map((el) => renderItem(el))}
-                <Separator />
-                <Button
-                  className="mx-auto flex items-center justify-center text-red-400"
-                  variant="ghost"
-                  onClick={() => handleClick('UNIMARTC2C')}
-                >
-                  ＋新增 7-11門市
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          {webSettingsData?.deliverykind?.['HOME'] && (
+            <div className="flex items-center justify-between space-x-2  p-4">
+              <Collapsible className="w-full" defaultOpen={true}>
+                <CollapsibleTrigger className="w-full">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-md" htmlFor="HOME_DELIVERY">
+                      宅配到府
+                    </Label>
+                    {deliveryType === 'HOME_DELIVERY' ? (
+                      <Check className="text-primary" />
+                    ) : (
+                      <ChevronsUpDown className="h-4 w-4" />
+                    )}
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  {addresses
+                    .filter(
+                      (opt) => !opt.LogisticsSubType || opt.LogisticsSubType === 'HOME_DELIVERY',
+                    )
+                    .map((el) => renderItem(el))}
+                  <Separator />
+                  <Button
+                    className="mx-auto flex items-center justify-center text-red-400"
+                    variant="ghost"
+                    onClick={() => handleClick('HOME_DELIVERY')}
+                  >
+                    ＋新增 宅配地址
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
+          )}
+          {webSettingsData?.deliverykind?.['CVS'] && (
+            <>
+              <div className="flex items-center justify-between space-x-2  p-4">
+                <Collapsible className="w-full" defaultOpen={deliveryType === 'FAMIC2C'}>
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-md" htmlFor="FAMIC2C">
+                        全家
+                      </Label>
+                      {deliveryType === 'FAMIC2C' ? (
+                        <Check className="text-primary" />
+                      ) : (
+                        <ChevronsUpDown className="h-4 w-4" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    {addresses
+                      .filter((opt) => opt.LogisticsSubType === 'FAMIC2C')
+                      .map((el) => renderItem(el))}
+                    <Separator />
+                    <Button
+                      className="mx-auto flex items-center justify-center text-red-400"
+                      variant="ghost"
+                      onClick={() => handleClick('FAMIC2C')}
+                    >
+                      ＋新增 全家門市
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+              <div className="flex items-center justify-between space-x-2  p-4">
+                <Collapsible className="w-full" defaultOpen={deliveryType === 'UNIMARTC2C'}>
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-md" htmlFor="UNIMARTC2C">
+                        7-11
+                      </Label>
+                      {deliveryType === 'UNIMARTC2C' ? (
+                        <Check className="text-primary" />
+                      ) : (
+                        <ChevronsUpDown className="h-4 w-4" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    {addresses
+                      .filter((opt) => opt.LogisticsSubType === 'UNIMARTC2C')
+                      .map((el) => renderItem(el))}
+                    <Separator />
+                    <Button
+                      className="mx-auto flex items-center justify-center text-red-400"
+                      variant="ghost"
+                      onClick={() => handleClick('UNIMARTC2C')}
+                    >
+                      ＋新增 7-11門市
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            </>
+          )}
+
           {/* <div className="flex items-center justify-between space-x-2  p-4">
             <Collapsible className="w-full" defaultOpen={deliveryType === 'HILIFEC2C'}>
               <CollapsibleTrigger className="w-full">
