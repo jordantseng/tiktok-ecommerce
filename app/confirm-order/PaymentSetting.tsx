@@ -227,7 +227,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
         )}
         {Object.keys(webSettingsData?.paykind || {}).map(
           (opt: string) =>
-            opt.indexOf(deliveryType !== 'HOME_DELIVERY' ? 'csv' : 'home') > -1 && (
+            opt.indexOf(deliveryType !== 'HOME_DELIVERY' ? 'cvs' : 'home') > -1 && (
               <div className="flex items-center justify-between space-x-2  p-4" key={opt}>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor={opt}>
@@ -352,7 +352,7 @@ const PaymentSetting = ({ value, onChange }: Props) => {
     //     )}
     //     {Object.keys(webSettingsData?.paykind || {}).map(
     //       (opt: string) =>
-    //         opt.indexOf('csv') > -1 && (
+    //         opt.indexOf('cvs') > -1 && (
     //           <SelectGroup key={opt}>
     //             <SelectItem value={opt}>
     //               <div className="flex items-center space-x-2">

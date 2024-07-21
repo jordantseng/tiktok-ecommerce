@@ -51,7 +51,7 @@ const DeliveryInfo = ({ onClick }: Props) => {
                 $
                 {deliveryType === 'HOME_DELIVERY'
                   ? webSettingsData?.logisticprice_home
-                  : webSettingsData?.logisticprice_csv}
+                  : webSettingsData?.logisticprice_cvs}
               </span>
             </div>
           )}
