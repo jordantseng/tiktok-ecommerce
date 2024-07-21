@@ -82,8 +82,8 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="w-20">全家</div>
-              {webSettingsData?.logisticprice_csv && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_csv}</div>
+              {webSettingsData?.logisticprice_cvs && (
+                <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
               )}
             </div>
             <RadioGroupItem value="FAMIC2C" id="FAMIC2C" />
@@ -103,8 +103,8 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="w-20">7-11</div>
-              {webSettingsData?.logisticprice_csv && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_csv}</div>
+              {webSettingsData?.logisticprice_cvs && (
+                <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
               )}
             </div>
             <RadioGroupItem value="UNIMARTC2C" id="UNIMARTC2C" />
@@ -124,8 +124,8 @@ const ChooseDelivery = ({ onConfirm }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="w-20">萊爾富</div>
-              {webSettingsData?.logisticprice_csv && (
-                <div className="text-red-400">${webSettingsData?.logisticprice_csv}</div>
+              {webSettingsData?.logisticprice_cvs && (
+                <div className="text-red-400">${webSettingsData?.logisticprice_cvs}</div>
               )}
             </div>
             <RadioGroupItem value="HILIFEC2C" id="HILIFEC2C" />

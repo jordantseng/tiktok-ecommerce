@@ -171,7 +171,7 @@ export const addOrder = async (baseURL: string, order: OrderData): Promise<void>
     LogisticsSubType:
       (order.LogisticsSubType !== 'HOME_DELIVERY' ? order.LogisticsSubType : '') || '',
     deliverystatus: order.CVSStoreName
-      ? 'CSV'
+      ? 'CVS'
       : order.raddress && !order.CVSAddress
         ? 'HOME'
         : 'store',

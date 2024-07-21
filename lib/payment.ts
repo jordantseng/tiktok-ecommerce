@@ -21,10 +21,10 @@ export const handleLabel = (val: string | null, webSettingsData: WebSettingsData
 export const handleFee = (
   webSettingsData: WebSettingsData | null,
   total: number,
-  isCsv: boolean,
+  isCvs: boolean,
 ) => {
-  const logisticPrice = isCsv
-    ? webSettingsData?.logisticprice_csv
+  const logisticPrice = isCvs
+    ? webSettingsData?.logisticprice_cvs
     : webSettingsData?.logisticprice_home
 
   return webSettingsData?.freelogisticprice && total > webSettingsData.freelogisticprice
