@@ -16,6 +16,7 @@ import { getBaseURL } from '@/lib/utils'
 import { AxiosError } from 'axios'
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigationContext } from './NavigationContext'
+import { useWebSettingsContext } from './WebSettingsContext'
 
 type LineAuthContextType = {
   isLiffInit: boolean
@@ -29,19 +30,22 @@ type LineAuthContextType = {
 
 const LingAuthContext = createContext<LineAuthContextType | null>(null)
 
-const liffId =
-  process.env.NODE_ENV === 'development' ? '2005664248-jXBbmKwy' : '2005483486-KrPb8qrj'
-
 export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const [liffObject, setLiffObject] = useState<Liff>()
   const [liffError, setLiffError] = useState('')
   const [lineEmail, setLineEmail] = useState('')
 
+  const { webSettingsData } = useWebSettingsContext()
   const { from } = useNavigationContext()
   const { handleSetToken } = useAuthContext()
   const router = useRouter()
   const pathName = usePathname()
   const { toast } = useToast()
+
+  const liffId =
+    process.env.NODE_ENV === 'development'
+      ? '2005664248-jXBbmKwy'
+      : webSettingsData?.liffid || '2005483486-KrPb8qrj'
 
   const isLiffInit = !!liffObject && !liffError
   const searchParams = useSearchParams()

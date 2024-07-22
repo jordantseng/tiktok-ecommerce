@@ -52,6 +52,8 @@ export type WebSettingsData = {
   address: string
   freelogisticprice?: number
   logisticprice_cvs?: number
+  api_token?: string
+  liffid?: string
   jsonbody: string
   created_at: string
   updated_at: string
