@@ -10,6 +10,7 @@ import { WebSettingsProvider } from '@/context/WebSettingsContext'
 import { Toaster } from '@/components/ui/toaster'
 import { getWebSettings } from '@/services/webSettings'
 import { NavigationProvider } from '@/context/NavigationContext'
+import { LineAuthProvider } from '@/context/LineAuthContext'
 import { headers } from 'next/headers'
 
 const inter = Inter({
@@ -45,20 +46,22 @@ export default async function RootLayout({
       <WebSettingsProvider>
         <NavigationProvider>
           <AuthProvider>
-            <CartProvider>
-              <AddressProvider>
-                <body
-                  className={cn(
-                    'touch-pan-x touch-pan-y bg-black font-sans antialiased max-[600px]:bg-background',
-                    inter.variable,
-                    inter.className,
-                  )}
-                >
-                  <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
-                  <Toaster />
-                </body>
-              </AddressProvider>
-            </CartProvider>
+            <LineAuthProvider>
+              <CartProvider>
+                <AddressProvider>
+                  <body
+                    className={cn(
+                      'touch-pan-x touch-pan-y bg-black font-sans antialiased max-[600px]:bg-background',
+                      inter.variable,
+                      inter.className,
+                    )}
+                  >
+                    <div className="mx-auto min-h-screen w-full max-w-md">{children}</div>
+                    <Toaster />
+                  </body>
+                </AddressProvider>
+              </CartProvider>
+            </LineAuthProvider>
           </AuthProvider>
         </NavigationProvider>
       </WebSettingsProvider>

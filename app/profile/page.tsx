@@ -23,15 +23,20 @@ import { useToast } from '@/components/ui/use-toast'
 import { updateUser } from '@/services/auth'
 import { Form, FormField } from '@/components/ui/form'
 import { getBaseURL } from '@/lib/utils'
+import { useLineAuthContext } from '@/context/LineAuthContext'
+import { useWebSettingsContext } from '@/context/WebSettingsContext'
 
 function ProfilePage() {
   const router = useRouter()
   const { toast } = useToast()
+  const { webSettingsData } = useWebSettingsContext()
   const { user, isLoadingUser, refreshUser, handleBindTiktok } = useAuthContext()
+  const { handleLineLogin } = useLineAuthContext()
   const [addresses, setAddresses] = useImmer<AddressData[]>([])
   const [isEditing, setIsEditing] = useState(false)
 
   const tiktokId = user?.tiktokid
+  const lineid = user?.lineid
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -102,12 +107,42 @@ function ProfilePage() {
   function handleBindTiktokAccount(e: MouseEvent) {
     e.preventDefault()
 
+    if (lineid) {
+      toast({
+        variant: 'destructive',
+        description: '只能綁定一個社群帳號',
+      })
+      return
+    }
+
     if (!tiktokId) {
       handleBindTiktok()
     } else {
       toast({
         variant: 'destructive',
         description: '已經綁定過 Tiktok 帳號',
+      })
+    }
+  }
+
+  function handleBindLineAccount(e: MouseEvent) {
+    e.preventDefault()
+
+    if (tiktokId) {
+      toast({
+        variant: 'destructive',
+        description: '只能綁定一個社群帳號',
+      })
+      return
+    }
+
+    if (!lineid) {
+      localStorage.setItem('line-bind', 'true')
+      handleLineLogin()
+    } else {
+      toast({
+        variant: 'destructive',
+        description: '已經綁定過 Line 帳號',
       })
     }
   }
@@ -206,28 +241,55 @@ function ProfilePage() {
                 )}
               />
 
-              <ProfileFormItemLayout
-                label={
+              {webSettingsData?.api_token && (
+                <ProfileFormItemLayout
+                  label={
+                    <div className="flex items-center gap-1">
+                      <Image
+                        src="/tiktok-logo.svg"
+                        width={30}
+                        height={30}
+                        alt="logo"
+                        className="h-8 w-8 cursor-pointer rounded-full border-2 bg-black p-1"
+                      />
+                      <span>Tiktok 帳號</span>
+                    </div>
+                  }
+                >
                   <div className="flex items-center gap-1">
-                    <Image
-                      src="/tiktok-logo.svg"
-                      width={30}
-                      height={30}
-                      alt="logo"
-                      className="h-8 w-8 cursor-pointer rounded-full border-2 bg-black p-1"
+                    <StatusButton
+                      title={!tiktokId ? '連動' : `已綁定 (${user.username})`}
+                      disabled={!tiktokId}
+                      onClick={handleBindTiktokAccount}
                     />
-                    <span>Tiktok 帳號</span>
                   </div>
-                }
-              >
-                <div className="flex items-center gap-1">
-                  <StatusButton
-                    title={!tiktokId ? '連動' : `已綁定 (${user.username})`}
-                    disabled={!tiktokId}
-                    onClick={handleBindTiktokAccount}
-                  />
-                </div>
-              </ProfileFormItemLayout>
+                </ProfileFormItemLayout>
+              )}
+
+              {webSettingsData?.liffid && (
+                <ProfileFormItemLayout
+                  label={
+                    <div className="flex items-center gap-1">
+                      <Image
+                        src="/line-logo.svg"
+                        width={30}
+                        height={30}
+                        alt="logo"
+                        className="h-8 w-8 cursor-pointer rounded-full border-2 bg-[#06C755] p-1"
+                      />
+                      <span>Line 帳號</span>
+                    </div>
+                  }
+                >
+                  <div className="flex items-center gap-1">
+                    <StatusButton
+                      title={!lineid ? '連動' : `已綁定 (${user.username})`}
+                      disabled={!lineid}
+                      onClick={handleBindLineAccount}
+                    />
+                  </div>
+                </ProfileFormItemLayout>
+              )}
             </section>
 
             <Button
