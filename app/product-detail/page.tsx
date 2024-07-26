@@ -35,7 +35,17 @@ const ProductDetailPage = async ({ searchParams }: ProductPageProps) => {
   }
 
   const showDeliveryMethods = () => {
+    const keys = Object.keys(deliveryMap)
     return Object.values(deliveryMap).map((method, index) => {
+      if (!webSettings?.deliverykind?.['HOME'] && keys[index] === 'HOME_DELIVERY') {
+        return ''
+      }
+      if (
+        !webSettings?.deliverykind?.['CVS'] &&
+        (keys[index] === 'FAMIC2C' || keys[index] === 'UNIMARTC2C')
+      ) {
+        return ''
+      }
       if (index + 1 === Object.values(deliveryMap).length) {
         return method
       }
