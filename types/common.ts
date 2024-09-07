@@ -62,3 +62,4 @@ export type WebSettingsData = {
   html: string
   deliverykind?: Record<string, string>
 }
+//  trigger rebuild
