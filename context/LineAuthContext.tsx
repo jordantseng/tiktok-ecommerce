@@ -70,7 +70,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
             setLiffError(error.toString())
           })
       })
-  }, [])
+  }, [liffId])
 
   useEffect(() => {
     if (code || state || liffClientId || liffRedirectUri) {
@@ -155,8 +155,27 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   }
 
   const handleLineLogin = useCallback(() => {
-    liffObject?.login()
-  }, [liffObject])
+    function redirectToMobileLineLogin() {
+      // TODO: should follow this issue
+      // this is workaround
+      // if user open our liff app in mobile browser
+      // we redirect user to mobile line liff
+      // should keep follow if this way is deprecated
+      // https://taichunmin.idv.tw/blog/2021-11-17-liff-open-in-line.html
+      window.open(`https://line.me/R/app/${liffId}`, '_self')
+    }
+
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints
+    const isInLine = navigator.userAgent.includes('Line')
+
+    if (!isInLine && isMobile) {
+      console.log('auth: redirect to mobile line liff...')
+      redirectToMobileLineLogin()
+    } else {
+      console.log('auth: redirect to desktop line liff...', window.location.href)
+      liffObject?.login()
+    }
+  }, [liffObject, liffId])
 
   const handleLineLogout = useCallback(() => {
     liffObject?.logout()
