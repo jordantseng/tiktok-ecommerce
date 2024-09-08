@@ -122,10 +122,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   }, [])
 
-  const handleLoginEmail = async ({ email, password }: LoginInfo, isReset: boolean) => {
+  const handleLoginEmail = async ({ email, password, token }: LoginInfo, isReset: boolean) => {
     try {
       const baseURL = getBaseURL(window.location.host)
-      const response = await loginEmail(baseURL, { email, password })
+      const response = await loginEmail(baseURL, { email, password, token })
       const data = response.data
       const apiToken = data?.api_token
 

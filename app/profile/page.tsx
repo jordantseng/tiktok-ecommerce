@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, MouseEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronRightIcon, Loader2 } from 'lucide-react'
+import { ChevronRightIcon, Loader2, Mail } from 'lucide-react'
 import { useImmer } from 'use-immer'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -48,6 +48,8 @@ function ProfilePage() {
     },
   })
 
+  const isUnboundEmail = user && user.email.includes('@tiktok.com')
+
   useEffect(() => {
     const baseURL = getBaseURL(window.location.host)
 
@@ -63,11 +65,11 @@ function ProfilePage() {
       form.reset({
         id: user.tiktokid ? user.name! : user.id.toString(),
         mobile: user.mobile ?? '',
-        email: user.email ?? '',
+        email: isUnboundEmail ? '' : user.email,
         password: '********',
       })
     }
-  }, [user, form, router, refreshUser])
+  }, [user, form, router, refreshUser, isUnboundEmail])
 
   async function handleSubmit(result: z.infer<typeof formSchema>) {
     const baseURL = getBaseURL(window.location.host)
@@ -128,14 +130,6 @@ function ProfilePage() {
   function handleBindLineAccount(e: MouseEvent) {
     e.preventDefault()
 
-    if (tiktokId) {
-      toast({
-        variant: 'destructive',
-        description: '只能綁定一個社群帳號',
-      })
-      return
-    }
-
     if (!lineid) {
       localStorage.setItem('line-bind', 'true')
       handleLineLogin()
@@ -155,6 +149,17 @@ function ProfilePage() {
       form.handleSubmit(handleSubmit)()
       setIsEditing(false)
     }
+  }
+
+  function handleBindEmail(e: MouseEvent<Element, globalThis.MouseEvent>) {
+    e.preventDefault()
+
+    if (!isUnboundEmail) {
+      toast({ variant: 'destructive', description: 'Email已綁定' })
+      return
+    }
+
+    router.push('register?type=binding')
   }
 
   return (
@@ -250,7 +255,7 @@ function ProfilePage() {
                         width={30}
                         height={30}
                         alt="logo"
-                        className="h-8 w-8 cursor-pointer rounded-full border-2 bg-black p-1"
+                        className="h-8 w-8 cursor-default rounded-full border-2 bg-black p-1"
                       />
                       <span>Tiktok 帳號</span>
                     </div>
@@ -275,7 +280,7 @@ function ProfilePage() {
                         width={30}
                         height={30}
                         alt="logo"
-                        className="h-8 w-8 cursor-pointer rounded-full border-2 bg-[#06C755] p-1"
+                        className="h-8 w-8 cursor-default rounded-full border-2 bg-[#06C755] p-1"
                       />
                       <span>Line 帳號</span>
                     </div>
@@ -286,6 +291,24 @@ function ProfilePage() {
                       title={!lineid ? '連動' : `已綁定 (${user.username})`}
                       disabled={!lineid}
                       onClick={handleBindLineAccount}
+                    />
+                  </div>
+                </ProfileFormItemLayout>
+              )}
+              {isUnboundEmail && (
+                <ProfileFormItemLayout
+                  label={
+                    <div className="flex items-center gap-1">
+                      <Mail width={28} height={28} />
+                      <span>Email 帳號</span>
+                    </div>
+                  }
+                >
+                  <div className="flex items-center gap-1">
+                    <StatusButton
+                      title={isUnboundEmail ? '連動' : `已綁定 (${user.email})`}
+                      disabled={!lineid}
+                      onClick={handleBindEmail}
                     />
                   </div>
                 </ProfileFormItemLayout>

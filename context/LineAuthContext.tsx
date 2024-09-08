@@ -89,10 +89,11 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const idToken = liffObject.getIDToken()
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
+      const token = localStorage.getItem('token')!
 
       if (idToken) {
         if (!lineBind) {
-          getTokenByLineIdToken(baseURL, idToken)
+          getTokenByLineIdToken(baseURL, idToken, token)
             .then(({ data }) => {
               handleSetToken(data.api_token)
 

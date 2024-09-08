@@ -21,8 +21,21 @@ const MemberPage = () => {
   const { user, isPreparingAuthData } = useAuthContext()
   const { recommends, isLoadingRecommends } = useRecommendsContext()
   const { orders } = useOrderContext()
+  const isUnboundEmail = user && user.email.includes('@tiktok.com')
 
   const tiktokId = user?.tiktokid
+
+  const renderEmail = () => {
+    if (!user) {
+      return <Skeleton className="h-5 w-28 md:h-8 md:w-36" />
+    }
+
+    if (isUnboundEmail) {
+      return null
+    }
+
+    return user.email
+  }
 
   return (
     <main className="flex h-full min-h-screen flex-col">
@@ -52,9 +65,7 @@ const MemberPage = () => {
                       user.id
                     )}
                   </span>
-                  <span className="min-h-5 text-xs md:min-h-8 md:text-base">
-                    {!user ? <Skeleton className="h-5 w-28 md:h-8 md:w-36" /> : user.email}
-                  </span>
+                  <span className="min-h-5 text-xs md:min-h-8 md:text-base">{renderEmail()}</span>
                 </div>
               </div>
             </div>

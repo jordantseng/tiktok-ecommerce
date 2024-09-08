@@ -18,7 +18,7 @@ function StatusButton({ title, disabled, onClick }: StatusButtonProps) {
       onClick={onClick}
       variant="ghost"
       className={cn(
-        'h-full min-w-20 cursor-default rounded-lg border border-primary bg-primary-foreground p-2 font-bold text-primary',
+        'h-full min-w-20 cursor-pointer rounded-lg border border-primary bg-primary-foreground p-2 font-bold text-primary',
         {
           'border-none bg-gray-100 text-gray-800': disabled,
         },

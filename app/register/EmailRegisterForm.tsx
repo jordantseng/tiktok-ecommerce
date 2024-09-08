@@ -4,6 +4,8 @@ import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { toast } from '@/components/ui/use-toast'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -12,6 +14,8 @@ import { Form, FormField, FormMessage } from '@/components/ui/form'
 import { emailSchema, passwordSchema } from '@/lib/schema'
 import RegisterButton from '@/app/register/RegisterButton'
 import { useLineAuthContext } from '@/context/LineAuthContext'
+import { getBaseURL } from '@/lib/utils'
+import { loginEmail, register } from '@/services/auth'
 
 const formSchema = z.object({
   email: emailSchema,
@@ -20,8 +24,11 @@ const formSchema = z.object({
 })
 
 function EmailRegisterForm() {
-  const { handleRegister, handleGetEmailCode } = useAuthContext()
+  const { handleRegister, handleGetEmailCode, token, handleSetToken } = useAuthContext()
   const { lineEmail, liffObject, handleRegisterWithLine } = useLineAuthContext()
+  const searchParams = useSearchParams()
+
+  const type = searchParams.get('type')
 
   const countdownInterval = useRef<NodeJS.Timeout | null>(null)
 
@@ -40,6 +47,7 @@ function EmailRegisterForm() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [countdown, setCountdown] = useState(0)
+  const router = useRouter()
 
   useEffect(() => {
     return () => {
@@ -58,16 +66,40 @@ function EmailRegisterForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
 
-    if (liffObject?.isLoggedIn()) {
-      await handleRegisterWithLine({
-        ...values,
-        code: verificationCode,
-      })
+    if (type !== 'binding') {
+      if (liffObject?.isLoggedIn()) {
+        await handleRegisterWithLine({
+          ...values,
+          code: verificationCode,
+        })
+      } else {
+        await handleRegister({
+          ...values,
+          code: verificationCode,
+        })
+      }
     } else {
-      await handleRegister({
-        ...values,
-        code: verificationCode,
-      })
+      try {
+        const baseURL = getBaseURL(window.location.host)
+        await register(baseURL, { email, password, code: verificationCode })
+        const response = await loginEmail(baseURL, { email, password, token })
+        const data = response.data
+        const apiToken = data?.api_token
+
+        if (!apiToken) {
+          throw new Error(response.resultmessage)
+        } else {
+          handleSetToken(apiToken)
+          router.push('/profile')
+          router.refresh()
+        }
+      } catch (error) {
+        console.error('handleRegister error: ', error)
+        toast({
+          variant: 'destructive',
+          description: error instanceof Error ? `${error.message}` : `${error}`,
+        })
+      }
     }
 
     setIsSubmitting(false)
@@ -164,6 +196,7 @@ function EmailRegisterForm() {
         <RegisterButton
           disabled={!email || !password || !verificationCode || isSubmitting}
           isLoading={isSubmitting}
+          label={type === 'binding' ? '綁定' : '註冊'}
         />
       </form>
     </Form>

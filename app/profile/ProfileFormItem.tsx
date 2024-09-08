@@ -68,6 +68,8 @@ export default function ProfileFormItem<T extends FormKeys>({
   type = 'text',
   onClick,
 }: ProfileFormItemProps<T>) {
+  console.log('field', field)
+
   return (
     <ProfileFormItemLayout label={label}>
       <div

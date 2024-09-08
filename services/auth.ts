@@ -8,6 +8,7 @@ export type LoginRes = ApiRes<{
 export type LoginInfo = {
   email: string
   password: string
+  token?: string
 }
 
 export type RegisterInfo = LoginInfo & {
@@ -46,7 +47,7 @@ type SuccessRes = ApiRes<{
 
 export const loginEmail = async (
   baseURL: string,
-  { email, password }: LoginInfo,
+  { email, password, token }: LoginInfo,
 ): Promise<LoginRes> => {
   const { data } = await axiosInstance({
     method: 'POST',
@@ -55,6 +56,7 @@ export const loginEmail = async (
     data: {
       email,
       password,
+      token
     },
   })
 
@@ -226,13 +228,14 @@ export const registerTiktok = async (
   return data
 }
 
-export const getTokenByLineIdToken = async (baseURL: string, token: string): Promise<LoginRes> => {
+export const getTokenByLineIdToken = async (baseURL: string, idToken: string, token: string): Promise<LoginRes> => {
   const { data } = await axiosInstance<LoginRes>({
     method: 'POST',
     baseURL,
     url: '/api/line/login',
     data: {
-      idtoken: token,
+      idtoken: idToken,
+      token
     },
   })
 
