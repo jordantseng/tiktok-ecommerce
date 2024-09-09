@@ -90,8 +90,9 @@ function EmailRegisterForm() {
           throw new Error(response.resultmessage)
         } else {
           handleSetToken(apiToken)
-          router.push('/profile')
-          router.refresh()
+          // As using router.push and router.refresh doesn't work
+          // This is a hacky workaround
+          window.location.href = '/profile'
         }
       } catch (error) {
         console.error('handleRegister error: ', error)
