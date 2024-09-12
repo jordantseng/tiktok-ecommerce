@@ -307,7 +307,7 @@ function ProfilePage() {
                   <div className="flex items-center gap-1">
                     <StatusButton
                       title={isUnboundEmail ? '連動' : `已綁定 (${user.email})`}
-                      disabled={!lineid}
+                      disabled={Boolean(user.email)}
                       onClick={handleBindEmail}
                     />
                   </div>
