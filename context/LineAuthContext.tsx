@@ -93,7 +93,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
 
       if (idToken) {
         if (!lineBind) {
-          getTokenByLineIdToken(baseURL, idToken, token)
+          getTokenByLineIdToken(baseURL, idToken)
             .then(({ data }) => {
               handleSetToken(data.api_token)
 
@@ -113,7 +113,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
               }
             })
         } else {
-          bindLine(baseURL, idToken)
+          getTokenByLineIdToken(baseURL, idToken, token)
             .then(() => {
               router.push('/profile')
             })

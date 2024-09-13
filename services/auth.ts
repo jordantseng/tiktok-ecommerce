@@ -56,7 +56,7 @@ export const loginEmail = async (
     data: {
       email,
       password,
-      token
+      token,
     },
   })
 
@@ -228,14 +228,18 @@ export const registerTiktok = async (
   return data
 }
 
-export const getTokenByLineIdToken = async (baseURL: string, idToken: string, token: string): Promise<LoginRes> => {
+export const getTokenByLineIdToken = async (
+  baseURL: string,
+  idToken: string,
+  token?: string,
+): Promise<LoginRes> => {
   const { data } = await axiosInstance<LoginRes>({
     method: 'POST',
     baseURL,
     url: '/api/line/login',
     data: {
       idtoken: idToken,
-      token
+      ...(token && { token }),
     },
   })
 
