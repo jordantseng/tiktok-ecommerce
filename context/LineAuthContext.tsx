@@ -93,7 +93,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
       if (idToken) {
-        if (!lineBind) {
+        if (!lineBind && !token) {
           getTokenByLineIdToken(baseURL, idToken)
             .then(({ data }) => {
               handleSetToken(data.api_token)
@@ -115,6 +115,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
             })
         } else {
           user &&
+            token &&
             !lineid &&
             getTokenByLineIdToken(baseURL, idToken, token)
               .then(() => {
