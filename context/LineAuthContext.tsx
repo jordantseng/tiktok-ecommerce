@@ -87,6 +87,8 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (user && liffObject && liffObject.isLoggedIn()) {
+      alert(user)
+      alert(user?.lineid)
       const idToken = liffObject.getIDToken()
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
