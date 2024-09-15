@@ -86,13 +86,12 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   }, [code, state, liffClientId, liffRedirectUri, router])
 
   useEffect(() => {
-    if (liffObject && liffObject.isLoggedIn()) {
+    if (user && liffObject && liffObject.isLoggedIn()) {
       const idToken = liffObject.getIDToken()
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
-      alert(JSON.stringify(user))
       if (!lineid && idToken) {
         if (!lineBind) {
           getTokenByLineIdToken(baseURL, idToken)
@@ -132,7 +131,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
         }
       }
     }
-  }, [handleSetToken, toast, pathName, router, liffObject])
+  }, [handleSetToken, toast, pathName, router, liffObject, user])
 
   const handleRegisterWithLine = async ({ email, password, code }: RegisterInfo) => {
     try {
