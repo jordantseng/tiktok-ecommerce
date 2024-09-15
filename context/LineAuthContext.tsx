@@ -37,7 +37,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
 
   const { webSettingsData } = useWebSettingsContext()
   const { from } = useNavigationContext()
-  const { handleSetToken } = useAuthContext()
+  const { user, handleSetToken } = useAuthContext()
   const router = useRouter()
   const pathName = usePathname()
   const { toast } = useToast()
@@ -90,8 +90,8 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
-
-      if (idToken) {
+      const lineid = user?.lineid
+      if (!lineid && idToken) {
         if (!lineBind) {
           getTokenByLineIdToken(baseURL, idToken)
             .then(({ data }) => {
@@ -130,7 +130,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
         }
       }
     }
-  }, [handleSetToken, toast, pathName, router, liffObject])
+  }, [handleSetToken, toast, pathName, router, liffObject, user?.lineid])
 
   const handleRegisterWithLine = async ({ email, password, code }: RegisterInfo) => {
     try {
