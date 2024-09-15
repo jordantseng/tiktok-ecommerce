@@ -91,6 +91,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
+      alert(lineid)
       if (!lineid && idToken) {
         if (!lineBind) {
           getTokenByLineIdToken(baseURL, idToken)
