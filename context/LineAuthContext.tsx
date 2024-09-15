@@ -17,6 +17,7 @@ import { AxiosError } from 'axios'
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigationContext } from './NavigationContext'
 import { useWebSettingsContext } from './WebSettingsContext'
+import { json } from 'stream/consumers'
 
 type LineAuthContextType = {
   isLiffInit: boolean
@@ -91,7 +92,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
-      alert(lineid)
+      alert(JSON.stringify(user))
       if (!lineid && idToken) {
         if (!lineBind) {
           getTokenByLineIdToken(baseURL, idToken)
@@ -131,7 +132,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
         }
       }
     }
-  }, [handleSetToken, toast, pathName, router, liffObject, user?.lineid])
+  }, [handleSetToken, toast, pathName, router, liffObject])
 
   const handleRegisterWithLine = async ({ email, password, code }: RegisterInfo) => {
     try {
