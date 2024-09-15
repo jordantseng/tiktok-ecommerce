@@ -86,15 +86,13 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   }, [code, state, liffClientId, liffRedirectUri, router])
 
   useEffect(() => {
-    if (user && liffObject && liffObject.isLoggedIn()) {
-      alert(user)
-      alert(user?.lineid)
+    if (liffObject && liffObject.isLoggedIn()) {
       const idToken = liffObject.getIDToken()
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
-      if (!lineid && idToken) {
+      if (idToken) {
         if (!lineBind) {
           getTokenByLineIdToken(baseURL, idToken)
             .then(({ data }) => {
@@ -116,20 +114,22 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
               }
             })
         } else {
-          getTokenByLineIdToken(baseURL, idToken, token)
-            .then(() => {
-              router.push('/profile')
-            })
-            .catch((error) => {
-              console.error('bindLine error: ', error)
-              toast({
-                variant: 'destructive',
-                description: error instanceof Error ? `${error.message}` : `${error}`,
+          user &&
+            !lineid &&
+            getTokenByLineIdToken(baseURL, idToken, token)
+              .then(() => {
+                router.push('/profile')
               })
-            })
-            .finally(() => {
-              localStorage.removeItem('line-bind')
-            })
+              .catch((error) => {
+                console.error('bindLine error: ', error)
+                toast({
+                  variant: 'destructive',
+                  description: error instanceof Error ? `${error.message}` : `${error}`,
+                })
+              })
+              .finally(() => {
+                localStorage.removeItem('line-bind')
+              })
         }
       }
     }
