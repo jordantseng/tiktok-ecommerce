@@ -8,16 +8,16 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { AxiosError } from 'axios'
 import { Liff } from '@line/liff'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useAuthContext } from './AuthContext'
-import { bindLine, getTokenByLineIdToken, register, RegisterInfo } from '@/services/auth'
+
+import { getTokenByLineIdToken, register, RegisterInfo } from '@/services/auth'
 import { getBaseURL } from '@/lib/utils'
-import { AxiosError } from 'axios'
 import { useToast } from '@/components/ui/use-toast'
-import { useNavigationContext } from './NavigationContext'
-import { useWebSettingsContext } from './WebSettingsContext'
-import { json } from 'stream/consumers'
+import { useAuthContext } from '@/context/AuthContext'
+import { useNavigationContext } from '@/context/NavigationContext'
+import { useWebSettingsContext } from '@/context/WebSettingsContext'
 
 type LineAuthContextType = {
   isLiffInit: boolean
@@ -40,7 +40,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const { from } = useNavigationContext()
   const { user, handleSetToken } = useAuthContext()
   const router = useRouter()
-  const pathName = usePathname()
+  const pathname = usePathname()
   const { toast } = useToast()
 
   const liffId =
@@ -85,6 +85,51 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
     }
   }, [code, state, liffClientId, liffRedirectUri, router])
 
+  const handleBindLine = useCallback(
+    (baseURL: string, idToken: string) => {
+      getTokenByLineIdToken(baseURL, idToken)
+        .then(({ data }) => {
+          handleSetToken(data.api_token)
+
+          if (pathname === '/register') {
+            router.push('/')
+          }
+        })
+        .catch((error) => {
+          if (error instanceof AxiosError) {
+            const res = error.response?.data
+            const data = res?.data
+
+            if (data.email) {
+              setLineEmail(data.email)
+              router.push('/register')
+            }
+          }
+        })
+    },
+    [handleSetToken, pathname, router],
+  )
+
+  const handleBindLineWithToken = useCallback(
+    (baseURL: string, idToken: string, token: string) => {
+      getTokenByLineIdToken(baseURL, idToken, token)
+        .then(() => {
+          router.push('/profile')
+        })
+        .catch((error) => {
+          console.error('bindLine error: ', error)
+          toast({
+            variant: 'destructive',
+            description: error instanceof Error ? `${error.message}` : `${error}`,
+          })
+        })
+        .finally(() => {
+          localStorage.removeItem('line-bind')
+        })
+    },
+    [router, toast],
+  )
+
   useEffect(() => {
     if (liffObject && liffObject.isLoggedIn()) {
       const idToken = liffObject.getIDToken()
@@ -92,49 +137,18 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
       const lineid = user?.lineid
+
       if (idToken) {
         if (!lineBind && !token) {
-          getTokenByLineIdToken(baseURL, idToken)
-            .then(({ data }) => {
-              handleSetToken(data.api_token)
-
-              if (pathName === '/register') {
-                router.push('/')
-              }
-            })
-            .catch((error) => {
-              if (error instanceof AxiosError) {
-                const res = error.response?.data
-                const data = res?.data
-
-                if (data.email) {
-                  setLineEmail(data.email)
-                  router.push('/register')
-                }
-              }
-            })
+          handleBindLine(baseURL, idToken)
         } else {
-          user &&
-            token &&
-            !lineid &&
-            getTokenByLineIdToken(baseURL, idToken, token)
-              .then(() => {
-                router.push('/profile')
-              })
-              .catch((error) => {
-                console.error('bindLine error: ', error)
-                toast({
-                  variant: 'destructive',
-                  description: error instanceof Error ? `${error.message}` : `${error}`,
-                })
-              })
-              .finally(() => {
-                localStorage.removeItem('line-bind')
-              })
+          if (user && token && !lineid) {
+            handleBindLineWithToken(baseURL, idToken, token)
+          }
         }
       }
     }
-  }, [handleSetToken, toast, pathName, router, liffObject, user])
+  }, [handleBindLine, handleBindLineWithToken, liffObject, user])
 
   const handleRegisterWithLine = async ({ email, password, code }: RegisterInfo) => {
     try {
