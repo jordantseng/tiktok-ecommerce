@@ -37,8 +37,9 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const [lineEmail, setLineEmail] = useState('')
 
   const { webSettingsData } = useWebSettingsContext()
+
   const { from } = useNavigationContext()
-  const { user, handleSetToken } = useAuthContext()
+  const { user, handleSetToken, refreshUser } = useAuthContext()
   const router = useRouter()
   const pathname = usePathname()
   const { toast } = useToast()
@@ -83,7 +84,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
         router.push('/')
       }
     }
-  }, [code, state, liffClientId, liffRedirectUri, router])
+  }, [code, liffClientId, liffRedirectUri, router, state])
 
   const handleBindLine = useCallback(
     (baseURL: string, idToken: string) => {
@@ -113,7 +114,10 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
   const handleBindLineWithToken = useCallback(
     (baseURL: string, idToken: string, token: string) => {
       getTokenByLineIdToken(baseURL, idToken, token)
-        .then(() => {
+        .then(({ data }) => {
+          console.log('👽 line/login data.api_token: ', data.api_token)
+          handleSetToken(data.api_token)
+          refreshUser()
           router.push('/profile')
         })
         .catch((error) => {
@@ -127,7 +131,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
           localStorage.removeItem('line-bind')
         })
     },
-    [router, toast],
+    [handleSetToken, refreshUser, router, toast],
   )
 
   useEffect(() => {
@@ -136,6 +140,9 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const baseURL = getBaseURL(window.location.host)
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
+
+      console.log('LineSAEffect: ', localStorage.getItem('token')!)
+
       const lineid = user?.lineid
 
       if (idToken) {
