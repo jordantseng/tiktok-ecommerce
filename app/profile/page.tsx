@@ -109,13 +109,13 @@ function ProfilePage() {
   function handleBindTiktokAccount(e: MouseEvent) {
     e.preventDefault()
 
-    if (lineid) {
-      toast({
-        variant: 'destructive',
-        description: '只能綁定一個社群帳號',
-      })
-      return
-    }
+    // if (lineid) {
+    //   toast({
+    //     variant: 'destructive',
+    //     description: '只能綁定一個社群帳號',
+    //   })
+    //   return
+    // }
 
     if (!tiktokId) {
       handleBindTiktok()
