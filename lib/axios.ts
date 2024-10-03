@@ -17,13 +17,13 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use((response) => {
   const data: ApiRes<any> = response.data
   if (data.resultcode === 403) {
-    const token = localStorage.getItem('token')
-    if (token) {
-      console.log('🦢 axios token: ', token)
-      console.log('🦢 axios response: ', JSON.stringify(response))
-      localStorage.removeItem('token')
-    }
-    window.location.href = '/login'
+    // const token = localStorage.getItem('token')
+    // if (token) {
+    //   console.log('🦢 axios token: ', token)
+    //   console.log('🦢 axios response: ', JSON.stringify(response))
+    //   localStorage.removeItem('token')
+    // }
+    // window.location.href = '/login'
   }
   if (400 <= data.resultcode && data.resultcode < 500) {
     throw new Error(data.resultmessage)
