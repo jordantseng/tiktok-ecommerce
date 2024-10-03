@@ -28,7 +28,7 @@ import { getBaseURL } from '@/lib/utils'
 
 function getLocalStorageToken() {
   if (typeof window !== 'undefined') {
-    console.log('🦢 getLocalStorageToken: ', localStorage.getItem('token'))
+    // console.log('🦢 getLocalStorageToken: ', localStorage.getItem('token'))
     return localStorage.getItem('token') || ''
   } else {
     return ''
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [token, setToken] = useState(getLocalStorageToken())
   const [isLoadingUser, setIsLoadingUser] = useState(false)
 
-  console.log('Authprovider token: ', token)
+  // console.log('Authprovider token: ', token)
 
   const isLogin = !!token
   const isPreparingAuthData = !user || !token

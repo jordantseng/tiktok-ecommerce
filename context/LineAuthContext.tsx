@@ -115,7 +115,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
     (baseURL: string, idToken: string, token: string) => {
       getTokenByLineIdToken(baseURL, idToken, token)
         .then(({ data }) => {
-          console.log('👽 line/login data.api_token: ', data.api_token)
+          // console.log('👽 line/login data.api_token: ', data.api_token)
           handleSetToken(data.api_token)
           refreshUser()
           router.push('/profile')
@@ -141,7 +141,7 @@ export const LineAuthProvider = ({ children }: PropsWithChildren) => {
       const lineBind = localStorage.getItem('line-bind')
       const token = localStorage.getItem('token')!
 
-      console.log('LineSAEffect: ', localStorage.getItem('token')!)
+      // console.log('LineSAEffect: ', localStorage.getItem('token')!)
 
       const lineid = user?.lineid
 

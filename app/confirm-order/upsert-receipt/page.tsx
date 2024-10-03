@@ -43,7 +43,7 @@ const UpsertReceiptPage = () => {
       getAddress(baseURL).then(({ data }) => {
         const target = data.data?.find((opt) => opt?.id?.toString() === id)
         if (target) {
-          console.log(target)
+          // console.log(target)
           setValue(target)
         }
       })
