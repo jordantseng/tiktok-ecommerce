@@ -263,7 +263,7 @@ function ProfilePage() {
                 >
                   <div className="flex items-center gap-1">
                     <StatusButton
-                      title={!tiktokId ? '連動' : `已綁定 (${user.username})`}
+                      title={!tiktokId ? '連動' : `已綁定 (${user.username || '-'})`}
                       disabled={!tiktokId}
                       onClick={handleBindTiktokAccount}
                     />
@@ -288,7 +288,7 @@ function ProfilePage() {
                 >
                   <div className="flex items-center gap-1">
                     <StatusButton
-                      title={!lineid ? '連動' : `已綁定 (${user.username})`}
+                      title={!lineid ? '連動' : `已綁定 (${user.username || '-'})`}
                       disabled={!lineid}
                       onClick={handleBindLineAccount}
                     />
@@ -306,7 +306,7 @@ function ProfilePage() {
                 >
                   <div className="flex items-center gap-1">
                     <StatusButton
-                      title={isUnboundEmail ? '連動' : `已綁定 (${user.email})`}
+                      title={isUnboundEmail ? '連動' : `已綁定 (${user.email || '-'})`}
                       disabled={Boolean(user.email)}
                       onClick={handleBindEmail}
                     />
