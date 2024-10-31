@@ -47,7 +47,7 @@ jobs:
           SOURCE: '.'
           REMOTE_HOST: ${{ secrets.SSH_BT_HOST }}
           REMOTE_USER: ${{ secrets.SSH_BT_USERNAME }}
-          TARGET: '/var/www/wwwroot/nodejs3.woowp.tw/tiktok-ecommerce'
+          TARGET: '/www/wwwroot/nodejs3.woowp.tw/tiktok-ecommerce'
           EXCLUDE: '/node_modules/'
           SCRIPT_BEFORE: ls
           SCRIPT_AFTER: |
