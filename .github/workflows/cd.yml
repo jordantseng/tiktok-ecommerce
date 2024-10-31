@@ -49,7 +49,3 @@ jobs:
           REMOTE_USER: ${{ secrets.SSH_BT_USERNAME }}
           TARGET: '/www/wwwroot/nodejs3.woowp.tw/tiktok-ecommerce'
           EXCLUDE: '/node_modules/'
-          SCRIPT_BEFORE: ls
-          SCRIPT_AFTER: |
-            node --version
-            /root/.nvm/versions/node/v20.9.0/bin/pm2 restart tiktok-ecommerce
