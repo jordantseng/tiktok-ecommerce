@@ -39,3 +39,17 @@ jobs:
           SCRIPT_AFTER: |
             node --version
             /root/.nvm/versions/node/v20.9.0/bin/pm2 restart tiktok-ecommerce
+      - name: Deploy to BT Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_BT_PRIVATE_KEY }}
+          ARGS: '-rlgoDzvc -i --delete'
+          SOURCE: '.'
+          REMOTE_HOST: ${{ secrets.SSH_BT_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_BT_USERNAME }}
+          TARGET: '/var/www/wwwroot/nodejs3.woowp.tw/tiktok-ecommerce'
+          EXCLUDE: '/node_modules/'
+          SCRIPT_BEFORE: ls
+          SCRIPT_AFTER: |
+            node --version
+            /root/.nvm/versions/node/v20.9.0/bin/pm2 restart tiktok-ecommerce
